@@ -3,9 +3,7 @@ const { Buffer } = require("buffer");
 
 window.Buffer = Buffer;
 
-// Existing code
 document.addEventListener("DOMContentLoaded", () => {
-  // Element References
   const nameInput = document.getElementById("name");
   const secretInput = document.getElementById("secret");
   const generateButton = document.getElementById("generate");
@@ -144,6 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
     gearIcon.id = name + "-gear-icon";
     tokenElement.appendChild(gearIcon);
 
+    gearIcon.addEventListener("mouseover", () => {
+      console.log("hovering over gear icon: ", gearIcon.id);
+    });
+
     gearIcon.addEventListener("click", (event) => {
       event.stopPropagation();
       console.log("clicked gear button");
@@ -197,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("Tokens after URL change:", tokens);
                   });
                 }
+                settings;
               });
             });
 

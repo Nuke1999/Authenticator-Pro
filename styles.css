@@ -37,11 +37,24 @@ body {
   height: 500px;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .gear-icon {
   position: absolute;
   left: 250px;
   z-index: 1000;
   transform: translateY(-2px);
+}
+
+.gear-icon:hover {
+  animation: spin 2s linear infinite;
 }
 
 .popup-container {
@@ -57,7 +70,6 @@ body {
   z-index: 1000;
 }
 
-/* Popup content */
 .popup-content {
   background: white;
   padding: 20px;
@@ -71,7 +83,6 @@ body {
   position: relative;
 }
 
-/* Close button */
 .close-popup {
   position: absolute;
   top: 125px;

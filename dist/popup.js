@@ -48398,9 +48398,7 @@ const { Buffer: popup_Buffer } = __webpack_require__(/*! buffer */ "./node_modul
 
 window.Buffer = popup_Buffer;
 
-// Existing code
 document.addEventListener("DOMContentLoaded", () => {
-  // Element References
   const nameInput = document.getElementById("name");
   const secretInput = document.getElementById("secret");
   const generateButton = document.getElementById("generate");
@@ -48539,6 +48537,10 @@ document.addEventListener("DOMContentLoaded", () => {
     gearIcon.id = name + "-gear-icon";
     tokenElement.appendChild(gearIcon);
 
+    gearIcon.addEventListener("mouseover", () => {
+      console.log("hovering over gear icon: ", gearIcon.id);
+    });
+
     gearIcon.addEventListener("click", (event) => {
       event.stopPropagation();
       console.log("clicked gear button");
@@ -48592,6 +48594,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("Tokens after URL change:", tokens);
                   });
                 }
+                settings;
               });
             });
 
@@ -48611,70 +48614,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-
-    // gearIcon.addEventListener("click", (event) => {
-    //   event.stopPropagation();
-    //   console.log("clicked gear button");
-
-    //   // Create the popup container
-    //   const popupContainer = document.createElement("div");
-    //   popupContainer.className = "popup-container";
-
-    //   // Create the popup content
-    //   const popupContent = document.createElement("div");
-    //   popupContent.className = "popup-content";
-    //   popupContent.innerHTML = `
-    //     <h3 class="centered-settings">${name} Token Settings</h3>
-    //     <p>Autofill URL:</p>
-    //     <input type="text" id="autofill-url-input" placeholder="Enter URL" value="${url}">
-    //     <button id="save-url-button">Save URL</button>
-    //     <p>Current Autofill URL: <span id="current-url">${url}</span></p>
-    //     <button class="close-popup">Close</button>
-    //   `;
-
-    //   // Append the popup content to the popup container
-    //   popupContainer.appendChild(popupContent);
-
-    //   // Append the popup container to the body
-    //   document.body.appendChild(popupContainer);
-
-    //   // Save the URL when the save button is clicked
-    //   document
-    //     .getElementById("save-url-button")
-    //     .addEventListener("click", () => {
-    //       const newUrl = document
-    //         .getElementById("autofill-url-input")
-    //         .value.trim();
-    //       chrome.storage.local.get(["tokens"], (result) => {
-    //         let tokens = result.tokens || [];
-    //         const tokenIndex = tokens.findIndex(
-    //           (tokenObj) => tokenObj.name === name
-    //         );
-    //         if (tokenIndex !== -1) {
-    //           tokens[tokenIndex].url = newUrl;
-    //           chrome.storage.local.set({ tokens }, () => {
-    //             document.getElementById("current-url").textContent = newUrl;
-    //             console.log("Saved URL to chrome storage:", newUrl);
-    //             console.log("Tokens after URL change:", tokens);
-    //           });
-    //         }
-    //       });
-    //     });
-
-    //   // Close the popup when clicking the close button
-    //   popupContent
-    //     .querySelector(".close-popup")
-    //     .addEventListener("click", () => {
-    //       document.body.removeChild(popupContainer);
-    //     });
-
-    //   // Close the popup when clicking outside of it
-    //   popupContainer.addEventListener("click", (event) => {
-    //     if (event.target === popupContainer) {
-    //       document.body.removeChild(popupContainer);
-    //     }
-    //   });
-    // });
 
     deleteButton.addEventListener("click", (event) => {
       event.stopPropagation(); // Stop the event from propagating

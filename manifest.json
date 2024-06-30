@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "All In One Authenticator",
+  "name": "Authenticator Pro",
   "description": "Authenticator that allows customization options.",
   "version": "1.0",
   "permissions": ["storage", "activeTab", "scripting", "tabs"],
