@@ -1,3 +1,51 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  height: 450px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+  visibility: hidden;
+}
+
+body:hover::-webkit-scrollbar,
+body::-webkit-scrollbar:hover {
+  width: 8px;
+  visibility: visible;
+}
+
+body::-webkit-scrollbar-track {
+  background: white;
+  margin-block: 0.25em;
+  visibility: hidden;
+}
+
+body:hover::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track:hover {
+  background: white;
+  margin-block: 0.25em;
+  visibility: visible;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+body:hover::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb:hover {
+  background: grey;
+  border-radius: 10px;
+  max-height: 20px;
+  visibility: visible;
+}
+
 .token-box {
   border: 1px solid #ccc;
   padding: 10px;
@@ -24,17 +72,12 @@
 
 .centered-auth {
   text-align: center;
+  transform: translateX(4px);
 }
 
 #no-tokens-message {
   color: red;
   font-weight: bold;
-  margin-top: 20px;
-}
-
-body {
-  width: 300px;
-  height: 500px;
 }
 
 @keyframes spin {
@@ -50,11 +93,10 @@ body {
   position: absolute;
   left: 250px;
   z-index: 1000;
-  transform: translateY(-2px);
 }
 
 .gear-icon:hover {
-  animation: spin 2s linear infinite;
+  animation: spin 2s linear;
 }
 
 .popup-container {
@@ -101,4 +143,78 @@ body {
 
 .centered-settings {
   text-align: center;
+}
+
+#tokens {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transform: translateX(4px);
+}
+
+.settings {
+  position: absolute;
+  left: 263px;
+  top: 12px;
+  z-index: 500;
+  width: 30px;
+  height: 30px;
+}
+
+.settings:hover {
+  animation: spin 2s linear;
+}
+
+.form-container {
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(4px);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.form-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}
+
+.form-checkbox {
+  margin-left: 10px;
+  transform: scale(1.2);
 }

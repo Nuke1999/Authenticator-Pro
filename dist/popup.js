@@ -48405,6 +48405,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const autofillCheckbox = document.getElementById("autofill");
   const tokensContainer = document.getElementById("tokens");
   const noTokensMessage = document.getElementById("no-tokens-message");
+  // const settings = document.getElementsByClassName("settings");
 
   const countdownContainer = document.createElement("div");
 
@@ -48428,6 +48429,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Event Listeners
+
+  // settings.addEventListener("mouseover");
+
   autofillCheckbox.addEventListener("change", () => {
     chrome.storage.local.set({ autofillEnabled: autofillCheckbox.checked });
     console.log("Checkbox event listener", autofillCheckbox.checked);
@@ -48435,8 +48439,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   generateButton.addEventListener("click", () => {
     const name = nameInput.value.trim();
+    let nameLength = false;
+    if (name.length < 21) {
+      nameLength = true;
+      console.log("name short enough");
+    } else {
+      console.log("name NOT short enough");
+    }
     const secret = secretInput.value.trim();
-    if (name && secret) {
+    if (name && nameLength && secret) {
       if (isValidBase32(secret)) {
         chrome.storage.local.get(["tokens"], (result) => {
           let tokens = result.tokens || [];
@@ -48537,9 +48548,9 @@ document.addEventListener("DOMContentLoaded", () => {
     gearIcon.id = name + "-gear-icon";
     tokenElement.appendChild(gearIcon);
 
-    gearIcon.addEventListener("mouseover", () => {
-      console.log("hovering over gear icon: ", gearIcon.id);
-    });
+    // gearIcon.addEventListener("mouseover", () => {
+    //   console.log("hovering over gear icon: ", gearIcon.id);
+    // });
 
     gearIcon.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -48594,7 +48605,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     console.log("Tokens after URL change:", tokens);
                   });
                 }
-                settings;
               });
             });
 

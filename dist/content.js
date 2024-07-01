@@ -48407,7 +48407,8 @@ window.Buffer = content_Buffer;
     console.log("Found inputs:", inputs);
 
     inputs.forEach((input) => {
-      if (input.id.includes("auth")) {
+      const inputId = input.id.toLowerCase();
+      if (inputId.includes("auth") || inputId.includes("totp")) {
         console.log("Pasting token: ", token);
         input.value = token;
 
@@ -48504,8 +48505,6 @@ window.Buffer = content_Buffer;
           );
         }
       });
-
-      window.addEventListener("unload", () => clearInterval(intervalId));
     } catch (error) {
       console.log("Error initializing content script:", error);
     }

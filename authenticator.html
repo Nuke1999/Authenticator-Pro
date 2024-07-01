@@ -1,34 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <title>All In One Authenticator</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <h1 class="centered-auth">Authenticator</h1>
-    <div>
-      <label for="name">Enter Name:</label>
-      <input type="text" id="name" />
-      <br />
-      <label for="secret">Enter Secret:</label>
-      <input type="text" id="secret" />
-      <br />
-      <br />
-      <button id="generate">Add Token</button>
-      <br />
-      <label for="autofill">Enable Autofill:</label>
-      <input type="checkbox" id="autofill" />
-    </div>
-    <div id="tokens">
-      <h2>Active Tokens:</h2>
-    </div>
-    <div id="no-tokens-message">
-      Nothing here yet... Set up Your Authenticator up above!
-    </div>
-    <script type="module" src="dist/popup.bundle.js"></script>
-  </body>
-</html> -->
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -36,26 +5,31 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1 class="centered-auth">Authenticator</h1>
-    <div>
-      <label for="name">Enter Name:</label>
-      <input type="text" id="name" />
+    <h2 class="centered-auth">Authenticator Pro</h2>
+    <img class="settings" src="./icons/gearIcon.svg" alt="Settings Icon" />
+    <div class="form-container">
+      <label for="name" class="form-label">Enter Name:</label>
+      <input type="text" id="name" class="form-input" />
       <br />
-      <label for="secret">Enter Secret:</label>
-      <input type="text" id="secret" />
+      <label for="secret" class="form-label">Enter Secret:</label>
+      <input type="text" id="secret" class="form-input" />
       <br />
       <br />
-      <button id="generate">Add Token</button>
+      <button id="generate" class="form-button">Add Token</button>
       <br />
-      <label for="autofill">Enable Autofill:</label>
-      <input type="checkbox" id="autofill" />
+      <label for="autofill" class="form-label">Enable Autofill:</label>
+      <input type="checkbox" id="autofill" class="form-checkbox" />
     </div>
     <div id="tokens">
       <h2>Active Tokens:</h2>
+      <div id="no-tokens-message">
+        Nothing here yet... Set up Your Authenticator up above!
+      </div>
     </div>
-    <div id="no-tokens-message">
-      Nothing here yet... Set up Your Authenticator up above!
-    </div>
+
+    <br />
+    <br />
+    <br />
     <script src="dist/popup.js"></script>
   </body>
 </html>
