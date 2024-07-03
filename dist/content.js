@@ -48427,6 +48427,13 @@ window.Buffer = content_Buffer;
   }
 
   function checkAndFillAuthInputs() {
+    if (chrome.runtime.id === undefined) {
+      console.log(
+        "Extension context invalidated, aborting checkAndFillAuthInputs."
+      );
+      return;
+    }
+
     chrome.runtime.sendMessage({ type: "GET_TAB_URL" }, (response) => {
       const currentTabUrl = response.url;
       if (!currentTabUrl) {
@@ -48455,6 +48462,11 @@ window.Buffer = content_Buffer;
   }
 
   function updateOTPs() {
+    if (chrome.runtime.id === undefined) {
+      console.log("Extension context invalidated, aborting updateOTPs.");
+      return;
+    }
+
     chrome.storage.local.get(["tokens"], (result) => {
       const tokens = result.tokens || [];
       tokens.forEach((tokenObj, index) => {
@@ -48490,6 +48502,13 @@ window.Buffer = content_Buffer;
     }, delay * 1000); // Align to next 1st or 31st second
   }
 
+  function onVisibilityChange() {
+    if (!document.hidden) {
+      checkAndFillAuthInputs();
+      // updateOTPs();
+    }
+  }
+
   function onDOMContentLoaded() {
     try {
       checkAndFillAuthInputs(); // Run immediately when the page loads
@@ -48497,7 +48516,7 @@ window.Buffer = content_Buffer;
 
       // Adding storage change listener here
       chrome.storage.onChanged.addListener((changes, namespace) => {
-        if (changes.tokens) {
+        if (changes.tokens || changes.autofillEnabled) {
           checkAndFillAuthInputs(); // Refresh the autofill logic if tokens are updated
           console.log(
             "Tokens updated in content script:",
@@ -48505,6 +48524,8 @@ window.Buffer = content_Buffer;
           );
         }
       });
+
+      document.addEventListener("visibilitychange", onVisibilityChange);
     } catch (error) {
       console.log("Error initializing content script:", error);
     }

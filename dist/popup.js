@@ -48404,13 +48404,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const generateButton = document.getElementById("generate");
   const autofillCheckbox = document.getElementById("autofill");
   const tokensContainer = document.getElementById("tokens");
-  const noTokensMessage = document.getElementById("no-tokens-message");
-  // const settings = document.getElementsByClassName("settings");
+  const minimizeButton = document.getElementById("minimize");
 
-  const countdownContainer = document.createElement("div");
+  function updateClock() {
+    const now = new Date();
+    const seconds = now.getSeconds() + now.getMilliseconds() / 1000;
 
-  countdownContainer.id = "countdown";
-  document.body.appendChild(countdownContainer);
+    let progressOffset;
+    if (seconds <= 30) {
+      progressOffset = -251.2 * (seconds / 30);
+    } else {
+      progressOffset = -251.2 * ((seconds - 30) / 30);
+    }
+
+    document.querySelector(".progress-circle").style.strokeDashoffset =
+      progressOffset;
+
+    requestAnimationFrame(updateClock);
+  }
+  updateClock();
 
   // Load tokens and autofill state from storage
   chrome.storage.local.get(["tokens", "autofillEnabled"], (result) => {
@@ -48419,7 +48431,6 @@ document.addEventListener("DOMContentLoaded", () => {
     tokens.forEach((tokenObj) => {
       addTokenToDOM(tokenObj.name, tokenObj.secret, tokenObj.url, tokenObj.otp);
     });
-    updateNoTokensMessage(tokens.length);
 
     // Set the state of the autofill checkbox
     autofillCheckbox.checked = result.autofillEnabled || false;
@@ -48430,7 +48441,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Event Listeners
 
-  // settings.addEventListener("mouseover");
+  minimizeButton.addEventListener("click", () => {
+    console.log("clicked minimize");
+    window.close();
+  });
 
   autofillCheckbox.addEventListener("change", () => {
     chrome.storage.local.set({ autofillEnabled: autofillCheckbox.checked });
@@ -48440,7 +48454,7 @@ document.addEventListener("DOMContentLoaded", () => {
   generateButton.addEventListener("click", () => {
     const name = nameInput.value.trim();
     let nameLength = false;
-    if (name.length < 21) {
+    if (name.length < 16) {
       nameLength = true;
       console.log("name short enough");
     } else {
@@ -48486,7 +48500,6 @@ document.addEventListener("DOMContentLoaded", () => {
                       tokenObj.otp
                     );
                   });
-                  updateNoTokensMessage(tokens.length);
                   console.log("Tokens after addition:", tokens);
                 });
               } else {
@@ -48531,31 +48544,27 @@ document.addEventListener("DOMContentLoaded", () => {
     tokenElement.id = `token-${name}`;
     tokenElement.classList.add("token-box");
 
-    const nameSpan = document.createElement("span");
-    nameSpan.className = "token-name";
-    nameSpan.textContent = `Name: ${name}`;
+    const nameHeader = document.createElement("h2");
+    nameHeader.className = "token-name";
+    nameHeader.textContent = `${name}`;
 
-    const tokenSpan = document.createElement("span");
-    tokenSpan.className = "token-value";
+    const tokenHeader = document.createElement("h1");
+    tokenHeader.className = "token-value";
 
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.className = "delete-button";
+    const tokenSettings = document.createElement("img");
+    tokenSettings.src = "./icons/gearIcon.svg";
+    tokenSettings.className = "token-settings";
+    tokenSettings.id = name + "-token-settings";
+    tokenElement.appendChild(tokenSettings);
 
-    const gearIcon = document.createElement("img");
-    gearIcon.src = "./icons/gearIcon.svg";
-    gearIcon.className = "gear-icon";
-    gearIcon.id = name + "-gear-icon";
-    tokenElement.appendChild(gearIcon);
+    const tokenCopy = document.createElement("img");
+    tokenCopy.src = "./icons/clipboard.svg";
+    tokenCopy.className = "token-copy";
+    tokenCopy.id = name + "-token-copy";
+    tokenElement.appendChild(tokenCopy);
 
-    // gearIcon.addEventListener("mouseover", () => {
-    //   console.log("hovering over gear icon: ", gearIcon.id);
-    // });
-
-    gearIcon.addEventListener("click", (event) => {
+    tokenSettings.addEventListener("click", (event) => {
       event.stopPropagation();
-      console.log("clicked gear button");
-
       // Fetch the latest token details from storage
       chrome.storage.local.get(["tokens"], (result) => {
         let tokens = result.tokens || [];
@@ -48571,42 +48580,51 @@ document.addEventListener("DOMContentLoaded", () => {
           const popupContent = document.createElement("div");
           popupContent.className = "popup-content";
           popupContent.innerHTML = `
-            <h3 class="centered-settings">${name} Token Settings</h3>
-            <p>Autofill URL:</p>
-            <input type="text" id="autofill-url-input" placeholder="Enter URL" value="${url}">
-            <button id="save-url-button">Save URL</button>
-            <p>Current Autofill URL: <span id="current-url">${url}</span></p>
-            <button class="close-popup">Close</button>
+          <h2 class="centered-headings">${name} Token Settings</h2>
+          <label for="name" class="form-label">Autofill URL:</label>
+          <input type="text" id="autofill-url-input" class="form-input" placeholder="Enter URL" value="${url}">
+          <button id="save-url-button" class="add-token-button" >Save URL</button>
+          <p>Current Autofill URL: <span id="current-url">${url}</span></p>
+          <div class="buttons-container"> 
+          <button class="delete-token" id="delete-token">Delete</button>
+          <button class="close-popup">Close</button>
+          </div>
           `;
 
-          // Append the popup content to the popup container
           popupContainer.appendChild(popupContent);
-
-          // Append the popup container to the body
           document.body.appendChild(popupContainer);
 
-          // Save the URL when the save button is clicked
-          document
-            .getElementById("save-url-button")
-            .addEventListener("click", () => {
-              const newUrl = document
-                .getElementById("autofill-url-input")
-                .value.trim();
-              chrome.storage.local.get(["tokens"], (result) => {
-                let tokens = result.tokens || [];
-                const tokenIndex = tokens.findIndex(
-                  (tokenObj) => tokenObj.name === name
-                );
-                if (tokenIndex !== -1) {
-                  tokens[tokenIndex].url = newUrl;
-                  chrome.storage.local.set({ tokens }, () => {
-                    document.getElementById("current-url").textContent = newUrl;
-                    console.log("Saved URL to chrome storage:", newUrl);
-                    console.log("Tokens after URL change:", tokens);
-                  });
-                }
-              });
+          let saveUrlButton = document.getElementById("save-url-button");
+          saveUrlButton.addEventListener("click", () => {
+            console.log("clicked save url button");
+          });
+
+          let autofillUrlInput = document.getElementById("autofill-url-input");
+          autofillUrlInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+              saveUrlButton.click();
+            }
+          });
+
+          saveUrlButton.addEventListener("click", () => {
+            const newUrl = document
+              .getElementById("autofill-url-input")
+              .value.trim();
+            chrome.storage.local.get(["tokens"], (result) => {
+              let tokens = result.tokens || [];
+              const tokenIndex = tokens.findIndex(
+                (tokenObj) => tokenObj.name === name
+              );
+              if (tokenIndex !== -1) {
+                tokens[tokenIndex].url = newUrl;
+                chrome.storage.local.set({ tokens }, () => {
+                  document.getElementById("current-url").textContent = newUrl;
+                  console.log("Saved URL to chrome storage:", newUrl);
+                  console.log("Tokens after URL change:", tokens);
+                });
+              }
             });
+          });
 
           // Close the popup when clicking the close button
           popupContent
@@ -48621,28 +48639,54 @@ document.addEventListener("DOMContentLoaded", () => {
               document.body.removeChild(popupContainer);
             }
           });
+
+          // Move the delete button event listener here
+          popupContent
+            .querySelector("#delete-token")
+            .addEventListener("click", () => {
+              confirmDelete(name, secret); // Call your confirmDelete function
+              document.body.removeChild(popupContainer); // Close the popup after deletion
+            });
         }
       });
     });
 
-    deleteButton.addEventListener("click", (event) => {
-      event.stopPropagation(); // Stop the event from propagating
-      confirmDelete(name, secret); // Call your confirmDelete function
-    });
-
-    tokenElement.appendChild(nameSpan);
-    tokenElement.appendChild(document.createElement("br")); // Add a line break
-    tokenElement.appendChild(tokenSpan);
-    tokenElement.appendChild(deleteButton);
+    tokenElement.appendChild(nameHeader);
+    tokenElement.appendChild(tokenHeader);
     tokensContainer.appendChild(tokenElement);
 
     updateToken(name, secret);
+    // tokenElement.addEventListener("click", () => {
+    //   const token = generateToken(secret);
+    //   navigator.clipboard.writeText(token).then(() => {
+    //     const copiedMessage = document.createElement("div");
+    //     copiedMessage.className = "copied-message";
+    //     copiedMessage.textContent = "Copied!";
 
-    // Add click event to copy token to clipboard
+    //     tokenElement.appendChild(copiedMessage);
+    //     setTimeout(() => {
+    //       tokenElement.removeChild(copiedMessage);
+    //     }, 2000); // Adjust the time as needed (2000ms = 2s)
+    //   });
+    // });
+    let canClick = true;
+
     tokenElement.addEventListener("click", () => {
+      if (!canClick) return;
+
       const token = generateToken(secret);
       navigator.clipboard.writeText(token).then(() => {
-        alert("Token copied to clipboard!");
+        const copiedMessage = document.createElement("div");
+        copiedMessage.className = "copied-message";
+        copiedMessage.textContent = "Copied!";
+
+        tokenElement.appendChild(copiedMessage);
+
+        canClick = false;
+        setTimeout(() => {
+          tokenElement.removeChild(copiedMessage);
+          canClick = true;
+        }, 2000); // Adjust the time as needed (2000ms = 2s)
       });
     });
   }
@@ -48670,7 +48714,6 @@ document.addEventListener("DOMContentLoaded", () => {
             tokenObj.otp
           );
         });
-        updateNoTokensMessage(tokens.length);
         console.log("Tokens after deletion:", tokens);
       });
     });
@@ -48686,9 +48729,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const token = generateToken(secret);
     const tokenElement = document.getElementById(`token-${name}`);
     if (tokenElement) {
-      tokenElement.querySelector(
-        ".token-value"
-      ).textContent = `Token: ${token}`;
+      tokenElement.querySelector(".token-value").textContent = `${token}`;
     }
 
     // Update the OTP in chrome.storage
@@ -48715,21 +48756,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateTokens(tokens);
       }, 30000);
     }, initialDelay * 1000);
-
-    if (tokens.length > 0) {
-      setInterval(() => {
-        const currentSeconds = new Date().getSeconds();
-        if (currentSeconds === 57 || currentSeconds === 27) {
-          countdownContainer.textContent = "Refreshing in 3...";
-        } else if (currentSeconds === 58 || currentSeconds === 28) {
-          countdownContainer.textContent = "Refreshing in 2...";
-        } else if (currentSeconds === 59 || currentSeconds === 29) {
-          countdownContainer.textContent = "Refreshing in 1...";
-        } else {
-          countdownContainer.textContent = "";
-        }
-      }, 1000);
-    }
   }
 
   function setupPeriodicTokenUpdate() {
@@ -48746,14 +48772,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }, 30000); // Adjust the interval as needed
     });
-  }
-
-  function updateNoTokensMessage(tokenCount) {
-    if (tokenCount === 0) {
-      noTokensMessage.style.display = "block";
-    } else {
-      noTokensMessage.style.display = "none";
-    }
   }
 
   // Call setupPeriodicTokenUpdate to keep OTP updated

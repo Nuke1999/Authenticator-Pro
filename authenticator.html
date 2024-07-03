@@ -5,8 +5,21 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h2 class="centered-auth">Authenticator Pro</h2>
-    <img class="settings" src="./icons/gearIcon.svg" alt="Settings Icon" />
+    <div class="header-container">
+      <h2 class="centered-title">Authenticator Pro</h2>
+      <img
+        class="main-settings"
+        id="main-settings"
+        src="./icons/gearIcon.svg"
+        alt="Settings Icon"
+      />
+      <img
+        class="minimize"
+        id="minimize"
+        src="./icons/minus.svg"
+        alt="Minimize Icon"
+      />
+    </div>
     <div class="form-container">
       <label for="name" class="form-label">Enter Name:</label>
       <input type="text" id="name" class="form-input" />
@@ -15,17 +28,22 @@
       <input type="text" id="secret" class="form-input" />
       <br />
       <br />
-      <button id="generate" class="form-button">Add Token</button>
+      <button id="generate" class="add-token-button">Add Token</button>
       <br />
       <label for="autofill" class="form-label">Enable Autofill:</label>
       <input type="checkbox" id="autofill" class="form-checkbox" />
     </div>
-    <div id="tokens">
-      <h2>Active Tokens:</h2>
-      <div id="no-tokens-message">
-        Nothing here yet... Set up Your Authenticator up above!
+    <div class="active-tokens-header-container">
+      <h1>Active Tokens:</h1>
+      <div class="minimalist-clock">
+        <svg viewBox="0 0 100 100">
+          <circle class="background-circle" cx="50" cy="50" r="40" />
+          <circle class="progress-circle" cx="50" cy="50" r="40" />
+        </svg>
       </div>
     </div>
+
+    <div id="tokens"></div>
 
     <br />
     <br />
