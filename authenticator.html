@@ -2,11 +2,15 @@
 <html>
   <head>
     <title>All In One Authenticator</title>
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+
+    <input type="file" id="file-input" accept="image/*" style="display: none;">
+
     <div class="header-container">
-      <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>
+      <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>      
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -58,7 +62,7 @@
       </svg>
     </div>
     <div id="main-content">
-      <div class="form-container">
+      <div class="form-container" id="form-container">
         <label for="name" class="form-label">Enter Name:</label>
         <input type="text" id="name" class="form-input" />
         <br />
@@ -92,39 +96,10 @@
         <h2>Permissions</h2>
         <div class="switch-box">
           <label class="switch">
-            <input type="checkbox" id="sync-tokens"/>
+            <input type="checkbox" id="autofill-checkbox" />
             <span class="slider round"></span>
           </label>
-          <div class="switch-text">Sync Tokens across Chrome</div>
-          <div class="tooltip">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span class="tooltiptext"
-              >Syncs saved tokens and extension settings on logged in chrome devices; otherwise, state is only local.</span
-            >
-          </div>
-          <br />
-        </div>
-        <div class="switch-box">
-          <label class="switch">
-            <input type="checkbox" id="autofill" />
-            <span class="slider round"></span>
-          </label>
-          <div class="switch-text">Enable Autofill Feature</div>
+          <div class="switch-text">Autofill</div>
           <div class="tooltip">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -151,10 +126,43 @@
         </div>
         <div class="switch-box">
           <label class="switch">
-            <input id="clipboard-copying" type="checkbox" />
+            <input type="checkbox" id="sync-checkbox"/>
             <span class="slider round"></span>
           </label>
-          <div class="switch-text">Enable Clipboard Copying</div>
+          <div class="switch-text">Sync Across Chrome</div>
+          <div class="tooltip">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-info"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span class="tooltiptext"
+              >Syncs tokens and settings on logged in chrome devices; otherwise, state is only local.</span
+            >
+          </div>
+          <br />
+        </div>
+        
+
+      
+      
+        <div class="switch-box">
+          <label class="switch">
+            <input id="clipboard-copying-checkbox" type="checkbox" />
+            <span class="slider round"></span>
+          </label>
+          <div class="switch-text">Clipboard Copying</div>
           <div class="tooltip">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -180,10 +188,10 @@
         </div>
         <div class="switch-box">
           <label class="switch">
-            <input type="checkbox" />
+            <input type="checkbox" id="online-time-checkbox" />
             <span class="slider round"></span>
           </label>
-          <div class="switch-text">Enable Online Time Sync</div>
+          <div class="switch-text">Online Time Sync</div>
           <div class="tooltip">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -210,10 +218,10 @@
         </div>
         <div class="switch-box">
           <label class="switch">
-            <input type="checkbox" />
+            <input type="checkbox" id="advanced-add-checkbox"/>
             <span class="slider round"></span>
           </label>
-          <div class="switch-text">Enable Camera Add Feature</div>
+          <div class="switch-text">Advanced Add Button</div>
           <div class="tooltip">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +240,7 @@
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
             <span class="tooltiptext"
-              >Allows camera access (only for scanning QR code).
+              >Allows users to add secrets via QR code (webcam, file, or link).
               </span
             >
           </div>
@@ -240,10 +248,10 @@
         </div>
         <div class="switch-box">
           <label class="switch">
-            <input type="checkbox" />
+            <input type="checkbox" id="file-upload-checkbox" />
             <span class="slider round"></span>
           </label>
-          <div class="switch-text">Enable File Upload Feature</div>
+          <div class="switch-text" >Retrieve Secret</div>
           <div class="tooltip">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -262,7 +270,7 @@
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
             <span class="tooltiptext"
-              >Allows QR code file/image upload.
+              >Allows secret to be retrieved via QR code or text string.
               </span
             >
           </div>
@@ -271,6 +279,28 @@
         </div>
       </div>
     </div>
+
+
+    <div>
+      <h2 class="centered-headings">${name} Token Settings</h2>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather x-icon" id="x-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+    </div>
+    <label for="name" class="form-label">Autofill URL:</label>
+    <input type="text" id="autofill-url-input" class="form-input" placeholder="Enter URL" value="${url}">
+    <button id="save-url-button" class="add-token-button" >Save URL</button>
+    <div class="inline-urll">
+      <label class="form-label">Currently Saved: </label>
+      <div>
+        ${shortenedUrl}
+      </div>
+      </div>
+    </div>
+    <div class="buttons-container"> 
+      <button class="delete-token" id="delete-token">Delete</button>
+      <button class="close-popup">Close</button>
+    </div>
+
+
     <script src="dist/popup.js"></script>
   </body>
 </html>

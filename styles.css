@@ -91,8 +91,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 .token-settings {
   position: relative;
-  left: 3px;
-  bottom: 5px;
+  left: -5px;
+  top: -10px;
   z-index: 3;
 }
 
@@ -129,7 +129,7 @@ body::-webkit-scrollbar-thumb:hover {
 .copied-message {
   color: green;
   font-weight: bold;
-  transform: translate(183px, -100px);
+  transform: translate(175px, -100px);
   z-index: 3;
 }
 
@@ -173,6 +173,25 @@ body::-webkit-scrollbar-thumb:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.popup-video-content {
+  background: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  width: 250px;
+  /* height: 300px; */
+  height: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 .popup-message {
   background: white;
   padding-left: 10px;
@@ -196,13 +215,13 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: space-between;
 }
 
-.x-icon-popup {
+/* .x-icon-popup {
   color: red;
   position: absolute;
   top: 5px;
   right: 5px;
   transition: stroke 0.3s ease, transform 0.3s ease;
-}
+} */
 
 .x-icon-popup:hover {
   stroke: darkred;
@@ -212,11 +231,11 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: right;
 }
 
-.close-popup-container-red-x {
+/* .close-popup-container-red-x {
   display: flex;
   justify-content: right;
   transform: (-10px, -100px);
-}
+} */
 
 .x-icon {
   color: red;
@@ -261,6 +280,57 @@ body::-webkit-scrollbar-thumb:hover {
 
 .delete-token:hover {
   background: darkred;
+}
+
+.webcam-add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: red;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.webcam-off-icon {
+  margin-left: 10px;
+}
+
+.webcam-on-icon {
+  margin-left: 10px;
+}
+
+.image-icon {
+  margin-left: 10px;
+}
+
+.webcam-add-button:hover {
+  background: darkred;
+}
+
+.image-add-button {
+  /* float: right; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-add-button:hover {
+  background: #0056b3;
 }
 
 .delete-token-confirmation {
@@ -336,6 +406,7 @@ body::-webkit-scrollbar-thumb:hover {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transform: translateX(4px);
+  height: auto;
 }
 
 .form-label {
@@ -345,9 +416,9 @@ body::-webkit-scrollbar-thumb:hover {
   color: #555;
 }
 
-#current-url {
+/* #current-url {
   margin-bottom: 5px;
-}
+} */
 
 .form-input {
   width: 100%;
@@ -393,6 +464,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .advanced-add-button {
+  margin-top: 10px;
   display: block;
   width: 100%;
   padding: 10px;
@@ -404,6 +476,7 @@ body::-webkit-scrollbar-thumb:hover {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  box-sizing: border-box;
 }
 
 .advanced-add-button:hover {
@@ -481,7 +554,6 @@ body::-webkit-scrollbar-thumb:hover {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transform: translateX(4px);
-  /* padding-left: 10px; */
 }
 
 .switch-box {
@@ -582,4 +654,20 @@ input:checked + .slider:before {
 .tooltip .tooltiptext {
   top: -35px;
   right: 105%;
+}
+
+.video-container {
+  padding-bottom: 10px;
+}
+
+.token-qr-button {
+  z-index: 3;
+  height: 27px;
+  width: 27px;
+  position: relative;
+  transform: translate(-60px, 25px);
+}
+
+.token-qr-button:hover {
+  transform: translate(-60px, 25px) scale(1.1);
 }
