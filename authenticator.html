@@ -6,11 +6,10 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-
-    <input type="file" id="file-input" accept="image/*" style="display: none;">
+    <input type="file" id="file-input" accept="image/*" style="display: none" />
 
     <div class="header-container">
-      <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>      
+      <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -92,9 +91,9 @@
       <div id="tokens"></div>
     </div>
     <div class="settings-content" id="settings-content" style="display: none">
-      <div class="switch-boxes-container">
-        <h2>Permissions</h2>
-        <div class="switch-box">
+      <div class="switch-boxes-container" id="switch-boxes-container">
+        <h2 class="permissions-header">Permissions</h2>
+        <div class="switch-box-first">
           <label class="switch">
             <input type="checkbox" id="autofill-checkbox" />
             <span class="slider round"></span>
@@ -118,15 +117,15 @@
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
             <span class="tooltiptext"
-              >Automatically fills the OTP field using the Autofill URL for each token.
-              </span
-            >
+              >Automatically fills the OTP field using the Autofill URL for each
+              token.
+            </span>
           </div>
           <br />
         </div>
         <div class="switch-box">
           <label class="switch">
-            <input type="checkbox" id="sync-checkbox"/>
+            <input type="checkbox" id="sync-checkbox" />
             <span class="slider round"></span>
           </label>
           <div class="switch-text">Sync Across Chrome</div>
@@ -148,15 +147,13 @@
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
             <span class="tooltiptext"
-              >Syncs tokens and settings on logged in chrome devices; otherwise, state is only local.</span
+              >Syncs tokens on logged in chrome devices; otherwise, state is
+              only local.</span
             >
           </div>
           <br />
         </div>
-        
 
-      
-      
         <div class="switch-box">
           <label class="switch">
             <input id="clipboard-copying-checkbox" type="checkbox" />
@@ -181,7 +178,8 @@
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
             <span class="tooltiptext"
-              >Allows copying the OTP to clipboard, when clicking a token box.</span
+              >Allows copying the OTP to clipboard, when clicking a token
+              box.</span
             >
           </div>
           <br />
@@ -210,15 +208,15 @@
               <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
             <span class="tooltiptext"
-              >Syncs with internet time for accuracy; otherwise, uses local device time.
-              </span
-            >
+              >Syncs with time online for accuracy; otherwise, uses local device
+              time.
+            </span>
           </div>
           <br />
         </div>
-        <div class="switch-box">
+        <div class="switch-box-last">
           <label class="switch">
-            <input type="checkbox" id="advanced-add-checkbox"/>
+            <input type="checkbox" id="advanced-add-checkbox" />
             <span class="slider round"></span>
           </label>
           <div class="switch-text">Advanced Add Button</div>
@@ -241,65 +239,19 @@
             </svg>
             <span class="tooltiptext"
               >Allows users to add secrets via QR code (webcam, file, or link).
-              </span
-            >
+            </span>
           </div>
           <br />
         </div>
-        <div class="switch-box">
-          <label class="switch">
-            <input type="checkbox" id="file-upload-checkbox" />
-            <span class="slider round"></span>
-          </label>
-          <div class="switch-text" >Retrieve Secret</div>
-          <div class="tooltip">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span class="tooltiptext"
-              >Allows secret to be retrieved via QR code or text string.
-              </span
-            >
-          </div>
-          <br />
-        </div>
-        </div>
+        <h2 class="themes-header">Themes</h2>
+        <button class="light-theme-button" id="light-theme-button">
+          Light Theme
+        </button>
+        <button class="dark-theme-button" id="dark-theme-button">
+          Dark Theme
+        </button>
       </div>
     </div>
-
-
-    <div>
-      <h2 class="centered-headings">${name} Token Settings</h2>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather x-icon" id="x-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-    </div>
-    <label for="name" class="form-label">Autofill URL:</label>
-    <input type="text" id="autofill-url-input" class="form-input" placeholder="Enter URL" value="${url}">
-    <button id="save-url-button" class="add-token-button" >Save URL</button>
-    <div class="inline-urll">
-      <label class="form-label">Currently Saved: </label>
-      <div>
-        ${shortenedUrl}
-      </div>
-      </div>
-    </div>
-    <div class="buttons-container"> 
-      <button class="delete-token" id="delete-token">Delete</button>
-      <button class="close-popup">Close</button>
-    </div>
-
 
     <script src="dist/popup.js"></script>
   </body>

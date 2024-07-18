@@ -5,73 +5,87 @@ window.Buffer = Buffer;
 
 (function () {
   let extensionContextInvalidated = false;
+  let autoFillDebounceTimer;
 
   function autoFillAuthInputs(token) {
-    const inputs = document.querySelectorAll('input[type="text"]');
-    const activeElement = document.activeElement; // Store the currently focused element
-    console.log("Found inputs:", inputs);
-
-    inputs.forEach((input) => {
-      const inputId = input.id.toLowerCase();
-      if (inputId.includes("auth") || inputId.includes("totp")) {
-        console.log("Pasting token: ", token);
-        input.value = token;
-
-        // Simulate user interaction
-        const inputEvent = new Event("input", { bubbles: true });
-        input.dispatchEvent(inputEvent);
-
-        const changeEvent = new Event("change", { bubbles: true });
-        input.dispatchEvent(changeEvent);
-      }
-    });
-
-    if (activeElement && activeElement.focus) {
-      activeElement.focus(); // Restore the focus to the originally focused element
+    if (autoFillDebounceTimer) {
+      clearTimeout(autoFillDebounceTimer);
     }
+    autoFillDebounceTimer = setTimeout(() => {
+      const inputs = document.querySelectorAll('input[type="text"]');
+      const activeElement = document.activeElement; // Store the currently focused element
+      console.log("Found inputs:", inputs);
+
+      inputs.forEach((input) => {
+        const inputId = input.id.toLowerCase();
+        if (inputId.includes("auth") || inputId.includes("totp")) {
+          console.log("Pasting token: ", token);
+          input.value = token;
+
+          // Simulate user interaction
+          const inputEvent = new Event("input", { bubbles: true });
+          input.dispatchEvent(inputEvent);
+
+          const changeEvent = new Event("change", { bubbles: true });
+          input.dispatchEvent(changeEvent);
+        }
+      });
+
+      if (activeElement && activeElement.focus) {
+        activeElement.focus(); // Restore the focus to the originally focused element
+      }
+    }, 200);
   }
 
+  let checkAndFillDebounceTimer;
+
   function checkAndFillAuthInputs() {
-    if (
-      typeof chrome.runtime === "undefined" ||
-      chrome.runtime.id === undefined
-    ) {
-      console.log(
-        "Extension context invalidated, aborting checkAndFillAuthInputs."
-      );
-      return;
+    if (checkAndFillDebounceTimer) {
+      clearTimeout(checkAndFillDebounceTimer);
     }
 
-    chrome.runtime.sendMessage({ type: "GET_TAB_URL" }, (response) => {
-      const currentTabUrl = response.url;
-      if (!currentTabUrl) {
-        console.log("Current tab URL not found.");
+    checkAndFillDebounceTimer = setTimeout(() => {
+      if (
+        typeof chrome.runtime === "undefined" ||
+        chrome.runtime.id === undefined
+      ) {
+        console.log(
+          "Extension context invalidated, aborting checkAndFillAuthInputs."
+        );
         return;
       }
-      console.log("Current tab URL:", currentTabUrl);
 
-      chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-        const storage = syncResult.syncEnabled
-          ? chrome.storage.sync
-          : chrome.storage.local;
-        storage.get(["tokens", "autofillEnabled"], (result) => {
-          console.log("chrome.storage content:", result);
-          if (result.autofillEnabled) {
-            const tokens = result.tokens || [];
-            tokens.forEach((tokenObj) => {
-              const savedUrl = tokenObj.url;
-              if (savedUrl && currentTabUrl.includes(savedUrl)) {
-                console.log("condition to fill token met");
-                const otp = tokenObj.otp; // Use the stored OTP
-                autoFillAuthInputs(otp);
-              }
-            });
-          } else {
-            console.log("Autofill is disabled.");
-          }
+      chrome.runtime.sendMessage({ type: "GET_TAB_URL" }, (response) => {
+        const currentTabUrl = response.url;
+        if (!currentTabUrl) {
+          console.log("Current tab URL not found.");
+          return;
+        }
+        console.log("Current tab URL:", currentTabUrl);
+
+        chrome.storage.local.get(["syncEnabled"], (syncResult) => {
+          const storage = syncResult.syncEnabled
+            ? chrome.storage.sync
+            : chrome.storage.local;
+          storage.get(["tokens", "autofillEnabled"], (result) => {
+            console.log("chrome.storage content:", result);
+            if (result.autofillEnabled) {
+              const tokens = result.tokens || [];
+              tokens.forEach((tokenObj) => {
+                const savedUrl = tokenObj.url;
+                if (savedUrl && currentTabUrl.includes(savedUrl)) {
+                  console.log("condition to fill token met");
+                  const otp = tokenObj.otp; // Use the stored OTP
+                  autoFillAuthInputs(otp);
+                }
+              });
+            } else {
+              console.log("Autofill is disabled.");
+            }
+          });
         });
       });
-    });
+    }, 200);
   }
 
   function updateOTPs() {
@@ -123,7 +137,6 @@ window.Buffer = Buffer;
   function onVisibilityChange() {
     if (!document.hidden) {
       checkAndFillAuthInputs();
-      // updateOTPs();
     }
   }
 
@@ -134,12 +147,18 @@ window.Buffer = Buffer;
 
       // Adding storage change listener here
       chrome.storage.onChanged.addListener((changes, namespace) => {
-        if (changes.tokens || changes.autofillEnabled) {
-          checkAndFillAuthInputs(); // Refresh the autofill logic if tokens are updated
+        if (changes.tokens) {
+          console.log("Changes detected in tokens");
+          checkAndFillAuthInputs();
+          updateOTPs(); // Run updateOTPs if tokens are updated
           console.log(
             "Tokens updated in content script:",
             changes.tokens.newValue
           );
+        }
+        if (changes.autofillEnabled) {
+          console.log("Changes detected in autofillEnabled");
+          checkAndFillAuthInputs(); // Refresh the autofill logic if autofillEnabled is updated
         }
       });
 
