@@ -13,7 +13,7 @@ window.Buffer = Buffer;
     }
     autoFillDebounceTimer = setTimeout(() => {
       const inputs = document.querySelectorAll('input[type="text"]');
-      const activeElement = document.activeElement; // Store the currently focused element
+      const activeElement = document.activeElement;
       console.log("Found inputs:", inputs);
 
       inputs.forEach((input) => {
@@ -22,7 +22,6 @@ window.Buffer = Buffer;
           console.log("Pasting token: ", token);
           input.value = token;
 
-          // Simulate user interaction
           const inputEvent = new Event("input", { bubbles: true });
           input.dispatchEvent(inputEvent);
 
@@ -32,7 +31,7 @@ window.Buffer = Buffer;
       });
 
       if (activeElement && activeElement.focus) {
-        activeElement.focus(); // Restore the focus to the originally focused element
+        activeElement.focus();
       }
     }, 200);
   }
@@ -64,12 +63,10 @@ window.Buffer = Buffer;
         console.log("Current tab URL:", currentTabUrl);
 
         chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-          const storage = syncResult.syncEnabled
-            ? chrome.storage.sync
-            : chrome.storage.local;
-          storage.get(["tokens", "autofillEnabled"], (result) => {
+          chrome.storage.local.get(["tokens", "autofillEnabled"], (result) => {
             console.log("chrome.storage content:", result);
             if (result.autofillEnabled) {
+              console.log("autofill is enabled");
               const tokens = result.tokens || [];
               tokens.forEach((tokenObj) => {
                 const savedUrl = tokenObj.url;
@@ -95,16 +92,13 @@ window.Buffer = Buffer;
     }
 
     chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-      const storage = syncResult.syncEnabled
-        ? chrome.storage.sync
-        : chrome.storage.local;
-      storage.get(["tokens"], (result) => {
+      chrome.storage.local.get(["tokens"], (result) => {
         const tokens = result.tokens || [];
         tokens.forEach((tokenObj, index) => {
           const otp = authenticator.generate(tokenObj.secret);
           tokens[index].otp = otp;
         });
-        storage.set({ tokens });
+        chrome.storage.local.set({ tokens });
       });
     });
   }
@@ -130,8 +124,8 @@ window.Buffer = Buffer;
           extensionContextInvalidated = true;
           clearInterval(intervalId);
         }
-      }, 30000); // 30 seconds interval
-    }, delay * 1000); // Align to next 1st or 31st second
+      }, 30000);
+    }, delay * 1000);
   }
 
   function onVisibilityChange() {
@@ -142,15 +136,14 @@ window.Buffer = Buffer;
 
   function onDOMContentLoaded() {
     try {
-      checkAndFillAuthInputs(); // Run immediately when the page loads
+      checkAndFillAuthInputs();
       alignToInterval();
 
-      // Adding storage change listener here
       chrome.storage.onChanged.addListener((changes, namespace) => {
         if (changes.tokens) {
           console.log("Changes detected in tokens");
           checkAndFillAuthInputs();
-          updateOTPs(); // Run updateOTPs if tokens are updated
+          updateOTPs();
           console.log(
             "Tokens updated in content script:",
             changes.tokens.newValue
@@ -158,7 +151,7 @@ window.Buffer = Buffer;
         }
         if (changes.autofillEnabled) {
           console.log("Changes detected in autofillEnabled");
-          checkAndFillAuthInputs(); // Refresh the autofill logic if autofillEnabled is updated
+          checkAndFillAuthInputs();
         }
       });
 

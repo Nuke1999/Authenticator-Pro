@@ -51793,6 +51793,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tokensContainer = document.getElementById("tokens");
   const mainContent = document.getElementById("main-content");
   const headerText = document.getElementById("centered-title");
+  const secretFormLabel = document.getElementById("secret-form-label");
 
   const formContainer = document.getElementById("form-container");
   const addTokenButton = document.getElementById("generate");
@@ -51815,18 +51816,30 @@ document.addEventListener("DOMContentLoaded", () => {
   advancedAddButton.className = "advanced-add-button";
   advancedAddButton.textContent = "Advanced Add";
 
+  let isTimeCheckboxChecked;
+
   nameInput.focus();
+
+  //theme land
 
   lightThemeButton.addEventListener("click", () => {
     document.body.classList.remove("theme-dark");
     document.body.classList.add("theme-light");
     chrome.storage.local.set({ theme: "theme-light" });
+    if (syncCheckbox.checked) {
+      console.log("sync is on, saving light theme to sync");
+      chrome.storage.sync.set({ theme: "theme-light" });
+    }
   });
 
   darkThemeButton.addEventListener("click", () => {
     document.body.classList.remove("theme-light");
     document.body.classList.add("theme-dark");
     chrome.storage.local.set({ theme: "theme-dark" });
+    if (syncCheckbox.checked) {
+      console.log("sync is on, saving dark theme to sync");
+      chrome.storage.sync.set({ theme: "theme-dark" });
+    }
   });
 
   //clock land
@@ -51852,7 +51865,17 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateClock() {
     const timeApiUrl = "https://worldtimeapi.org/api/timezone/Etc/UTC";
     let initialTime;
-    let offset;
+    let offset = 0; // Ensure offset is initialized
+
+    if (isTimeCheckboxChecked) {
+      console.log("time checkbox checked");
+      getSecondsFromTimeApi().then((seconds) => startClock(seconds));
+    } else {
+      console.log("time checkbox not checked");
+      offset = 0; // Reset offset if not using API time
+      const seconds = getSecondsFromLocalTime();
+      startClock(seconds);
+    }
 
     function getSecondsFromTimeApi() {
       return fetch(timeApiUrl)
@@ -51863,7 +51886,6 @@ document.addEventListener("DOMContentLoaded", () => {
           return response.json();
         })
         .then((data) => {
-          // console.log(data);
           initialTime = new Date(data.datetime);
           offset = initialTime.getTime() - Date.now();
           return (
@@ -51874,7 +51896,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getSecondsFromLocalTime() {
       const now = new Date(Date.now() + offset);
-      return now.getSeconds() + now.getMilliseconds() / 1000;
+      const seconds = now.getSeconds() + now.getMilliseconds() / 1000;
+      return seconds;
     }
 
     function updateClockWithSeconds(seconds) {
@@ -51897,27 +51920,46 @@ document.addEventListener("DOMContentLoaded", () => {
       clockTextElement.style.opacity = 1 - fractionalSecond;
     }
 
-    function startClock() {
-      function tick() {
-        const seconds = getSecondsFromLocalTime();
-        updateClockWithSeconds(seconds);
-        requestAnimationFrame(tick);
-      }
-      tick();
+    function updateTokensAtInterval() {
+      chrome.storage.local.get(["tokens"], (result) => {
+        let tokens = result.tokens || [];
+        tokens.forEach((tokenObj) => {
+          updateToken(tokenObj.name, tokenObj.secret);
+        });
+      });
     }
 
-    getSecondsFromTimeApi()
-      .then(() => {
-        startClock();
-      })
-      .catch((error) => {
-        console.log("Error fetching online time:", error);
-        offset = 0;
-        startClock();
-      });
-  }
+    function debounce(func, delay) {
+      let debounceTimer;
+      return function () {
+        const context = this;
+        const args = arguments;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => func.apply(context, args), delay);
+      };
+    }
 
-  updateClock();
+    const debouncedUpdateTokensAtInterval = debounce(
+      updateTokensAtInterval,
+      100
+    );
+
+    function startClock(initialSeconds) {
+      function tick(seconds) {
+        if (seconds === undefined) {
+          seconds = getSecondsFromLocalTime();
+        }
+        updateClockWithSeconds(seconds);
+
+        if (Math.floor(seconds) === 0 || Math.floor(seconds) === 30) {
+          debouncedUpdateTokensAtInterval();
+        }
+
+        requestAnimationFrame(() => tick());
+      }
+      tick(initialSeconds);
+    }
+  }
 
   // button & label event listeners
 
@@ -51956,352 +51998,213 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // chrome storage & sync
 
+  //first time: aligns local & sync storages, sets storage to either sync storage or default values, ensures checkbox status reflects storage, tries to pull theme from sync;
+  //else: aligns checkbox values with local storage, sets theme according to local storage
   try {
-    chrome.storage.local.get(
-      [
-        "firstTime",
-        "tokens",
-        "autofillEnabled",
-        "syncEnabled",
-        "clipboardCopyingEnabled",
-        "onlineTimeEnabled",
-        "advancedAddEnabled",
-        "theme",
-      ],
-      (result) => {
-        console.log("first chrome local get", result);
-        if (result.theme) {
-          document.body.classList.add(result.theme);
-        } else {
-          document.body.classList.add("theme-light"); // Default to light theme
-        }
-        const isFirstTime = result.firstTime === undefined;
-        // console.log(result);
-        if (isFirstTime) {
-          console.log("first time");
-          chrome.storage.local.set(
-            {
-              firstTime: false,
-              syncEnabled: true,
-              autofillEnabled: true,
-              clipboardCopyingEnabled: true,
-              onlineTimeEnabled: true,
-              advancedAddEnabled: false,
-            },
-            () => {
-              syncCheckbox.checked = true;
-              autofillCheckbox.checked = true;
-              clipboardCopyingCheckbox.checked = true;
-              onlineTimeCheckbox.checked = true;
-              advancedAddCheckbox.checked = false;
-            }
-          );
-          //
-          chrome.storage.sync.set(
-            {
-              firstTime: false,
-              syncEnabled: true,
-              autofillEnabled: true,
-              clipboardCopyingEnabled: true,
-              onlineTimeEnabled: true,
-              advancedAddEnabled: false,
-            },
-            () => {
-              chrome.storage.sync.get((result) => {
-                console.log(
-                  "set up both local and sync storage; theoretically both should be: ",
-                  result
-                );
-              });
-            }
-          );
-          //
-          chrome.storage.local.get((result) => {
-            console.log(
-              "chrome storage local after setting up first time: ",
-              result
-            );
+    chrome.storage.local.get((localResult) => {
+      console.log(localResult);
+
+      let tokens = localResult.tokens || [];
+      tokens.sort((a, b) => a.name.localeCompare(b.name));
+      tokens.forEach((tokenObj) => {
+        addTokenToDOM(
+          tokenObj.name,
+          tokenObj.secret,
+          tokenObj.url,
+          tokenObj.otp
+        );
+      });
+
+      chrome.storage.sync.get((result) => {
+        console.log("sync result", result);
+      });
+
+      if (localResult.firstTime === undefined) {
+        console.log(
+          "according to chrome local storage, this is the first time; local storage is empty"
+        );
+        autofillCheckbox.checked = true;
+        syncCheckbox.checked = true;
+        clipboardCopyingCheckbox.checked = true;
+        onlineTimeCheckbox.checked = true;
+        advancedAddCheckbox.checked = false;
+        chrome.storage.sync.get((syncResult) => {
+          isTimeCheckboxChecked = syncResult.onlineTimeEnabled || true;
+          updateClock();
+
+          console.log("got syncResults ", syncResult);
+          chrome.storage.local.set({
+            tokens: syncResult.tokens || [],
+            autofillEnabled: syncResult.autofillEnabled || true,
+            syncEnabled: syncResult.syncEnabled || true,
+            clipboardCopyingEnabled: syncResult.clipboardCopyingEnabled || true,
+            onlineTimeEnabled: syncResult.onlineTimeEnabled || true,
+            advancedAddEnabled: syncResult.advancedAddEnabled || false,
+            firstTime: false,
+            theme: syncResult.theme || "theme-light",
           });
-        } else {
-          console.log(
-            "is sync enbled? ",
-            result.syncEnabled,
-            "if so, getting sync storage info; if not, getting local storage info"
-          );
-          const storage = result.syncEnabled
-            ? chrome.storage.sync
-            : chrome.storage.local;
+          chrome.storage.sync.set({
+            tokens: syncResult.tokens || localResult.tokens || true,
+            autofillEnabled:
+              syncResult.autofillEnabled || localResult.autofillEnabled || true,
+            syncEnabled:
+              syncResult.syncEnabled || localResult.syncEnabled || true,
+            clipboardCopyingEnabled:
+              syncResult.clipboardCopyingEnabled ||
+              localResult.clipboardCopyingEnabled ||
+              true,
+            onlineTimeEnabled:
+              syncResult.onlineTimeEnabled ||
+              localResult.onlineTimeEnabled ||
+              true,
+            advancedAddEnabled:
+              syncResult.advancedAddEnabled ||
+              localResult.advancedAddEnabled ||
+              false,
+            theme: syncResult.theme || "theme-light",
+          });
+        });
+      } else {
+        console.log(
+          "it was not the first time, according to chrome local storage; making checkbox positions match local storage. "
+        );
+        chrome.storage.local.get((localresult) => {
+          isTimeCheckboxChecked = localResult.onlineTimeEnabled;
+          updateClock();
 
-          storage.get(
-            [
-              "tokens",
-              "autofillEnabled",
-              "clipboardCopyingEnabled",
-              "onlineTimeEnabled",
-              "advancedAddEnabled",
-              "fileUploadEnabled",
-            ],
-            (storageResult) => {
-              // console.log(storageResult);
-              if (storageResult.advancedAddEnabled) {
-                // console.log("advanced add checked");
-                formContainer.appendChild(advancedAddButton);
-              } else {
-                formContainer.style.display = "hidden";
-              }
+          console.log("local result: ", localResult);
+          autofillCheckbox.checked = localResult.autofillEnabled;
+          syncCheckbox.checked = localResult.syncEnabled;
+          clipboardCopyingCheckbox.checked =
+            localResult.clipboardCopyingEnabled;
+          onlineTimeCheckbox.checked = localResult.onlineTimeEnabled;
+          advancedAddCheckbox.checked = localResult.advancedAddEnabled;
+          if (advancedAddCheckbox.checked) {
+            advancedAddButton.className = "advanced-add-button";
+            formContainer.appendChild(advancedAddButton);
+            advancedAddButton.style.display = "block";
+          } else {
+            advancedAddButton.style.display = "none";
+          }
 
-              if (chrome.runtime.lastError) {
-                throw new Error(chrome.runtime.lastError);
-              }
-              let tokens = storageResult.tokens || [];
-              tokens.sort((a, b) => a.name.localeCompare(b.name));
-              tokens.forEach((tokenObj) => {
-                addTokenToDOM(
-                  tokenObj.name,
-                  tokenObj.secret,
-                  tokenObj.url,
-                  tokenObj.otp
-                );
-              });
-
-              autofillCheckbox.checked =
-                storageResult.autofillEnabled !== undefined
-                  ? storageResult.autofillEnabled
-                  : true;
-              clipboardCopyingCheckbox.checked =
-                storageResult.clipboardCopyingEnabled !== undefined
-                  ? storageResult.clipboardCopyingEnabled
-                  : true;
-              onlineTimeCheckbox.checked =
-                storageResult.onlineTimeEnabled !== undefined
-                  ? storageResult.onlineTimeEnabled
-                  : true;
-              advancedAddCheckbox.checked =
-                storageResult.advancedAddEnabled !== undefined
-                  ? storageResult.advancedAddEnabled
-                  : false;
-              setupInitialUpdate(tokens);
-            }
-          );
-
-          syncCheckbox.checked =
-            result.syncEnabled !== undefined ? result.syncEnabled : true;
-        }
-        if (result.advancedAddEnabled) {
-          // console.log("advanced add enabled");
-          formContainer.appendChild(advancedAddButton);
-        } else {
-          // console.log("advancedAdd Not enabled");
-        }
+          if (localResult.theme == "theme-light") {
+            document.body.classList.remove("theme-dark");
+            document.body.classList.add("theme-light");
+            chrome.storage.local.set({ theme: "theme-light" });
+          } else if (localResult.theme == "theme-dark") {
+            document.body.classList.remove("theme-light");
+            document.body.classList.add("theme-dark");
+            chrome.storage.local.set({ theme: "theme-dark" });
+          } else {
+            console.log("theme was neither light nor dark");
+          }
+        });
       }
-    );
+    });
   } catch (error) {
     console.error("Error accessing local storage:", error);
   }
 
-  try {
-    chrome.storage.sync.get(null, (result) => {
-      if (chrome.runtime.lastError) {
-        throw new Error(chrome.runtime.lastError);
-      }
-      console.log("Sync storage result:", result);
-    });
-  } catch (error) {
-    console.error("Error accessing sync storage:", error);
-  }
-
+  //sets checkbox status of  both local and sync
   autofillCheckbox.addEventListener("change", () => {
-    // console.log("autofillcheckbox position: ", autofillCheckbox.checked);
-    chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-      const storage = syncResult.syncEnabled
-        ? chrome.storage.sync
-        : chrome.storage.local;
-      try {
-        storage.set({ autofillEnabled: autofillCheckbox.checked });
-      } catch (error) {
-        console.error("Error setting autofillEnabled:", error);
-      }
-    });
+    try {
+      chrome.storage.local.set({ autofillEnabled: autofillCheckbox.checked });
+      chrome.storage.sync.set({ autofillEnabled: autofillCheckbox.checked });
+    } catch (error) {
+      console.error("Error setting autofillEnabled:", error);
+    }
   });
 
   syncCheckbox.addEventListener("change", () => {
-    const useSync = syncCheckbox.checked;
+    try {
+      if (syncCheckbox.checked) {
+        console.log("sync checkbox checked");
 
-    chrome.storage.local.set({ syncEnabled: useSync }, () => {
-      if (useSync) {
-        console.log("Sync checked");
-        chrome.storage.local.get(
-          [
-            "tokens",
-            "autofillEnabled",
-            "clipboardCopyingEnabled",
-            "onlineTimeEnabled",
-            "advancedAddEnabled",
-            "fileUploadEnabled",
-          ],
-          (result) => {
-            console.log(result);
-            if (chrome.runtime.lastError) {
-              console.error(
-                "Error accessing local storage:",
-                chrome.runtime.lastError
+        chrome.storage.local.get(["tokens"], (localResult) => {
+          chrome.storage.sync.get(["tokens"], (syncResult) => {
+            console.log("localResult.tokens:", localResult.tokens);
+            console.log("syncResult.tokens:", syncResult.tokens);
+
+            let localTokens = Array.isArray(localResult.tokens)
+              ? localResult.tokens
+              : [];
+            let syncTokens = Array.isArray(syncResult.tokens)
+              ? syncResult.tokens
+              : [];
+
+            // Consolidate tokens
+            localTokens.forEach((localToken) => {
+              const match = syncTokens.find(
+                (syncToken) =>
+                  syncToken.name === localToken.name &&
+                  syncToken.secret === localToken.secret
               );
-              return;
-            }
-            const tokens = result.tokens || [];
-            const autofillEnabled = result.autofillEnabled || false;
-            const clipboardCopyingEnabled =
-              result.clipboardCopyingEnabled || false;
-            const onlineTimeEnabled = result.onlineTimeEnabled || false;
-            const advancedAddEnabled = result.advancedAddEnabled || false;
-            const fileUploadEnabled = result.fileUploadEnabled || false;
-            chrome.storage.sync.set(
-              {
-                tokens,
-                autofillEnabled,
-                clipboardCopyingEnabled,
-                onlineTimeEnabled,
-                advancedAddEnabled,
-                fileUploadEnabled,
-              },
-              () => {
-                if (chrome.runtime.lastError) {
-                  console.error(
-                    "Error setting sync storage:",
-                    chrome.runtime.lastError
-                  );
-                  return;
-                }
-                chrome.storage.local.remove(
-                  [
-                    "tokens",
-                    "autofillEnabled",
-                    "clipboardCopyingEnabled",
-                    "onlineTimeEnabled",
-                    "advancedAddEnabled",
-                    "fileUploadEnabled",
-                  ],
-                  () => {
-                    if (chrome.runtime.lastError) {
-                      console.error(
-                        "Error removing from local storage:",
-                        chrome.runtime.lastError
-                      );
-                      return;
-                    }
-                    // console.log("Migrated tokens and settings to sync storage");
-                    updateOTPs();
-                  }
-                );
+              if (!match) {
+                syncTokens.push(localToken);
               }
-            );
-          }
-        );
+            });
+
+            // Save consolidated tokens to sync storage
+            chrome.storage.sync.set({ tokens: syncTokens }, () => {
+              console.log("adding potentially new tokens to dom");
+              syncTokens.forEach((tokenObj) => {
+                // Check if token is already in DOM
+                if (!document.getElementById(`token-${tokenObj.name}`)) {
+                  addTokenToDOM(
+                    tokenObj.name,
+                    tokenObj.secret,
+                    tokenObj.url,
+                    tokenObj.otp
+                  );
+                }
+              });
+              console.log(
+                "Consolidated tokens saved to sync storage:",
+                syncTokens
+              );
+            });
+          });
+        });
       } else {
-        // console.log("Sync unchecked");
-        chrome.storage.sync.get(
-          [
-            "tokens",
-            "autofillEnabled",
-            "clipboardCopyingEnabled",
-            "onlineTimeEnabled",
-            "advancedAddEnabled",
-            "fileUploadEnabled",
-          ],
-          (result) => {
-            if (chrome.runtime.lastError) {
-              console.error(
-                "Error accessing sync storage:",
-                chrome.runtime.lastError
-              );
-              return;
-            }
-            const tokens = result.tokens || [];
-            const autofillEnabled = result.autofillEnabled || false;
-            const clipboardCopyingEnabled =
-              result.clipboardCopyingEnabled || false;
-            const onlineTimeEnabled = result.onlineTimeEnabled || false;
-            const advancedAddEnabled = result.advancedAddEnabled || false;
-            const fileUploadEnabled = result.fileUploadEnabled || false;
-            chrome.storage.local.set(
-              {
-                tokens,
-                autofillEnabled,
-                clipboardCopyingEnabled,
-                onlineTimeEnabled,
-                advancedAddEnabled,
-                fileUploadEnabled,
-              },
-              () => {
-                if (chrome.runtime.lastError) {
-                  console.error(
-                    "Error setting local storage:",
-                    chrome.runtime.lastError
-                  );
-                  return;
-                }
-                chrome.storage.sync.remove(
-                  [
-                    "tokens",
-                    "autofillEnabled",
-                    "clipboardCopyingEnabled",
-                    "onlineTimeEnabled",
-                    "advancedAddEnabled",
-                    "fileUploadEnabled",
-                  ],
-                  () => {
-                    if (chrome.runtime.lastError) {
-                      console.error(
-                        "Error removing from sync storage:",
-                        chrome.runtime.lastError
-                      );
-                      return;
-                    }
-                    console.log(
-                      "Migrated tokens and settings to local storage"
-                    );
-                    updateOTPs();
-                  }
-                );
-              }
-            );
-          }
-        );
+        console.log("sync is unchecked, not syncing storage and local.");
       }
-    });
+
+      chrome.storage.local.set({ syncEnabled: syncCheckbox.checked });
+      chrome.storage.sync.set({ syncEnabled: syncCheckbox.checked });
+    } catch (error) {
+      console.error("Error setting syncCheck:", error);
+    }
   });
 
   clipboardCopyingCheckbox.addEventListener("change", () => {
-    // console.log("clipboard copying: ", clipboardCopying.checked);
-    chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-      const storage = syncResult.syncEnabled
-        ? chrome.storage.sync
-        : chrome.storage.local;
-      try {
-        storage.set({
-          clipboardCopyingEnabled: clipboardCopyingCheckbox.checked,
-        });
-      } catch (error) {
-        console.error("Error setting clipboardCopyingEnabled:", error);
-      }
-    });
+    try {
+      chrome.storage.local.set({
+        clipboardCopyingEnabled: clipboardCopyingCheckbox.checked,
+      });
+      chrome.storage.sync.set({
+        clipboardCopyingEnabled: clipboardCopyingCheckbox.checked,
+      });
+    } catch (error) {
+      console.error("Error setting syncCheck:", error);
+    }
   });
 
   onlineTimeCheckbox.addEventListener("change", () => {
-    // console.log("online time sync: ", onlineTime.checked);
-    chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-      const storage = syncResult.syncEnabled
-        ? chrome.storage.sync
-        : chrome.storage.local;
-      try {
-        storage.set({ onlineTimeEnabled: onlineTimeCheckbox.checked });
-      } catch (error) {
-        console.error("Error setting onlineTimeEnabled:", error);
-      }
-    });
+    console.log("time checkbox is: ", onlineTimeCheckbox.checked);
+    try {
+      chrome.storage.local.set({
+        onlineTimeEnabled: onlineTimeCheckbox.checked,
+      });
+      chrome.storage.sync.set({
+        onlineTimeEnabled: onlineTimeCheckbox.checked,
+      });
+    } catch (error) {
+      console.error("Error setting syncCheck:", error);
+    }
   });
 
   advancedAddCheckbox.addEventListener("change", () => {
+    console.log("advanced add checkbox toggled: ", advancedAddCheckbox.checked);
     if (advancedAddCheckbox.checked) {
       advancedAddButton.className = "advanced-add-button";
       formContainer.appendChild(advancedAddButton);
@@ -52309,34 +52212,17 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       advancedAddButton.style.display = "none";
     }
-    chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-      const storage = syncResult.syncEnabled
-        ? chrome.storage.sync
-        : chrome.storage.local;
-      try {
-        storage.set({ advancedAddEnabled: advancedAddCheckbox.checked });
-      } catch (error) {
-        console.error("Error enabling advanced add:", error);
-      }
-      // console.log("advanced add button: ", advancedAddCheckbox.checked);
-    });
-  });
-
-  function updateOTPs() {
-    chrome.storage.local.get(["syncEnabled"], (syncResult) => {
-      const storage = syncResult.syncEnabled
-        ? chrome.storage.sync
-        : chrome.storage.local;
-      storage.get(["tokens"], (result) => {
-        const tokens = result.tokens || [];
-        tokens.forEach((tokenObj, index) => {
-          const otp = authenticator.generate(tokenObj.secret);
-          tokens[index].otp = otp;
-        });
-        storage.set({ tokens });
+    try {
+      chrome.storage.local.set({
+        advancedAddEnabled: advancedAddCheckbox.checked,
       });
-    });
-  }
+      chrome.storage.sync.set({
+        advancedAddEnabled: advancedAddCheckbox.checked,
+      });
+    } catch (error) {
+      console.error("Error setting syncCheck:", error);
+    }
+  });
 
   addTokenButton.addEventListener("click", () => {
     const name = nameInput.value.trim();
@@ -52351,10 +52237,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const secret = secretInput.value.trim();
     if (name && nameLength && secret) {
       if (isValidBase32(secret)) {
-        const storage = syncCheckbox.checked
-          ? chrome.storage.sync
-          : chrome.storage.local;
-        storage.get(["tokens"], (result) => {
+        chrome.storage.local.get(["tokens"], (result) => {
+          console.log(result);
           let tokens = result.tokens || [];
           const nameExists = tokens.some((tokenObj) => tokenObj.name === name);
           const secretExists = tokens.some(
@@ -52377,7 +52261,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 const newTokenObj = { name, secret, url: "", otp };
                 tokens.push(newTokenObj);
                 tokens.sort((a, b) => a.name.localeCompare(b.name));
-                storage.set({ tokens }, () => {
+
+                if (syncCheckbox.checked == true) {
+                  chrome.storage.sync.set({ tokens }, () => {
+                    tokensContainer.innerHTML = "";
+                    tokens.forEach((tokenObj) => {
+                      addTokenToDOM(
+                        tokenObj.name,
+                        tokenObj.secret,
+                        tokenObj.url,
+                        tokenObj.otp
+                      );
+                    });
+
+                    // Retrieve and log the storage data after setting
+                    chrome.storage.sync.get(null, (result) => {
+                      console.log("sync storage tokens:", result);
+                    });
+                  });
+                }
+
+                chrome.storage.local.set({ tokens }, () => {
                   tokensContainer.innerHTML = "";
                   tokens.forEach((tokenObj) => {
                     addTokenToDOM(
@@ -52386,6 +52290,11 @@ document.addEventListener("DOMContentLoaded", () => {
                       tokenObj.url,
                       tokenObj.otp
                     );
+                  });
+
+                  // Retrieve and log the storage data after setting
+                  chrome.storage.local.get(null, (result) => {
+                    console.log("local storage tokens:", result);
                   });
                 });
               } else {
@@ -52406,8 +52315,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isCooldown = false;
 
-  function setVideoMessage(text, visible) {
-    const videoMessages = document.getElementById("video-messages");
+  function setAdvancedAddMessage(text, visible) {
+    const videoMessages = document.getElementById("advanced-add-messages");
     if (videoMessages) {
       videoMessages.textContent = text;
       videoMessages.style.visibility = visible ? "visible" : "hidden";
@@ -52442,7 +52351,7 @@ document.addEventListener("DOMContentLoaded", () => {
     popupContent.innerHTML = `
     <div>
       <h2 class="centered-headings">Add QR Code Via:</h2>
-      <h3 class="video-messages" id="video-messages" style="visibility: hidden;">QR Code not found. Try a different image.</h3>
+      <h3 class="advanced-add-messages" id="advanced-add-messages" style="visibility: hidden;">QR Code not found. Try a different image.</h3>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather x-icon" id="x-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
     </div>
     <div class="video-container" style="display: none;">
@@ -52454,7 +52363,8 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
     <div class="url-add-container">
       <label for="name" class="form-label">Image URL:</label>
-      <input type="text" id="image-url-input" class="form-input" placeholder="Enter URL" value="">
+      <input type="text" id="image-url-input" class="form-input enter-url-placeholder" placeholder="Enter URL" value="">
+
       <button id="add-url-button" class="add-url-button">Enter URL</button>
     </div>
   `;
@@ -52467,6 +52377,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const fileAddButton = document.getElementById("image-add-button");
     fileAddButton.appendChild(imageIcon);
+
+    let qrCodeFoundMessage = document.createElement("div");
+    qrCodeFoundMessage.className = "secret-found-message";
+    qrCodeFoundMessage.textContent = "QR code found!";
+
+    function qrCodeFound() {
+      secretFormLabel.insertAdjacentElement("afterend", qrCodeFoundMessage);
+      setTimeout(() => {
+        qrCodeFoundMessage.remove();
+      }, 3000);
+    }
 
     let stream;
     let qrScanner;
@@ -52482,7 +52403,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       webcamButton.innerHTML = "Webcam";
       webcamButton.appendChild(webcamOffIcon);
-      setVideoMessage("QR Code not found. Try a different image.", false);
+      setAdvancedAddMessage("QR Code not found. Try a different image.", false);
     };
 
     let saveUrlButton = document.getElementById("add-url-button");
@@ -52496,15 +52417,19 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((result) => {
           console.log("decoded qr code:", result);
           secretInput.value = result;
+          qrCodeFound();
           document.body.removeChild(popupContainer);
         })
         .catch((error) => {
-          setVideoMessage(
+          setAdvancedAddMessage(
             "Incorrect URL, or URL did not contain QR code.",
             true
           );
           setTimeout(() => {
-            setVideoMessage("QR Code not found. Try a different image.", false);
+            setAdvancedAddMessage(
+              "QR Code not found. Try a different image.",
+              false
+            );
           }, 3000);
           console.log(error || "No QR code found.");
         });
@@ -52525,7 +52450,7 @@ document.addEventListener("DOMContentLoaded", () => {
       isCooldown = true;
       setTimeout(() => {
         isCooldown = false;
-      }, 3000);
+      }, 2000);
     });
 
     popupContainer.addEventListener("click", (e) => {
@@ -52538,7 +52463,7 @@ document.addEventListener("DOMContentLoaded", () => {
         isCooldown = true;
         setTimeout(() => {
           isCooldown = false;
-        }, 3000);
+        }, 2000);
       }
     });
 
@@ -52563,7 +52488,10 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector(".video-container").style.display = "none";
           webcamButton.innerHTML = "Webcam";
           webcamButton.appendChild(webcamOffIcon);
-          setVideoMessage("QR Code not found. Try a different image.", false);
+          setAdvancedAddMessage(
+            "QR Code not found. Try a different image.",
+            false
+          );
         } else {
           stream = await navigator.mediaDevices.getUserMedia({
             video: true,
@@ -52575,13 +52503,15 @@ document.addEventListener("DOMContentLoaded", () => {
           webcamButton.innerHTML = "Webcam";
           webcamButton.appendChild(webcamOffIcon);
 
-          setVideoMessage("Scanning...", true);
+          setAdvancedAddMessage("Scanning...", true);
 
           qrScanner = new qr_scanner__WEBPACK_IMPORTED_MODULE_0__["default"](
             videoElem,
             (result) => {
               if (result.data) {
                 console.log("decoded qr code:", result.data);
+                qrCodeFound();
+
                 secretInput.value = result.data;
                 stream.getTracks().forEach((track) => track.stop());
                 stream = null;
@@ -52590,7 +52520,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   "none";
                 document.body.removeChild(popupContainer);
                 nameInput.focus();
-                setVideoMessage(
+                setAdvancedAddMessage(
                   "QR Code not found. Try a different image.",
                   false
                 );
@@ -52614,7 +52544,7 @@ document.addEventListener("DOMContentLoaded", () => {
       isCooldown = true;
       setTimeout(() => {
         isCooldown = false;
-      }, 3000);
+      }, 2000);
     });
 
     document
@@ -52634,21 +52564,25 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await qr_scanner__WEBPACK_IMPORTED_MODULE_0__["default"].scanImage(file);
             secretInput.value = result;
             document.body.removeChild(popupContainer);
+            qrCodeFound();
             isCooldown = true;
             setTimeout(() => {
               isCooldown = false;
             }, 2000);
             nameInput.focus();
           } catch (error) {
-            setVideoMessage("QR Code not found. Try a different image.", true);
+            setAdvancedAddMessage(
+              "QR Code not found. Try a different image.",
+              true
+            );
             console.log(error || "No QR code found.");
 
             setTimeout(() => {
-              setVideoMessage(
+              setAdvancedAddMessage(
                 "QR Code not found. Try a different image.",
                 false
               );
-            }, 5000);
+            }, 3000);
           }
 
           e.target.value = "";
@@ -52716,17 +52650,155 @@ document.addEventListener("DOMContentLoaded", () => {
     const tokenHeader = document.createElement("h1");
     tokenHeader.className = "token-value";
 
-    const tokenSettings = document.createElement("img");
-    tokenSettings.src = "./icons/gearIcon.svg";
-    tokenSettings.className = "token-settings";
-    tokenSettings.id = name + "-token-settings";
-    tokenElement.appendChild(tokenSettings);
+    // const tokenSettings = document.createElement("div");
 
-    const tokenCopy = document.createElement("img");
-    tokenCopy.src = "./icons/clipboard.svg";
-    tokenCopy.className = "token-copy";
-    tokenCopy.id = name + "-token-copy";
-    tokenElement.appendChild(tokenCopy);
+    fetch("./icons/gearIcon.svg")
+      .then((response) => response.text())
+      .then((svgText) => {
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+        let tokenSettings = svgDoc.documentElement;
+
+        tokenSettings.setAttribute(
+          "class",
+          "feather feather-settings token-settings"
+        );
+        tokenSettings.setAttribute("id", name + "-token-settings");
+
+        tokenElement.appendChild(tokenSettings);
+
+        tokenSettings.addEventListener("click", (e) => {
+          console.log("clicked token setting");
+          e.stopPropagation();
+          chrome.storage.local.get(["tokens"], (result) => {
+            let tokens = result.tokens || [];
+            const tokenObj = tokens.find((token) => token.name === name);
+            if (tokenObj) {
+              const { name, url } = tokenObj;
+
+              let shortenedUrl = url;
+              let urlLength = 50;
+              if (url.length > urlLength) {
+                shortenedUrl = url.substring(0, urlLength) + "...";
+              }
+
+              let popupContainer = document.createElement("div");
+              popupContainer.className = "popup-container";
+              let popupContent = document.createElement("div");
+              popupContent.className = "popup-content";
+              popupContent.innerHTML = `
+                <div class="centered-header">
+                  <h2 class="centered-headings shorter-width-heading">${name} Token Settings</h2>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather x-icon" id="x-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                </div>
+                <label for="name" class="form-label">Autofill URL:</label>
+                <input type="text" id="autofill-url-input" class="form-input enter-url-placeholder" placeholder="Enter URL" value="${url}">
+                <button id="save-url-button" class="add-token-button" >Save URL</button>
+                <div class="inline-url">
+                <label class="form-label">Currently Saved: </label>
+                <div id="current-url" class="form-label" >${shortenedUrl}</div>
+                </div>
+                <div class="buttons-container">
+                  <button class="delete-token" id="delete-token">Delete</button>
+                  <button class="close-popup">Close</button>
+                </div>
+              `;
+
+              popupContainer.appendChild(popupContent);
+              document.body.appendChild(popupContainer);
+
+              let redXButton = document.getElementById("x-icon");
+              redXButton.addEventListener("click", () => {
+                document.body.removeChild(popupContainer);
+              });
+
+              let saveUrlButton = document.getElementById("save-url-button");
+              saveUrlButton.addEventListener("click", () => {
+                console.log("clicked save url button");
+              });
+
+              let autofillUrlInput =
+                document.getElementById("autofill-url-input");
+              autofillUrlInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                  saveUrlButton.click();
+                }
+              });
+
+              saveUrlButton.addEventListener("click", () => {
+                const newUrl = document
+                  .getElementById("autofill-url-input")
+                  .value.trim();
+
+                chrome.storage.local.get(["tokens"], (result) => {
+                  let tokens = result.tokens || [];
+                  const tokenIndex = tokens.findIndex(
+                    (tokenObj) => tokenObj.name === name
+                  );
+
+                  if (tokenIndex !== -1) {
+                    tokens[tokenIndex].url = newUrl;
+                    chrome.storage.local.set({ tokens }, () => {
+                      const displayUrl =
+                        newUrl.length > urlLength
+                          ? newUrl.substring(0, urlLength) + "..."
+                          : newUrl;
+                      document.getElementById("current-url").textContent =
+                        displayUrl;
+                      console.log("Saved URL to chrome storage:", newUrl);
+
+                      // Retrieve and log the stored value to verify
+                      chrome.storage.local.get("tokens", (result) => {
+                        console.log(
+                          "Retrieved tokens from storage:",
+                          result.tokens
+                        );
+                      });
+                    });
+                  }
+                });
+              });
+
+              popupContent
+                .querySelector(".close-popup")
+                .addEventListener("click", () => {
+                  document.body.removeChild(popupContainer);
+                });
+
+              popupContainer.addEventListener("click", (e) => {
+                if (e.target === popupContainer) {
+                  document.body.removeChild(popupContainer);
+                }
+              });
+
+              popupContent
+                .querySelector("#delete-token")
+                .addEventListener("click", () => {
+                  confirmDelete(name, secret);
+                  document.body.removeChild(popupContainer);
+                });
+            }
+          });
+        });
+      })
+      .catch((error) => console.error("Error fetching the SVG:", error));
+
+    // Load the clipboard icon SVG
+    fetch("./icons/clipboard.svg")
+      .then((response) => response.text())
+      .then((svgText) => {
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
+        let tokenCopy = svgDoc.documentElement;
+
+        tokenCopy.setAttribute("class", "feather feather-clipboard token-copy");
+        tokenCopy.setAttribute("id", name + "-token-copy");
+
+        tokenElement.appendChild(tokenCopy);
+      })
+      .catch((error) =>
+        console.error("Error fetching the clipboard SVG:", error)
+      );
 
     const tokenQRButton = document.createElement("img");
     tokenQRButton.src = "./icons/tiny-qr.svg";
@@ -52743,11 +52815,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const name = tokenQRButton.id.split("-token-qr-button")[0]; // Get the token name
 
-      const storage = syncCheckbox.checked
-        ? chrome.storage.sync
-        : chrome.storage.local;
-
-      storage.get(["tokens"], async (result) => {
+      chrome.storage.local.get(["tokens"], async (result) => {
+        console.log(result);
         const tokens = result.tokens || [];
         const tokenObj = tokens.find((token) => token.name === name);
 
@@ -52767,12 +52836,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
           popupContent.innerHTML = `
             <div>
-              <h2 class="centered-headings">${tokenObj.name} Secret:</h2> 
-              <h3 class="centered-headings centered-secret">${tokenObj.secret}</h3>
+              <h2 class="centered-headings shorter-width-heading">${tokenObj.name} Secret:</h2> 
+              <h3 class="centered-secret shorter-width-heading">${tokenObj.secret}</h3>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather x-icon" id="x-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
            <img src="${qrDataURL}" alt="QR Code" />
-
-
             </div>
  
           `;
@@ -52780,130 +52847,18 @@ document.addEventListener("DOMContentLoaded", () => {
           popupContainer.appendChild(popupContent);
           document.body.appendChild(popupContainer);
 
-          let redXButton = document.getElementById("x-icon");
-          redXButton.addEventListener("click", () => {
-            document.body.removeChild(popupContainer);
-          });
-        } else {
-          console.error("Token not found.");
-        }
-      });
-    });
-
-    tokenSettings.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const storage = syncCheckbox.checked
-        ? chrome.storage.sync
-        : chrome.storage.local;
-      storage.get(["tokens"], (result) => {
-        let tokens = result.tokens || [];
-        const tokenObj = tokens.find((token) => token.name === name);
-        if (tokenObj) {
-          const { name, url } = tokenObj;
-
-          let shortenedUrl = url;
-          let urlLength = 50;
-          if (url.length > urlLength) {
-            shortenedUrl = url.substring(0, urlLength) + "...";
-          }
-
-          let popupContainer = document.createElement("div");
-          popupContainer.className = "popup-container";
-          let popupContent = document.createElement("div");
-          popupContent.className = "popup-content";
-          popupContent.innerHTML = `
-            <div class="centered-header">
-              <h2 class="centered-headings shorter-width-heading">${name} Token Settings</h2>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather x-icon" id="x-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-            </div>
-            <label for="name" class="form-label">Autofill URL:</label>
-            <input type="text" id="autofill-url-input" class="form-input" placeholder="Enter URL" value="${url}">
-            <button id="save-url-button" class="add-token-button" >Save URL</button>
-            <div class="inline-url">
-            <label class="form-label">Currently Saved: </label>
-            <div id="current-url">${shortenedUrl}</div>
-            </div>
-            <div class="buttons-container">
-              <button class="delete-token" id="delete-token">Delete</button>
-              <button class="close-popup">Close</button>
-            </div>
-          `;
-
-          popupContainer.appendChild(popupContent);
-          document.body.appendChild(popupContainer);
-
-          let redXButton = document.getElementById("x-icon");
-          redXButton.addEventListener("click", () => {
-            document.body.removeChild(popupContainer);
-          });
-
-          let saveUrlButton = document.getElementById("save-url-button");
-          saveUrlButton.addEventListener("click", () => {
-            console.log("clicked save url button");
-          });
-
-          let autofillUrlInput = document.getElementById("autofill-url-input");
-          autofillUrlInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              saveUrlButton.click();
-            }
-          });
-
-          saveUrlButton.addEventListener("click", () => {
-            const newUrl = document
-              .getElementById("autofill-url-input")
-              .value.trim();
-            const storage = syncCheckbox.checked
-              ? chrome.storage.sync
-              : chrome.storage.local;
-
-            storage.get(["tokens"], (result) => {
-              let tokens = result.tokens || [];
-              const tokenIndex = tokens.findIndex(
-                (tokenObj) => tokenObj.name === name
-              );
-
-              if (tokenIndex !== -1) {
-                tokens[tokenIndex].url = newUrl;
-                storage.set({ tokens }, () => {
-                  const displayUrl =
-                    newUrl.length > urlLength
-                      ? newUrl.substring(0, urlLength) + "..."
-                      : newUrl;
-                  document.getElementById("current-url").textContent =
-                    displayUrl;
-                  console.log("Saved URL to chrome storage:", newUrl);
-
-                  // Retrieve and log the stored value to verify
-                  storage.get("tokens", (result) => {
-                    console.log(
-                      "Retrieved tokens from storage:",
-                      result.tokens
-                    );
-                  });
-                });
-              }
-            });
-          });
-
-          popupContent
-            .querySelector(".close-popup")
-            .addEventListener("click", () => {
-              document.body.removeChild(popupContainer);
-            });
-
           popupContainer.addEventListener("click", (e) => {
             if (e.target === popupContainer) {
               document.body.removeChild(popupContainer);
             }
           });
 
-          popupContent
-            .querySelector("#delete-token")
-            .addEventListener("click", () => {
-              confirmDelete(name, secret);
-              document.body.removeChild(popupContainer);
-            });
+          let redXButton = document.getElementById("x-icon");
+          redXButton.addEventListener("click", () => {
+            document.body.removeChild(popupContainer);
+          });
+        } else {
+          console.error("Token not found.");
         }
       });
     });
@@ -52964,16 +52919,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function deleteToken(name, secret) {
-    const storage = syncCheckbox.checked
-      ? chrome.storage.sync
-      : chrome.storage.local;
-    storage.get(["tokens"], (result) => {
+    chrome.storage.local.get(["tokens"], (result) => {
       let tokens = result.tokens || [];
       tokens = tokens.filter(
         (tokenObj) => tokenObj.name !== name && tokenObj.secret !== secret
       );
       tokens.sort((a, b) => a.name.localeCompare(b.name));
-      storage.set({ tokens }, () => {
+
+      //we should also update tokens to sync storage if syncCheck enabled,so:
+
+      if (syncCheckbox.checked == true) {
+        chrome.storage.sync.set({ tokens }, (result) => {
+          console.log(
+            "sync was checked on, so saved tokens to sync storage, result:",
+            result
+          );
+          tokensContainer.innerHTML = "";
+          tokens.forEach((tokenObj) => {
+            addTokenToDOM(
+              tokenObj.name,
+              tokenObj.secret,
+              tokenObj.url,
+              tokenObj.otp
+            );
+          });
+        });
+      }
+
+      chrome.storage.local.set({ tokens }, () => {
+        console.log(
+          "reagrdless of whether sync was checked on or not, saving tokens to local storage; tokenObj: ",
+          tokens
+        );
         tokensContainer.innerHTML = "";
         tokens.forEach((tokenObj) => {
           addTokenToDOM(
@@ -52987,73 +52964,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function updateTokens(tokens) {
-    tokens.forEach((tokenObj) => {
-      updateToken(tokenObj.name, tokenObj.secret);
-    });
-  }
-
   function updateToken(name, secret) {
     const token = generateToken(secret);
     const tokenElement = document.getElementById(`token-${name}`);
     if (tokenElement) {
       tokenElement.querySelector(".token-value").textContent = `${token}`;
     }
-
-    const storage = syncCheckbox.checked
-      ? chrome.storage.sync
-      : chrome.storage.local;
-    storage.get(["tokens"], (result) => {
+    chrome.storage.local.get(["tokens"], (result) => {
       let tokens = result.tokens || [];
       const tokenIndex = tokens.findIndex((tokenObj) => tokenObj.name === name);
       if (tokenIndex !== -1) {
         tokens[tokenIndex].otp = token;
-        storage.set({ tokens }, () => {
+        chrome.storage.local.set({ tokens }, () => {
           console.log(`Updated OTP for ${name} in chrome.storage: ${token}`);
         });
       }
     });
   }
-
-  function setupInitialUpdate(tokens) {
-    const now = new Date();
-    const seconds = now.getSeconds();
-    const initialDelay = seconds < 30 ? 30 - seconds : 60 - seconds;
-
-    setTimeout(() => {
-      updateTokens(tokens);
-      setInterval(() => {
-        updateTokens(tokens);
-      }, 30000);
-    }, initialDelay * 1000);
-  }
-
-  // if (advancedAddCheckbox.checked) {
-  //   console.log("advanced add enabled");
-  //   formContainer.appendChild(advancedAddButton);
-  // } else {
-  //   console.log("advancedAdd Not enabled");
-  // }
-
-  function setupPeriodicTokenUpdate() {
-    const storage = syncCheckbox.checked
-      ? chrome.storage.sync
-      : chrome.storage.local;
-    storage.get(["tokens"], (result) => {
-      let tokens = result.tokens || [];
-      tokens.forEach((tokenObj) => {
-        updateToken(tokenObj.name, tokenObj.secret);
-      });
-
-      setInterval(() => {
-        tokens.forEach((tokenObj) => {
-          updateToken(tokenObj.name, tokenObj.secret);
-        });
-      }, 30000);
-    });
-  }
-
-  setupPeriodicTokenUpdate();
 });
 
 })();

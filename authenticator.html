@@ -10,6 +10,7 @@
 
     <div class="header-container">
       <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -23,10 +24,10 @@
         class="feather feather-settings main-settings"
         id="main-settings"
       >
-        <circle cx="12" cy="12" r="3"></circle>
         <path
           d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
         ></path>
+        <circle cx="12" cy="12" r="3"></circle>
       </svg>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +66,14 @@
         <label for="name" class="form-label">Enter Name:</label>
         <input type="text" id="name" class="form-input" />
         <br />
-        <label for="secret" class="form-label">Enter Secret:</label>
+        <div class="inline-label-and-message">
+          <label
+            for="secret"
+            class="form-label secret-form-label"
+            id="secret-form-label"
+            >Enter Secret:</label
+          >
+        </div>
         <input type="text" id="secret" class="form-input-no-margin" />
         <br />
         <br />
@@ -244,12 +252,14 @@
           <br />
         </div>
         <h2 class="themes-header">Themes</h2>
-        <button class="light-theme-button" id="light-theme-button">
-          Light Theme
-        </button>
-        <button class="dark-theme-button" id="dark-theme-button">
-          Dark Theme
-        </button>
+        <div class="theme-buttons-container">
+          <button class="light-theme-button" id="light-theme-button">
+            Light Theme
+          </button>
+          <button class="dark-theme-button" id="dark-theme-button">
+            Dark Theme
+          </button>
+        </div>
       </div>
     </div>
 
