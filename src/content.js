@@ -1,5 +1,5 @@
-const { authenticator } = require("otplib");
-const { Buffer } = require("buffer");
+import { authenticator } from "otplib";
+import { Buffer } from "buffer";
 
 window.Buffer = Buffer;
 

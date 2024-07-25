@@ -51540,6 +51540,18 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -51779,13 +51791,17 @@ var __webpack_exports__ = {};
   !*** ./src/popup.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var qr_scanner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! qr-scanner */ "./node_modules/qr-scanner/qr-scanner.min.js");
-const { authenticator } = __webpack_require__(/*! otplib */ "./node_modules/otplib/index.js");
-const { Buffer: popup_Buffer } = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js");
+/* harmony import */ var otplib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! otplib */ "./node_modules/otplib/index.js");
+/* harmony import */ var otplib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(otplib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var buffer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js");
+/* harmony import */ var qr_scanner__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! qr-scanner */ "./node_modules/qr-scanner/qr-scanner.min.js");
+/* harmony import */ var qrcode__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! qrcode */ "./node_modules/qrcode/lib/browser.js");
 
-const QRCode = __webpack_require__(/*! qrcode */ "./node_modules/qrcode/lib/browser.js");
 
-window.Buffer = popup_Buffer;
+
+
+
+window.Buffer = buffer__WEBPACK_IMPORTED_MODULE_1__.Buffer;
 
 document.addEventListener("DOMContentLoaded", () => {
   const nameInput = document.getElementById("name");
@@ -51820,7 +51836,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nameInput.focus();
 
-  //theme land
+  //themes related
 
   lightThemeButton.addEventListener("click", () => {
     document.body.classList.remove("theme-dark");
@@ -51842,7 +51858,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  //clock land
+  //clock related
 
   function lastSeconds(seconds) {
     const wholeSeconds = Math.floor(seconds);
@@ -51865,14 +51881,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateClock() {
     const timeApiUrl = "https://worldtimeapi.org/api/timezone/Etc/UTC";
     let initialTime;
-    let offset = 0; // Ensure offset is initialized
+    let offset = 0;
 
     if (isTimeCheckboxChecked) {
       console.log("time checkbox checked");
       getSecondsFromTimeApi().then((seconds) => startClock(seconds));
     } else {
       console.log("time checkbox not checked");
-      offset = 0; // Reset offset if not using API time
+      offset = 0;
       const seconds = getSecondsFromLocalTime();
       startClock(seconds);
     }
@@ -51996,7 +52012,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.close();
   });
 
-  // chrome storage & sync
+  // chrome storage & sync realted
 
   //first time: aligns local & sync storages, sets storage to either sync storage or default values, ensures checkbox status reflects storage, tries to pull theme from sync;
   //else: aligns checkbox values with local storage, sets theme according to local storage
@@ -52015,29 +52031,28 @@ document.addEventListener("DOMContentLoaded", () => {
         );
       });
 
-      chrome.storage.sync.get((result) => {
-        console.log("sync result", result);
-      });
+      chrome.storage.sync.get((syncResult) => {
+        console.log("sync result", syncResult);
 
-      if (localResult.firstTime === undefined) {
-        console.log(
-          "according to chrome local storage, this is the first time; local storage is empty"
-        );
-        autofillCheckbox.checked = true;
-        syncCheckbox.checked = true;
-        clipboardCopyingCheckbox.checked = true;
-        onlineTimeCheckbox.checked = true;
-        advancedAddCheckbox.checked = false;
-        chrome.storage.sync.get((syncResult) => {
+        if (localResult.firstTime === undefined) {
+          console.log(
+            "according to chrome local storage, this is the first time; local storage is empty"
+          );
+          //this is setting up the actual checkboxes;
+
+          autofillCheckbox.checked = false;
+          syncCheckbox.checked = syncResult.syncEnabled || true;
+          clipboardCopyingCheckbox.checked = false;
+          onlineTimeCheckbox.checked = syncResult.onlineTimeEnabled || true;
+          advancedAddCheckbox.advancedAddEnabled = false;
           isTimeCheckboxChecked = syncResult.onlineTimeEnabled || true;
           updateClock();
-
           console.log("got syncResults ", syncResult);
           chrome.storage.local.set({
             tokens: syncResult.tokens || [],
-            autofillEnabled: syncResult.autofillEnabled || true,
+            autofillEnabled: false,
             syncEnabled: syncResult.syncEnabled || true,
-            clipboardCopyingEnabled: syncResult.clipboardCopyingEnabled || true,
+            clipboardCopyingEnabled: false,
             onlineTimeEnabled: syncResult.onlineTimeEnabled || true,
             advancedAddEnabled: syncResult.advancedAddEnabled || false,
             firstTime: false,
@@ -52045,14 +52060,8 @@ document.addEventListener("DOMContentLoaded", () => {
           });
           chrome.storage.sync.set({
             tokens: syncResult.tokens || localResult.tokens || true,
-            autofillEnabled:
-              syncResult.autofillEnabled || localResult.autofillEnabled || true,
             syncEnabled:
               syncResult.syncEnabled || localResult.syncEnabled || true,
-            clipboardCopyingEnabled:
-              syncResult.clipboardCopyingEnabled ||
-              localResult.clipboardCopyingEnabled ||
-              true,
             onlineTimeEnabled:
               syncResult.onlineTimeEnabled ||
               localResult.onlineTimeEnabled ||
@@ -52063,15 +52072,12 @@ document.addEventListener("DOMContentLoaded", () => {
               false,
             theme: syncResult.theme || "theme-light",
           });
-        });
-      } else {
-        console.log(
-          "it was not the first time, according to chrome local storage; making checkbox positions match local storage. "
-        );
-        chrome.storage.local.get((localresult) => {
+        } else {
+          console.log(
+            "it was not the first time, according to chrome local storage; making checkbox positions match local storage. "
+          );
           isTimeCheckboxChecked = localResult.onlineTimeEnabled;
           updateClock();
-
           console.log("local result: ", localResult);
           autofillCheckbox.checked = localResult.autofillEnabled;
           syncCheckbox.checked = localResult.syncEnabled;
@@ -52096,24 +52102,53 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.classList.add("theme-dark");
             chrome.storage.local.set({ theme: "theme-dark" });
           } else {
-            console.log("theme was neither light nor dark");
+            console.log("theme was somehow neither light nor dark");
           }
-        });
-      }
+        }
+      });
     });
   } catch (error) {
     console.error("Error accessing local storage:", error);
   }
 
-  //sets checkbox status of  both local and sync
-  autofillCheckbox.addEventListener("change", () => {
-    try {
-      chrome.storage.local.set({ autofillEnabled: autofillCheckbox.checked });
-      chrome.storage.sync.set({ autofillEnabled: autofillCheckbox.checked });
-    } catch (error) {
-      console.error("Error setting autofillEnabled:", error);
+  autofillCheckbox.addEventListener("change", async () => {
+    if (autofillCheckbox.checked) {
+      try {
+        // Request optional permissions
+        const granted = await requestAutofillPermission();
+        if (granted) {
+          // Permission granted, proceed with setting the checkbox state
+          console.log("Autofill permission granted.");
+          chrome.storage.local.set({ autofillEnabled: true });
+        } else {
+          // Permission denied, revert the checkbox state
+          console.log("Autofill permission denied.");
+          autofillCheckbox.checked = false;
+        }
+      } catch (error) {
+        console.error("Error requesting autofill permission:", error);
+        autofillCheckbox.checked = false;
+      }
+    } else {
+      // If the checkbox is unchecked, update the storage accordingly
+      chrome.storage.local.set({ autofillEnabled: false });
+      // chrome.storage.sync.set({ autofillEnabled: false });
     }
   });
+
+  // Function to request autofill permission
+  async function requestAutofillPermission() {
+    return new Promise((resolve) => {
+      chrome.permissions.request(
+        {
+          origins: ["http://*/*", "https://*/*"],
+        },
+        (granted) => {
+          resolve(granted);
+        }
+      );
+    });
+  }
 
   syncCheckbox.addEventListener("change", () => {
     try {
@@ -52176,18 +52211,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  clipboardCopyingCheckbox.addEventListener("change", () => {
-    try {
-      chrome.storage.local.set({
-        clipboardCopyingEnabled: clipboardCopyingCheckbox.checked,
-      });
-      chrome.storage.sync.set({
-        clipboardCopyingEnabled: clipboardCopyingCheckbox.checked,
-      });
-    } catch (error) {
-      console.error("Error setting syncCheck:", error);
+  // clipboardCopyingCheckbox.addEventListener("change", () => {
+  //   try {
+  //     chrome.storage.local.set({
+  //       clipboardCopyingEnabled: clipboardCopyingCheckbox.checked,
+  //     });
+  //     chrome.storage.sync.set({
+  //       clipboardCopyingEnabled: clipboardCopyingCheckbox.checked,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error setting syncCheck:", error);
+  //   }
+  // });
+
+  clipboardCopyingCheckbox.addEventListener("change", async () => {
+    if (clipboardCopyingCheckbox.checked) {
+      try {
+        // Request clipboard permissions
+        const granted = await requestClipboardPermission();
+        if (granted) {
+          // Permission granted, proceed with setting the checkbox state
+          console.log("Clipboard permission granted.");
+          chrome.storage.local.set({ clipboardCopyingEnabled: true });
+          chrome.storage.sync.set({ clipboardCopyingEnabled: true });
+        } else {
+          // Permission denied, revert the checkbox state
+          console.log("Clipboard permission denied.");
+          clipboardCopyingCheckbox.checked = false;
+        }
+      } catch (error) {
+        console.error("Error requesting clipboard permission:", error);
+        clipboardCopyingCheckbox.checked = false;
+      }
+    } else {
+      // If the checkbox is unchecked, update the storage accordingly
+      chrome.storage.local.set({ clipboardCopyingEnabled: false });
+      chrome.storage.sync.set({ clipboardCopyingEnabled: false });
     }
   });
+
+  async function requestClipboardPermission() {
+    return new Promise((resolve) => {
+      chrome.permissions.request(
+        {
+          permissions: ["clipboardRead", "clipboardWrite"],
+        },
+        (granted) => {
+          resolve(granted);
+        }
+      );
+    });
+  }
 
   onlineTimeCheckbox.addEventListener("change", () => {
     console.log("time checkbox is: ", onlineTimeCheckbox.checked);
@@ -52257,7 +52331,7 @@ document.addEventListener("DOMContentLoaded", () => {
               if (isValid) {
                 nameInput.value = "";
                 secretInput.value = "";
-                const otp = authenticator.generate(secret);
+                const otp = otplib__WEBPACK_IMPORTED_MODULE_0__.authenticator.generate(secret);
                 const newTokenObj = { name, secret, url: "", otp };
                 tokens.push(newTokenObj);
                 tokens.sort((a, b) => a.name.localeCompare(b.name));
@@ -52401,8 +52475,6 @@ document.addEventListener("DOMContentLoaded", () => {
         stream.getTracks().forEach((track) => track.stop());
         stream = null;
       }
-      webcamButton.innerHTML = "Webcam";
-      webcamButton.appendChild(webcamOffIcon);
       setAdvancedAddMessage("QR Code not found. Try a different image.", false);
     };
 
@@ -52413,7 +52485,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let addImageUrl = imageUrlInput.value;
       console.log("Image URL saved:", addImageUrl);
 
-      qr_scanner__WEBPACK_IMPORTED_MODULE_0__["default"].scanImage(addImageUrl)
+      qr_scanner__WEBPACK_IMPORTED_MODULE_2__["default"].scanImage(addImageUrl)
         .then((result) => {
           console.log("decoded qr code:", result);
           secretInput.value = result;
@@ -52457,7 +52529,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.target === popupContainer) {
         setTimeout(() => {
           stopCameraAndScanner();
-        }, 1000); // Wait 1 second before executing stopCameraAndScanner()
+        }, 1000); // Wait 1 second before stopping camera
 
         document.body.removeChild(popupContainer);
         isCooldown = true;
@@ -52484,10 +52556,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (stream) {
           stream.getTracks().forEach((track) => track.stop());
           stream = null;
-          videoElem.pause(); // Ensure the video element is paused
+          videoElem.pause();
           document.querySelector(".video-container").style.display = "none";
           webcamButton.innerHTML = "Webcam";
-          webcamButton.appendChild(webcamOffIcon);
+          webcamButton.appendChild(webcamOnIcon);
           setAdvancedAddMessage(
             "QR Code not found. Try a different image.",
             false
@@ -52505,7 +52577,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           setAdvancedAddMessage("Scanning...", true);
 
-          qrScanner = new qr_scanner__WEBPACK_IMPORTED_MODULE_0__["default"](
+          qrScanner = new qr_scanner__WEBPACK_IMPORTED_MODULE_2__["default"](
             videoElem,
             (result) => {
               if (result.data) {
@@ -52550,8 +52622,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document
       .getElementById("image-add-button")
       .addEventListener("click", () => {
-        stopCameraAndScanner();
-        document.querySelector(".video-container").style.display = "none";
+        setTimeout(() => {
+          stopCameraAndScanner();
+          document.querySelector(".video-container").style.display = "none";
+        }, 1500); // 1-second delay for stopCameraAndScanner
         document.getElementById("file-input").click();
       });
 
@@ -52561,7 +52635,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const file = e.target.files[0];
         if (file) {
           try {
-            const result = await qr_scanner__WEBPACK_IMPORTED_MODULE_0__["default"].scanImage(file);
+            const result = await qr_scanner__WEBPACK_IMPORTED_MODULE_2__["default"].scanImage(file);
             secretInput.value = result;
             document.body.removeChild(popupContainer);
             qrCodeFound();
@@ -52626,14 +52700,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function generateToken(secret) {
     if (isValidBase32(secret)) {
-      return authenticator.generate(secret);
+      return otplib__WEBPACK_IMPORTED_MODULE_0__.authenticator.generate(secret);
     }
     throw new Error("Invalid secret format.");
   }
 
   function checkToken(token, secret) {
     if (isValidBase32(secret)) {
-      return authenticator.check(token, secret);
+      return otplib__WEBPACK_IMPORTED_MODULE_0__.authenticator.check(token, secret);
     }
     return false;
   }
@@ -52649,8 +52723,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tokenHeader = document.createElement("h1");
     tokenHeader.className = "token-value";
-
-    // const tokenSettings = document.createElement("div");
 
     fetch("./icons/gearIcon.svg")
       .then((response) => response.text())
@@ -52746,8 +52818,6 @@ document.addEventListener("DOMContentLoaded", () => {
                       document.getElementById("current-url").textContent =
                         displayUrl;
                       console.log("Saved URL to chrome storage:", newUrl);
-
-                      // Retrieve and log the stored value to verify
                       chrome.storage.local.get("tokens", (result) => {
                         console.log(
                           "Retrieved tokens from storage:",
@@ -52783,7 +52853,6 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch((error) => console.error("Error fetching the SVG:", error));
 
-    // Load the clipboard icon SVG
     fetch("./icons/clipboard.svg")
       .then((response) => response.text())
       .then((svgText) => {
@@ -52813,7 +52882,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const name = tokenQRButton.id.split("-token-qr-button")[0]; // Get the token name
+      const name = tokenQRButton.id.split("-token-qr-button")[0];
 
       chrome.storage.local.get(["tokens"], async (result) => {
         console.log(result);
@@ -52829,19 +52898,19 @@ document.addEventListener("DOMContentLoaded", () => {
           // Generate QR code as PNG data URL
           let qrDataURL;
           try {
-            qrDataURL = await QRCode.toDataURL(tokenObj.secret, { width: 140 });
+            qrDataURL = await qrcode__WEBPACK_IMPORTED_MODULE_3__.toDataURL(tokenObj.secret, { width: 140 });
           } catch (error) {
             console.error(error);
           }
 
           popupContent.innerHTML = `
             <div>
-              <h2 class="centered-headings shorter-width-heading">${tokenObj.name} Secret:</h2> 
+              <h2 class="centered-headings shorter-width-heading">${tokenObj.name} Secret:</h2>
               <h3 class="centered-secret shorter-width-heading">${tokenObj.secret}</h3>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather x-icon" id="x-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
            <img src="${qrDataURL}" alt="QR Code" />
             </div>
- 
+
           `;
 
           popupContainer.appendChild(popupContent);
@@ -52925,8 +52994,6 @@ document.addEventListener("DOMContentLoaded", () => {
         (tokenObj) => tokenObj.name !== name && tokenObj.secret !== secret
       );
       tokens.sort((a, b) => a.name.localeCompare(b.name));
-
-      //we should also update tokens to sync storage if syncCheck enabled,so:
 
       if (syncCheckbox.checked == true) {
         chrome.storage.sync.set({ tokens }, (result) => {

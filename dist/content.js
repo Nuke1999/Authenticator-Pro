@@ -48367,6 +48367,30 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -48377,6 +48401,22 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 				if (typeof window === 'object') return window;
 /******/ 			}
 /******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
@@ -48390,13 +48430,20 @@ module.exports = /*#__PURE__*/JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
 /*!************************!*\
   !*** ./src/content.js ***!
   \************************/
-const { authenticator } = __webpack_require__(/*! otplib */ "./node_modules/otplib/index.js");
-const { Buffer: content_Buffer } = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var otplib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! otplib */ "./node_modules/otplib/index.js");
+/* harmony import */ var otplib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(otplib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var buffer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js");
 
-window.Buffer = content_Buffer;
+
+
+window.Buffer = buffer__WEBPACK_IMPORTED_MODULE_1__.Buffer;
 
 (function () {
   let extensionContextInvalidated = false;
@@ -48490,7 +48537,7 @@ window.Buffer = content_Buffer;
       chrome.storage.local.get(["tokens"], (result) => {
         const tokens = result.tokens || [];
         tokens.forEach((tokenObj, index) => {
-          const otp = authenticator.generate(tokenObj.secret);
+          const otp = otplib__WEBPACK_IMPORTED_MODULE_0__.authenticator.generate(tokenObj.secret);
           tokens[index].otp = otp;
         });
         chrome.storage.local.set({ tokens });
@@ -48561,6 +48608,8 @@ window.Buffer = content_Buffer;
   } else {
     onDOMContentLoaded();
   }
+})();
+
 })();
 
 /******/ })()

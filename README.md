@@ -12,7 +12,8 @@ AuthenticatorPro is a customizable authenticator extension that allows users to 
 
 ## Work In Progress
 
-- Future customization options: themes, popup size, font, etc.
+- More themes
+- In-app webcam permission popup
 
 ## Installation
 

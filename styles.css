@@ -8,10 +8,6 @@ body {
   overflow-x: hidden;
 }
 
-.permissions-page-body {
-  background-color: grey;
-}
-
 body::-webkit-scrollbar {
   width: 8px;
   visibility: visible;
@@ -458,13 +454,15 @@ body.theme-dark {
   height: 30px;
   width: 30px;
   position: relative;
-  transform: translate(214px, -50px);
+  /* transform: translate(214px, -50px); */
+  transform: translate(220px, -50px);
+
   visibility: hidden;
   z-index: 2;
 }
 
 .back-button:hover {
-  transform: translate(214px, -50px) scale(1.1);
+  transform: translate(220px, -50px) scale(1.1);
 }
 
 .header-container::selection {
@@ -1085,4 +1083,42 @@ input:checked + .slider:before {
 
 .light-theme-button:hover {
   background-color: rgb(219, 219, 219);
+}
+
+.theme-dark .options-page-header {
+  color: white;
+}
+
+.permissions-page-body {
+  text-align: center;
+}
+
+.theme-dark .camera-permission-button {
+  background-color: #ca6778;
+}
+
+.camera-permission-button {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 90%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: red;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-permission-message {
+  color: black;
+  font-weight: bold;
+}
+
+.theme-dark .camera-permission-message {
+  color: white;
 }
