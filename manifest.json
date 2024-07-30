@@ -3,9 +3,9 @@
   "name": "Authenticator Pro",
   "description": "Authenticator Pro is a powerful tool that generates a One-Time Password (OTP) every 30 seconds based on a provided secret.",
   "version": "1.0",
-  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "permissions": ["storage", "tabs"],
   "optional_host_permissions": ["http://*/*", "https://*/*"],
-  "optional_permissions": ["clipboardRead", "clipboardWrite"],
+  "optional_permissions": ["clipboardWrite"],
   "icons": {
     "16": "./images/icon16.png",
     "48": "./images/icon48.png",

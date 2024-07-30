@@ -12,14 +12,24 @@ window.Buffer = Buffer;
       clearTimeout(autoFillDebounceTimer);
     }
     autoFillDebounceTimer = setTimeout(() => {
-      const inputs = document.querySelectorAll('input[type="text"]');
+      const inputs = document.querySelectorAll("input");
       const activeElement = document.activeElement;
-      console.log("Found inputs:", inputs);
+      // console.log("Found inputs:", inputs);
 
       inputs.forEach((input) => {
         const inputId = input.id.toLowerCase();
-        if (inputId.includes("auth") || inputId.includes("totp")) {
-          console.log("Pasting token: ", token);
+        if (
+          inputId.includes("auth") ||
+          inputId.includes("totp") ||
+          inputId.includes("otp") ||
+          inputId.includes("2fa") ||
+          inputId.includes("mfa") ||
+          inputId.includes("code") ||
+          inputId.includes("token") ||
+          inputId.includes("verify") ||
+          inputId.includes("passcode")
+        ) {
+          // console.log("Pasting token: ", token);
           input.value = token;
 
           const inputEvent = new Event("input", { bubbles: true });
@@ -48,9 +58,9 @@ window.Buffer = Buffer;
         typeof chrome.runtime === "undefined" ||
         chrome.runtime.id === undefined
       ) {
-        console.log(
-          "Extension context invalidated, aborting checkAndFillAuthInputs."
-        );
+        // console.log(
+        //   "Extension context invalidated, aborting checkAndFillAuthInputs."
+        // );
         return;
       }
 
@@ -60,24 +70,24 @@ window.Buffer = Buffer;
           console.log("Current tab URL not found.");
           return;
         }
-        console.log("Current tab URL:", currentTabUrl);
+        // console.log("Current tab URL:", currentTabUrl);
 
         chrome.storage.local.get(["syncEnabled"], (syncResult) => {
           chrome.storage.local.get(["tokens", "autofillEnabled"], (result) => {
-            console.log("chrome.storage content:", result);
+            // console.log("chrome.storage content:", result);
             if (result.autofillEnabled) {
-              console.log("autofill is enabled");
+              // console.log("autofill is enabled");
               const tokens = result.tokens || [];
               tokens.forEach((tokenObj) => {
                 const savedUrl = tokenObj.url;
                 if (savedUrl && currentTabUrl.includes(savedUrl)) {
-                  console.log("condition to fill token met");
+                  // console.log("condition to fill token met");
                   const otp = tokenObj.otp; // Use the stored OTP
                   autoFillAuthInputs(otp);
                 }
               });
             } else {
-              console.log("Autofill is disabled.");
+              // console.log("Autofill is disabled.");
             }
           });
         });
@@ -87,7 +97,7 @@ window.Buffer = Buffer;
 
   function updateOTPs() {
     if (chrome.runtime.id === undefined) {
-      console.log("Extension context invalidated, aborting updateOTPs.");
+      // console.log("Extension context invalidated, aborting updateOTPs.");
       return;
     }
 
@@ -120,7 +130,7 @@ window.Buffer = Buffer;
           checkAndFillAuthInputs();
           updateOTPs();
         } catch (error) {
-          console.log("Error accessing chrome.storage.local:", error);
+          // console.log("Error accessing chrome.storage.local:", error);
           extensionContextInvalidated = true;
           clearInterval(intervalId);
         }
@@ -141,23 +151,23 @@ window.Buffer = Buffer;
 
       chrome.storage.onChanged.addListener((changes, namespace) => {
         if (changes.tokens) {
-          console.log("Changes detected in tokens");
+          // console.log("Changes detected in tokens");
           checkAndFillAuthInputs();
           updateOTPs();
-          console.log(
-            "Tokens updated in content script:",
-            changes.tokens.newValue
-          );
+          // console.log(
+          //   "Tokens updated in content script:",
+          //   changes.tokens.newValue
+          // );
         }
         if (changes.autofillEnabled) {
-          console.log("Changes detected in autofillEnabled");
+          // console.log("Changes detected in autofillEnabled");
           checkAndFillAuthInputs();
         }
       });
 
       document.addEventListener("visibilitychange", onVisibilityChange);
     } catch (error) {
-      console.log("Error initializing content script:", error);
+      // console.log("Error initializing content script:", error);
     }
   }
 

@@ -1,6 +1,6 @@
 # AuthenticatorPro
 
-AuthenticatorPro is a customizable authenticator extension that allows users to generate and autofill one-time passwords (OTPs) for their favorite websites. This extension offers various customization options such as enabling/disabling autofill, setting specific URLs for autofill, and more.
+AuthenticatorPro is a customizable authenticator extension that allows users to generate and autofill one-time passwords (OTPs). This extension offers various customization options such as enabling/disabling autofill, setting specific URLs for autofill, and more.
 
 ## Features
 
@@ -44,7 +44,7 @@ AuthenticatorPro is a customizable authenticator extension that allows users to 
 5. Load the extension in Chrome:
    -Go to 'chrome://extensions/'
    -Enable "Developer mode"
-   -Click "Loan dunpacked" and select the root of the project.
+   -Click "Loan unpacked" and select the root of the project.
 
 ## Usage
 
