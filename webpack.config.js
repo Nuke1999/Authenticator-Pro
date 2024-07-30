@@ -39,19 +39,19 @@ module.exports = {
   ],
 };
 
-//Production Webpack:
+//Production webpack:
 
 // const webpack = require("webpack");
 // const path = require("path");
 // const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 // const TerserPlugin = require("terser-webpack-plugin");
-// const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 // module.exports = {
 //   entry: {
 //     popup: "./src/popup.js",
 //     content: "./src/content.js",
 //     options: "./src/options.js",
+//     background: "./background.js",
 //   },
 //   output: {
 //     path: path.resolve(__dirname, "dist"),
@@ -110,17 +110,11 @@ module.exports = {
 //     new webpack.ProvidePlugin({
 //       process: "process/browser",
 //     }),
-//     new BundleAnalyzerPlugin(),
-//     new CopyWebpackPlugin({
-//       patterns: [
-//         { from: "manifest.json", to: "" },
-//         { from: "authenticator.html", to: "" },
-//         { from: "options.html", to: "" },
-//         { from: "background.js", to: "" },
-//         { from: "icons", to: "icons" },
-//         { from: "images", to: "images" },
-//         { from: "styles.css", to: "" },
-//       ],
+//     new webpack.IgnorePlugin({
+//       resourceRegExp:
+//         /test_key\.pem|test_rsa_privkey\.pem|test_rsa_pubkey\.pem/,
+//       contextRegExp: /public-encrypt\/test/,
 //     }),
+//     new BundleAnalyzerPlugin(),
 //   ],
 // };
