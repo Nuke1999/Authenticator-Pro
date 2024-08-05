@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Authenticator Pro",
   "description": "Authenticator Pro is a powerful tool that generates a One-Time Password (OTP) every 30 seconds based on a provided secret.",
-  "version": "1.0",
+  "version": "1.0.1",
   "permissions": ["storage", "tabs"],
   "optional_host_permissions": ["http://*/*", "https://*/*"],
   "optional_permissions": ["clipboardWrite"],

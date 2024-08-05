@@ -381,24 +381,26 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             });
 
-            // Save consolidated tokens to sync storage
+            // Save consolidated tokens to sync storage and local storage
             chrome.storage.sync.set({ tokens: syncTokens }, () => {
-              // console.log("adding potentially new tokens to dom");
-              syncTokens.forEach((tokenObj) => {
-                // Check if token is already in DOM
-                if (!document.getElementById(`token-${tokenObj.name}`)) {
-                  addTokenToDOM(
-                    tokenObj.name,
-                    tokenObj.secret,
-                    tokenObj.url,
-                    tokenObj.otp
-                  );
-                }
+              chrome.storage.local.set({ tokens: syncTokens }, () => {
+                // console.log("adding potentially new tokens to dom");
+                syncTokens.forEach((tokenObj) => {
+                  // Check if token is already in DOM
+                  if (!document.getElementById(`token-${tokenObj.name}`)) {
+                    addTokenToDOM(
+                      tokenObj.name,
+                      tokenObj.secret,
+                      tokenObj.url,
+                      tokenObj.otp
+                    );
+                  }
+                });
+                // console.log(
+                //   "Consolidated tokens saved to sync storage and local storage:",
+                //   syncTokens
+                // );
               });
-              // console.log(
-              //   "Consolidated tokens saved to sync storage:",
-              //   syncTokens
-              // );
             });
           });
         });
