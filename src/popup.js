@@ -276,13 +276,15 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         } else {
           // console.log(
-          //   "it was not the first time, according to chrome local storage; making checkbox positions match local storage. "
+          //   "according to chrome, it was not the first time; making checkbox positions match local storage. "
           // );
           isTimeCheckboxChecked = localResult.onlineTimeEnabled;
           updateClock();
           // console.log("local result: ", localResult);
           autofillCheckbox.checked = localResult.autofillEnabled;
           syncCheckbox.checked = localResult.syncEnabled;
+          const event = new Event("change");
+          syncCheckbox.dispatchEvent(event);
           clipboardCopyingCheckbox.checked =
             localResult.clipboardCopyingEnabled;
           onlineTimeCheckbox.checked = localResult.onlineTimeEnabled;
@@ -540,9 +542,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                     // Retrieve and log the storage data after setting
-                    chrome.storage.sync.get(null, (result) => {
-                      // console.log("sync storage tokens:", result);
-                    });
+                    // chrome.storage.sync.get(null, (result) => {
+                    //   // console.log("sync storage tokens:", result);
+                    // });
                   });
                 }
 
@@ -558,9 +560,9 @@ document.addEventListener("DOMContentLoaded", () => {
                   });
 
                   // Retrieve and log the storage data after setting
-                  chrome.storage.local.get(null, (result) => {
-                    // console.log("local storage tokens:", result);
-                  });
+                  // chrome.storage.local.get(null, (result) => {
+                  //   // console.log("local storage tokens:", result);
+                  // });
                 });
               } else {
                 throw new Error("Invalid token generated.");
@@ -676,12 +678,14 @@ document.addEventListener("DOMContentLoaded", () => {
       let addImageUrl = imageUrlInput.value;
       // console.log("Image URL saved:", addImageUrl);
 
-      QrScanner.scanImage(addImageUrl)
+      QrScanner.scanImage(addImageUrl, { returnDetailedScanResult: true })
         .then((result) => {
-          // console.log("decoded qr code:", result);
-          secretInput.value = result;
-          qrCodeFound();
-          document.body.removeChild(popupContainer);
+          const decodedData = result.data; // Get the decoded QR code value
+          // console.log("decoded qr code:", decodedData);
+
+          secretInput.value = decodedData; // Set the decoded data to the input
+          qrCodeFound(); // Handle the successful QR code scan
+          document.body.removeChild(popupContainer); // Remove the popup
         })
         .catch((error) => {
           setAdvancedAddMessage(
@@ -811,23 +815,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document
-      .getElementById("image-add-button")
-      .addEventListener("click", () => {
-        setTimeout(() => {
-          stopCameraAndScanner();
-          document.querySelector(".video-container").style.display = "none";
-        }, 1500); // 1-second delay for stopCameraAndScanner
-        document.getElementById("file-input").click();
-      });
-
-    document
       .getElementById("file-input")
       .addEventListener("change", async (e) => {
         const file = e.target.files[0];
         if (file) {
           try {
-            const result = await QrScanner.scanImage(file);
-            secretInput.value = result;
+            const result = await QrScanner.scanImage(file, {
+              returnDetailedScanResult: true,
+            });
+            // console.log(result.data);
+            secretInput.value = result.data;
             document.body.removeChild(popupContainer);
             qrCodeFound();
             isCooldown = true;
@@ -840,7 +837,8 @@ document.addEventListener("DOMContentLoaded", () => {
               "QR Code not found. Try a different image.",
               true
             );
-            // console.log(error || "No QR code found.");
+            console.log(error);
+            console.log(error || "No QR code found.");
 
             setTimeout(() => {
               setAdvancedAddMessage(
