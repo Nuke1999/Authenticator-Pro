@@ -10,20 +10,17 @@ body {
 
 body::-webkit-scrollbar {
   width: 8px;
-  visibility: visible;
 }
 
 body::-webkit-scrollbar-track {
   background: white;
   margin-block: 0.25em;
-  visibility: visible;
 }
 
 body::-webkit-scrollbar-thumb {
   background: grey;
   border-radius: 10px;
   max-height: 20px;
-  visibility: visible;
 }
 
 body.theme-dark {
@@ -43,7 +40,7 @@ body.theme-dark {
   cursor: pointer;
   display: inline-block;
   width: 250px;
-  max-height: 50px;
+  height: 50px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
@@ -142,7 +139,22 @@ body.theme-dark {
   user-select: none;
   color: green;
   font-weight: bold;
-  z-index: 3;
+  z-index: 1;
+}
+
+.theme-dark .not-copied-message {
+  color: white;
+}
+
+.not-copied-message {
+  position: relative;
+  top: -20px;
+  left: 63%;
+  transform: translateX(-50%);
+  user-select: none;
+  color: red;
+  font-weight: bold;
+  z-index: 1;
 }
 
 .popup-container {
@@ -454,7 +466,6 @@ body.theme-dark {
   height: 30px;
   width: 30px;
   position: relative;
-  /* transform: translate(214px, -50px); */
   transform: translate(220px, -50px);
 
   visibility: hidden;
@@ -681,8 +692,6 @@ body.theme-dark {
   height: 100%;
 }
 
-/* .minimalist-clock  */
-
 .minimalist-clock circle {
   fill: none;
   stroke: #000;
@@ -872,6 +881,34 @@ input:checked + .slider:before {
   margin-left: auto;
 }
 
+.checkbox-message-password {
+  visibility: hidden;
+  width: 175px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  right: 25px;
+  bottom: -7px;
+}
+
+.checkbox-message-sync {
+  visibility: hidden;
+  width: 175px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  right: 25px;
+  bottom: -7px;
+}
+
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 225px;
@@ -882,15 +919,12 @@ input:checked + .slider:before {
   border-radius: 6px;
   position: absolute;
   z-index: 1;
+  top: -35px;
+  right: 105%;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
-}
-
-.tooltip .tooltiptext {
-  top: -35px;
-  right: 105%;
 }
 
 .video-container {
@@ -980,17 +1014,25 @@ input:checked + .slider:before {
   color: white;
 }
 
-.url-add-container {
+.form-label-container {
   margin-top: 5px;
 }
 
-.theme-dark .add-url-button {
+.form-label-container-password {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 5px;
+}
+
+.theme-dark .wide-button {
   background-color: #4a90e2;
 }
 
-.add-url-button {
+.wide-button {
+  display: block;
   width: 100%;
   padding: 10px;
+  transform: translateY(-5px);
   border: none;
   border-radius: 5px;
   background-color: #007bff;
@@ -998,16 +1040,13 @@ input:checked + .slider:before {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.add-url-button:hover {
+.wide-button:hover {
   background-color: #0056b3;
 }
 
-.theme-dark .add-url-button:hover {
+.theme-dark .wide-button:hover {
   background-color: #357abd;
 }
 
@@ -1045,6 +1084,7 @@ input:checked + .slider:before {
 .theme-buttons-container {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 15px;
 }
 
 .dark-theme-button {
@@ -1121,4 +1161,60 @@ input:checked + .slider:before {
 
 .theme-dark .camera-permission-message {
   color: white;
+}
+
+.password-warning-message {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 10px;
+  color: red;
+  font-weight: bold;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.logo-container img {
+  width: 50%;
+  height: auto;
+  filter: invert(100%);
+}
+
+#password-submit-button {
+  margin-top: 5px;
+}
+
+.theme-dark .logo-container {
+  filter: invert(100%);
+}
+
+.clipboard-tooltip {
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 10;
+}
+
+#incorrect-password-message {
+  height: 20px;
+  line-height: 20px;
+  color: red;
+  padding-left: 10px;
+}
+
+.wrong-or-nonmatch-passwords {
+  display: inline-block;
+  color: red;
+  margin-left: 12px;
+  visibility: hidden;
 }

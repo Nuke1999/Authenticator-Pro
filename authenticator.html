@@ -2,267 +2,320 @@
 <html>
   <head>
     <title>All In One Authenticator</title>
-
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <input type="file" id="file-input" accept="image/*" style="display: none" />
-
-    <div class="header-container">
-      <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>
-
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="0.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-settings main-settings"
-        id="main-settings"
-      >
-        <path
-          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
-        ></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="back-button feather feather-corner-up-left"
-        id="back-button"
-      >
-        <polyline points="9 14 4 9 9 4"></polyline>
-        <path d="M20 20v-7a4 4 0 0 0-4-4H4"></path>
-      </svg>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-minus minimize"
-        id="minimize"
-      >
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-      </svg>
-    </div>
-    <div id="main-content">
-      <div class="form-container" id="form-container">
-        <label for="name" class="form-label">Enter Name:</label>
-        <input type="text" id="name" class="form-input" />
-        <br />
-        <div class="inline-label-and-message">
-          <label
-            for="secret"
-            class="form-label secret-form-label"
-            id="secret-form-label"
-            >Enter Secret:</label
-          >
-        </div>
-        <input type="text" id="secret" class="form-input-no-margin" />
-        <br />
-        <br />
-        <button id="generate" class="add-token-button">Add Token</button>
+    <div id="password-prompt-container" class="password-prompt-container">
+      <h2 class="centered-title">Enter Password to Unlock</h2>
+      <div class="form-container">
+        <input type="password" id="password-input" class="form-input" />
+        <button id="password-submit-button" class="wide-button">Submit</button>
       </div>
-      <div class="active-tokens-header-container">
-        <h1 class="active-tokens-header">Active Tokens:</h1>
+      <h2
+        class="incorrect-password-message"
+        id="incorrect-password-message"
+      ></h2>
+      <div class="logo-container">
+        <img
+          src="./images/big-authenticator-pro-logo.png"
+          alt="authenticator-pro-logo"
+          class="logo-img"
+        />
+      </div>
+    </div>
+    <div class="authenticator-main-content" id="authenticator-main-content">
+      <div class="header-container">
+        <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="0.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-settings main-settings"
+          id="main-settings"
+        >
+          <path
+            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+          ></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="back-button feather feather-corner-up-left"
+          id="back-button"
+        >
+          <polyline points="9 14 4 9 9 4"></polyline>
+          <path d="M20 20v-7a4 4 0 0 0-4-4H4"></path>
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-minus minimize"
+          id="minimize"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </div>
+      <div id="main-content">
+        <div class="form-container" id="form-container">
+          <label for="name" class="form-label">Enter Name:</label>
+          <input type="text" id="name" class="form-input" />
+          <br />
+          <div class="inline-label-and-message">
+            <label
+              for="secret"
+              class="form-label secret-form-label"
+              id="secret-form-label"
+              >Enter Secret:</label
+            >
+          </div>
+          <input type="text" id="secret" class="form-input-no-margin" />
+          <br />
+          <br />
+          <button id="generate" class="add-token-button">Add Token</button>
+        </div>
         <div class="active-tokens-header-container">
-          <div class="minimalist-clock">
-            <svg viewBox="0 0 100 100">
-              <circle class="background-circle" cx="50" cy="50" r="40" />
-              <circle class="progress-circle" cx="50" cy="50" r="40" />
-              <text
-                class="clock-text"
-                x="50"
-                y="60"
-                text-anchor="middle"
-              ></text>
-            </svg>
+          <h1 class="active-tokens-header">Active Tokens:</h1>
+          <div class="active-tokens-header-container">
+            <div class="minimalist-clock">
+              <svg viewBox="0 0 100 100">
+                <circle class="background-circle" cx="50" cy="50" r="40" />
+                <circle class="progress-circle" cx="50" cy="50" r="40" />
+                <text
+                  class="clock-text"
+                  x="50"
+                  y="60"
+                  text-anchor="middle"
+                ></text>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div id="tokens"></div>
+      </div>
+      <div class="settings-content" id="settings-content" style="display: none">
+        <div class="switch-boxes-container" id="switch-boxes-container">
+          <h2 class="permissions-header">Permissions</h2>
+          <div class="switch-box-first">
+            <label class="switch">
+              <input type="checkbox" id="advanced-add-checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <div class="switch-text">Advanced Add Button</div>
+            <div class="tooltip">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-info"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span class="tooltiptext"
+                >Allows users to add secrets via QR code (webcam, file, or
+                link).
+              </span>
+            </div>
+            <br />
+          </div>
+          <div class="switch-box">
+            <label class="switch">
+              <input type="checkbox" id="autofill-checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <div class="switch-text">Autofill</div>
+            <div class="tooltip">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-info"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span class="tooltiptext"
+                >Automatically fills the OTP field using the Autofill URL for
+                each token.
+              </span>
+            </div>
+            <br />
+          </div>
+          <div class="switch-box">
+            <label class="switch">
+              <input id="clipboard-copying-checkbox" type="checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <div class="switch-text">Clipboard Copying</div>
+            <div class="tooltip">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-info"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span class="tooltiptext"
+                >Allows copying the OTP to clipboard when clicking a token
+                box.</span
+              >
+            </div>
+            <br />
+          </div>
+          <div class="switch-box">
+            <label class="switch">
+              <input type="checkbox" id="online-time-checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <div class="switch-text">Online Time Sync</div>
+            <div class="tooltip">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-info"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span class="tooltiptext"
+                >Syncs with time online for accuracy; otherwise uses local
+                device time.
+              </span>
+            </div>
+            <br />
+          </div>
+          <div class="switch-box">
+            <label class="switch" id="password-protected-label">
+              <input type="checkbox" id="password-protected-checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <div class="switch-text">Password Protection</div>
+            <div class="tooltip">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-info"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span
+                class="checkbox-message-password"
+                id="checkbox-message-password"
+                >To enable, turn off Sync Across Chrome</span
+              >
+              <span class="tooltiptext"
+                >Encrypts and protects saved secrets with a password.
+              </span>
+            </div>
+            <br />
+          </div>
+          <div class="switch-box-last">
+            <label class="switch" id="sync-check-label">
+              <input type="checkbox" id="sync-checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <div class="switch-text">Sync Across Chrome</div>
+            <div class="tooltip">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-info"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span class="checkbox-message-sync" id="checkbox-message-sync"
+                >To enable, turn off Password Protection</span
+              >
+              <span class="tooltiptext"
+                >Syncs tokens on logged in chrome devices; otherwise, state is
+                only local.</span
+              >
+            </div>
+            <br />
+          </div>
+          <h2 class="themes-header">Themes</h2>
+          <div class="theme-buttons-container">
+            <button class="light-theme-button" id="light-theme-button">
+              Light Theme
+            </button>
+            <button class="dark-theme-button" id="dark-theme-button">
+              Dark Theme
+            </button>
           </div>
         </div>
       </div>
-      <div id="tokens"></div>
     </div>
-    <div class="settings-content" id="settings-content" style="display: none">
-      <div class="switch-boxes-container" id="switch-boxes-container">
-        <h2 class="permissions-header">Permissions</h2>
-        <div class="switch-box-first">
-          <label class="switch">
-            <input type="checkbox" id="autofill-checkbox" />
-            <span class="slider round"></span>
-          </label>
-          <div class="switch-text">Autofill</div>
-          <div class="tooltip">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span class="tooltiptext"
-              >Automatically fills the OTP field using the Autofill URL for each
-              token.
-            </span>
-          </div>
-          <br />
-        </div>
-        <div class="switch-box">
-          <label class="switch">
-            <input type="checkbox" id="sync-checkbox" />
-            <span class="slider round"></span>
-          </label>
-          <div class="switch-text">Sync Across Chrome</div>
-          <div class="tooltip">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span class="tooltiptext"
-              >Syncs tokens on logged in chrome devices; otherwise, state is
-              only local.</span
-            >
-          </div>
-          <br />
-        </div>
-
-        <div class="switch-box">
-          <label class="switch">
-            <input id="clipboard-copying-checkbox" type="checkbox" />
-            <span class="slider round"></span>
-          </label>
-          <div class="switch-text">Clipboard Copying</div>
-          <div class="tooltip">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span class="tooltiptext"
-              >Allows copying the OTP to clipboard when clicking a token
-              box.</span
-            >
-          </div>
-          <br />
-        </div>
-        <div class="switch-box">
-          <label class="switch">
-            <input type="checkbox" id="online-time-checkbox" />
-            <span class="slider round"></span>
-          </label>
-          <div class="switch-text">Online Time Sync</div>
-          <div class="tooltip">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span class="tooltiptext"
-              >Syncs with time online for accuracy; otherwise uses local device
-              time.
-            </span>
-          </div>
-          <br />
-        </div>
-        <div class="switch-box-last">
-          <label class="switch">
-            <input type="checkbox" id="advanced-add-checkbox" />
-            <span class="slider round"></span>
-          </label>
-          <div class="switch-text">Advanced Add Button</div>
-          <div class="tooltip">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-info"
-            >
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <span class="tooltiptext"
-              >Allows users to add secrets via QR code (webcam, file, or link).
-            </span>
-          </div>
-          <br />
-        </div>
-        <h2 class="themes-header">Themes</h2>
-        <div class="theme-buttons-container">
-          <button class="light-theme-button" id="light-theme-button">
-            Light Theme
-          </button>
-          <button class="dark-theme-button" id="dark-theme-button">
-            Dark Theme
-          </button>
-        </div>
-      </div>
-    </div>
-
     <script type="module" src="dist/popup.js"></script>
   </body>
 </html>
