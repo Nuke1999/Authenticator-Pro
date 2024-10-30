@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktyvūs tokenai:"
+  },
+  "add_token": {
+    "message": "Pridėti tokeną"
+  },
+  "add_qr_code_via": {
+    "message": "Pridėti QR kodą per:"
+  },
+  "advanced_add": {
+    "message": "Išplėstinis pridėjimas"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Išplėstinio pridėjimo mygtukas"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Leidžia vartotojams pridėti paslaptis per QR kodą (webcam, failą arba nuorodą)."
+  },
+  "are_you_sure_message": {
+    "message": "Ar esate tikri? Ši operacija yra nuolatinė."
+  },
+  "autofill_checkbox_label": {
+    "message": "Automatinis užpildymas"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Automatiškai užpildo OTP laukelį naudodamas kiekvieno tokeno automatinio užpildymo URL."
+  },
+  "autofill_url": {
+    "message": "Automatinio užpildymo URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Automatinio užpildymo URL: (Negaliojantis)"
+  },
+  "camera_permission_button": {
+    "message": "Kameros leidimo mygtukas"
+  },
+  "camera_permission_message_1": {
+    "message": "*Mygtukas automatiškai spustelės puslapio įkėlimo metu*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webcam mygtukas veiks po to, kai leisite kamerai prieigą"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Kopijavimas į klipbordą"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Leidžia kopijuoti OTP į klipbordą spustelėjus tokeno langelį."
+  },
+  "close": {
+    "message": "Uždaryti"
+  },
+  "confirm_password": {
+    "message": "Patvirtinti slaptažodį:"
+  },
+  "copied": {
+    "message": "Nukopijuota!"
+  },
+  "currently_saved": {
+    "message": "Šiuo metu išsaugota: "
+  },
+  "dark_theme": {
+    "message": "Tamsus tema"
+  },
+  "delete": {
+    "message": "Ištrinti"
+  },
+  "disable_password_protection": {
+    "message": "Išjungti slaptažodžio apsaugą"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Įjunkite klipbordo kopijavimą nustatymuose"
+  },
+  "enable_password_protection": {
+    "message": "Įjungti slaptažodžio apsaugą"
+  },
+  "enter_name": {
+    "message": "Įveskite vardą:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Prašome įvesti tiek vardą, tiek paslaptį."
+  },
+  "enter_password": {
+    "message": "Įveskite slaptažodį:"
+  },
+  "enter_secret": {
+    "message": "Įveskite paslaptį:"
+  },
+  "enter_url": {
+    "message": "Įveskite URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro yra galingas įrankis, kuris kas 30 sekundžių generuoja vienkartinį slaptažodį (OTP) pagal pateiktą paslaptį."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Paslėpti tokeno pridėjimą"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Paslepia tokeno pridėjimo formą; suteikia geresnę išsaugotų tokenų matomumą."
+  },
+  "image": {
+    "message": "Vaizdas"
+  },
+  "image_url": {
+    "message": "Vaizdo URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Neteisingas slaptažodis"
+  },
+  "incorrect_url_message": {
+    "message": "Neteisingas URL arba URL neturi QR kodo."
+  },
+  "invalid_secret_message": {
+    "message": "Neteisinga paslaptis. Prašome įvesti Base32 koduotą eilutę."
+  },
+  "light_theme": {
+    "message": "Šviesus tema"
+  },
+  "main_enter_password_message": {
+    "message": "Įveskite slaptažodį, kad atrakintumėte"
+  },
+  "name_already_exists_message": {
+    "message": "Tokenas su šiuo vardu jau egzistuoja."
+  },
+  "name_too_long_message": {
+    "message": "Vardas per ilgas, prašome įvesti trumpesnį vardą."
+  },
+  "online_time_checkbox_label": {
+    "message": "Interneto laiko sinchronizavimas"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Sinchronizuojama su internetu laiku tikslumui; kitu atveju naudojamas vietinis prietaiso laikas."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Slaptažodžio apsauga"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Norėdami įjungti, išjunkite sinchronizavimą tarp Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Šifruoja ir apsaugo išsaugotas paslaptis slaptažodžiu."
+  },
+  "password_protection_setup": {
+    "message": "Slaptažodžio apsaugos nustatymas"
+  },
+  "passwords_dont_match": {
+    "message": "Slaptažodžiai nesutampa"
+  },
+  "password_warning_message": {
+    "message": "ĮSPĖJIMAS: Jei slaptažodis pamirštas, jo atkurti negalima."
+  },
+  "permissions": {
+    "message": "Teisės"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro teisių puslapis "
+  },
+  "popup_mode_label": {
+    "message": "Iššokantis režimas"
+  },
+  "popup_mode_tooltip": {
+    "message": "Atidaro Authenticator Pro atskiroje lango."
+  },
+  "qr_found_message": {
+    "message": "QR kodas rastas!"
+  },
+  "qr_not_found_message": {
+    "message": "QR kodas nerastas. Išbandykite kitą vaizdą."
+  },
+  "remove_password": {
+    "message": "Pašalinti slaptažodį"
+  },
+  "save_url": {
+    "message": "Išsaugoti URL"
+  },
+  "scanning": {
+    "message": "Skanuojama..."
+  },
+  "secret": {
+    "message": " Paslaptis:"
+  },
+  "secret_already_added_message": {
+    "message": "Jūs jau pridėjote šią paslaptį."
+  },
+  "settings": {
+    "message": "Nustatymai"
+  },
+  "submit": {
+    "message": "Pateikti"
+  },
+  "sync_checkbox_label": {
+    "message": "Sinchronizuoti tarp Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Norėdami įjungti, išjunkite slaptažodžio apsaugą"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Sinchronizuoja tokenus prisijungusiuose Chrome įrenginiuose; kitaip būsena bus tik lokali."
+  },
+  "themes": {
+    "message": "Temos"
+  },
+  "token_settings": {
+    "message": "Tokenų nustatymai"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

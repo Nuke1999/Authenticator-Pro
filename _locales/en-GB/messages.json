@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Active Tokens:"
+  },
+  "add_token": {
+    "message": "Add Token"
+  },
+  "add_qr_code_via": {
+    "message": "Add QR Code Via:"
+  },
+  "advanced_add": {
+    "message": "Advanced Add"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Advanced Add Button"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Allows users to add secrets via QR code (webcam, file, or link)."
+  },
+  "are_you_sure_message": {
+    "message": "Are you sure? This action is permanent."
+  },
+  "autofill_checkbox_label": {
+    "message": "Autofill"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Automatically fills the OTP field using the Autofill URL for each token."
+  },
+  "autofill_url": {
+    "message": "Autofill URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Autofill URL: (Not Enabled)"
+  },
+  "camera_permission_button": {
+    "message": "Camera Permission Button"
+  },
+  "camera_permission_message_1": {
+    "message": "*Button auto-clicks on page load*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webcam Button will work after allowing camera access"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Clipboard Copying"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Allows copying the OTP to clipboard when clicking a token box."
+  },
+  "close": {
+    "message": "Close"
+  },
+  "confirm_password": {
+    "message": "Confirm Password:"
+  },
+  "copied": {
+    "message": "Copied!"
+  },
+  "currently_saved": {
+    "message": "Currently Saved: "
+  },
+  "dark_theme": {
+    "message": "Dark Theme"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "disable_password_protection": {
+    "message": "Disable Password Protection"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Enable Clipboard Copy in settings"
+  },
+  "enable_password_protection": {
+    "message": "Enable Password Protection"
+  },
+  "enter_name": {
+    "message": "Enter Name:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Please enter both name and secret."
+  },
+  "enter_password": {
+    "message": "Enter Password:"
+  },
+  "enter_secret": {
+    "message": "Enter Secret:"
+  },
+  "enter_url": {
+    "message": "Enter URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro is a powerful tool that generates a One-Time Password (OTP) every 30 seconds based on a provided secret."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Hide Token Adder"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Hides the token adder form; provides easier visibility of saved tokens."
+  },
+  "image": {
+    "message": "Image"
+  },
+  "image_url": {
+    "message": "Image URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Incorrect Password"
+  },
+  "incorrect_url_message": {
+    "message": "Incorrect URL, or URL did not contain QR code."
+  },
+  "invalid_secret_message": {
+    "message": "Invalid secret. Please enter a Base32 encoded string."
+  },
+  "light_theme": {
+    "message": "Light Theme"
+  },
+  "main_enter_password_message": {
+    "message": "Enter Password to Unlock"
+  },
+  "name_already_exists_message": {
+    "message": "A token with this name already exists."
+  },
+  "name_too_long_message": {
+    "message": "Name too long, please input a shorter name."
+  },
+  "online_time_checkbox_label": {
+    "message": "Online Time Sync"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Syncs with time online for accuracy; otherwise uses local device time."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Password Protection"
+  },
+  "password_protected_checkbox_message": {
+    "message": "To enable, turn off Sync Across Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Encrypts and protects saved secrets with a password."
+  },
+  "password_protection_setup": {
+    "message": "Password Protection Setup"
+  },
+  "passwords_dont_match": {
+    "message": "Passwords Don't Match"
+  },
+  "password_warning_message": {
+    "message": "WARNING: If the password is forgotten, it cannot be recovered."
+  },
+  "permissions": {
+    "message": "Permissions"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro Permissions Page"
+  },
+  "popup_mode_label": {
+    "message": "Popup Mode"
+  },
+  "popup_mode_tooltip": {
+    "message": "Opens Authenticator Pro in a separate window."
+  },
+  "qr_found_message": {
+    "message": "QR code found!"
+  },
+  "qr_not_found_message": {
+    "message": "QR Code not found. Try a different image."
+  },
+  "remove_password": {
+    "message": "Remove Password"
+  },
+  "save_url": {
+    "message": "Save URL"
+  },
+  "scanning": {
+    "message": "Scanning..."
+  },
+  "secret": {
+    "message": " Secret:"
+  },
+  "secret_already_added_message": {
+    "message": "You've already added this secret."
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "submit": {
+    "message": "Submit"
+  },
+  "sync_checkbox_label": {
+    "message": "Sync Across Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "To enable, turn off Password Protection"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Syncs tokens on logged-in Chrome devices; otherwise, state is only local."
+  },
+  "themes": {
+    "message": "Themes"
+  },
+  "token_settings": {
+    "message": "Token Settings"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

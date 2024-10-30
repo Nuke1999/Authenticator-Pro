@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Tokens Activos:"
+  },
+  "add_token": {
+    "message": "Engadir Token"
+  },
+  "add_qr_code_via": {
+    "message": "Engadir Código QR A través de:"
+  },
+  "advanced_add": {
+    "message": "Engadir Avanzado"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Botón de Engadir Avanzado"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Permite aos usuarios engadir segredos a través de código QR (webcam, arquivo ou enlace)."
+  },
+  "are_you_sure_message": {
+    "message": "Estás seguro? Esta acción é permanente."
+  },
+  "autofill_checkbox_label": {
+    "message": "Autocompletar"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Completa automáticamente o campo OTP utilizando a URL de autocompletar para cada token."
+  },
+  "autofill_url": {
+    "message": "URL de Autocompletar:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL de Autocompletar: (Non Activada)"
+  },
+  "camera_permission_button": {
+    "message": "Botón de Permiso da Cámara"
+  },
+  "camera_permission_message_1": {
+    "message": "*O botón faise clic automaticamente ao cargar a páxina*"
+  },
+  "camera_permission_message_2": {
+    "message": "O botón da webcam funcionará despois de permitir o acceso á cámara"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Copia ao Portapapeis"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Permite copiar o OTP ao portapapeis ao clicar nunha caixa de token."
+  },
+  "close": {
+    "message": "Pechar"
+  },
+  "confirm_password": {
+    "message": "Confirmar Contraseña:"
+  },
+  "copied": {
+    "message": "Copiado!"
+  },
+  "currently_saved": {
+    "message": "Actualmente Gardado: "
+  },
+  "dark_theme": {
+    "message": "Tema Escuro"
+  },
+  "delete": {
+    "message": "Eliminar"
+  },
+  "disable_password_protection": {
+    "message": "Desactivar Protección por Contraseña"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Activar Copia ao Portapapeis nos axustes"
+  },
+  "enable_password_protection": {
+    "message": "Activar Protección por Contraseña"
+  },
+  "enter_name": {
+    "message": "Introducir Nome:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Por favor, introduce tanto o nome como o secreto."
+  },
+  "enter_password": {
+    "message": "Introducir Contraseña:"
+  },
+  "enter_secret": {
+    "message": "Introducir Segredo:"
+  },
+  "enter_url": {
+    "message": "Introducir URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro é unha poderosa ferramenta que xera un Contraseña de Uso Único (OTP) cada 30 segundos en base a un segredo proporcionado."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Ocultar Engadidor de Tokens"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Oculta o formulario de engadido de tokens; proporciona unha visibilidade máis fácil dos tokens gardados."
+  },
+  "image": {
+    "message": "Imaxe"
+  },
+  "image_url": {
+    "message": "URL da Imaxe:"
+  },
+  "incorrect_password_message": {
+    "message": "Contraseña Incorrecta"
+  },
+  "incorrect_url_message": {
+    "message": "URL incorrecta, ou a URL non contiña un código QR."
+  },
+  "invalid_secret_message": {
+    "message": "Segredo invalido. Por favor, introduce unha cadea codificada en Base32."
+  },
+  "light_theme": {
+    "message": "Tema Claro"
+  },
+  "main_enter_password_message": {
+    "message": "Introducir Contraseña para Desbloquear"
+  },
+  "name_already_exists_message": {
+    "message": "Xa existe un token con este nome."
+  },
+  "name_too_long_message": {
+    "message": "Nome demasiado longo, por favor introduce un nome máis curto."
+  },
+  "online_time_checkbox_label": {
+    "message": "Sincronización do Tempo en Liña"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Sincronízase co tempo en liña para maior precisión; doutro xeito, utiliza o tempo do dispositivo local."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Protección por Contraseña"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Para activar, desactiva a Sincronización en Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Cifra e protexe os segredos gardados cunha contraseña."
+  },
+  "password_protection_setup": {
+    "message": "Configuración da Protección por Contraseña"
+  },
+  "passwords_dont_match": {
+    "message": "As Contraseñas Non Coinciden"
+  },
+  "password_warning_message": {
+    "message": "AVISO: Se a contraseña se esquece, non pode ser recuperada."
+  },
+  "permissions": {
+    "message": "Permisos"
+  },
+  "permissions_page_header": {
+    "message": "Página de Permisos de Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "Modo Fenómeno"
+  },
+  "popup_mode_tooltip": {
+    "message": "Abre Authenticator Pro nunha xanela separada."
+  },
+  "qr_found_message": {
+    "message": "Código QR atopado!"
+  },
+  "qr_not_found_message": {
+    "message": "Código QR non atopado. Proba cunha imaxe diferente."
+  },
+  "remove_password": {
+    "message": "Eliminar Contraseña"
+  },
+  "save_url": {
+    "message": "Gardar URL"
+  },
+  "scanning": {
+    "message": "Escaneando..."
+  },
+  "secret": {
+    "message": " Segredo:"
+  },
+  "secret_already_added_message": {
+    "message": "Xa engadiches este segredo."
+  },
+  "settings": {
+    "message": "Configuracións"
+  },
+  "submit": {
+    "message": "Enviar"
+  },
+  "sync_checkbox_label": {
+    "message": "Sincronizar en Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Para activar, desactiva a Protección por Contraseña"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Sincroniza tokens en dispositivos Chrome conectados; doutro xeito, o estado é só local."
+  },
+  "themes": {
+    "message": "Temas"
+  },
+  "token_settings": {
+    "message": "Configuración dos Tokens"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktive Tokens:"
+  },
+  "add_token": {
+    "message": "Token Hinzufügen"
+  },
+  "add_qr_code_via": {
+    "message": "QR-Code Hinzufügen Über:"
+  },
+  "advanced_add": {
+    "message": "Erweiterte Hinzufügung"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Erweiterte Hinzufügen-Schaltfläche"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Ermöglicht es Benutzern, Geheimnisse über QR-Code (Webcam, Datei oder Link) hinzuzufügen."
+  },
+  "are_you_sure_message": {
+    "message": "Bist du sicher? Diese Aktion ist dauerhaft."
+  },
+  "autofill_checkbox_label": {
+    "message": "Automatisches Ausfüllen"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Füllt das OTP-Feld automatisch mit der Autofill-URL für jedes Token aus."
+  },
+  "autofill_url": {
+    "message": "Autofill-URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Autofill-URL: (Nicht Aktiviert)"
+  },
+  "camera_permission_button": {
+    "message": "Kamera-Erlaubnis-Schaltfläche"
+  },
+  "camera_permission_message_1": {
+    "message": "*Schaltfläche klickt automatisch beim Laden der Seite*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webcam-Schaltfläche funktioniert nach der Kamerazugriffsberechtigung"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "In Zwischenablage Kopieren"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Ermöglicht das Kopieren des OTP in die Zwischenablage durch Klicken auf eine Token-Box."
+  },
+  "close": {
+    "message": "Schließen"
+  },
+  "confirm_password": {
+    "message": "Passwort Bestätigen:"
+  },
+  "copied": {
+    "message": "Kopiert!"
+  },
+  "currently_saved": {
+    "message": "Aktuell Gespeichert: "
+  },
+  "dark_theme": {
+    "message": "Dunkles Thema"
+  },
+  "delete": {
+    "message": "Löschen"
+  },
+  "disable_password_protection": {
+    "message": "Passwortschutz Deaktivieren"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Aktivieren Sie das Kopieren in die Zwischenablage in den Einstellungen"
+  },
+  "enable_password_protection": {
+    "message": "Passwortschutz Aktivieren"
+  },
+  "enter_name": {
+    "message": "Name Eingeben:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Bitte geben Sie sowohl den Namen als auch das Geheimnis ein."
+  },
+  "enter_password": {
+    "message": "Passwort Eingeben:"
+  },
+  "enter_secret": {
+    "message": "Geheimnis Eingeben:"
+  },
+  "enter_url": {
+    "message": "URL Eingeben"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro ist ein leistungsstarkes Tool, das alle 30 Sekunden basierend auf einem bereitgestellten Geheimnis ein Einmalpasswort (OTP) generiert."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Token-Formular Ausblenden"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Blendet das Token-Formular aus und verbessert die Sichtbarkeit gespeicherter Tokens."
+  },
+  "image": {
+    "message": "Bild"
+  },
+  "image_url": {
+    "message": "Bild-URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Falsches Passwort"
+  },
+  "incorrect_url_message": {
+    "message": "Falsche URL oder QR-Code in der URL nicht enthalten."
+  },
+  "invalid_secret_message": {
+    "message": "Ungültiges Geheimnis. Bitte geben Sie eine Base32-kodierte Zeichenfolge ein."
+  },
+  "light_theme": {
+    "message": "Helles Thema"
+  },
+  "main_enter_password_message": {
+    "message": "Passwort Eingeben zum Entsperren"
+  },
+  "name_already_exists_message": {
+    "message": "Ein Token mit diesem Namen existiert bereits."
+  },
+  "name_too_long_message": {
+    "message": "Name zu lang, bitte kürzeren Namen eingeben."
+  },
+  "online_time_checkbox_label": {
+    "message": "Online-Zeitsynchronisation"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Synchronisiert mit der Online-Zeit für Genauigkeit; nutzt sonst die lokale Gerätezeit."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Passwortschutz"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Zum Aktivieren, deaktivieren Sie Chrome-Synchronisation"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Verschlüsselt und schützt gespeicherte Geheimnisse mit einem Passwort."
+  },
+  "password_protection_setup": {
+    "message": "Passwortschutz Einrichten"
+  },
+  "passwords_dont_match": {
+    "message": "Passwörter Stimmen Nicht Überein"
+  },
+  "password_warning_message": {
+    "message": "WARNUNG: Wenn das Passwort vergessen wird, kann es nicht wiederhergestellt werden."
+  },
+  "permissions": {
+    "message": "Berechtigungen"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro Berechtigungsseite"
+  },
+  "popup_mode_label": {
+    "message": "Popup-Modus"
+  },
+  "popup_mode_tooltip": {
+    "message": "Öffnet Authenticator Pro in einem separaten Fenster."
+  },
+  "qr_found_message": {
+    "message": "QR-Code gefunden!"
+  },
+  "qr_not_found_message": {
+    "message": "QR-Code nicht gefunden. Versuchen Sie ein anderes Bild."
+  },
+  "remove_password": {
+    "message": "Passwort Entfernen"
+  },
+  "save_url": {
+    "message": "URL Speichern"
+  },
+  "scanning": {
+    "message": "Scannen..."
+  },
+  "secret": {
+    "message": " Geheimnis:"
+  },
+  "secret_already_added_message": {
+    "message": "Dieses Geheimnis wurde bereits hinzugefügt."
+  },
+  "settings": {
+    "message": "Einstellungen"
+  },
+  "submit": {
+    "message": "Absenden"
+  },
+  "sync_checkbox_label": {
+    "message": "Chrome-Synchronisation"
+  },
+  "sync_checkbox_message": {
+    "message": "Zum Aktivieren, Passwortschutz Deaktivieren"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Synchronisiert Tokens auf angemeldeten Chrome-Geräten; ansonsten nur lokal gespeichert."
+  },
+  "themes": {
+    "message": "Themen"
+  },
+  "token_settings": {
+    "message": "Token-Einstellungen"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

@@ -1,4 +1,8 @@
-html,
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +10,7 @@ body {
   height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
+  max-height: 450px;
 }
 
 body::-webkit-scrollbar {
@@ -433,7 +438,6 @@ body.theme-dark {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  min-height: 100px;
 }
 
 .theme-dark circle {
@@ -677,12 +681,11 @@ body.theme-dark {
 }
 
 .minimalist-clock {
-  display: inline-block;
   width: 48px;
   height: 48px;
   margin-top: auto;
-  margin-left: 35px;
-  transform: translateY(-2px);
+  margin-left: auto;
+  padding-right: 7px;
   user-select: none;
   pointer-events: none;
 }
@@ -987,6 +990,7 @@ input:checked + .slider:before {
   margin-top: 20px;
   text-align: center;
   display: block;
+  max-width: calc(100% - 20px);
   margin-left: auto;
   margin-right: auto;
 }

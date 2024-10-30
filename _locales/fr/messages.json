@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Jetons Actifs :"
+  },
+  "add_token": {
+    "message": "Ajouter un Jeton"
+  },
+  "add_qr_code_via": {
+    "message": "Ajouter un Code QR via :"
+  },
+  "advanced_add": {
+    "message": "Ajout Avancé"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Bouton d'Ajout Avancé"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Permet aux utilisateurs d'ajouter des secrets via un code QR (webcam, fichier ou lien)."
+  },
+  "are_you_sure_message": {
+    "message": "Êtes-vous sûr ? Cette action est permanente."
+  },
+  "autofill_checkbox_label": {
+    "message": "Remplissage Automatique"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Remplit automatiquement le champ OTP en utilisant l'URL de remplissage automatique pour chaque jeton."
+  },
+  "autofill_url": {
+    "message": "URL de Remplissage Automatique :"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL de Remplissage Automatique : (Non Activée)"
+  },
+  "camera_permission_button": {
+    "message": "Bouton d'Autorisation de la Caméra"
+  },
+  "camera_permission_message_1": {
+    "message": "*Le bouton se clique automatiquement lors du chargement de la page*"
+  },
+  "camera_permission_message_2": {
+    "message": "Le bouton Webcam fonctionnera après avoir autorisé l'accès à la caméra"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Copie dans le Presse-papiers"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Permet de copier l'OTP dans le presse-papiers lors du clic sur une zone de jeton."
+  },
+  "close": {
+    "message": "Fermer"
+  },
+  "confirm_password": {
+    "message": "Confirmer le Mot de Passe :"
+  },
+  "copied": {
+    "message": "Copié !"
+  },
+  "currently_saved": {
+    "message": "Actuellement Sauvegardé : "
+  },
+  "dark_theme": {
+    "message": "Thème Sombre"
+  },
+  "delete": {
+    "message": "Supprimer"
+  },
+  "disable_password_protection": {
+    "message": "Désactiver la Protection par Mot de Passe"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Activer la Copie dans le Presse-papiers dans les paramètres"
+  },
+  "enable_password_protection": {
+    "message": "Activer la Protection par Mot de Passe"
+  },
+  "enter_name": {
+    "message": "Entrez le Nom :"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Veuillez entrer à la fois le nom et le secret."
+  },
+  "enter_password": {
+    "message": "Entrez le Mot de Passe :"
+  },
+  "enter_secret": {
+    "message": "Entrez le Secret :"
+  },
+  "enter_url": {
+    "message": "Entrez l'URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro est un outil puissant qui génère un Mot de Passe à Usage Unique (OTP) toutes les 30 secondes basé sur un secret fourni."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Masquer l'Ajout de Jetons"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Masque le formulaire d'ajout de jetons ; offre une meilleure visibilité des jetons sauvegardés."
+  },
+  "image": {
+    "message": "Image"
+  },
+  "image_url": {
+    "message": "URL de l'Image :"
+  },
+  "incorrect_password_message": {
+    "message": "Mot de Passe Incorrect"
+  },
+  "incorrect_url_message": {
+    "message": "URL Incorrecte, ou l'URL ne contenait pas de code QR."
+  },
+  "invalid_secret_message": {
+    "message": "Secret invalide. Veuillez entrer une chaîne codée en Base32."
+  },
+  "light_theme": {
+    "message": "Thème Clair"
+  },
+  "main_enter_password_message": {
+    "message": "Entrez le Mot de Passe pour Déverrouiller"
+  },
+  "name_already_exists_message": {
+    "message": "Un jeton avec ce nom existe déjà."
+  },
+  "name_too_long_message": {
+    "message": "Nom trop long, veuillez saisir un nom plus court."
+  },
+  "online_time_checkbox_label": {
+    "message": "Synchronisation du Temps en Ligne"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Se synchronise avec l'heure en ligne pour plus de précision ; sinon, utilise l'heure locale de l'appareil."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Protection par Mot de Passe"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Pour activer, désactivez la Synchronisation sur Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Crypte et protège les secrets sauvegardés avec un mot de passe."
+  },
+  "password_protection_setup": {
+    "message": "Configuration de la Protection par Mot de Passe"
+  },
+  "passwords_dont_match": {
+    "message": "Les Mots de Passe ne Correspondent Pas"
+  },
+  "password_warning_message": {
+    "message": "AVERTISSEMENT : Si le mot de passe est oublié, il ne peut pas être récupéré."
+  },
+  "permissions": {
+    "message": "Autorisations"
+  },
+  "permissions_page_header": {
+    "message": "Page des Autorisations d'Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "Mode Fenêtre Contextuelle"
+  },
+  "popup_mode_tooltip": {
+    "message": "Ouvre Authenticator Pro dans une fenêtre séparée."
+  },
+  "qr_found_message": {
+    "message": "Code QR trouvé !"
+  },
+  "qr_not_found_message": {
+    "message": "Code QR non trouvé. Essayez une autre image."
+  },
+  "remove_password": {
+    "message": "Supprimer le Mot de Passe"
+  },
+  "save_url": {
+    "message": "Sauvegarder l'URL"
+  },
+  "scanning": {
+    "message": "Analyse en cours..."
+  },
+  "secret": {
+    "message": "Secret :"
+  },
+  "secret_already_added_message": {
+    "message": "Vous avez déjà ajouté ce secret."
+  },
+  "settings": {
+    "message": "Paramètres"
+  },
+  "submit": {
+    "message": "Soumettre"
+  },
+  "sync_checkbox_label": {
+    "message": "Synchroniser sur Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Pour activer, désactivez la Protection par Mot de Passe"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Synchronise les jetons sur les appareils Chrome connectés ; sinon, l'état est uniquement local."
+  },
+  "themes": {
+    "message": "Thèmes"
+  },
+  "token_settings": {
+    "message": "Paramètres des Jetons"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

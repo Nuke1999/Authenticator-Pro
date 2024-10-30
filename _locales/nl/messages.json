@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Actieve Tokens:"
+  },
+  "add_token": {
+    "message": "Token Toevoegen"
+  },
+  "add_qr_code_via": {
+    "message": "QR-code Toevoegen Via:"
+  },
+  "advanced_add": {
+    "message": "Geavanceerd Toevoegen"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Geavanceerd Toevoegen Knop"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Staat gebruikers toe om geheimen toe te voegen via QR-code (webcam, bestand of link)."
+  },
+  "are_you_sure_message": {
+    "message": "Weet je het zeker? Deze actie is permanent."
+  },
+  "autofill_checkbox_label": {
+    "message": "Automatisch Invullen"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Vult automatisch het OTP-veld in met behulp van de Autofill-URL voor elke token."
+  },
+  "autofill_url": {
+    "message": "Autofill URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Autofill URL: (Niet Geactiveerd)"
+  },
+  "camera_permission_button": {
+    "message": "Camera Toestemming Knop"
+  },
+  "camera_permission_message_1": {
+    "message": "*Knop klikt automatisch bij het laden van de pagina*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webcamknop werkt nadat camera toegang is verleend"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Kopiëren naar Klembord"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Staat toe om de OTP naar het klembord te kopiëren bij het klikken op een tokenvak."
+  },
+  "close": {
+    "message": "Sluiten"
+  },
+  "confirm_password": {
+    "message": "Bevestig Wachtwoord:"
+  },
+  "copied": {
+    "message": "Gekopieerd!"
+  },
+  "currently_saved": {
+    "message": "Huidig Opgeslagen: "
+  },
+  "dark_theme": {
+    "message": "Donker Thema"
+  },
+  "delete": {
+    "message": "Verwijderen"
+  },
+  "disable_password_protection": {
+    "message": "Schakel Wachtwoordbeveiliging Uit"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Schakel Klembordkopie in de instellingen in"
+  },
+  "enable_password_protection": {
+    "message": "Schakel Wachtwoordbeveiliging In"
+  },
+  "enter_name": {
+    "message": "Voer Naam In:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Voer zowel naam als geheim in."
+  },
+  "enter_password": {
+    "message": "Voer Wachtwoord In:"
+  },
+  "enter_secret": {
+    "message": "Voer Geheim In:"
+  },
+  "enter_url": {
+    "message": "Voer URL In"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro is een krachtig hulpmiddel dat elke 30 seconden een Eenmalig Wachtwoord (OTP) genereert op basis van een opgegeven geheim."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Verberg Token Toevoeger"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Verbergt het token toevoegformulier; biedt een betere zichtbaarheid van opgeslagen tokens."
+  },
+  "image": {
+    "message": "Afbeelding"
+  },
+  "image_url": {
+    "message": "Afbeelding URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Onjuist Wachtwoord"
+  },
+  "incorrect_url_message": {
+    "message": "Onjuiste URL, of URL bevatte geen QR-code."
+  },
+  "invalid_secret_message": {
+    "message": "Ongeldig geheim. Voer een Base32-gecodeerde string in."
+  },
+  "light_theme": {
+    "message": "Licht Thema"
+  },
+  "main_enter_password_message": {
+    "message": "Voer Wachtwoord In om te Ontgrendelen"
+  },
+  "name_already_exists_message": {
+    "message": "Er bestaat al een token met deze naam."
+  },
+  "name_too_long_message": {
+    "message": "Naam is te lang, voer een kortere naam in."
+  },
+  "online_time_checkbox_label": {
+    "message": "Online Tijdsynchronisatie"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Synchroniseert met de online tijd voor nauwkeurigheid; anders gebruikt het de lokale apparaat tijd."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Wachtwoordbeveiliging"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Om te activeren, schakel Synchronisatie Tussen Chrome uit"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Versleutelt en beschermt opgeslagen geheimen met een wachtwoord."
+  },
+  "password_protection_setup": {
+    "message": "Instelling Wachtwoordbeveiliging"
+  },
+  "passwords_dont_match": {
+    "message": "Wachtwoorden komen niet overeen"
+  },
+  "password_warning_message": {
+    "message": "WAARSCHUWING: Als het wachtwoord vergeten wordt, kan het niet worden hersteld."
+  },
+  "permissions": {
+    "message": "Machtigingen"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro Machtigingspagina"
+  },
+  "popup_mode_label": {
+    "message": "Pop-up Modus"
+  },
+  "popup_mode_tooltip": {
+    "message": "Opent Authenticator Pro in een apart venster."
+  },
+  "qr_found_message": {
+    "message": "QR-code gevonden!"
+  },
+  "qr_not_found_message": {
+    "message": "QR-code niet gevonden. Probeer een andere afbeelding."
+  },
+  "remove_password": {
+    "message": "Verwijder Wachtwoord"
+  },
+  "save_url": {
+    "message": "Sla URL Op"
+  },
+  "scanning": {
+    "message": "Scannen..."
+  },
+  "secret": {
+    "message": " Geheim:"
+  },
+  "secret_already_added_message": {
+    "message": "Je hebt dit geheim al toegevoegd."
+  },
+  "settings": {
+    "message": "Instellingen"
+  },
+  "submit": {
+    "message": "Indienen"
+  },
+  "sync_checkbox_label": {
+    "message": "Synchroniseer Tussen Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Om te activeren, schakel Wachtwoordbeveiliging uit"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Synchroniseert tokens op ingelogde Chrome-apparaten; anders is de status alleen lokaal."
+  },
+  "themes": {
+    "message": "Thema's"
+  },
+  "token_settings": {
+    "message": "Tokeninstellingen"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

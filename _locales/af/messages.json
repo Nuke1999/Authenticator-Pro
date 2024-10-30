@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktiewe Tokens:"
+  },
+  "add_token": {
+    "message": "Voeg Token By"
+  },
+  "add_qr_code_via": {
+    "message": "Voeg QR Kode By via:"
+  },
+  "advanced_add": {
+    "message": "Gevorderde Byvoeging"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Gevorderde Voegknoppie"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Laat gebruikers toe om geheime by te voeg via QR-kode (webkamera, lêer of skakel)."
+  },
+  "are_you_sure_message": {
+    "message": "Is jy seker? Hierdie aksie is permanent."
+  },
+  "autofill_checkbox_label": {
+    "message": "Outomatiese Invul"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Vul die OTP-veld outomaties in met die Autofill URL vir elke token."
+  },
+  "autofill_url": {
+    "message": "Outomatiese Invul-URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Outomatiese Invul-URL: (Nie geaktiveer nie)"
+  },
+  "camera_permission_button": {
+    "message": "Kameratoestemmingsknoppie"
+  },
+  "camera_permission_message_1": {
+    "message": "*Knoppie klik outomaties wanneer bladsy laai*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webkameraknoppie werk na kamera-toestemming"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Klembordkopiëring"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Laat kopiëring van OTP na klembord toe wanneer 'n tokenboks geklik word."
+  },
+  "close": {
+    "message": "Maak Toe"
+  },
+  "confirm_password": {
+    "message": "Bevestig Wagwoord:"
+  },
+  "copied": {
+    "message": "Gekopieer!"
+  },
+  "currently_saved": {
+    "message": "Tans gestoor: "
+  },
+  "dark_theme": {
+    "message": "Donker Tema"
+  },
+  "delete": {
+    "message": "Verwyder"
+  },
+  "disable_password_protection": {
+    "message": "Deaktiveer Wagwoordbeskerming"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Aktiveer klembordkopiëring in instellings"
+  },
+  "enable_password_protection": {
+    "message": "Aktiveer Wagwoordbeskerming"
+  },
+  "enter_name": {
+    "message": "Voer Naam In:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Voer asseblief beide naam en geheim in."
+  },
+  "enter_password": {
+    "message": "Voer Wagwoord In:"
+  },
+  "enter_secret": {
+    "message": "Voer Geheim In:"
+  },
+  "enter_url": {
+    "message": "Voer URL In"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro is 'n kragtige hulpmiddel wat 'n Eenmalige Wagwoord (OTP) elke 30 sekondes genereer, gebaseer op 'n voorsien geheim."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Versteek Token-byvoeger"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Versteek die token-byvoegvorm; bied beter sigbaarheid van gestoor tokens."
+  },
+  "image": {
+    "message": "Beeld"
+  },
+  "image_url": {
+    "message": "Beeld-URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Verkeerde Wagwoord"
+  },
+  "incorrect_url_message": {
+    "message": "Verkeerde URL, of URL bevat nie 'n QR-kode nie."
+  },
+  "invalid_secret_message": {
+    "message": "Ongeldige geheim. Voer asseblief 'n Base32-geënkodeerde string in."
+  },
+  "light_theme": {
+    "message": "Lig Tema"
+  },
+  "main_enter_password_message": {
+    "message": "Voer Wagwoord In om Te Ontsluit"
+  },
+  "name_already_exists_message": {
+    "message": "'n Token met hierdie naam bestaan reeds."
+  },
+  "name_too_long_message": {
+    "message": "Naam is te lank, voer 'n korter naam in."
+  },
+  "online_time_checkbox_label": {
+    "message": "Aanlyn Tyd Sinchronisasie"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Sinchroniseer met aanlyn tyd vir akkuraatheid; gebruik andersins die plaaslike toestel tyd."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Wagwoordbeskerming"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Om te aktiveer, skakel Sinchronisasie in Chrome uit"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Enkripteer en beskerm gestoorde geheime met 'n wagwoord."
+  },
+  "password_protection_setup": {
+    "message": "Instel van Wagwoordbeskerming"
+  },
+  "passwords_dont_match": {
+    "message": "Wagwoorde Stem Nie Ooreen Nie"
+  },
+  "password_warning_message": {
+    "message": "WAARSKUWING: As die wagwoord vergeet word, kan dit nie herstel word nie."
+  },
+  "permissions": {
+    "message": "Toestemmings"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro Toestemmingsbladsy"
+  },
+  "popup_mode_label": {
+    "message": "Opspring-modus"
+  },
+  "popup_mode_tooltip": {
+    "message": "Maak Authenticator Pro oop in 'n aparte venster."
+  },
+  "qr_found_message": {
+    "message": "QR-kode gevind!"
+  },
+  "qr_not_found_message": {
+    "message": "QR-kode nie gevind nie. Probeer 'n ander beeld."
+  },
+  "remove_password": {
+    "message": "Verwyder Wagwoord"
+  },
+  "save_url": {
+    "message": "Stoor URL"
+  },
+  "scanning": {
+    "message": "Skandeer..."
+  },
+  "secret": {
+    "message": " Geheim:"
+  },
+  "secret_already_added_message": {
+    "message": "Jy het hierdie geheim reeds bygevoeg."
+  },
+  "settings": {
+    "message": "Instellings"
+  },
+  "submit": {
+    "message": "Indien"
+  },
+  "sync_checkbox_label": {
+    "message": "Sinchroniseer op Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Om te aktiveer, skakel Wagwoordbeskerming af"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Sinchroniseer tokens op aangemelde Chrome-toestelle; andersins is dit net plaaslik gestoor."
+  },
+  "themes": {
+    "message": "Temas"
+  },
+  "token_settings": {
+    "message": "Token Instellings"
+  },
+  "webcam": {
+    "message": "Webkamera"
+  }
+}

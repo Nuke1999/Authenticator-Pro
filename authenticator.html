@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>All In One Authenticator</title>
+    <title>__MSG_extension_name__</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <input type="file" id="file-input" accept="image/*" style="display: none" />
     <div id="password-prompt-container" class="password-prompt-container">
-      <h2 class="centered-title">Enter Password to Unlock</h2>
+      <h2 class="centered-title">__MSG_main_enter_password_message__</h2>
       <div class="form-container">
         <input type="password" id="password-input" class="form-input" />
-        <button id="password-submit-button" class="wide-button">Submit</button>
+        <button id="password-submit-button" class="wide-button">
+          __MSG_submit__
+        </button>
       </div>
       <h2
         class="incorrect-password-message"
@@ -26,7 +28,9 @@
     </div>
     <div class="authenticator-main-content" id="authenticator-main-content">
       <div class="header-container">
-        <h2 class="centered-title" id="centered-title">Authenticator Pro</h2>
+        <h2 class="centered-title" id="centered-title">
+          __MSG_extension_name__
+        </h2>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -79,7 +83,7 @@
       </div>
       <div id="main-content">
         <div class="form-container" id="form-container">
-          <label for="name" class="form-label">Enter Name:</label>
+          <label for="name" class="form-label">__MSG_enter_name__</label>
           <input type="text" id="name" class="form-input" />
           <br />
           <div class="inline-label-and-message">
@@ -87,230 +91,43 @@
               for="secret"
               class="form-label secret-form-label"
               id="secret-form-label"
-              >Enter Secret:</label
+              >__MSG_enter_secret__</label
             >
           </div>
           <input type="text" id="secret" class="form-input-no-margin" />
           <br />
           <br />
-          <button id="generate" class="add-token-button">Add Token</button>
+          <button id="generate" class="add-token-button">
+            __MSG_add_token__
+          </button>
         </div>
         <div class="active-tokens-header-container">
-          <h1 class="active-tokens-header">Active Tokens:</h1>
-          <div class="active-tokens-header-container">
-            <div class="minimalist-clock">
-              <svg viewBox="0 0 100 100">
-                <circle class="background-circle" cx="50" cy="50" r="40" />
-                <circle class="progress-circle" cx="50" cy="50" r="40" />
-                <text
-                  class="clock-text"
-                  x="50"
-                  y="60"
-                  text-anchor="middle"
-                ></text>
-              </svg>
-            </div>
+          <h1 class="active-tokens-header">__MSG_active_tokens__</h1>
+          <div class="minimalist-clock">
+            <svg viewBox="0 0 100 100">
+              <circle class="background-circle" cx="50" cy="50" r="40" />
+              <circle class="progress-circle" cx="50" cy="50" r="40" />
+              <text
+                class="clock-text"
+                x="50"
+                y="60"
+                text-anchor="middle"
+              ></text>
+            </svg>
           </div>
         </div>
         <div id="tokens"></div>
       </div>
       <div class="settings-content" id="settings-content" style="display: none">
         <div class="switch-boxes-container" id="switch-boxes-container">
-          <h2 class="permissions-header">Permissions</h2>
-          <div class="switch-box-first">
-            <label class="switch">
-              <input type="checkbox" id="advanced-add-checkbox" />
-              <span class="slider round"></span>
-            </label>
-            <div class="switch-text">Advanced Add Button</div>
-            <div class="tooltip">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-info"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <span class="tooltiptext"
-                >Allows users to add secrets via QR code (webcam, file, or
-                link).
-              </span>
-            </div>
-            <br />
-          </div>
-          <div class="switch-box">
-            <label class="switch">
-              <input type="checkbox" id="autofill-checkbox" />
-              <span class="slider round"></span>
-            </label>
-            <div class="switch-text">Autofill</div>
-            <div class="tooltip">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-info"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <span class="tooltiptext"
-                >Automatically fills the OTP field using the Autofill URL for
-                each token.
-              </span>
-            </div>
-            <br />
-          </div>
-          <div class="switch-box">
-            <label class="switch">
-              <input id="clipboard-copying-checkbox" type="checkbox" />
-              <span class="slider round"></span>
-            </label>
-            <div class="switch-text">Clipboard Copying</div>
-            <div class="tooltip">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-info"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <span class="tooltiptext"
-                >Allows copying the OTP to clipboard when clicking a token
-                box.</span
-              >
-            </div>
-            <br />
-          </div>
-          <div class="switch-box">
-            <label class="switch">
-              <input type="checkbox" id="online-time-checkbox" />
-              <span class="slider round"></span>
-            </label>
-            <div class="switch-text">Online Time Sync</div>
-            <div class="tooltip">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-info"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <span class="tooltiptext"
-                >Syncs with time online for accuracy; otherwise uses local
-                device time.
-              </span>
-            </div>
-            <br />
-          </div>
-          <div class="switch-box">
-            <label class="switch" id="password-protected-label">
-              <input type="checkbox" id="password-protected-checkbox" />
-              <span class="slider round"></span>
-            </label>
-            <div class="switch-text">Password Protection</div>
-            <div class="tooltip">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-info"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <span
-                class="checkbox-message-password"
-                id="checkbox-message-password"
-                >To enable, turn off Sync Across Chrome</span
-              >
-              <span class="tooltiptext"
-                >Encrypts and protects saved secrets with a password.
-              </span>
-            </div>
-            <br />
-          </div>
-          <div class="switch-box-last">
-            <label class="switch" id="sync-check-label">
-              <input type="checkbox" id="sync-checkbox" />
-              <span class="slider round"></span>
-            </label>
-            <div class="switch-text">Sync Across Chrome</div>
-            <div class="tooltip">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-info"
-              >
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <span class="checkbox-message-sync" id="checkbox-message-sync"
-                >To enable, turn off Password Protection</span
-              >
-              <span class="tooltiptext"
-                >Syncs tokens on logged in chrome devices; otherwise, state is
-                only local.</span
-              >
-            </div>
-            <br />
-          </div>
-          <h2 class="themes-header">Themes</h2>
+          <h2 class="permissions-header">__MSG_permissions__</h2>
+          <h2 class="themes-header">__MSG_themes__</h2>
           <div class="theme-buttons-container">
             <button class="light-theme-button" id="light-theme-button">
-              Light Theme
+              __MSG_light_theme__
             </button>
             <button class="dark-theme-button" id="dark-theme-button">
-              Dark Theme
+              __MSG_dark_theme__
             </button>
           </div>
         </div>

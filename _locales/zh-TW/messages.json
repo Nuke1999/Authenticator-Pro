@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "當前活動的令牌:"
+  },
+  "add_token": {
+    "message": "添加令牌"
+  },
+  "add_qr_code_via": {
+    "message": "通過 QR 碼添加:"
+  },
+  "advanced_add": {
+    "message": "進階添加"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "進階添加按鈕"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "允許用戶通過二維碼（攝像頭、檔案或鏈接）添加秘密。"
+  },
+  "are_you_sure_message": {
+    "message": "您確定嗎？此操作是永久性的。"
+  },
+  "autofill_checkbox_label": {
+    "message": "自動填充"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "使用每個令牌的自動填充 URL 自動填充 OTP 欄位。"
+  },
+  "autofill_url": {
+    "message": "自動填充 URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "自動填充 URL:（未啟用）"
+  },
+  "camera_permission_button": {
+    "message": "相機權限按鈕"
+  },
+  "camera_permission_message_1": {
+    "message": "*按鈕在頁面加載時自動點擊*"
+  },
+  "camera_permission_message_2": {
+    "message": "允許相機訪問後，攝像頭按鈕將生效"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "複製到剪貼板"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "允許在單擊令牌框時將 OTP 複製到剪貼板。"
+  },
+  "close": {
+    "message": "關閉"
+  },
+  "confirm_password": {
+    "message": "確認密碼:"
+  },
+  "copied": {
+    "message": "已複製！"
+  },
+  "currently_saved": {
+    "message": "當前保存: "
+  },
+  "dark_theme": {
+    "message": "深色主題"
+  },
+  "delete": {
+    "message": "刪除"
+  },
+  "disable_password_protection": {
+    "message": "禁用密碼保護"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "在設置中啟用剪貼板複製"
+  },
+  "enable_password_protection": {
+    "message": "啟用密碼保護"
+  },
+  "enter_name": {
+    "message": "輸入名稱:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "請輸入名稱和秘密。"
+  },
+  "enter_password": {
+    "message": "輸入密碼:"
+  },
+  "enter_secret": {
+    "message": "輸入秘密:"
+  },
+  "enter_url": {
+    "message": "輸入 URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro 是一款強大的工具，根據提供的秘密每 30 秒生成一次一次性密碼（OTP）。"
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "隱藏添加令牌"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "隱藏添加令牌表單；提供更好的已保存令牌可見性。"
+  },
+  "image": {
+    "message": "圖像"
+  },
+  "image_url": {
+    "message": "圖像 URL:"
+  },
+  "incorrect_password_message": {
+    "message": "密碼不正確"
+  },
+  "incorrect_url_message": {
+    "message": "URL 不正確，或者 URL 不包含 QR 碼。"
+  },
+  "invalid_secret_message": {
+    "message": "無效的秘密。請提供一個 Base32 編碼的字符串。"
+  },
+  "light_theme": {
+    "message": "淺色主題"
+  },
+  "main_enter_password_message": {
+    "message": "輸入密碼以解鎖"
+  },
+  "name_already_exists_message": {
+    "message": "已存在相同名稱的令牌。"
+  },
+  "name_too_long_message": {
+    "message": "名稱過長，請輸入更短的名稱。"
+  },
+  "online_time_checkbox_label": {
+    "message": "在線時間同步"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "與在線時間同步以確保準確性；否則使用本地設備時間。"
+  },
+  "password_protected_checkbox_label": {
+    "message": "密碼保護"
+  },
+  "password_protected_checkbox_message": {
+    "message": "要啟用，請關閉 Chrome 之間的同步"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "用密碼加密並保護保存的秘密。"
+  },
+  "password_protection_setup": {
+    "message": "密碼保護設置"
+  },
+  "passwords_dont_match": {
+    "message": "密碼不匹配"
+  },
+  "password_warning_message": {
+    "message": "警告：如果忘記密碼，將無法恢復。"
+  },
+  "permissions": {
+    "message": "權限"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro 權限頁面 "
+  },
+  "popup_mode_label": {
+    "message": "彈出模式"
+  },
+  "popup_mode_tooltip": {
+    "message": "在單獨的窗口中打開 Authenticator Pro。"
+  },
+  "qr_found_message": {
+    "message": "找到 QR 碼！"
+  },
+  "qr_not_found_message": {
+    "message": "未找到 QR 碼。請嘗試其他圖像。"
+  },
+  "remove_password": {
+    "message": "移除密碼"
+  },
+  "save_url": {
+    "message": "保存 URL"
+  },
+  "scanning": {
+    "message": "掃描中..."
+  },
+  "secret": {
+    "message": " 秘密:"
+  },
+  "secret_already_added_message": {
+    "message": "您已經添加了這個秘密。"
+  },
+  "settings": {
+    "message": "設置"
+  },
+  "submit": {
+    "message": "提交"
+  },
+  "sync_checkbox_label": {
+    "message": "跨 Chrome 同步"
+  },
+  "sync_checkbox_message": {
+    "message": "要啟用，請關閉密碼保護"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "在已登錄的 Chrome 設備上同步令牌；否則狀態僅為本地。"
+  },
+  "themes": {
+    "message": "主題"
+  },
+  "token_settings": {
+    "message": "令牌設置"
+  },
+  "webcam": {
+    "message": "攝像頭"
+  }
+}

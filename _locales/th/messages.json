@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "โทเค็นที่ใช้งานอยู่:"
+  },
+  "add_token": {
+    "message": "เพิ่มโทเค็น"
+  },
+  "add_qr_code_via": {
+    "message": "เพิ่ม QR โค้ดผ่าน:"
+  },
+  "advanced_add": {
+    "message": "เพิ่มขั้นสูง"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "ปุ่มเพิ่มขั้นสูง"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "อนุญาตให้ผู้ใช้เพิ่มความลับผ่าน QR โค้ด (เว็บแคม ไฟล์ หรือ ลิงก์)"
+  },
+  "are_you_sure_message": {
+    "message": "คุณแน่ใจหรือไม่? การดำเนินการนี้เป็นแบบถาวร."
+  },
+  "autofill_checkbox_label": {
+    "message": "การกรอกอัตโนมัติ"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "กรอกฟิลด์ OTP โดยอัตโนมัติด้วย URL การกรอกอัตโนมัติสำหรับแต่ละโทเค็น."
+  },
+  "autofill_url": {
+    "message": "URL การกรอกอัตโนมัติ:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL การกรอกอัตโนมัติ: (ยังไม่เปิดใช้งาน)"
+  },
+  "camera_permission_button": {
+    "message": "ปุ่มอนุญาตกล้อง"
+  },
+  "camera_permission_message_1": {
+    "message": "*ปุ่มจะคลิกโดยอัตโนมัติเมื่อโหลดหน้า*"
+  },
+  "camera_permission_message_2": {
+    "message": "ปุ่มเว็บแคมจะทำงานหลังจากอนุญาตการเข้าถึงกล้อง"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "การคัดลอกไปยังคลิปบอร์ด"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "อนุญาตให้คัดลอก OTP ไปยังคลิปบอร์ดเมื่อคลิกที่กล่องโทเค็น."
+  },
+  "close": {
+    "message": "ปิด"
+  },
+  "confirm_password": {
+    "message": "ยืนยันรหัสผ่าน:"
+  },
+  "copied": {
+    "message": "คัดลอกแล้ว!"
+  },
+  "currently_saved": {
+    "message": "บันทึกปัจจุบัน: "
+  },
+  "dark_theme": {
+    "message": "ธีมมืด"
+  },
+  "delete": {
+    "message": "ลบ"
+  },
+  "disable_password_protection": {
+    "message": "ปิดการป้องกันรหัสผ่าน"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "เปิดใช้งานการคัดลอกไปยังคลิปบอร์ดในการตั้งค่า"
+  },
+  "enable_password_protection": {
+    "message": "เปิดใช้งานการป้องกันรหัสผ่าน"
+  },
+  "enter_name": {
+    "message": "กรอกชื่อ:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "กรุณากรอกชื่อและความลับทั้งสอง."
+  },
+  "enter_password": {
+    "message": "กรอกรหัสผ่าน:"
+  },
+  "enter_secret": {
+    "message": "กรอกความลับ:"
+  },
+  "enter_url": {
+    "message": "กรอก URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro เป็นเครื่องมือที่ทรงพลังซึ่งสร้างรหัสผ่านแบบใช้ครั้งเดียว (OTP) ทุกๆ 30 วินาทีตามความลับที่ให้ไว้."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "ซ่อนตัวเพิ่มโทเค็น"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "ซ่อนแบบฟอร์มการเพิ่มโทเค็น; ช่วยให้มองเห็นโทเค็นที่บันทึกไว้ได้ง่ายขึ้น."
+  },
+  "image": {
+    "message": "ภาพ"
+  },
+  "image_url": {
+    "message": "URL ภาพ:"
+  },
+  "incorrect_password_message": {
+    "message": "รหัสผ่านไม่ถูกต้อง"
+  },
+  "incorrect_url_message": {
+    "message": "URL ไม่ถูกต้อง หรือ URL ไม่ได้มี QR โค้ด."
+  },
+  "invalid_secret_message": {
+    "message": "ความลับไม่ถูกต้อง กรุณากรอกสตริงที่เข้ารหัส Base32."
+  },
+  "light_theme": {
+    "message": "ธีมสว่าง"
+  },
+  "main_enter_password_message": {
+    "message": "กรอกรหัสผ่านเพื่อปลดล็อค"
+  },
+  "name_already_exists_message": {
+    "message": "มีโทเค็นที่มีชื่อนี้อยู่แล้ว."
+  },
+  "name_too_long_message": {
+    "message": "ชื่อยาวเกินไป กรุณากรอกชื่อที่สั้นลง."
+  },
+  "online_time_checkbox_label": {
+    "message": "ซิงค์เวลาทางออนไลน์"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "ซิงค์กับเวลาทางออนไลน์เพื่อความแม่นยำ; มิฉะนั้นจะใช้เวลาจากอุปกรณ์."
+  },
+  "password_protected_checkbox_label": {
+    "message": "การป้องกันรหัสผ่าน"
+  },
+  "password_protected_checkbox_message": {
+    "message": "เพื่อเปิดใช้งานให้ปิดการซิงค์ข้าม Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "เข้ารหัสและป้องกันความลับที่บันทึกด้วยรหัสผ่าน."
+  },
+  "password_protection_setup": {
+    "message": "การตั้งค่าการป้องกันรหัสผ่าน"
+  },
+  "passwords_dont_match": {
+    "message": "รหัสผ่านไม่ตรงกัน"
+  },
+  "password_warning_message": {
+    "message": "คำเตือน: หากรหัสผ่านถูกลืมจะไม่สามารถกู้คืนได้."
+  },
+  "permissions": {
+    "message": "สิทธิ์"
+  },
+  "permissions_page_header": {
+    "message": "หน้าอนุญาต Authenticator Pro "
+  },
+  "popup_mode_label": {
+    "message": "โหมดป๊อปอัป"
+  },
+  "popup_mode_tooltip": {
+    "message": "เปิด Authenticator Pro ในหน้าต่างแยกต่างหาก."
+  },
+  "qr_found_message": {
+    "message": "พบ QR โค้ด!"
+  },
+  "qr_not_found_message": {
+    "message": "ไม่พบ QR โค้ด ลองใช้ภาพอื่น."
+  },
+  "remove_password": {
+    "message": "ลบรหัสผ่าน"
+  },
+  "save_url": {
+    "message": "บันทึก URL"
+  },
+  "scanning": {
+    "message": "กำลังสแกน..."
+  },
+  "secret": {
+    "message": " ความลับ:"
+  },
+  "secret_already_added_message": {
+    "message": "คุณได้เพิ่มความลับนี้แล้ว."
+  },
+  "settings": {
+    "message": "การตั้งค่า"
+  },
+  "submit": {
+    "message": "ส่ง"
+  },
+  "sync_checkbox_label": {
+    "message": "ซิงค์ข้าม Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "เพื่อเปิดใช้งานให้ปิดการป้องกันรหัสผ่าน"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "ซิงค์โทเค็นบนอุปกรณ์ Chrome ที่เข้าสู่ระบบ; มิฉะนั้นสถานะจะเป็นเฉพาะท้องถิ่น."
+  },
+  "themes": {
+    "message": "ธีม"
+  },
+  "token_settings": {
+    "message": "การตั้งค่าโทเค็น"
+  },
+  "webcam": {
+    "message": "เว็บแคม"
+  }
+}

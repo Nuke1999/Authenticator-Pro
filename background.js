@@ -1,14 +1,10 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "cameraPermissionGranted") {
-    chrome.storage.local.set({ cameraPermissionGranted: true }, () => {
-      console.log("Camera permission granted");
-    });
+    chrome.storage.local.set({ cameraPermissionGranted: true }, () => {});
   }
 
   if (message.action === "cameraPermissionDenied") {
-    chrome.storage.local.set({ cameraPermissionGranted: false }, () => {
-      console.log("Camera permission denied");
-    });
+    chrome.storage.local.set({ cameraPermissionGranted: false }, () => {});
   }
 
   if (message.type === "GET_TAB_URL") {

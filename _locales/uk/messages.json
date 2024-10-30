@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Активні токени:"
+  },
+  "add_token": {
+    "message": "Додати токен"
+  },
+  "add_qr_code_via": {
+    "message": "Додати QR-код через:"
+  },
+  "advanced_add": {
+    "message": "Розширене додавання"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Кнопка розширеного додавання"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Дозволяє користувачам додавати секрети за допомогою QR-коду (веб-камера, файл або посилання)."
+  },
+  "are_you_sure_message": {
+    "message": "Ви впевнені? Ця дія є постійною."
+  },
+  "autofill_checkbox_label": {
+    "message": "Автозаповнення"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Автоматично заповнює поле OTP, використовуючи URL автозаповнення для кожного токена."
+  },
+  "autofill_url": {
+    "message": "URL автозаповнення:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL автозаповнення: (не активовано)"
+  },
+  "camera_permission_button": {
+    "message": "Кнопка дозволу на камеру"
+  },
+  "camera_permission_message_1": {
+    "message": "*Кнопка автоматично натискається при завантаженні сторінки*"
+  },
+  "camera_permission_message_2": {
+    "message": "Кнопка веб-камери працюватиме після надання доступу до камери"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Копіювання в буфер обміну"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Дозволяє копіювати OTP в буфер обміну, натискаючи на поле токена."
+  },
+  "close": {
+    "message": "Закрити"
+  },
+  "confirm_password": {
+    "message": "Підтвердіть пароль:"
+  },
+  "copied": {
+    "message": "Скопійовано!"
+  },
+  "currently_saved": {
+    "message": "В даний момент збережено: "
+  },
+  "dark_theme": {
+    "message": "Темна тема"
+  },
+  "delete": {
+    "message": "Видалити"
+  },
+  "disable_password_protection": {
+    "message": "Вимкнути захист паролем"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Увімкніть копіювання в буфер обміну в налаштуваннях"
+  },
+  "enable_password_protection": {
+    "message": "Увімкнути захист паролем"
+  },
+  "enter_name": {
+    "message": "Введіть ім'я:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Будь ласка, введіть як ім'я, так і секрет."
+  },
+  "enter_password": {
+    "message": "Введіть пароль:"
+  },
+  "enter_secret": {
+    "message": "Введіть секрет:"
+  },
+  "enter_url": {
+    "message": "Введіть URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro — потужний інструмент, який генерує одноразовий пароль (OTP) кожні 30 секунд на основі наданого секрету."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Сховати форму додавання токена"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Сховує форму додавання токена; забезпечує кращу видимість збережених токенів."
+  },
+  "image": {
+    "message": "Зображення"
+  },
+  "image_url": {
+    "message": "URL зображення:"
+  },
+  "incorrect_password_message": {
+    "message": "Неправильний пароль"
+  },
+  "incorrect_url_message": {
+    "message": "Неправильний URL, або URL не містив QR-коду."
+  },
+  "invalid_secret_message": {
+    "message": "Неправильний секрет. Будь ласка, введіть рядок, закодований у Base32."
+  },
+  "light_theme": {
+    "message": "Світла тема"
+  },
+  "main_enter_password_message": {
+    "message": "Введіть пароль, щоб розблокувати"
+  },
+  "name_already_exists_message": {
+    "message": "Токен з цим ім'ям вже існує."
+  },
+  "name_too_long_message": {
+    "message": "Ім'я занадто довге, будь ласка, введіть коротше ім'я."
+  },
+  "online_time_checkbox_label": {
+    "message": "Синхронізація онлайн-часу"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Синхронізується з онлайн-часом для точності; в іншому випадку використовує локальний час пристрою."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Захист паролем"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Щоб увімкнути, вимкніть синхронізацію між Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Шифрує та захищає збережені секрети паролем."
+  },
+  "password_protection_setup": {
+    "message": "Налаштування захисту паролем"
+  },
+  "passwords_dont_match": {
+    "message": "Паролі не збігаються"
+  },
+  "password_warning_message": {
+    "message": "УВАГА: Якщо пароль забутий, його не можна відновити."
+  },
+  "permissions": {
+    "message": "Дозволи"
+  },
+  "permissions_page_header": {
+    "message": "Сторінка дозволів Authenticator Pro "
+  },
+  "popup_mode_label": {
+    "message": "Вікно"
+  },
+  "popup_mode_tooltip": {
+    "message": "Відкриває Authenticator Pro в окремому вікні."
+  },
+  "qr_found_message": {
+    "message": "QR-код знайдено!"
+  },
+  "qr_not_found_message": {
+    "message": "QR-код не знайдено. Спробуйте інше зображення."
+  },
+  "remove_password": {
+    "message": "Видалити пароль"
+  },
+  "save_url": {
+    "message": "Зберегти URL"
+  },
+  "scanning": {
+    "message": "Сканування..."
+  },
+  "secret": {
+    "message": " Секрет:"
+  },
+  "secret_already_added_message": {
+    "message": "Ви вже додали цей секрет."
+  },
+  "settings": {
+    "message": "Налаштування"
+  },
+  "submit": {
+    "message": "Надіслати"
+  },
+  "sync_checkbox_label": {
+    "message": "Синхронізація між Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Щоб увімкнути, вимкніть захист паролем"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Синхронізує токени на пристроях Chrome, в які ви ввійшли; в іншому випадку, стан лише локальний."
+  },
+  "themes": {
+    "message": "Теми"
+  },
+  "token_settings": {
+    "message": "Налаштування токена"
+  },
+  "webcam": {
+    "message": "Веб-камера"
+  }
+}

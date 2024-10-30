@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Tokenet Aktiv:"
+  },
+  "add_token": {
+    "message": "Shto Token"
+  },
+  "add_qr_code_via": {
+    "message": "Shto QR Kodin përmes:"
+  },
+  "advanced_add": {
+    "message": "Shtim Avancuar"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Butoni i Shtimit të Avancuar"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Lejon përdoruesit të shtojnë sekrete përmes QR kodit (kamera, skedar, ose lidhje)."
+  },
+  "are_you_sure_message": {
+    "message": "A jeni të sigurt? Kjo veprim është përherë."
+  },
+  "autofill_checkbox_label": {
+    "message": "Plotëso Automatikisht"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Plotëson automatikisht fushën OTP duke përdorur URL-në e plotësimit automatik për secilin token."
+  },
+  "autofill_url": {
+    "message": "URL për Plotësim Automatik:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL për Plotësim Automatik: (Nuk është Aktivizuar)"
+  },
+  "camera_permission_button": {
+    "message": "Butoni i Lejimit të Kamerës"
+  },
+  "camera_permission_message_1": {
+    "message": "*Butoni auto-klikon në ngarkimin e faqes*"
+  },
+  "camera_permission_message_2": {
+    "message": "Butoni i Webcam do të funksionojë pas lejimit të qasjes në kamerë"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Kopjimi në Clipboard"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Lejon kopjimin e OTP në clipboard kur klikohet një kuti tokeni."
+  },
+  "close": {
+    "message": "Mbyll"
+  },
+  "confirm_password": {
+    "message": "Konfirmo Fjalëkalimin:"
+  },
+  "copied": {
+    "message": "Kopjuar!"
+  },
+  "currently_saved": {
+    "message": "Aktualisht të Ruajtura: "
+  },
+  "dark_theme": {
+    "message": "Tema e Errët"
+  },
+  "delete": {
+    "message": "Fshi"
+  },
+  "disable_password_protection": {
+    "message": "Çaktivizo Mbrojtjen me Fjalëkalim"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Aktivizoni Kopjimin në Clipboard në cilësime"
+  },
+  "enable_password_protection": {
+    "message": "Aktivizoni Mbrojtjen me Fjalëkalim"
+  },
+  "enter_name": {
+    "message": "Shkruaj Emrin:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Ju lutem, shkruani si emrin ashtu edhe sekretin."
+  },
+  "enter_password": {
+    "message": "Shkruaj Fjalëkalimin:"
+  },
+  "enter_secret": {
+    "message": "Shkruaj Sekretin:"
+  },
+  "enter_url": {
+    "message": "Shkruaj URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro është një mjet i fuqishëm që gjeneron një Fjalëkalim të Vetëm (OTP) çdo 30 sekonda bazuar në një sekret të dhënë."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Fshi Shtuesin e Tokenëve"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Fshin formën e shtimit të tokenëve; siguron një pamje më të lehtë të tokenëve të ruajtur."
+  },
+  "image": {
+    "message": "Imazhi"
+  },
+  "image_url": {
+    "message": "URL e Imazhit:"
+  },
+  "incorrect_password_message": {
+    "message": "Fjalëkalim i Gabuar"
+  },
+  "incorrect_url_message": {
+    "message": "URL i Gabuar, ose URL nuk përmbante QR kod."
+  },
+  "invalid_secret_message": {
+    "message": "Sekreti i pavlefshëm. Ju lutem, shkruani një varg të koduar në Base32."
+  },
+  "light_theme": {
+    "message": "Tema e Lehtë"
+  },
+  "main_enter_password_message": {
+    "message": "Shkruaj Fjalëkalimin për të Çelur"
+  },
+  "name_already_exists_message": {
+    "message": "Një token me këtë emër ekziston tashmë."
+  },
+  "name_too_long_message": {
+    "message": "Emri është shumë i gjatë, ju lutem shkruani një emër më të shkurtër."
+  },
+  "online_time_checkbox_label": {
+    "message": "Sinhronizimi i Kohës Online"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Sinhronizon me kohën online për saktësi; përndryshe përdor kohën lokale të pajisjes."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Mbrojtja me Fjalëkalim"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Për të aktivizuar, çaktivizoni Sinhronizimin mes Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Enkripton dhe mbron sekretet e ruajtura me një fjalëkalim."
+  },
+  "password_protection_setup": {
+    "message": "Konfigurimi i Mbrojtjes me Fjalëkalim"
+  },
+  "passwords_dont_match": {
+    "message": "Fjalëkalimet nuk përputhen"
+  },
+  "password_warning_message": {
+    "message": "KËSHILLË: Nëse fjalëkalimi harrohet, nuk mund të rikuperohet."
+  },
+  "permissions": {
+    "message": "Lejet"
+  },
+  "permissions_page_header": {
+    "message": "Faqja e Lejeve të Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "Mënyra e Dritares"
+  },
+  "popup_mode_tooltip": {
+    "message": "Hap Authenticator Pro në një dritare të veçantë."
+  },
+  "qr_found_message": {
+    "message": "QR kodi u gjet!"
+  },
+  "qr_not_found_message": {
+    "message": "QR Kodi nuk u gjet. Provoni një imazh tjetër."
+  },
+  "remove_password": {
+    "message": "Hiq Fjalëkalimin"
+  },
+  "save_url": {
+    "message": "Ruaj URL"
+  },
+  "scanning": {
+    "message": "Skenim..."
+  },
+  "secret": {
+    "message": " Sekret:"
+  },
+  "secret_already_added_message": {
+    "message": "Këtë sekret e keni shtuar tashmë."
+  },
+  "settings": {
+    "message": "Cilësimet"
+  },
+  "submit": {
+    "message": "Dërgo"
+  },
+  "sync_checkbox_label": {
+    "message": "Sinhronizim mes Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Për të aktivizuar, çaktivizoni Mbrojtjen me Fjalëkalim"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Sinhronizon tokenët në pajisjet e regjistruara në Chrome; përndryshe, gjendja është vetëm lokale."
+  },
+  "themes": {
+    "message": "Temat"
+  },
+  "token_settings": {
+    "message": "Cilësimet e Tokenit"
+  },
+  "webcam": {
+    "message": "Kamera"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Virkar Tokens:"
+  },
+  "add_token": {
+    "message": "Bæta við Token"
+  },
+  "add_qr_code_via": {
+    "message": "Bæta við QR Kóða í gegnum:"
+  },
+  "advanced_add": {
+    "message": "Væddur Bætir"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Væddur Bætir Takki"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Leyfir notendum að bæta við leyndarmálum í gegnum QR kóða (vöktunartæki, skjal eða hlekk)."
+  },
+  "are_you_sure_message": {
+    "message": "Ertu viss? Þessi aðgerð er varanleg."
+  },
+  "autofill_checkbox_label": {
+    "message": "Sjálfvirk útfylling"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Fylla sjálfkrafa út OTP reitinn með sjálfvirku útfylling URL fyrir hverja token."
+  },
+  "autofill_url": {
+    "message": "Sjálfvirk útfylling URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Sjálfvirk útfylling URL: (Ekki virkt)"
+  },
+  "camera_permission_button": {
+    "message": "Myndavél leyfis takki"
+  },
+  "camera_permission_message_1": {
+    "message": "*Takkinn er sjálfkrafa smelltur þegar síða er hlaðin*"
+  },
+  "camera_permission_message_2": {
+    "message": "Vöktunartæki takki mun virka eftir að leyfa aðgang að myndavél"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Afritun í Úrklippu"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Leyfir afritun OTP í úrklippu þegar smellt er á token box."
+  },
+  "close": {
+    "message": "Loka"
+  },
+  "confirm_password": {
+    "message": "Staðfesta lykilorð:"
+  },
+  "copied": {
+    "message": "Afritað!"
+  },
+  "currently_saved": {
+    "message": "Sem er nú þegar vistað: "
+  },
+  "dark_theme": {
+    "message": "Dökkt Þema"
+  },
+  "delete": {
+    "message": "Eyða"
+  },
+  "disable_password_protection": {
+    "message": "Deila Lykilorð Vörn"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Virkja afritun í úrklippu í stillingum"
+  },
+  "enable_password_protection": {
+    "message": "Virkja Lykilorð Vörn"
+  },
+  "enter_name": {
+    "message": "Sláðu inn nafn:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Vinsamlegast sláðu inn bæði nafn og leyndarmál."
+  },
+  "enter_password": {
+    "message": "Sláðu inn lykilorð:"
+  },
+  "enter_secret": {
+    "message": "Sláðu inn leyndarmál:"
+  },
+  "enter_url": {
+    "message": "Sláðu inn URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro er öflugt tól sem býr til eina notendaskrá (OTP) á 30 sekúndna fresti byggt á veittum leyndarmálum."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Fela Token Bæti"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Fela token bæti form; veitir auðveldari sýn á vistaða tokens."
+  },
+  "image": {
+    "message": "Mynd"
+  },
+  "image_url": {
+    "message": "Mynd URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Lykilorð rangt"
+  },
+  "incorrect_url_message": {
+    "message": "Rangt URL, eða URL inniheldur ekki QR kóða."
+  },
+  "invalid_secret_message": {
+    "message": "Ógild leyndarmál. Vinsamlegast sláðu inn Base32 kóðaða streng."
+  },
+  "light_theme": {
+    "message": "Létt Þema"
+  },
+  "main_enter_password_message": {
+    "message": "Sláðu inn lykilorð til að opna"
+  },
+  "name_already_exists_message": {
+    "message": "Token með þessu nafni er þegar til."
+  },
+  "name_too_long_message": {
+    "message": "Nafn of langt, vinsamlegast sláðu inn styttra nafn."
+  },
+  "online_time_checkbox_label": {
+    "message": "Tímasamræmi á netinu"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Samræmir við tíma á netinu fyrir nákvæmni; annars notar staðartíman."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Lykilorð Vörn"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Til að virka, slökkva á Samræmingu á Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Ríf og vernda vistaða leyndarmál með lykilorði."
+  },
+  "password_protection_setup": {
+    "message": "Uppsetning Lykilorð Vörn"
+  },
+  "passwords_dont_match": {
+    "message": "Lykilorð passa ekki"
+  },
+  "password_warning_message": {
+    "message": "VÖRNING: Ef lykilorðið er gleymt, er ekki hægt að endurheimta það."
+  },
+  "permissions": {
+    "message": "Heimildir"
+  },
+  "permissions_page_header": {
+    "message": "Heimildasíða Authenticator Pro "
+  },
+  "popup_mode_label": {
+    "message": "Popup Mode"
+  },
+  "popup_mode_tooltip": {
+    "message": "Opnar Authenticator Pro í sér glugga."
+  },
+  "qr_found_message": {
+    "message": "QR kóði fannst!"
+  },
+  "qr_not_found_message": {
+    "message": "QR kóði ekki fannst. Reyndu annað mynd."
+  },
+  "remove_password": {
+    "message": "Fjarlægja lykilorð"
+  },
+  "save_url": {
+    "message": "Vista URL"
+  },
+  "scanning": {
+    "message": "Skanna..."
+  },
+  "secret": {
+    "message": " Leyndarmál:"
+  },
+  "secret_already_added_message": {
+    "message": "Þú hefur þegar bætt við þessu leyndarmáli."
+  },
+  "settings": {
+    "message": "Stillingar"
+  },
+  "submit": {
+    "message": "Senda"
+  },
+  "sync_checkbox_label": {
+    "message": "Samræma í gegnum Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Til að virka, slökkva á Lykilorð Vörn"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Samræmir tokens á innskráðum Chrome tækjum; annars er stöðunni aðeins staðbundið."
+  },
+  "themes": {
+    "message": "Þem"
+  },
+  "token_settings": {
+    "message": "Token Stillingar"
+  },
+  "webcam": {
+    "message": "Vöktunartæki"
+  }
+}

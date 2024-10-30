@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Активни Токени:"
+  },
+  "add_token": {
+    "message": "Добавяне на Токен"
+  },
+  "add_qr_code_via": {
+    "message": "Добавяне на QR Код чрез:"
+  },
+  "advanced_add": {
+    "message": "Разширено Добавяне"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Бутон за Разширено Добавяне"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Позволява добавяне на тайни чрез QR код (камера, файл или връзка)."
+  },
+  "are_you_sure_message": {
+    "message": "Сигурни ли сте? Това действие е необратимо."
+  },
+  "autofill_checkbox_label": {
+    "message": "Автоматично Попълване"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Автоматично попълва полето OTP, използвайки URL за автоматично попълване за всеки токен."
+  },
+  "autofill_url": {
+    "message": "URL за Автоматично Попълване:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL за Автоматично Попълване: (Не е Активирано)"
+  },
+  "camera_permission_button": {
+    "message": "Бутон за Разрешение на Камерата"
+  },
+  "camera_permission_message_1": {
+    "message": "*Бутонът се активира автоматично при зареждане на страницата*"
+  },
+  "camera_permission_message_2": {
+    "message": "Бутонът за камера ще работи след разрешаване на достъп до камерата"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Копиране в Clipboard"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Позволява копиране на OTP в клипборда при клик върху токен."
+  },
+  "close": {
+    "message": "Затвори"
+  },
+  "confirm_password": {
+    "message": "Потвърдете Паролата:"
+  },
+  "copied": {
+    "message": "Копирано!"
+  },
+  "currently_saved": {
+    "message": "Текущо Запазено: "
+  },
+  "dark_theme": {
+    "message": "Тъмна Тема"
+  },
+  "delete": {
+    "message": "Изтрий"
+  },
+  "disable_password_protection": {
+    "message": "Деактивиране на Защита с Парола"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Активирайте копирането в клипборда от настройките"
+  },
+  "enable_password_protection": {
+    "message": "Активиране на Защита с Парола"
+  },
+  "enter_name": {
+    "message": "Въведете Име:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Моля, въведете и име, и тайна."
+  },
+  "enter_password": {
+    "message": "Въведете Парола:"
+  },
+  "enter_secret": {
+    "message": "Въведете Тайна:"
+  },
+  "enter_url": {
+    "message": "Въведете URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro е мощен инструмент, който генерира еднократна парола (OTP) на всеки 30 секунди въз основа на въведена тайна."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Скриване на Формуляра за Токени"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Скрива формуляра за добавяне на токени; предоставя по-лесен преглед на запазените токени."
+  },
+  "image": {
+    "message": "Изображение"
+  },
+  "image_url": {
+    "message": "URL на Изображението:"
+  },
+  "incorrect_password_message": {
+    "message": "Грешна Парола"
+  },
+  "incorrect_url_message": {
+    "message": "Невалиден URL или липсва QR код."
+  },
+  "invalid_secret_message": {
+    "message": "Невалидна тайна. Въведете Base32 кодиран низ."
+  },
+  "light_theme": {
+    "message": "Светла Тема"
+  },
+  "main_enter_password_message": {
+    "message": "Въведете Парола за Отключване"
+  },
+  "name_already_exists_message": {
+    "message": "Токен с това име вече съществува."
+  },
+  "name_too_long_message": {
+    "message": "Името е твърде дълго, въведете по-кратко име."
+  },
+  "online_time_checkbox_label": {
+    "message": "Синхронизация на Онлайн Времето"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Синхронизира се с онлайн време за точност; в противен случай използва локалното време на устройството."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Защита с Парола"
+  },
+  "password_protected_checkbox_message": {
+    "message": "За активиране, изключете синхронизацията чрез Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Шифрова и защитава запазените тайни с парола."
+  },
+  "password_protection_setup": {
+    "message": "Настройки за Защита с Парола"
+  },
+  "passwords_dont_match": {
+    "message": "Паролите не съвпадат"
+  },
+  "password_warning_message": {
+    "message": "ПРЕДУПРЕЖДЕНИЕ: Ако паролата бъде забравена, не може да се възстанови."
+  },
+  "permissions": {
+    "message": "Разрешения"
+  },
+  "permissions_page_header": {
+    "message": "Страница с Разрешения на Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "Режим на Изскачащ Прозорец"
+  },
+  "popup_mode_tooltip": {
+    "message": "Отваря Authenticator Pro в отделен прозорец."
+  },
+  "qr_found_message": {
+    "message": "QR кодът е намерен!"
+  },
+  "qr_not_found_message": {
+    "message": "QR кодът не е намерен. Опитайте с друго изображение."
+  },
+  "remove_password": {
+    "message": "Премахване на Парола"
+  },
+  "save_url": {
+    "message": "Запазване на URL"
+  },
+  "scanning": {
+    "message": "Сканиране..."
+  },
+  "secret": {
+    "message": " Тайна:"
+  },
+  "secret_already_added_message": {
+    "message": "Тази тайна вече е добавена."
+  },
+  "settings": {
+    "message": "Настройки"
+  },
+  "submit": {
+    "message": "Потвърди"
+  },
+  "sync_checkbox_label": {
+    "message": "Синхронизация чрез Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "За активиране, изключете Защита с Парола"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Синхронизира токените на устройства с влязъл в Chrome профил; иначе състоянието е само локално."
+  },
+  "themes": {
+    "message": "Теми"
+  },
+  "token_settings": {
+    "message": "Настройки на Токен"
+  },
+  "webcam": {
+    "message": "Уебкамера"
+  }
+}

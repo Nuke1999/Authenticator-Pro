@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "활성 토큰:"
+  },
+  "add_token": {
+    "message": "토큰 추가"
+  },
+  "add_qr_code_via": {
+    "message": "QR 코드 추가 방법:"
+  },
+  "advanced_add": {
+    "message": "고급 추가"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "고급 추가 버튼"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "사용자가 QR 코드(웹캠, 파일 또는 링크)를 통해 비밀을 추가할 수 있습니다."
+  },
+  "are_you_sure_message": {
+    "message": "확실합니까? 이 작업은 영구적입니다."
+  },
+  "autofill_checkbox_label": {
+    "message": "자동 채우기"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "각 토큰에 대해 자동 채우기 URL을 사용하여 OTP 필드를 자동으로 채웁니다."
+  },
+  "autofill_url": {
+    "message": "자동 채우기 URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "자동 채우기 URL: (사용 안 함)"
+  },
+  "camera_permission_button": {
+    "message": "카메라 권한 버튼"
+  },
+  "camera_permission_message_1": {
+    "message": "*페이지 로드 시 버튼이 자동으로 클릭됩니다*"
+  },
+  "camera_permission_message_2": {
+    "message": "카메라 접근을 허용한 후 웹캠 버튼이 작동합니다."
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "클립보드 복사"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "토큰 박스를 클릭할 때 OTP를 클립보드에 복사합니다."
+  },
+  "close": {
+    "message": "닫기"
+  },
+  "confirm_password": {
+    "message": "비밀번호 확인:"
+  },
+  "copied": {
+    "message": "복사됨!"
+  },
+  "currently_saved": {
+    "message": "현재 저장됨: "
+  },
+  "dark_theme": {
+    "message": "어두운 테마"
+  },
+  "delete": {
+    "message": "삭제"
+  },
+  "disable_password_protection": {
+    "message": "비밀번호 보호 해제"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "설정에서 클립보드 복사 사용"
+  },
+  "enable_password_protection": {
+    "message": "비밀번호 보호 활성화"
+  },
+  "enter_name": {
+    "message": "이름 입력:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "이름과 비밀을 모두 입력해 주세요."
+  },
+  "enter_password": {
+    "message": "비밀번호 입력:"
+  },
+  "enter_secret": {
+    "message": "비밀 입력:"
+  },
+  "enter_url": {
+    "message": "URL 입력"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro는 제공된 비밀에 따라 30초마다 일회성 비밀번호(OTP)를 생성하는 강력한 도구입니다."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "토큰 추가기 숨기기"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "토큰 추가 양식을 숨깁니다; 저장된 토큰의 가시성을 높입니다."
+  },
+  "image": {
+    "message": "이미지"
+  },
+  "image_url": {
+    "message": "이미지 URL:"
+  },
+  "incorrect_password_message": {
+    "message": "비밀번호가 올바르지 않습니다."
+  },
+  "incorrect_url_message": {
+    "message": "잘못된 URL이거나 URL에 QR 코드가 포함되어 있지 않습니다."
+  },
+  "invalid_secret_message": {
+    "message": "유효하지 않은 비밀입니다. Base32로 인코딩된 문자열을 입력해 주세요."
+  },
+  "light_theme": {
+    "message": "밝은 테마"
+  },
+  "main_enter_password_message": {
+    "message": "잠금을 해제하려면 비밀번호를 입력하세요."
+  },
+  "name_already_exists_message": {
+    "message": "이 이름으로 된 토큰이 이미 존재합니다."
+  },
+  "name_too_long_message": {
+    "message": "이름이 너무 깁니다. 더 짧은 이름을 입력해 주세요."
+  },
+  "online_time_checkbox_label": {
+    "message": "온라인 시간 동기화"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "정확성을 위해 온라인 시간과 동기화합니다; 그렇지 않으면 로컬 장치 시간을 사용합니다."
+  },
+  "password_protected_checkbox_label": {
+    "message": "비밀번호 보호"
+  },
+  "password_protected_checkbox_message": {
+    "message": "활성화를 위해 Chrome 간 동기화를 끄세요."
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "비밀번호로 저장된 비밀을 암호화하고 보호합니다."
+  },
+  "password_protection_setup": {
+    "message": "비밀번호 보호 설정"
+  },
+  "passwords_dont_match": {
+    "message": "비밀번호가 일치하지 않습니다."
+  },
+  "password_warning_message": {
+    "message": "경고: 비밀번호를 잊어버리면 복구할 수 없습니다."
+  },
+  "permissions": {
+    "message": "권한"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro 권한 페이지 "
+  },
+  "popup_mode_label": {
+    "message": "팝업 모드"
+  },
+  "popup_mode_tooltip": {
+    "message": "Authenticator Pro를 별도의 창에서 엽니다."
+  },
+  "qr_found_message": {
+    "message": "QR 코드 발견!"
+  },
+  "qr_not_found_message": {
+    "message": "QR 코드가 발견되지 않았습니다. 다른 이미지를 시도해 주세요."
+  },
+  "remove_password": {
+    "message": "비밀번호 제거"
+  },
+  "save_url": {
+    "message": "URL 저장"
+  },
+  "scanning": {
+    "message": "스캔 중..."
+  },
+  "secret": {
+    "message": " 비밀:"
+  },
+  "secret_already_added_message": {
+    "message": "이 비밀은 이미 추가했습니다."
+  },
+  "settings": {
+    "message": "설정"
+  },
+  "submit": {
+    "message": "제출"
+  },
+  "sync_checkbox_label": {
+    "message": "Chrome 간 동기화"
+  },
+  "sync_checkbox_message": {
+    "message": "활성화를 위해 비밀번호 보호를 끄세요."
+  },
+  "sync_checkbox_tooltip": {
+    "message": "로그인된 Chrome 장치에서 토큰을 동기화합니다; 그렇지 않으면 상태가 로컬에만 적용됩니다."
+  },
+  "themes": {
+    "message": "테마"
+  },
+  "token_settings": {
+    "message": "토큰 설정"
+  },
+  "webcam": {
+    "message": "웹캠"
+  }
+}

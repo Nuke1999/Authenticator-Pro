@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Ενεργά Διακριτικά:"
+  },
+  "add_token": {
+    "message": "Προσθήκη Διακριτικού"
+  },
+  "add_qr_code_via": {
+    "message": "Προσθήκη QR Κώδικα Μέσω:"
+  },
+  "advanced_add": {
+    "message": "Προηγμένη Προσθήκη"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Κουμπί Προηγμένης Προσθήκης"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Επιτρέπει την προσθήκη μυστικών μέσω QR κώδικα (webcam, αρχείο ή σύνδεσμος)."
+  },
+  "are_you_sure_message": {
+    "message": "Είσαι σίγουρος; Αυτή η ενέργεια είναι μόνιμη."
+  },
+  "autofill_checkbox_label": {
+    "message": "Αυτόματη Συμπλήρωση"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Συμπληρώνει αυτόματα το πεδίο OTP χρησιμοποιώντας την URL αυτόματης συμπλήρωσης για κάθε διακριτικό."
+  },
+  "autofill_url": {
+    "message": "URL Αυτόματης Συμπλήρωσης:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL Αυτόματης Συμπλήρωσης: (Μη Ενεργοποιημένο)"
+  },
+  "camera_permission_button": {
+    "message": "Κουμπί Άδειας Κάμερας"
+  },
+  "camera_permission_message_1": {
+    "message": "*Το κουμπί κάνει αυτόματο κλικ κατά τη φόρτωση της σελίδας*"
+  },
+  "camera_permission_message_2": {
+    "message": "Το κουμπί της κάμερας λειτουργεί μετά την παροχή άδειας πρόσβασης στην κάμερα"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Αντιγραφή στο Πρόχειρο"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Επιτρέπει την αντιγραφή του OTP στο πρόχειρο με ένα κλικ σε ένα κουτί διακριτικού."
+  },
+  "close": {
+    "message": "Κλείσιμο"
+  },
+  "confirm_password": {
+    "message": "Επιβεβαίωση Κωδικού:"
+  },
+  "copied": {
+    "message": "Αντιγράφηκε!"
+  },
+  "currently_saved": {
+    "message": "Αποθηκευμένα Τώρα: "
+  },
+  "dark_theme": {
+    "message": "Σκούρο Θέμα"
+  },
+  "delete": {
+    "message": "Διαγραφή"
+  },
+  "disable_password_protection": {
+    "message": "Απενεργοποίηση Προστασίας με Κωδικό"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Ενεργοποίηση Αντιγραφής στο Πρόχειρο στις ρυθμίσεις"
+  },
+  "enable_password_protection": {
+    "message": "Ενεργοποίηση Προστασίας με Κωδικό"
+  },
+  "enter_name": {
+    "message": "Εισαγωγή Ονόματος:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Παρακαλούμε εισάγετε τόσο το όνομα όσο και το μυστικό."
+  },
+  "enter_password": {
+    "message": "Εισαγωγή Κωδικού:"
+  },
+  "enter_secret": {
+    "message": "Εισαγωγή Μυστικού:"
+  },
+  "enter_url": {
+    "message": "Εισαγωγή URL"
+  },
+  "extension_description": {
+    "message": "Το Authenticator Pro είναι ένα ισχυρό εργαλείο που δημιουργεί έναν κωδικό μιας χρήσης (OTP) κάθε 30 δευτερόλεπτα με βάση ένα μυστικό."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Απόκρυψη Φόρμας Προσθήκης Διακριτικών"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Αποκρύπτει τη φόρμα προσθήκης διακριτικών για καλύτερη προβολή των αποθηκευμένων διακριτικών."
+  },
+  "image": {
+    "message": "Εικόνα"
+  },
+  "image_url": {
+    "message": "URL Εικόνας:"
+  },
+  "incorrect_password_message": {
+    "message": "Λάθος Κωδικός"
+  },
+  "incorrect_url_message": {
+    "message": "Λανθασμένη URL ή ο QR Κωδικός δεν περιλαμβάνεται."
+  },
+  "invalid_secret_message": {
+    "message": "Άκυρο μυστικό. Παρακαλούμε εισάγετε μια κωδικοποιημένη ακολουθία σε Base32."
+  },
+  "light_theme": {
+    "message": "Φωτεινό Θέμα"
+  },
+  "main_enter_password_message": {
+    "message": "Εισαγάγετε τον Κωδικό για Ξεκλείδωμα"
+  },
+  "name_already_exists_message": {
+    "message": "Ένα διακριτικό με αυτό το όνομα υπάρχει ήδη."
+  },
+  "name_too_long_message": {
+    "message": "Το όνομα είναι πολύ μεγάλο, παρακαλώ εισάγετε ένα μικρότερο."
+  },
+  "online_time_checkbox_label": {
+    "message": "Συγχρονισμός Ώρας Online"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Συγχρονίζεται με την online ώρα για ακρίβεια, διαφορετικά χρησιμοποιεί την τοπική ώρα της συσκευής."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Προστασία με Κωδικό"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Για ενεργοποίηση, απενεργοποιήστε τον συγχρονισμό σε Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Κρυπτογραφεί και προστατεύει τα αποθηκευμένα μυστικά με έναν κωδικό."
+  },
+  "password_protection_setup": {
+    "message": "Ρύθμιση Προστασίας με Κωδικό"
+  },
+  "passwords_dont_match": {
+    "message": "Οι Κωδικοί Δεν Ταιριάζουν"
+  },
+  "password_warning_message": {
+    "message": "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Εάν ξεχαστεί ο κωδικός, δεν μπορεί να ανακτηθεί."
+  },
+  "permissions": {
+    "message": "Δικαιώματα"
+  },
+  "permissions_page_header": {
+    "message": "Σελίδα Δικαιωμάτων Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "Λειτουργία Αναδυόμενου Παραθύρου"
+  },
+  "popup_mode_tooltip": {
+    "message": "Ανοίγει το Authenticator Pro σε ξεχωριστό παράθυρο."
+  },
+  "qr_found_message": {
+    "message": "QR κώδικας βρέθηκε!"
+  },
+  "qr_not_found_message": {
+    "message": "QR Κώδικας δεν βρέθηκε. Δοκιμάστε μια άλλη εικόνα."
+  },
+  "remove_password": {
+    "message": "Αφαίρεση Κωδικού"
+  },
+  "save_url": {
+    "message": "Αποθήκευση URL"
+  },
+  "scanning": {
+    "message": "Σάρωση..."
+  },
+  "secret": {
+    "message": " Μυστικό:"
+  },
+  "secret_already_added_message": {
+    "message": "Έχετε ήδη προσθέσει αυτό το μυστικό."
+  },
+  "settings": {
+    "message": "Ρυθμίσεις"
+  },
+  "submit": {
+    "message": "Υποβολή"
+  },
+  "sync_checkbox_label": {
+    "message": "Συγχρονισμός σε Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Για ενεργοποίηση, απενεργοποιήστε την Προστασία με Κωδικό"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Συγχρονίζει διακριτικά σε συνδεδεμένες συσκευές Chrome. Διαφορετικά, αποθηκεύεται τοπικά."
+  },
+  "themes": {
+    "message": "Θέματα"
+  },
+  "token_settings": {
+    "message": "Ρυθμίσεις Διακριτικών"
+  },
+  "webcam": {
+    "message": "Κάμερα"
+  }
+}

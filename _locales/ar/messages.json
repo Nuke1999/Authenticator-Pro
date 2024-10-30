@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "الرموز النشطة:"
+  },
+  "add_token": {
+    "message": "إضافة رمز"
+  },
+  "add_qr_code_via": {
+    "message": "إضافة رمز QR عبر:"
+  },
+  "advanced_add": {
+    "message": "إضافة متقدمة"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "زر الإضافة المتقدمة"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "يسمح للمستخدمين بإضافة الرموز عبر رمز QR (كاميرا ويب، ملف، أو رابط)."
+  },
+  "are_you_sure_message": {
+    "message": "هل أنت متأكد؟ هذا الإجراء دائم."
+  },
+  "autofill_checkbox_label": {
+    "message": "التعبئة التلقائية"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "يملأ حقل OTP تلقائيًا باستخدام URL التعبئة التلقائية لكل رمز."
+  },
+  "autofill_url": {
+    "message": "URL التعبئة التلقائية:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL التعبئة التلقائية: (غير مفعّل)"
+  },
+  "camera_permission_button": {
+    "message": "زر إذن الكاميرا"
+  },
+  "camera_permission_message_1": {
+    "message": "*يتم النقر تلقائيًا عند تحميل الصفحة*"
+  },
+  "camera_permission_message_2": {
+    "message": "زر كاميرا الويب يعمل بعد السماح بالوصول للكاميرا"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "نسخ إلى الحافظة"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "يسمح بنسخ OTP إلى الحافظة عند النقر على صندوق الرمز."
+  },
+  "close": {
+    "message": "إغلاق"
+  },
+  "confirm_password": {
+    "message": "تأكيد كلمة المرور:"
+  },
+  "copied": {
+    "message": "تم النسخ!"
+  },
+  "currently_saved": {
+    "message": "محفوظ حاليًا: "
+  },
+  "dark_theme": {
+    "message": "الوضع الداكن"
+  },
+  "delete": {
+    "message": "حذف"
+  },
+  "disable_password_protection": {
+    "message": "تعطيل حماية كلمة المرور"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "فعّل النسخ إلى الحافظة من الإعدادات"
+  },
+  "enable_password_protection": {
+    "message": "تمكين حماية كلمة المرور"
+  },
+  "enter_name": {
+    "message": "أدخل الاسم:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "يرجى إدخال الاسم والرمز السري."
+  },
+  "enter_password": {
+    "message": "أدخل كلمة المرور:"
+  },
+  "enter_secret": {
+    "message": "أدخل الرمز السري:"
+  },
+  "enter_url": {
+    "message": "أدخل URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro هو أداة قوية لتوليد كلمات مرور أحادية الاستخدام (OTP) كل 30 ثانية باستخدام رمز سري."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "إخفاء إضافة الرمز"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "يخفي نموذج إضافة الرموز؛ يوفر رؤية أسهل للرموز المحفوظة."
+  },
+  "image": {
+    "message": "صورة"
+  },
+  "image_url": {
+    "message": "رابط الصورة:"
+  },
+  "incorrect_password_message": {
+    "message": "كلمة المرور غير صحيحة"
+  },
+  "incorrect_url_message": {
+    "message": "الرابط غير صحيح أو لا يحتوي على رمز QR."
+  },
+  "invalid_secret_message": {
+    "message": "رمز سري غير صالح. الرجاء إدخال سلسلة مشفرة بتنسيق Base32."
+  },
+  "light_theme": {
+    "message": "الوضع الفاتح"
+  },
+  "main_enter_password_message": {
+    "message": "أدخل كلمة المرور لفتح القفل"
+  },
+  "name_already_exists_message": {
+    "message": "يوجد رمز بالفعل بهذا الاسم."
+  },
+  "name_too_long_message": {
+    "message": "الاسم طويل جدًا، يرجى إدخال اسم أقصر."
+  },
+  "online_time_checkbox_label": {
+    "message": "مزامنة الوقت عبر الإنترنت"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "يتزامن مع الوقت عبر الإنترنت لتحقيق الدقة؛ أو يستخدم وقت الجهاز المحلي."
+  },
+  "password_protected_checkbox_label": {
+    "message": "حماية بكلمة المرور"
+  },
+  "password_protected_checkbox_message": {
+    "message": "لتفعيلها، قم بإيقاف المزامنة عبر Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "يقوم بتشفير وحماية الرموز المحفوظة بكلمة مرور."
+  },
+  "password_protection_setup": {
+    "message": "إعداد حماية كلمة المرور"
+  },
+  "passwords_dont_match": {
+    "message": "كلمات المرور غير متطابقة"
+  },
+  "password_warning_message": {
+    "message": "تحذير: إذا نسيت كلمة المرور، لن يمكن استعادتها."
+  },
+  "permissions": {
+    "message": "الأذونات"
+  },
+  "permissions_page_header": {
+    "message": "صفحة أذونات Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "وضع النافذة المنبثقة"
+  },
+  "popup_mode_tooltip": {
+    "message": "يفتح Authenticator Pro في نافذة منفصلة."
+  },
+  "qr_found_message": {
+    "message": "تم العثور على رمز QR!"
+  },
+  "qr_not_found_message": {
+    "message": "لم يتم العثور على رمز QR. جرّب صورة أخرى."
+  },
+  "remove_password": {
+    "message": "إزالة كلمة المرور"
+  },
+  "save_url": {
+    "message": "حفظ URL"
+  },
+  "scanning": {
+    "message": "جارٍ المسح..."
+  },
+  "secret": {
+    "message": " الرمز السري:"
+  },
+  "secret_already_added_message": {
+    "message": "لقد أضفت هذا الرمز بالفعل."
+  },
+  "settings": {
+    "message": "الإعدادات"
+  },
+  "submit": {
+    "message": "إرسال"
+  },
+  "sync_checkbox_label": {
+    "message": "مزامنة عبر Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "لتفعيلها، قم بإيقاف حماية كلمة المرور"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "يتم مزامنة الرموز على أجهزة Chrome المتصلة؛ خلاف ذلك، تكون الحالة محلية فقط."
+  },
+  "themes": {
+    "message": "السمات"
+  },
+  "token_settings": {
+    "message": "إعدادات الرمز"
+  },
+  "webcam": {
+    "message": "كاميرا ويب"
+  }
+}

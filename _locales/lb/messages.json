@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktiv Tokenen:"
+  },
+  "add_token": {
+    "message": "Token derbäisetzen"
+  },
+  "add_qr_code_via": {
+    "message": "QR Code derbäisetzen iwwer:"
+  },
+  "advanced_add": {
+    "message": "Erweidert derbäisetzen"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Erweidert derbäisetzen Knäppchen"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Erlaabt d'Benotzer Geheimnisser iwwer QR Code (Webcam, Datei oder Link) ze derbäisetzen."
+  },
+  "are_you_sure_message": {
+    "message": "Sidd Dir sécher? Dës Handlung ass permanent."
+  },
+  "autofill_checkbox_label": {
+    "message": "Autofill"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Fëllt automatesch d'OTP-Feld mat der Autofill-URL fir all Token."
+  },
+  "autofill_url": {
+    "message": "Autofill URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Autofill URL: (Net aktivéiert)"
+  },
+  "camera_permission_button": {
+    "message": "Kamera Erlaabnes Knäppchen"
+  },
+  "camera_permission_message_1": {
+    "message": "*Knäppchen klickt automatesch beim Laascht vun der Säit*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webcam Knäppchen funktionnéiert no Erlaabnes vun der Kamera"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Clipboard Kopéieren"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Erlaabt d'OTP op d'Clipboard ze kopéieren wann een e Tokenfeld klickt."
+  },
+  "close": {
+    "message": "Zoumaachen"
+  },
+  "confirm_password": {
+    "message": "Passwuert bestätegen:"
+  },
+  "copied": {
+    "message": "Kopéiert!"
+  },
+  "currently_saved": {
+    "message": "Aktuell gespäichert: "
+  },
+  "dark_theme": {
+    "message": "Däischtert Thema"
+  },
+  "delete": {
+    "message": "Läschen"
+  },
+  "disable_password_protection": {
+    "message": "Passwuertschutz desaktivéieren"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Erlaabt Clipboard Kopéieren an den Astellungen"
+  },
+  "enable_password_protection": {
+    "message": "Passwuertschutz aktivéieren"
+  },
+  "enter_name": {
+    "message": "Numm aginn:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Gitt w.e.g. béid Numm an Geheimnis un."
+  },
+  "enter_password": {
+    "message": "Passwuert aginn:"
+  },
+  "enter_secret": {
+    "message": "Geheimnis aginn:"
+  },
+  "enter_url": {
+    "message": "URL aginn"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro ass e mächtegt Instrument, dat all 30 Sekonnen e Once-Time Passwuert (OTP) op Basis vun engem geheime Schlëssel generéiert."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Tokenen-Formulaire verstoppen"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Verstoppt d'Token-Formulaire; erlaabt eng méi einfach Vue op gespäichert Tokenen."
+  },
+  "image": {
+    "message": "Bild"
+  },
+  "image_url": {
+    "message": "Bild URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Falscht Passwuert"
+  },
+  "incorrect_url_message": {
+    "message": "Falsch URL oder URL huet keen QR Code."
+  },
+  "invalid_secret_message": {
+    "message": "Ongëltegt Geheimnis. Gitt w.e.g. eng Base32 kodéiert Kette un."
+  },
+  "light_theme": {
+    "message": "Liicht Thema"
+  },
+  "main_enter_password_message": {
+    "message": "Gitt Passwuert an fir opzemaachen"
+  },
+  "name_already_exists_message": {
+    "message": "En Token mat dësem Numm besteet schonn."
+  },
+  "name_too_long_message": {
+    "message": "Numm ze laang, gitt w.e.g. en méi kuerzen Numm an."
+  },
+  "online_time_checkbox_label": {
+    "message": "Online Zäit Synchro"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Synchroniséiert mat der Zäit online fir Genauegkeet; benotzt soss d'Zäit vum lokale Gerät."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Passwuertschutz"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Fir ze aktivéieren, schalt Synchro iwwer Chrome aus"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Schützt gespäichert Geheimnisser mat engem Passwuert."
+  },
+  "password_protection_setup": {
+    "message": "Passwuertschutz Astellung"
+  },
+  "passwords_dont_match": {
+    "message": "Passwierder passen net zesummen"
+  },
+  "password_warning_message": {
+    "message": "OPGEPASST: Wann d'Passwuert vergiess gëtt, kann et net erëmfonnt ginn."
+  },
+  "permissions": {
+    "message": "Erlaabnesser"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro Erlaabnesser Säit"
+  },
+  "popup_mode_label": {
+    "message": "Popup Modus"
+  },
+  "popup_mode_tooltip": {
+    "message": "Öffnet Authenticator Pro an engem separaten Fënster."
+  },
+  "qr_found_message": {
+    "message": "QR Code fonnt!"
+  },
+  "qr_not_found_message": {
+    "message": "QR Code net fonnt. Probéiert en anert Bild."
+  },
+  "remove_password": {
+    "message": "Passwuert ewechhuelen"
+  },
+  "save_url": {
+    "message": "URL späicheren"
+  },
+  "scanning": {
+    "message": "Scannen..."
+  },
+  "secret": {
+    "message": " Geheimnis:"
+  },
+  "secret_already_added_message": {
+    "message": "Dir hutt dëst Geheimnis schonn derbäigesat."
+  },
+  "settings": {
+    "message": "Astellungen"
+  },
+  "submit": {
+    "message": "Areechen"
+  },
+  "sync_checkbox_label": {
+    "message": "Synchroniséieren iwwer Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Fir ze aktivéieren, schalt Passwuertschutz aus"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Synchroniséiert Tokenen op ageloggenen Chrome-Geräter; benotzt soss nëmme lokal."
+  },
+  "themes": {
+    "message": "Themen"
+  },
+  "token_settings": {
+    "message": "Token Astellungen"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

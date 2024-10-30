@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "アクティブトークン:"
+  },
+  "add_token": {
+    "message": "トークンを追加"
+  },
+  "add_qr_code_via": {
+    "message": "QRコードを追加:"
+  },
+  "advanced_add": {
+    "message": "高度な追加"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "高度な追加ボタン"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "QRコード（ウェブカメラ、ファイル、またはリンク）を介してシークレットを追加できます。"
+  },
+  "are_you_sure_message": {
+    "message": "本当に実行しますか？この操作は永久的です。"
+  },
+  "autofill_checkbox_label": {
+    "message": "自動入力"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "各トークンの自動入力URLを使用してOTPフィールドを自動的に入力します。"
+  },
+  "autofill_url": {
+    "message": "自動入力URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "自動入力URL:（無効）"
+  },
+  "camera_permission_button": {
+    "message": "カメラ許可ボタン"
+  },
+  "camera_permission_message_1": {
+    "message": "*ボタンはページ読み込み時に自動的にクリックされます*"
+  },
+  "camera_permission_message_2": {
+    "message": "カメラアクセスを許可した後、ウェブカメラボタンが機能します"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "クリップボードコピー"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "トークンボックスをクリックしたときにOTPをクリップボードにコピーします。"
+  },
+  "close": {
+    "message": "閉じる"
+  },
+  "confirm_password": {
+    "message": "パスワードを確認:"
+  },
+  "copied": {
+    "message": "コピーされました！"
+  },
+  "currently_saved": {
+    "message": "現在保存されている: "
+  },
+  "dark_theme": {
+    "message": "ダークテーマ"
+  },
+  "delete": {
+    "message": "削除"
+  },
+  "disable_password_protection": {
+    "message": "パスワード保護を無効にする"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "設定でクリップボードコピーを有効にします"
+  },
+  "enable_password_protection": {
+    "message": "パスワード保護を有効にする"
+  },
+  "enter_name": {
+    "message": "名前を入力:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "名前とシークレットの両方を入力してください。"
+  },
+  "enter_password": {
+    "message": "パスワードを入力:"
+  },
+  "enter_secret": {
+    "message": "シークレットを入力:"
+  },
+  "enter_url": {
+    "message": "URLを入力"
+  },
+  "extension_description": {
+    "message": "Authenticator Proは、提供されたシークレットに基づいて30秒ごとにワンタイムパスワード（OTP）を生成する強力なツールです。"
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "トークン追加を隠す"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "トークン追加フォームを隠し、保存されたトークンの可視性を向上させます。"
+  },
+  "image": {
+    "message": "画像"
+  },
+  "image_url": {
+    "message": "画像URL:"
+  },
+  "incorrect_password_message": {
+    "message": "パスワードが間違っています"
+  },
+  "incorrect_url_message": {
+    "message": "URLが間違っているか、QRコードが含まれていません。"
+  },
+  "invalid_secret_message": {
+    "message": "無効なシークレットです。Base32エンコードされた文字列を入力してください。"
+  },
+  "light_theme": {
+    "message": "ライトテーマ"
+  },
+  "main_enter_password_message": {
+    "message": "ロックを解除するためにパスワードを入力"
+  },
+  "name_already_exists_message": {
+    "message": "この名前のトークンはすでに存在します。"
+  },
+  "name_too_long_message": {
+    "message": "名前が長すぎます。短い名前を入力してください。"
+  },
+  "online_time_checkbox_label": {
+    "message": "オンライン時間同期"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "正確さのためにオンラインの時間と同期します。それ以外の場合、ローカルデバイスタイムを使用します。"
+  },
+  "password_protected_checkbox_label": {
+    "message": "パスワード保護"
+  },
+  "password_protected_checkbox_message": {
+    "message": "有効にするには、Chrome間の同期をオフにしてください"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "パスワードで保存されたシークレットを暗号化し、保護します。"
+  },
+  "password_protection_setup": {
+    "message": "パスワード保護の設定"
+  },
+  "passwords_dont_match": {
+    "message": "パスワードが一致しません"
+  },
+  "password_warning_message": {
+    "message": "警告: パスワードを忘れた場合、回復できません。"
+  },
+  "permissions": {
+    "message": "権限"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro権限ページ "
+  },
+  "popup_mode_label": {
+    "message": "ポップアップモード"
+  },
+  "popup_mode_tooltip": {
+    "message": "Authenticator Proを別ウィンドウで開きます。"
+  },
+  "qr_found_message": {
+    "message": "QRコードが見つかりました！"
+  },
+  "qr_not_found_message": {
+    "message": "QRコードが見つかりません。別の画像を試してください。"
+  },
+  "remove_password": {
+    "message": "パスワードを削除"
+  },
+  "save_url": {
+    "message": "URLを保存"
+  },
+  "scanning": {
+    "message": "スキャン中..."
+  },
+  "secret": {
+    "message": " シークレット:"
+  },
+  "secret_already_added_message": {
+    "message": "このシークレットはすでに追加されています。"
+  },
+  "settings": {
+    "message": "設定"
+  },
+  "submit": {
+    "message": "送信"
+  },
+  "sync_checkbox_label": {
+    "message": "Chrome間の同期"
+  },
+  "sync_checkbox_message": {
+    "message": "有効にするには、パスワード保護をオフにしてください"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "ログインしたChromeデバイス間でトークンを同期します。そうでなければ、状態はローカルのみに留まります。"
+  },
+  "themes": {
+    "message": "テーマ"
+  },
+  "token_settings": {
+    "message": "トークン設定"
+  },
+  "webcam": {
+    "message": "ウェブカメラ"
+  }
+}

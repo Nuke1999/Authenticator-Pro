@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Ակտիվ նշաններ:"
+  },
+  "add_token": {
+    "message": "Ավելացնել նշան"
+  },
+  "add_qr_code_via": {
+    "message": "Ավելացնել QR կոդի միջոցով:"
+  },
+  "advanced_add": {
+    "message": "Ամբողջական ավելացում"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Ամբողջական ավելացման կոճակ"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Թույլ է տալիս օգտվողներին QR կոդի (վեբկամերա, ֆայլ կամ հղում) միջոցով գաղտնիքներ ավելացնել:"
+  },
+  "are_you_sure_message": {
+    "message": "Ակնարկ եք? Այս գործողությունը վերջնական է:"
+  },
+  "autofill_checkbox_label": {
+    "message": "Ավտոմատ լրացում"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Ավտոմատ կերպով լրացնում է OTP դաշտը յուրաքանչյուր նշանի համար ավտոմատ լրացման URL-ով:"
+  },
+  "autofill_url": {
+    "message": "Ավտոմատ լրացման URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Ավտոմատ լրացման URL: (չէ էկագրված)"
+  },
+  "camera_permission_button": {
+    "message": "Կամերայի թույլտվության կոճակ"
+  },
+  "camera_permission_message_1": {
+    "message": "*Կոճակը ավտոմատ կերպով սեղմվում է էջի բեռնման ժամանակ*"
+  },
+  "camera_permission_message_2": {
+    "message": "Վեբկամերայի կոճակը աշխատելու է, երբ թույլատրեք տեսախցիկի մուտքը"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Կտրվածքի կրկնօրինակման"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Թույլ է տալիս OTP-ն կրկնօրինակել կտրվածքին, երբ սեղմում եք նշանի տուփին:"
+  },
+  "close": {
+    "message": "Փակել"
+  },
+  "confirm_password": {
+    "message": "Հաստատել գաղտնաբառը:"
+  },
+  "copied": {
+    "message": "Կրկնօրինակվեց!"
+  },
+  "currently_saved": {
+    "message": "Ընթացիկ պահպանված:"
+  },
+  "dark_theme": {
+    "message": "Դարչնագույն թեմա"
+  },
+  "delete": {
+    "message": "Ջնջել"
+  },
+  "disable_password_protection": {
+    "message": "Չեզոքացնել գաղտնաբառի պաշտպանությունը"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Թույլատրել կտրվածքի կրկնօրինակումը կարգավորումներում"
+  },
+  "enable_password_protection": {
+    "message": "Թույլատրել գաղտնաբառի պաշտպանությունը"
+  },
+  "enter_name": {
+    "message": "Մուտքագրեք անունը:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Խնդրում ենք մուտքագրել թե անունը, թե գաղտնիքը:"
+  },
+  "enter_password": {
+    "message": "Մուտքագրեք գաղտնաբառը:"
+  },
+  "enter_secret": {
+    "message": "Մուտքագրեք գաղտնիքը:"
+  },
+  "enter_url": {
+    "message": "Մուտքագրեք URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro-ը հզոր գործիք է, որն ամեն 30 վայրկյանում ստեղծում է մեկանգամյա գաղտնաբառ (OTP) տրամադրված գաղտնիքի հիման վրա:"
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Դադարեցնել նշանի հավելում"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Դադարեցնում է նշանի հավելման ձևը; հեշտացնում է պահպանված նշանների տեսանելիությունը:"
+  },
+  "image": {
+    "message": "Պատկեր"
+  },
+  "image_url": {
+    "message": "Պատկեր URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Սխալ գաղտնաբառ"
+  },
+  "incorrect_url_message": {
+    "message": "Սխալ URL, կամ URL-ն չի պարունակում QR կոդ:"
+  },
+  "invalid_secret_message": {
+    "message": "Գաղտնիքը անթույլատրելի է: Խնդրում ենք մուտքագրել Base32 կոդավորված տող:"
+  },
+  "light_theme": {
+    "message": "Լույսի թեմա"
+  },
+  "main_enter_password_message": {
+    "message": "Մուտքագրեք գաղտնաբառը բացելու համար"
+  },
+  "name_already_exists_message": {
+    "message": "Այս անունով արդեն կան նշաններ:"
+  },
+  "name_too_long_message": {
+    "message": "Անունը շատ երկար է, խնդրում ենք մուտքագրել ավելի կարճ անուն:"
+  },
+  "online_time_checkbox_label": {
+    "message": "Անցանց ժամանակի սինք"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Ձեռնարկում է տրված տվյալների կայունությունը; հակառակ դեպքում օգտագործում է տեղական սարքի ժամանակը:"
+  },
+  "password_protected_checkbox_label": {
+    "message": "Գաղտնաբառի պաշտպանություն"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Ակտիվացնելու համար անջատեք Chrome-ի սինքը"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Գաղտնիքները գաղտնագրում և պաշտպանում է գաղտնաբառով:"
+  },
+  "password_protection_setup": {
+    "message": "Գաղտնաբառի պաշտպանության կարգավորում"
+  },
+  "passwords_dont_match": {
+    "message": "Գաղտնաբառերը չեն համընկնում"
+  },
+  "password_warning_message": {
+    "message": "Ծանուցում: Եթե գաղտնաբառը մոռացվել է, այն չի կարող վերականգնվել:"
+  },
+  "permissions": {
+    "message": "Թույլտվություններ"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro-ի թույլտվության էջ"
+  },
+  "popup_mode_label": {
+    "message": "Փոփ-ապպ մոդ"
+  },
+  "popup_mode_tooltip": {
+    "message": "Authenticator Pro-ն բացվում է առանձին պատուհանում:"
+  },
+  "qr_found_message": {
+    "message": "QR կոդը գտնվեց!"
+  },
+  "qr_not_found_message": {
+    "message": "QR կոդը գտնվեց, փորձեք այլ պատկեր:"
+  },
+  "remove_password": {
+    "message": "Հեռացնել գաղտնաբառը"
+  },
+  "save_url": {
+    "message": "URL պահպանել"
+  },
+  "scanning": {
+    "message": "Սքանավորում..."
+  },
+  "secret": {
+    "message": " Գաղտնիք:"
+  },
+  "secret_already_added_message": {
+    "message": "Դուք արդեն ավելացրել եք այս գաղտնիքը:"
+  },
+  "settings": {
+    "message": "Կարգավորումներ"
+  },
+  "submit": {
+    "message": "Ուղարկել"
+  },
+  "sync_checkbox_label": {
+    "message": "Սինք առցանց Chrome-ում"
+  },
+  "sync_checkbox_message": {
+    "message": "Ակտիվացնելու համար անջատեք գաղտնաբառի պաշտպանությունը"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Սինք հանձնում է նշանները մուտքագրված Chrome սարքերում, հակառակ դեպքում՝ վիճակը միայն տեղական է:"
+  },
+  "themes": {
+    "message": "Թեմաներ"
+  },
+  "token_settings": {
+    "message": "Նշանի կարգավորումներ"
+  },
+  "webcam": {
+    "message": "Վեբկամերա"
+  }
+}

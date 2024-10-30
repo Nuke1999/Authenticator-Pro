@@ -40800,8 +40800,8 @@ delete this.$overlay,delete this.$codeOutlineHighlight);this.$overlay&&this._upd
 !1){if(!navigator.mediaDevices)return[];let b=async()=>(await navigator.mediaDevices.enumerateDevices()).filter(d=>"videoinput"===d.kind),c;try{a&&(await b()).every(d=>!d.label)&&(c=await navigator.mediaDevices.getUserMedia({audio:!1,video:!0}))}catch(d){}try{return(await b()).map((d,f)=>({id:d.deviceId,label:d.label||(0===f?"Default Camera":`Camera ${f+1}`)}))}finally{c&&(console.warn("Call listCameras after successfully starting a QR scanner to avoid creating a temporary video stream"),e._stopVideoStream(c))}}async hasFlash(){let a;
 try{if(this.$video.srcObject){if(!(this.$video.srcObject instanceof MediaStream))return!1;a=this.$video.srcObject}else a=(await this._getCameraStream()).stream;return"torch"in a.getVideoTracks()[0].getSettings()}catch(b){return!1}finally{a&&a!==this.$video.srcObject&&(console.warn("Call hasFlash after successfully starting the scanner to avoid creating a temporary video stream"),e._stopVideoStream(a))}}isFlashOn(){return this._flashOn}async toggleFlash(){this._flashOn?await this.turnFlashOff():await this.turnFlashOn()}async turnFlashOn(){if(!this._flashOn&&
 !this._destroyed&&(this._flashOn=!0,this._active&&!this._paused))try{if(!await this.hasFlash())throw"No flash available";await this.$video.srcObject.getVideoTracks()[0].applyConstraints({advanced:[{torch:!0}]})}catch(a){throw this._flashOn=!1,a;}}async turnFlashOff(){this._flashOn&&(this._flashOn=!1,await this._restartVideoStream())}destroy(){this.$video.removeEventListener("loadedmetadata",this._onLoadedMetaData);this.$video.removeEventListener("play",this._onPlay);document.removeEventListener("visibilitychange",
-this._onVisibilityChange);window.removeEventListener("resize",this._updateOverlay);this._destroyed=!0;this._flashOn=!1;this.stop();e._postWorkerMessage(this._qrEnginePromise,"close")}async start(){if(this._destroyed)throw Error("The QR scanner can not be started as it had been destroyed.");if(!this._active||this._paused)if("https:"!==window.location.protocol&&console.warn("The camera stream is only accessible if the page is transferred via https."),this._active=!0,!document.hidden)if(this._paused=
-!1,this.$video.srcObject)await this.$video.play();else try{let {stream:a,facingMode:b}=await this._getCameraStream();!this._active||this._paused?e._stopVideoStream(a):(this._setVideoMirror(b),this.$video.srcObject=a,await this.$video.play(),this._flashOn&&(this._flashOn=!1,this.turnFlashOn().catch(()=>{})))}catch(a){if(!this._paused)throw this._active=!1,a;}}stop(){this.pause();this._active=!1}async pause(a=!1){this._paused=!0;if(!this._active)return!0;this.$video.pause();this.$overlay&&(this.$overlay.style.display=
+this._onVisibilityChange);window.removeEventListener("resize",this._updateOverlay);this._destroyed=!0;this._flashOn=!1;this.stop();e._postWorkerMessage(this._qrEnginePromise,"close")}async start(){if(this._destroyed)throw Error("The QR scanner can not be started as it had been destroyed.");if(!this._active||this._paused)if("https:"!==window.location.protocol&&console.log("The camera stream is only accessible if the page is transferred via https."),this._active=!0,!document.hidden)if(this._paused=
+!1,this.$video.srcObject)await this.$video.play().catch(() =>{});else try{let {stream:a,facingMode:b}=await this._getCameraStream();!this._active||this._paused?e._stopVideoStream(a):(this._setVideoMirror(b),this.$video.srcObject=a,await this.$video.play().catch(() => {}),this._flashOn&&(this._flashOn=!1,this.turnFlashOn().catch(()=>{})))}catch(a){if(!this._paused) this._active=!1;}}stop(){this.pause();this._active=!1}async pause(a=!1){this._paused=!0;if(!this._active)return!0;this.$video.pause();this.$overlay&&(this.$overlay.style.display=
 "none");let b=()=>{this.$video.srcObject instanceof MediaStream&&(e._stopVideoStream(this.$video.srcObject),this.$video.srcObject=null)};if(a)return b(),!0;await new Promise(c=>setTimeout(c,300));if(!this._paused)return!1;b();return!0}async setCamera(a){a!==this._preferredCamera&&(this._preferredCamera=a,await this._restartVideoStream())}static async scanImage(a,b,c,d,f=!1,h=!1){let m,n=!1;b&&("scanRegion"in b||"qrEngine"in b||"canvas"in b||"disallowCanvasResizing"in b||"alsoTryWithoutScanRegion"in
 b||"returnDetailedScanResult"in b)?(m=b.scanRegion,c=b.qrEngine,d=b.canvas,f=b.disallowCanvasResizing||!1,h=b.alsoTryWithoutScanRegion||!1,n=!0):b||c||d||f||h?console.warn("You're using a deprecated api for scanImage which will be removed in the future."):console.warn("Note that the return type of scanImage will change in the future. To already switch to the new api today, you can pass returnDetailedScanResult: true.");b=!!c;try{let p,k;[c,p]=await Promise.all([c||e.createQrEngine(),e._loadImage(a)]);
 [d,k]=e._drawToCanvas(p,m,d,f);let q;if(c instanceof Worker){let g=c;b||e._postWorkerMessageSync(g,"inversionMode","both");q=await new Promise((l,v)=>{let w,u,r,y=-1;u=t=>{t.data.id===y&&(g.removeEventListener("message",u),g.removeEventListener("error",r),clearTimeout(w),null!==t.data.data?l({data:t.data.data,cornerPoints:e._convertPoints(t.data.cornerPoints,m)}):v(e.NO_QR_CODE_FOUND))};r=t=>{g.removeEventListener("message",u);g.removeEventListener("error",r);clearTimeout(w);v("Scanner error: "+(t?
@@ -40817,7 +40817,7 @@ Worker||(this._qrEnginePromise=e.createQrEngine());c?(this._onDecode?this._onDec
 c.cornerPoints.map(({x:d,y:f})=>`${d},${f}`).join(" ")),this.$codeOutlineHighlight.style.display="")):this.$codeOutlineHighlight&&!this._codeOutlineHighlightRemovalTimeout&&(this._codeOutlineHighlightRemovalTimeout=setTimeout(()=>this.$codeOutlineHighlight.style.display="none",100))}this._scanFrame()})}_onDecodeError(a){a!==e.NO_QR_CODE_FOUND&&console.log(a)}async _getCameraStream(){if(!navigator.mediaDevices)throw"Camera not found.";let a=/^(environment|user)$/.test(this._preferredCamera)?"facingMode":
 "deviceId",b=[{width:{min:1024}},{width:{min:768}},{}],c=b.map(d=>Object.assign({},d,{[a]:{exact:this._preferredCamera}}));for(let d of[...c,...b])try{let f=await navigator.mediaDevices.getUserMedia({video:d,audio:!1}),h=this._getFacingMode(f)||(d.facingMode?this._preferredCamera:"environment"===this._preferredCamera?"user":"environment");return{stream:f,facingMode:h}}catch(f){}throw"Camera not found.";}async _restartVideoStream(){let a=this._paused;await this.pause(!0)&&!a&&this._active&&await this.start()}static _stopVideoStream(a){for(let b of a.getTracks())b.stop(),
 a.removeTrack(b)}_setVideoMirror(a){this.$video.style.transform="scaleX("+("user"===a?-1:1)+")"}_getFacingMode(a){return(a=a.getVideoTracks()[0])?/rear|back|environment/i.test(a.label)?"environment":/front|user|face/i.test(a.label)?"user":null:null}static _drawToCanvas(a,b,c,d=!1){c=c||document.createElement("canvas");let f=b&&b.x?b.x:0,h=b&&b.y?b.y:0,m=b&&b.width?b.width:a.videoWidth||a.width,n=b&&b.height?b.height:a.videoHeight||a.height;d||(d=b&&b.downScaledWidth?b.downScaledWidth:m,b=b&&b.downScaledHeight?
-b.downScaledHeight:n,c.width!==d&&(c.width=d),c.height!==b&&(c.height=b));b=c.getContext("2d",{alpha:!1});b.imageSmoothingEnabled=!1;b.drawImage(a,f,h,m,n,0,0,c.width,c.height);return[c,b]}static async _loadImage(a){if(a instanceof Image)return await e._awaitImageLoad(a),a;if(a instanceof HTMLVideoElement||a instanceof HTMLCanvasElement||a instanceof SVGImageElement||"OffscreenCanvas"in window&&a instanceof OffscreenCanvas||"ImageBitmap"in window&&a instanceof ImageBitmap)return a;if(a instanceof
+    b.downScaledHeight : n, c.width !== d && (c.width = d), c.height !== b && (c.height = b)); b = c.getContext("2d", {willReadFrequently: true},{alpha:!1});b.imageSmoothingEnabled=!1;b.drawImage(a,f,h,m,n,0,0,c.width,c.height);return[c,b]}static async _loadImage(a){if(a instanceof Image)return await e._awaitImageLoad(a),a;if(a instanceof HTMLVideoElement||a instanceof HTMLCanvasElement||a instanceof SVGImageElement||"OffscreenCanvas"in window&&a instanceof OffscreenCanvas||"ImageBitmap"in window&&a instanceof ImageBitmap)return a;if(a instanceof
 File||a instanceof Blob||a instanceof URL||"string"===typeof a){let b=new Image;b.src=a instanceof File||a instanceof Blob?URL.createObjectURL(a):a.toString();try{return await e._awaitImageLoad(b),b}finally{(a instanceof File||a instanceof Blob)&&URL.revokeObjectURL(b.src)}}else throw"Unsupported image type.";}static async _awaitImageLoad(a){a.complete&&0!==a.naturalWidth||await new Promise((b,c)=>{let d=f=>{a.removeEventListener("load",d);a.removeEventListener("error",d);f instanceof ErrorEvent?
 c("Image load error"):b()};a.addEventListener("load",d);a.addEventListener("error",d)})}static async _postWorkerMessage(a,b,c,d){return e._postWorkerMessageSync(await a,b,c,d)}static _postWorkerMessageSync(a,b,c,d){if(!(a instanceof Worker))return-1;let f=e._workerMessageId++;a.postMessage({id:f,type:b,data:c},d);return f}}e.DEFAULT_CANVAS_SIZE=400;e.NO_QR_CODE_FOUND="No QR code found";e._disableBarcodeDetector=!1;e._workerMessageId=0;/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (e);
 //# sourceMappingURL=qr-scanner.min.js.map
@@ -51800,13 +51800,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 window.Buffer = buffer__WEBPACK_IMPORTED_MODULE_1__.Buffer;
 
 chrome.storage.local.set({
   isPasswordVerified: false,
 });
 document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const isPopup = urlParams.get("isPopup") === "true";
+  const isVideoPermission = urlParams.get("isVideoPermission") === "true";
   const nameInput = document.getElementById("name");
   const secretInput = document.getElementById("secret");
   const tokensContainer = document.getElementById("tokens");
@@ -51822,18 +51824,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const backButton = document.getElementById("back-button");
   const lightThemeButton = document.getElementById("light-theme-button");
   const darkThemeButton = document.getElementById("dark-theme-button");
-  const autofillCheckbox = document.getElementById("autofill-checkbox");
-  const syncCheckbox = document.getElementById("sync-checkbox");
-  const clipboardCopyingCheckbox = document.getElementById(
-    "clipboard-copying-checkbox"
-  );
-  const onlineTimeCheckbox = document.getElementById("online-time-checkbox");
-  const advancedAddCheckbox = document.getElementById("advanced-add-checkbox");
-  const passwordProtectedCheckbox = document.getElementById(
-    "password-protected-checkbox"
-  );
   advancedAddButton.className = "advanced-add-button";
-  advancedAddButton.textContent = "Advanced Add";
+  advancedAddButton.textContent = chrome.i18n.getMessage("advanced_add");
   const authenticatorMainContent = document.getElementById(
     "authenticator-main-content"
   );
@@ -51844,35 +51836,193 @@ document.addEventListener("DOMContentLoaded", () => {
     "password-submit-button"
   );
   const passwordInputField = document.getElementById("password-input");
-  const passwordProtectedLabel = document.getElementById(
-    "password-protected-label"
-  );
-  const checkboxMessagePassword = document.getElementById(
-    "checkbox-message-password"
-  );
-  const syncCheckLabel = document.getElementById("sync-check-label");
-  const checkboxMessageSync = document.getElementById("checkbox-message-sync");
-
   let isTimeCheckboxChecked;
   let isPasswordCheckboxChecked;
   nameInput.focus();
 
-  //encryption & decryption related
+  const switches = [
+    {
+      id: "advanced-add-checkbox",
+      label: "advanced_add_checkbox_label",
+      tooltip: "advanced_add_checkbox_tooltip",
+    },
+    {
+      id: "autofill-checkbox",
+      label: "autofill_checkbox_label",
+      tooltip: "autofill_checkbox_tooltip",
+    },
+    {
+      id: "clipboard-copying-checkbox",
+      label: "clipboard_copying_checkbox_label",
+      tooltip: "clipboard_copying_checkbox_tooltip",
+    },
+    {
+      id: "hide-token-adder-checkbox",
+      label: "hide_token_adder_checkbox_label",
+      tooltip: "hide_token_adder_checkbox_tooltip",
+    },
+    {
+      id: "online-time-checkbox",
+      label: "online_time_checkbox_label",
+      tooltip: "online_time_checkbox_tooltip",
+    },
+    {
+      id: "password-protected-checkbox",
+      label: "password_protected_checkbox_label",
+      tooltip: "password_protected_checkbox_tooltip",
+      extraMessage: "password_protected_checkbox_message",
+      extraMessageId: "checkbox-message-password",
+    },
+    {
+      id: "popup-mode-checkbox",
+      label: "popup_mode_label",
+      tooltip: "popup_mode_tooltip",
+    },
+    {
+      id: "sync-checkbox",
+      label: "sync_checkbox_label",
+      tooltip: "sync_checkbox_tooltip",
+      extraMessage: "sync_checkbox_message",
+      extraMessageId: "checkbox-message-sync",
+    },
+  ];
+
+  switches
+    .slice()
+    .reverse()
+    .forEach((switchConfig) => {
+      const switchElement = createSwitchElement(switchConfig);
+      const permissionsHeader = document.querySelector("h2.permissions-header");
+
+      permissionsHeader.insertAdjacentElement("afterend", switchElement);
+    });
+
+  const settingsContent = document.createElement("div");
+  settingsContent.id = "settings-content";
+  settingsContent.className = "settings-content";
+  settingsContent.style.display = "none";
+  mainContent.insertAdjacentElement("afterend", settingsContent);
+
+  function createSwitchElement({
+    id,
+    label,
+    tooltip,
+    extraMessage,
+    extraMessageId,
+    isLast,
+  }) {
+    const switchBox = document.createElement("div");
+    switchBox.className = isLast ? "switch-box-last" : "switch-box";
+    const switchLabel = document.createElement("label");
+    switchLabel.className = "switch";
+    if (id === "password-protected-checkbox" || id === "sync-checkbox") {
+      switchLabel.id =
+        id === "password-protected-checkbox"
+          ? "password-protected-label"
+          : "sync-check-label";
+    }
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = id;
+    const slider = document.createElement("span");
+    slider.className = "slider round";
+    switchLabel.appendChild(checkbox);
+    switchLabel.appendChild(slider);
+    const switchText = document.createElement("div");
+    switchText.className = "switch-text";
+    switchText.textContent = chrome.i18n.getMessage(label);
+    const tooltipContainer = document.createElement("div");
+    tooltipContainer.className = "tooltip";
+    const tooltipIcon = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "svg"
+    );
+    tooltipIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    tooltipIcon.setAttribute("width", "24");
+    tooltipIcon.setAttribute("height", "24");
+    tooltipIcon.setAttribute("viewBox", "0 0 24 24");
+    tooltipIcon.setAttribute("fill", "none");
+    tooltipIcon.setAttribute("stroke", "currentColor");
+    tooltipIcon.setAttribute("stroke-width", "2");
+    tooltipIcon.setAttribute("stroke-linecap", "round");
+    tooltipIcon.setAttribute("stroke-linejoin", "round");
+    tooltipIcon.classList.add("feather", "feather-info");
+    const circle = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "circle"
+    );
+    circle.setAttribute("cx", "12");
+    circle.setAttribute("cy", "12");
+    circle.setAttribute("r", "10");
+    const line1 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "line"
+    );
+    line1.setAttribute("x1", "12");
+    line1.setAttribute("y1", "16");
+    line1.setAttribute("x2", "12");
+    line1.setAttribute("y2", "12");
+    const line2 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "line"
+    );
+    line2.setAttribute("x1", "12");
+    line2.setAttribute("y1", "8");
+    line2.setAttribute("x2", "12.01");
+    line2.setAttribute("y2", "8");
+    tooltipIcon.appendChild(circle);
+    tooltipIcon.appendChild(line1);
+    tooltipIcon.appendChild(line2);
+    const tooltipText = document.createElement("span");
+    tooltipText.className = "tooltiptext";
+    tooltipText.textContent = chrome.i18n.getMessage(tooltip);
+    tooltipContainer.appendChild(tooltipIcon);
+    tooltipContainer.appendChild(tooltipText);
+    if (extraMessage) {
+      const extraMessageDiv = document.createElement("span");
+      extraMessageDiv.className = extraMessageId;
+      extraMessageDiv.id = extraMessageId;
+      extraMessageDiv.textContent = chrome.i18n.getMessage(extraMessage);
+      tooltipContainer.appendChild(extraMessageDiv);
+    }
+    switchBox.appendChild(switchLabel);
+    switchBox.appendChild(switchText);
+    switchBox.appendChild(tooltipContainer);
+    return switchBox;
+  }
+
+  function localizePopup() {
+    document.querySelectorAll("*:not(script):not(style)").forEach((element) => {
+      if (
+        element.childNodes.length === 1 &&
+        element.childNodes[0].nodeType === Node.TEXT_NODE
+      ) {
+        const originalText = element.textContent;
+        const localizedText = originalText.replace(
+          /__MSG_(\w+)__/g,
+          (match, key) => {
+            return chrome.i18n.getMessage(key) || match;
+          }
+        );
+        if (localizedText !== originalText) {
+          element.textContent = localizedText;
+        }
+      }
+    });
+  }
+
+  localizePopup();
+
   async function encryptSecret(secret, encryptionKey) {
     return new Promise((resolve, reject) => {
       chrome.storage.local.get(["salt", "iv"], async (result) => {
         if (chrome.runtime.lastError) {
-          console.error(
-            "Error retrieving data from storage:",
-            chrome.runtime.lastError
-          );
           reject(chrome.runtime.lastError);
           return;
         }
         let salt = result.salt;
         let iv = result.iv;
         if (!salt || !iv) {
-          console.error("Missing necessary values from storage (salt, iv)");
           reject("Missing necessary values from storage.");
           return;
         }
@@ -51898,6 +52048,7 @@ document.addEventListener("DOMContentLoaded", () => {
             encryptedData: encryptedBase64,
           });
         } catch (error) {
+          console.log(error);
           reject(error);
         }
       });
@@ -51925,6 +52076,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const decryptedSecret = new TextDecoder().decode(decryptedSecretBuffer);
       return decryptedSecret;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   }
@@ -51941,7 +52093,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hashHex = hashArray
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
-    const iv = window.crypto.getRandomValues(new Uint8Array(12)); // AES-GCM IV
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const keyMaterial = await crypto.subtle.importKey(
       "raw",
       encoder.encode(password),
@@ -52000,35 +52152,23 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       return importedKey;
     } catch (error) {
-      console.error("Error importing key:", error);
+      console.log(error);
       throw error;
     }
   }
-  // function popupUpdate() {
-  //   try {
-  //     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  //       chrome.tabs.sendMessage(tabs[0].id, { popupOpen: true });
-  //     });
-  //   } catch (error) {
-  //     console.error("Error occurred:", error);
-  //   }
-  // }
 
   function popupUpdate() {
     try {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.tabs
           .sendMessage(tabs[0].id, { popupOpen: true })
-          .catch((error) => {
-            console.log("Error sending message:", error);
-          });
+          .catch((error) => {});
       });
     } catch (error) {
-      console.log("Error occurred:", error);
+      console.log(error);
     }
   }
 
-  //themes related
   lightThemeButton.addEventListener("click", () => {
     document.body.classList.remove("theme-dark");
     document.body.classList.add("theme-light");
@@ -52046,7 +52186,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  //clock related
   function lastSeconds(seconds) {
     const wholeSeconds = Math.floor(seconds);
 
@@ -52071,7 +52210,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let offset = 0;
 
     if (isTimeCheckboxChecked) {
-      getSecondsFromTimeApi().then((seconds) => startClock(seconds));
+      getSecondsFromTimeApi()
+        .then((seconds) => startClock(seconds))
+        .catch((error) => {
+          startClock(getSecondsFromLocalTime());
+        });
     } else {
       offset = 0;
       const seconds = getSecondsFromLocalTime();
@@ -52079,26 +52222,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getSecondsFromTimeApi() {
-      return fetch(timeApiUrl)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          initialTime = new Date(data.datetime);
-          offset = initialTime.getTime() - Date.now();
-          return (
-            initialTime.getSeconds() + initialTime.getMilliseconds() / 1000
-          );
-        });
+      return Promise.race([
+        fetch(timeApiUrl)
+          .then((response) => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.json();
+          })
+          .then((data) => {
+            initialTime = new Date(data.datetime);
+            offset = initialTime.getTime() - Date.now();
+            return (
+              initialTime.getSeconds() + initialTime.getMilliseconds() / 1000
+            );
+          }),
+        new Promise((resolve) =>
+          setTimeout(() => resolve(getSecondsFromLocalTime()), 500)
+        ),
+      ]);
     }
 
     function getSecondsFromLocalTime() {
       const now = new Date(Date.now() + offset);
-      const seconds = now.getSeconds() + now.getMilliseconds() / 1000;
-      return seconds;
+      return now.getSeconds() + now.getMilliseconds() / 1000;
     }
 
     function updateClockWithSeconds(seconds) {
@@ -52117,32 +52262,24 @@ document.addEventListener("DOMContentLoaded", () => {
       clockTextElement.style.opacity = 1 - fractionalSecond;
     }
 
-    function debounce(func, delay) {
-      let debounceTimer;
-      return function () {
-        const context = this;
-        const args = arguments;
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => func.apply(context, args), delay);
-      };
-    }
-    const debouncedUpdateTokensAtInterval = debounce(
-      updateTokensAtInterval,
-      100
-    );
-
     function startClock(initialSeconds) {
+      let lastUpdateTime = -1;
       function tick(seconds) {
-        if (seconds === undefined) {
-          seconds = getSecondsFromLocalTime();
+        try {
+          if (seconds === undefined) seconds = getSecondsFromLocalTime();
+          updateClockWithSeconds(seconds);
+          const currentSecond = Math.floor(seconds);
+          if (
+            (currentSecond === 0 || currentSecond === 30) &&
+            currentSecond !== lastUpdateTime
+          ) {
+            updateTokensAtInterval();
+            lastUpdateTime = currentSecond;
+          }
+          requestAnimationFrame(() => tick(getSecondsFromLocalTime()));
+        } catch (error) {
+          console.log("Error in tick function:", error);
         }
-        updateClockWithSeconds(seconds);
-
-        if (Math.floor(seconds) === 0 || Math.floor(seconds) === 30) {
-          debouncedUpdateTokensAtInterval();
-        }
-
-        requestAnimationFrame(() => tick());
       }
       tick(initialSeconds);
     }
@@ -52164,7 +52301,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ["encrypt", "decrypt"]
               );
               let tokens = result.tokens || [];
-
               for (let token of tokens) {
                 try {
                   const decryptedSecret = await decryptSecret(
@@ -52172,12 +52308,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     importedKey,
                     result.iv
                   );
-
                   updateToken(token.name, decryptedSecret);
-                } catch (error) {}
+                } catch (error) {
+                  console.log(error);
+                }
               }
-            } catch (error) {}
-          } else {
+            } catch (error) {
+              console.log(error);
+            }
           }
         } else {
           let tokens = result.tokens || [];
@@ -52207,7 +52345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     settingsPage.style.display = "block";
     mainSettings.style.visibility = "hidden";
     backButton.style.visibility = "visible";
-    headerText.textContent = "Settings";
+    headerText.textContent = chrome.i18n.getMessage("settings");
   });
 
   backButton.addEventListener("click", () => {
@@ -52215,7 +52353,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mainContent.style.display = "block";
     mainSettings.style.visibility = "visible";
     backButton.style.visibility = "hidden";
-    headerText.textContent = "Authenticator Pro";
+    headerText.textContent = chrome.i18n.getMessage("extension_name");
   });
 
   minimizeButton.addEventListener("click", () => {
@@ -52230,34 +52368,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return result;
   }
 
-  // function logAllLocalStorage() {
-  //   chrome.storage.local.get(null, (items) => {
-  //     console.log("All items in chrome.storage.local:");
-  //     for (let key in items) {
-  //       if (items.hasOwnProperty(key)) {
-  //         console.log(`${key}:`, items[key]);
-  //       }
-  //     }
-  //   });
-  // }
-  // setTimeout(() => {
-  //   logAllLocalStorage();
-  // }, 1000);
-
-  // Getting all sync storage upon opening extension, for testing
-  // function logAllSyncStorage() {
-  //   chrome.storage.sync.get(null, (items) => {
-  //     console.log("All items in chrome.storage.sync:");
-  //     for (let key in items) {
-  //       if (items.hasOwnProperty(key)) {
-  //         console.log(`${key}:`, items[key]);
-  //       }
-  //     }
-  //   });
-  // }
-
-  // logAllSyncStorage();
-
   passwordInputField.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -52271,10 +52381,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ["salt", "iv", "encryptedHashedPassword", "encryptionKeyInMemory"],
       async (result) => {
         if (chrome.runtime.lastError) {
-          console.error(
-            "Error retrieving data from storage:",
-            chrome.runtime.lastError
-          );
           return;
         }
         const storedSalt = result.salt;
@@ -52373,7 +52479,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "incorrect-password-message"
           );
           if (errorMessageElement) {
-            errorMessageElement.textContent = "Incorrect Password";
+            errorMessageElement.textContent = chrome.i18n.getMessage(
+              "incorrect_password_message"
+            );
             setTimeout(() => {
               errorMessageElement.textContent = "";
             }, 3000);
@@ -52387,10 +52495,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return new Promise((resolve, reject) => {
       chrome.storage.local.get(["tokens", "iv"], async (result) => {
         if (chrome.runtime.lastError) {
-          console.error(
-            "Error retrieving tokens from storage:",
-            chrome.runtime.lastError
-          );
           reject(chrome.runtime.lastError);
         }
         let tokens = result.tokens || [];
@@ -52404,6 +52508,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
             decryptedTokens.push({ ...token, secret: decryptedSecret });
           } catch (error) {
+            console.log(error);
             reject(error);
           }
         }
@@ -52435,90 +52540,84 @@ document.addEventListener("DOMContentLoaded", () => {
         passwordPromptContainer.style.display = "block";
       }
 
-      chrome.storage.sync.get((syncResult) => {
-        if (localResult.firstTime === undefined) {
-          // First time setup, initialize checkboxes and storage
-          autofillCheckbox.checked = false;
-          syncCheckbox.checked = syncResult.syncEnabled || false;
-          clipboardCopyingCheckbox.checked = false;
-          onlineTimeCheckbox.checked = syncResult.onlineTimeEnabled || false;
-          advancedAddCheckbox.checked = false;
-          passwordProtectedCheckbox.checked = false;
-          // Setting `isTimeCheckboxChecked` and updating clock
-          isTimeCheckboxChecked = syncResult.onlineTimeEnabled || false;
-          updateClock();
-          // Setting values in local and sync storage
-          chrome.storage.local.set({
-            tokens: syncResult.tokens || [],
-            autofillEnabled: false,
-            syncEnabled: syncResult.syncEnabled || false,
-            clipboardCopyingEnabled: false,
-            onlineTimeEnabled: syncResult.onlineTimeEnabled || false,
-            advancedAddEnabled: syncResult.advancedAddEnabled || false,
-            passwordCheckbox: false,
-            firstTime: false,
-            theme: syncResult.theme || "theme-light",
-            // isPasswordVerified: false,
-          });
+      if (localResult.firstTime === undefined) {
+        autofillCheckbox.checked = false;
+        syncCheckbox.checked = false;
+        clipboardCopyingCheckbox.checked = false;
+        onlineTimeCheckbox.checked = false;
+        advancedAddCheckbox.checked = false;
+        passwordProtectedCheckbox.checked = false;
+        popupModeCheckbox.checked = false;
+        isTimeCheckboxChecked = false;
+        hideTokenAdder.checked = false;
+        updateClock();
+        chrome.storage.local.set({
+          tokens: [],
+          autofillEnabled: false,
+          syncEnabled: false,
+          clipboardCopyingEnabled: false,
+          onlineTimeEnabled: false,
+          advancedAddEnabled: false,
+          passwordCheckbox: false,
+          popupModeCheckbox: false,
+          firstTime: false,
+          theme: "theme-light",
+          hideTokenAdder: false,
+        });
+      } else {
+        chrome.storage.local.set({ isPasswordVerified: false });
+        autofillCheckbox.checked = localResult.autofillEnabled;
+        syncCheckbox.checked = localResult.syncEnabled;
+        const changeEvent = new Event("change");
+        syncCheckbox.dispatchEvent(changeEvent);
+        clipboardCopyingCheckbox.checked = localResult.clipboardCopyingEnabled;
+        onlineTimeCheckbox.checked = localResult.onlineTimeEnabled;
+        advancedAddCheckbox.checked = localResult.advancedAddEnabled;
+        passwordProtectedCheckbox.checked = localResult.passwordCheckbox;
+        popupModeCheckbox.checked = localResult.popupModeCheckbox;
+        isTimeCheckboxChecked = localResult.onlineTimeEnabled;
+        isPasswordCheckboxChecked = localResult.passwordCheckbox;
+        hideTokenAdder.checked = localResult.hideTokenAdder;
+        updateClock();
 
-          chrome.storage.sync.set({
-            tokens: syncResult.tokens || localResult.tokens || [],
-            syncEnabled:
-              syncResult.syncEnabled || localResult.syncEnabled || true,
-            onlineTimeEnabled:
-              syncResult.onlineTimeEnabled ||
-              localResult.onlineTimeEnabled ||
-              true,
-            advancedAddEnabled:
-              syncResult.advancedAddEnabled ||
-              localResult.advancedAddEnabled ||
-              false,
-            theme: syncResult.theme || "theme-light",
-          });
-        } else {
-          chrome.storage.local.set({ isPasswordVerified: false });
-          // Not the first time, synchronize state of passwordProtectedCheckbox
-          autofillCheckbox.checked = localResult.autofillEnabled;
-          syncCheckbox.checked = localResult.syncEnabled;
-          // Dispatch change event to update UI elements accordingly
-          const event = new Event("change");
-          syncCheckbox.dispatchEvent(event);
-          clipboardCopyingCheckbox.checked =
-            localResult.clipboardCopyingEnabled;
-          onlineTimeCheckbox.checked = localResult.onlineTimeEnabled;
-          advancedAddCheckbox.checked = localResult.advancedAddEnabled;
-          passwordProtectedCheckbox.checked = localResult.passwordCheckbox;
-          // Update `isTimeCheckboxChecked` and update clock if necessary
-          isTimeCheckboxChecked = localResult.onlineTimeEnabled;
-          isPasswordCheckboxChecked = localResult.passwordCheckbox;
-          updateClock();
-
-          if (advancedAddCheckbox.checked) {
-            advancedAddButton.className = "advanced-add-button";
-            formContainer.appendChild(advancedAddButton);
-            advancedAddButton.style.display = "block";
-          } else {
-            advancedAddButton.style.display = "none";
-          }
-
-          // Sync theme
-          if (localResult.theme == "theme-light") {
-            document.body.classList.remove("theme-dark");
-            document.body.classList.add("theme-light");
-            chrome.storage.local.set({ theme: "theme-light" });
-          } else if (localResult.theme == "theme-dark") {
-            document.body.classList.remove("theme-light");
-            document.body.classList.add("theme-dark");
-            chrome.storage.local.set({ theme: "theme-dark" });
-          }
+        if (hideTokenAdder.checked) {
+          formContainer.style.display = "none";
         }
-      });
+
+        if (advancedAddCheckbox.checked) {
+          advancedAddButton.className = "advanced-add-button";
+          formContainer.appendChild(advancedAddButton);
+          advancedAddButton.style.display = "block";
+        } else {
+          advancedAddButton.style.display = "none";
+        }
+
+        if (popupModeCheckbox.checked && !isPopup) {
+          chrome.windows.create({
+            url: chrome.runtime.getURL("authenticator.html") + "?isPopup=true",
+            type: "popup",
+            width: 314,
+            height: 480,
+          });
+          window.close();
+        }
+
+        if (localResult.theme == "theme-light") {
+          document.body.classList.remove("theme-dark");
+          document.body.classList.add("theme-light");
+          chrome.storage.local.set({ theme: "theme-light" });
+        } else if (localResult.theme == "theme-dark") {
+          document.body.classList.remove("theme-light");
+          document.body.classList.add("theme-dark");
+          chrome.storage.local.set({ theme: "theme-dark" });
+        }
+      }
     });
   } catch (error) {
-    console.error("Error accessing local storage:", error);
+    console.log(error);
   }
 
-  // logAllLocalStorage();
+  const autofillCheckbox = document.getElementById("autofill-checkbox");
 
   autofillCheckbox.addEventListener("change", async () => {
     if (autofillCheckbox.checked) {
@@ -52532,7 +52631,7 @@ document.addEventListener("DOMContentLoaded", () => {
           autofillCheckbox.checked = false;
         }
       } catch (error) {
-        console.error("Error requesting autofill permission:", error);
+        console.log(error);
         autofillCheckbox.checked = false;
       }
     } else {
@@ -52540,7 +52639,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Function to request autofill permission
   async function requestAutofillPermission() {
     return new Promise((resolve) => {
       chrome.permissions.request(
@@ -52553,6 +52651,8 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
   }
+
+  const syncCheckbox = document.getElementById("sync-checkbox");
 
   syncCheckbox.addEventListener("change", (e) => {
     if (passwordProtectedCheckbox.checked) {
@@ -52572,16 +52672,12 @@ document.addEventListener("DOMContentLoaded", () => {
               : [];
             localTokens.forEach((localToken) => {
               const match = syncTokens.find(
-                (syncToken) =>
-                  syncToken.name === localToken.name &&
-                  syncToken.secret === localToken.secret
+                (syncToken) => syncToken.name === localToken.name
               );
               if (!match) {
                 syncTokens.push(localToken);
               }
             });
-
-            // Save consolidated tokens to sync storage and local storage
             chrome.storage.sync.set({ tokens: syncTokens }, () => {
               chrome.storage.local.set({ tokens: syncTokens }, () => {
                 syncTokens.forEach((tokenObj) => {
@@ -52603,9 +52699,13 @@ document.addEventListener("DOMContentLoaded", () => {
       chrome.storage.local.set({ syncEnabled: syncCheckbox.checked });
       chrome.storage.sync.set({ syncEnabled: syncCheckbox.checked });
     } catch (error) {
-      console.error("Error setting syncCheck:", error);
+      console.log(error);
     }
   });
+
+  const clipboardCopyingCheckbox = document.getElementById(
+    "clipboard-copying-checkbox"
+  );
 
   clipboardCopyingCheckbox.addEventListener("change", async () => {
     if (clipboardCopyingCheckbox.checked) {
@@ -52618,7 +52718,7 @@ document.addEventListener("DOMContentLoaded", () => {
           clipboardCopyingCheckbox.checked = false;
         }
       } catch (error) {
-        console.error("Error requesting clipboard permission:", error);
+        console.log(error);
         clipboardCopyingCheckbox.checked = false;
       }
     } else {
@@ -52640,6 +52740,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const onlineTimeCheckbox = document.getElementById("online-time-checkbox");
+
   onlineTimeCheckbox.addEventListener("change", () => {
     try {
       chrome.storage.local.set({
@@ -52649,9 +52751,11 @@ document.addEventListener("DOMContentLoaded", () => {
         onlineTimeEnabled: onlineTimeCheckbox.checked,
       });
     } catch (error) {
-      console.error("Error setting syncCheck:", error);
+      console.log(error);
     }
   });
+
+  const advancedAddCheckbox = document.getElementById("advanced-add-checkbox");
 
   advancedAddCheckbox.addEventListener("change", () => {
     if (advancedAddCheckbox.checked) {
@@ -52669,7 +52773,7 @@ document.addEventListener("DOMContentLoaded", () => {
         advancedAddEnabled: advancedAddCheckbox.checked,
       });
     } catch (error) {
-      console.error("Error setting syncCheck:", error);
+      console.log(error);
     }
   });
 
@@ -52679,7 +52783,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (name.length < 12) {
       nameLength = true;
     } else {
-      createPopup("Name too long, please input a shorter name");
+      createPopup(chrome.i18n.getMessage("name_too_long_message"));
       return;
     }
 
@@ -52697,9 +52801,13 @@ document.addEventListener("DOMContentLoaded", () => {
               (tokenObj) => tokenObj.secret === secret
             );
             if (nameExists) {
-              createPopup("A token with this name already exists.");
+              createPopup(
+                chrome.i18n.getMessage("name_already_exists_message")
+              );
             } else if (secretExists) {
-              createPopup("You've already added this secret.");
+              createPopup(
+                chrome.i18n.getMessage("secret_already_added_message")
+              );
             } else {
               try {
                 const token = generateToken(secret);
@@ -52778,21 +52886,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                   throw new Error("Invalid token generated.");
                 }
-              } catch (err) {
-                createPopup("Invalid Input");
+              } catch (error) {
+                console.log(error);
               }
             }
           }
         );
       } else {
-        createPopup("Invalid secret. Please enter a Base32 encoded string.");
+        createPopup(chrome.i18n.getMessage("invalid_secret_message"));
       }
     } else {
-      createPopup("Please enter both name and secret.");
+      createPopup(chrome.i18n.getMessage("enter_name_and_secret_message"));
     }
   });
 
   let isCooldown = false;
+
+  const passwordProtectedLabel = document.getElementById(
+    "password-protected-label"
+  );
+
+  const checkboxMessagePassword = document.getElementById(
+    "checkbox-message-password"
+  );
 
   passwordProtectedLabel.addEventListener("mouseover", (event) => {
     event.stopPropagation();
@@ -52807,6 +52923,10 @@ document.addEventListener("DOMContentLoaded", () => {
     checkboxMessagePassword.style.visibility = "hidden";
   });
 
+  const syncCheckLabel = document.getElementById("sync-check-label");
+
+  const checkboxMessageSync = document.getElementById("checkbox-message-sync");
+
   syncCheckLabel.addEventListener("mouseover", (event) => {
     event.stopPropagation();
     if (!syncCheckbox.checked && passwordProtectedCheckbox.checked) {
@@ -52819,6 +52939,10 @@ document.addEventListener("DOMContentLoaded", () => {
     e.stopPropagation();
     checkboxMessageSync.style.visibility = "hidden";
   });
+
+  const passwordProtectedCheckbox = document.getElementById(
+    "password-protected-checkbox"
+  );
 
   passwordProtectedCheckbox.addEventListener("click", (e) => {
     e.preventDefault();
@@ -52853,7 +52977,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const containerDiv = document.createElement("div");
       const heading = document.createElement("h2");
       heading.className = "centered-headings";
-      heading.textContent = "Password Protection Setup";
+      heading.textContent = chrome.i18n.getMessage("password_protection_setup");
       containerDiv.appendChild(heading);
 
       const svgIcon = document.createElementNS(
@@ -52904,13 +53028,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const passDontMatchMessage = document.createElement("div");
       passDontMatchMessage.className = "wrong-or-nonmatch-passwords";
       passDontMatchMessage.id = "wrong-password-message";
-      passDontMatchMessage.textContent = "Passwords Don't Match";
+      passDontMatchMessage.textContent = chrome.i18n.getMessage(
+        "passwords_dont_match"
+      );
       const formLabelContainer = document.createElement("div");
       formLabelContainer.className = "form-label-container";
       const passwordLabel = document.createElement("label");
       passwordLabel.className = "form-label";
       passwordLabel.setAttribute("for", "password");
-      passwordLabel.textContent = "Enter Password:";
+      passwordLabel.textContent = chrome.i18n.getMessage("enter_password");
       formLabelContainer.appendChild(passwordLabel);
       passwordLabel.appendChild(passDontMatchMessage);
       const passwordInput = document.createElement("input");
@@ -52923,7 +53049,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const passwordConfirmationLabel = document.createElement("label");
       passwordConfirmationLabel.className = "form-label";
       passwordConfirmationLabel.setAttribute("for", "password-confirmation");
-      passwordConfirmationLabel.textContent = "Confirm Password:";
+      passwordConfirmationLabel.textContent =
+        chrome.i18n.getMessage("confirm_password");
+
       formLabelContainer.appendChild(passwordConfirmationLabel);
       const passwordConfirmationInput = document.createElement("input");
       passwordInput.addEventListener("keydown", (e) => {
@@ -52938,8 +53066,9 @@ document.addEventListener("DOMContentLoaded", () => {
       formLabelContainer.appendChild(passwordConfirmationInput);
       const warningMessage = document.createElement("div");
       warningMessage.className = "password-warning-message";
-      warningMessage.textContent =
-        "WARNING: If the password is forgotten, it cannot be recovered.";
+      warningMessage.textContent = chrome.i18n.getMessage(
+        "password_warning_message"
+      );
       formLabelContainer.appendChild(warningMessage);
       containerDiv.appendChild(formLabelContainer);
       const buttonContainer = document.createElement("div");
@@ -52947,7 +53076,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const protectionButton = document.createElement("button");
       protectionButton.id = "password-protection-button";
       protectionButton.className = "wide-button";
-      protectionButton.textContent = "Enable Password Protection";
+      protectionButton.textContent = chrome.i18n.getMessage(
+        "enable_password_protection"
+      );
+
       buttonContainer.appendChild(protectionButton);
       containerDiv.appendChild(buttonContainer);
       popupContent.appendChild(containerDiv);
@@ -53006,7 +53138,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
               document.body.removeChild(popupContainer);
             } catch (error) {
-              console.log("Error removing popup container:", error);
+              console.log(error);
             }
           });
         } else {
@@ -53023,7 +53155,8 @@ document.addEventListener("DOMContentLoaded", () => {
       popupContent.className = "popup-content";
       const h2 = document.createElement("h2");
       h2.className = "centered-headings";
-      h2.textContent = "Password Protection Verification";
+      h2.textContent = chrome.i18n.getMessage("disable_password_protection");
+
       popupContent.appendChild(h2);
       const svgIcon = document.createElementNS(
         "http://www.w3.org/2000/svg",
@@ -53071,14 +53204,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const wrongPasswordMessage = document.createElement("div");
       wrongPasswordMessage.className = "wrong-or-nonmatch-passwords";
       wrongPasswordMessage.id = "wrong-remove-password-message";
-      wrongPasswordMessage.textContent = "Wrong Password";
+      wrongPasswordMessage.textContent = chrome.i18n.getMessage(
+        "incorrect_password_message"
+      );
+
       popupContent.appendChild(svgIcon);
       const formLabelContainer = document.createElement("div");
       formLabelContainer.className = "form-label-container";
       const label = document.createElement("label");
       label.setAttribute("for", "password");
       label.className = "form-label";
-      label.textContent = "Enter Password:";
+      label.textContent = chrome.i18n.getMessage("enter_password");
+
       formLabelContainer.appendChild(label);
       label.appendChild(wrongPasswordMessage);
       const passwordInput = document.createElement("input");
@@ -53097,7 +53234,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const removePasswordButton = document.createElement("button");
       removePasswordButton.id = "remove-password-button";
       removePasswordButton.className = "wide-button";
-      removePasswordButton.textContent = "Remove Password";
+      removePasswordButton.textContent =
+        chrome.i18n.getMessage("remove_password");
       buttonContainer.appendChild(removePasswordButton);
       popupContent.appendChild(buttonContainer);
       popupContainer.appendChild(popupContent);
@@ -53134,7 +53272,9 @@ document.addEventListener("DOMContentLoaded", () => {
                       result.encryptionKeyInMemory
                     );
                     await decryptAllTokens(importedKey);
-                  } catch (error) {}
+                  } catch (error) {
+                    console.log(error);
+                  }
                 }
               );
             } else {
@@ -53146,11 +53286,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  const popupModeCheckbox = document.getElementById("popup-mode-checkbox");
+
+  popupModeCheckbox.addEventListener("click", () => {
+    if (popupModeCheckbox.checked) {
+      chrome.storage.local.set({ popupModeCheckbox: true });
+      if (syncCheckbox.checked) {
+        chrome.storage.sync.set({ popupModeCheckbox: true });
+      }
+    } else {
+      chrome.storage.local.set({ popupModeCheckbox: false });
+      if (syncCheckbox.checked) {
+        chrome.stroage.sync.set({ popupModeCheckbox: false });
+      }
+    }
+  });
+
+  const hideTokenAdder = document.getElementById("hide-token-adder-checkbox");
+  hideTokenAdder.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      formContainer.style.display = "none";
+      chrome.storage.local.set({ hideTokenAdder: true });
+      if (syncCheckbox.checked) {
+        chrome.storage.sync.set({ hideTokenAdder: true });
+      }
+    } else {
+      formContainer.style.display = "";
+      chrome.storage.local.set({ hideTokenAdder: false });
+      if (syncCheckbox.checked) {
+        chrome.storage.sync.set({ hideTokenAdder: false });
+      }
+    }
+  });
+
   async function decryptAllTokens(importedKey) {
     chrome.storage.local.get(["tokens", "iv", "salt"], async (result) => {
       let tokens = result.tokens || [];
       const decryptedTokens = [];
-
       for (let token of tokens) {
         try {
           const decryptedSecret = await decryptSecret(
@@ -53160,21 +53332,18 @@ document.addEventListener("DOMContentLoaded", () => {
           );
           decryptedTokens.push({ ...token, secret: decryptedSecret });
         } catch (error) {
-          console.error("Error decrypting secret from local storage:", error);
+          console.log(error);
         }
       }
-
       chrome.storage.local.set({
         tokens: decryptedTokens,
         salt: "",
         iv: "",
         encryptedHashedPassword: "",
       });
-
       while (tokensContainer.firstChild) {
         tokensContainer.removeChild(tokensContainer.firstChild);
       }
-
       decryptedTokens.forEach((tokenObj) => {
         addTokenToDOM(
           tokenObj.name,
@@ -53183,11 +53352,9 @@ document.addEventListener("DOMContentLoaded", () => {
           tokenObj.otp
         );
       });
-
       if (syncCheckbox.checked) {
         chrome.storage.sync.get(["tokens"], async (syncResult) => {
           let syncTokens = syncResult.tokens || [];
-
           for (let i = 0; i < syncTokens.length; i++) {
             const matchingToken = decryptedTokens.find(
               (token) => token.name === syncTokens[i].name
@@ -53208,26 +53375,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ["salt", "iv", "encryptedHashedPassword"],
         async (result) => {
           if (chrome.runtime.lastError) {
-            console.error(
-              "Error retrieving data from storage:",
-              chrome.runtime.lastError
-            );
             reject(chrome.runtime.lastError);
             return;
           }
-
           const storedSalt = result.salt;
           const storedIV = result.iv;
           const storedEncryptedHash = result.encryptedHashedPassword;
-
           if (!storedSalt || !storedIV || !storedEncryptedHash) {
-            console.error(
-              "Salt, IV, or encrypted hashed password not found in storage."
-            );
             reject("Salt, IV, or encrypted hashed password not found.");
             return;
           }
-
           try {
             const ivArray = Uint8Array.from(atob(storedIV), (c) =>
               c.charCodeAt(0)
@@ -53236,10 +53393,8 @@ document.addEventListener("DOMContentLoaded", () => {
               atob(storedEncryptedHash),
               (c) => c.charCodeAt(0)
             );
-
             const encoder = new TextEncoder();
             const saltedPassword = encoder.encode(passInput + storedSalt);
-
             const hashedInputBuffer = await crypto.subtle.digest(
               "SHA-256",
               saltedPassword
@@ -53255,7 +53410,6 @@ document.addEventListener("DOMContentLoaded", () => {
               false,
               ["deriveKey"]
             );
-
             const derivedKey = await crypto.subtle.deriveKey(
               {
                 name: "PBKDF2",
@@ -53290,6 +53444,7 @@ document.addEventListener("DOMContentLoaded", () => {
               resolve(false);
             }
           } catch (error) {
+            console.log(error);
             reject(error);
           }
         }
@@ -53305,7 +53460,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  advancedAddButton.addEventListener("click", () => {
+  const webcamButton = document.createElement("button");
+  advancedAddButton.addEventListener("click", async () => {
     if (document.querySelector(".popup-container") || isCooldown) {
       return;
     }
@@ -53328,7 +53484,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let headerDiv = document.createElement("div");
     let heading = document.createElement("h2");
     heading.className = "centered-headings";
-    heading.textContent = "Add QR Code Via:";
+    heading.textContent = chrome.i18n.getMessage("add_qr_code_via");
     headerDiv.appendChild(heading);
     let errorMessage = document.createElement("h3");
     errorMessage.className = "advanced-add-messages";
@@ -53383,14 +53539,14 @@ document.addEventListener("DOMContentLoaded", () => {
     popupContent.appendChild(videoContainer);
     let buttonsContainer = document.createElement("div");
     buttonsContainer.className = "buttons-container";
-    const webcamButton = document.createElement("button");
+
     webcamButton.className = "webcam-add-button";
     webcamButton.id = "webcam-add-button";
-    webcamButton.textContent = "Webcam";
+    webcamButton.textContent = chrome.i18n.getMessage("webcam");
     const imageButton = document.createElement("button");
     imageButton.className = "image-add-button";
     imageButton.id = "image-add-button";
-    imageButton.textContent = "Image";
+    imageButton.textContent = chrome.i18n.getMessage("image");
     buttonsContainer.appendChild(webcamButton);
     buttonsContainer.appendChild(imageButton);
     popupContent.appendChild(buttonsContainer);
@@ -53399,7 +53555,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let label = document.createElement("label");
     label.setAttribute("for", "name");
     label.className = "form-label";
-    label.textContent = "Image URL:";
+    label.textContent = chrome.i18n.getMessage("image_url");
     let imageUrlInput = document.createElement("input");
     imageUrlInput.type = "text";
     imageUrlInput.id = "image-url-input";
@@ -53409,7 +53565,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let urlButton = document.createElement("button");
     urlButton.id = "add-url-button";
     urlButton.className = "wide-button";
-    urlButton.textContent = "Enter URL";
+    urlButton.textContent = chrome.i18n.getMessage("enter_url");
     formLabelContainer.appendChild(label);
     formLabelContainer.appendChild(imageUrlInput);
     formLabelContainer.appendChild(urlButton);
@@ -53423,7 +53579,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fileAddButton.appendChild(imageIcon);
     let qrCodeFoundMessage = document.createElement("div");
     qrCodeFoundMessage.className = "secret-found-message";
-    qrCodeFoundMessage.textContent = "QR code found!";
+    qrCodeFoundMessage.textContent = chrome.i18n.getMessage("qr_found_message");
 
     function qrCodeFound() {
       secretFormLabel.insertAdjacentElement("afterend", qrCodeFoundMessage);
@@ -53444,14 +53600,14 @@ document.addEventListener("DOMContentLoaded", () => {
         stream.getTracks().forEach((track) => track.stop());
         stream = null;
       }
-      setAdvancedAddMessage("QR Code not found. Try a different image.", false);
+      setAdvancedAddMessage(
+        chrome.i18n.getMessage("qr_not_found_message"),
+        false
+      );
     };
-
     let saveUrlButton = document.getElementById("add-url-button");
-
     function saveImageUrl() {
       let addImageUrl = imageUrlInput.value;
-
       qr_scanner__WEBPACK_IMPORTED_MODULE_2__["default"].scanImage(addImageUrl, { returnDetailedScanResult: true })
         .then((result) => {
           const decodedData = result.data;
@@ -53462,26 +53618,23 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch((error) => {
           setAdvancedAddMessage(
-            "Incorrect URL, or URL did not contain QR code.",
+            chrome.i18n.getMessage("incorrect_url_message"),
             true
           );
           setTimeout(() => {
             setAdvancedAddMessage(
-              "QR Code not found. Try a different image.",
+              chrome.i18n.getMessage("qr_not_found_message"),
               false
             );
           }, 3000);
         });
     }
-
     saveUrlButton.addEventListener("click", saveImageUrl);
-
     imageUrlInput.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
         saveImageUrl();
       }
     });
-
     let redXButton = document.getElementById("x-icon");
     redXButton.addEventListener("click", () => {
       stopCameraAndScanner();
@@ -53528,23 +53681,18 @@ document.addEventListener("DOMContentLoaded", () => {
           webcamButton.textContent = "Webcam";
           webcamButton.appendChild(webcamOnIcon);
           setAdvancedAddMessage(
-            "QR Code not found. Try a different image.",
+            chrome.i18n.getMessage("qr_not_found_message"),
             false
           );
         } else {
           stream = await navigator.mediaDevices.getUserMedia({
             video: true,
           });
-
           videoElem.srcObject = stream;
           document.querySelector(".video-container").style.display = "block";
-
-          webcamButton.textContent = "Webcam";
-
+          webcamButton.textContent = chrome.i18n.getMessage("webcam");
           webcamButton.appendChild(webcamOffIcon);
-
-          setAdvancedAddMessage("Scanning...", true);
-
+          setAdvancedAddMessage(chrome.i18n.getMessage("scanning"), true);
           qrScanner = new qr_scanner__WEBPACK_IMPORTED_MODULE_2__["default"](
             videoElem,
             (result) => {
@@ -53560,7 +53708,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.body.removeChild(popupContainer);
                 nameInput.focus();
                 setAdvancedAddMessage(
-                  "QR Code not found. Try a different image.",
+                  chrome.i18n.getMessage("qr_not_found_message"),
                   false
                 );
               } else {
@@ -53568,13 +53716,23 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             { returnDetailedScanResult: true }
           );
-
           qrScanner.start();
         }
-      } catch (err) {
-        const optionsUrl = chrome.runtime.getURL("options.html");
-        if (document.querySelector(".popup-video-content")) {
-          window.open(optionsUrl);
+      } catch (error) {
+        if (
+          document.querySelector(".popup-video-content") &&
+          !isVideoPermission &&
+          !isPopup
+        ) {
+          chrome.windows.create({
+            url:
+              chrome.runtime.getURL("authenticator.html") +
+              "?isPopup=true&isVideoPermission=true",
+            type: "popup",
+            width: 314,
+            height: 480,
+          });
+          window.close();
         }
       }
 
@@ -53608,13 +53766,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const secretMatch = data.match(/secret=([^&]+)/);
             const issuerMatch = data.match(/issuer=([^&]+)/);
             const labelMatch = data.match(/totp\/([^:?]+)/);
-
             if (secretMatch) {
               secretInput.value = secretMatch[1];
             } else {
               secretInput.value = data;
             }
-
             if (issuerMatch) {
               nameInput.value = issuerMatch[1];
             } else if (labelMatch) {
@@ -53631,22 +53787,26 @@ document.addEventListener("DOMContentLoaded", () => {
             nameInput.focus();
           } catch (error) {
             setAdvancedAddMessage(
-              "QR Code not found. Try a different image.",
+              chrome.i18n.getMessage("incorrect_url_message"),
               true
             );
-
             setTimeout(() => {
               setAdvancedAddMessage(
-                "QR Code not found. Try a different image.",
+                chrome.i18n.getMessage("qr_not_found_message"),
                 false
               );
             }, 3000);
           }
-
           e.target.value = "";
         }
       });
   });
+
+  if (isPopup && isVideoPermission) {
+    const clickEvent = new Event("click");
+    advancedAddButton.dispatchEvent(clickEvent);
+    webcamButton.dispatchEvent(clickEvent);
+  }
 
   function createPopup(message) {
     if (document.querySelector(".popup-container")) {
@@ -53671,7 +53831,6 @@ document.addEventListener("DOMContentLoaded", () => {
     svgIcon.setAttribute("stroke-linejoin", "round");
     svgIcon.classList.add("feather", "x-icon");
     svgIcon.id = "x-icon";
-
     const circle = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "circle"
@@ -53680,7 +53839,6 @@ document.addEventListener("DOMContentLoaded", () => {
     circle.setAttribute("cy", "12");
     circle.setAttribute("r", "10");
     svgIcon.appendChild(circle);
-
     const line1 = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "line"
@@ -53690,7 +53848,6 @@ document.addEventListener("DOMContentLoaded", () => {
     line1.setAttribute("x2", "9");
     line1.setAttribute("y2", "15");
     svgIcon.appendChild(line1);
-
     const line2 = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "line"
@@ -53709,7 +53866,7 @@ document.addEventListener("DOMContentLoaded", () => {
     closeButtonContainer.className = "close-popup-container";
     const closeButton = document.createElement("button");
     closeButton.className = "close-popup";
-    closeButton.textContent = "Close";
+    closeButton.textContent = chrome.i18n.getMessage("close");
     closeButtonContainer.appendChild(closeButton);
     popupContent.appendChild(headerDiv);
     popupContent.appendChild(messageHeading);
@@ -53743,7 +53900,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nameHeader.textContent = `${name}`;
     const tokenHeader = document.createElement("h1");
     tokenHeader.className = "token-value";
-
+    tokenHeader.textContent = otp;
     fetch("./icons/gearIcon.svg")
       .then((response) => response.text())
       .then((svgText) => {
@@ -53756,202 +53913,190 @@ document.addEventListener("DOMContentLoaded", () => {
           "feather feather-settings token-settings"
         );
         tokenSettings.setAttribute("id", name + "-token-settings");
-
         tokenElement.appendChild(tokenSettings);
-
         tokenSettings.addEventListener("click", (e) => {
           e.stopPropagation();
-          chrome.storage.local.get(["tokens"], (result) => {
-            let tokens = result.tokens || [];
-            const tokenObj = tokens.find((token) => token.name === name);
-            if (tokenObj) {
-              const { url } = tokenObj;
-              let shortenedUrl = url || "";
-              let urlLength = 50;
-              if (url.length > urlLength) {
-                shortenedUrl = url.substring(0, urlLength) + "...";
-              }
-              let popupContainer = document.createElement("div");
-              popupContainer.className = "popup-container";
-              let popupContent = document.createElement("div");
-              popupContent.className = "popup-content";
-              popupContent.textContent = "";
-              const headerDiv = document.createElement("div");
-              headerDiv.className = "centered-header";
-              const headerText = document.createElement("h2");
-              headerText.className = "centered-headings shorter-width-heading";
-              headerText.textContent = `${name} Token Settings`;
-              headerDiv.appendChild(headerText);
-              const svgIcon = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "svg"
-              );
-              svgIcon.setAttribute("width", "24");
-              svgIcon.setAttribute("height", "24");
-              svgIcon.setAttribute("viewBox", "0 0 24 24");
-              svgIcon.setAttribute("fill", "none");
-              svgIcon.setAttribute("stroke", "red");
-              svgIcon.setAttribute("stroke-width", "2");
-              svgIcon.setAttribute("stroke-linecap", "round");
-              svgIcon.setAttribute("stroke-linejoin", "round");
-              svgIcon.classList.add("feather", "x-icon");
-              svgIcon.id = "x-icon";
+          let shortenedUrl = url || "";
+          let urlLength = 50;
+          if (url.length > urlLength) {
+            shortenedUrl = url.substring(0, urlLength) + "...";
+          }
+          let popupContainer = document.createElement("div");
+          popupContainer.className = "popup-container";
+          let popupContent = document.createElement("div");
+          popupContent.className = "popup-content";
+          popupContent.textContent = "";
+          const headerDiv = document.createElement("div");
+          headerDiv.className = "centered-header";
+          const headerText = document.createElement("h2");
+          headerText.className = "centered-headings shorter-width-heading";
+          const tokenSettings = chrome.i18n.getMessage("token_settings");
+          headerText.textContent = `${name} ${tokenSettings}`;
+          headerDiv.appendChild(headerText);
+          const svgIcon = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "svg"
+          );
+          svgIcon.setAttribute("width", "24");
+          svgIcon.setAttribute("height", "24");
+          svgIcon.setAttribute("viewBox", "0 0 24 24");
+          svgIcon.setAttribute("fill", "none");
+          svgIcon.setAttribute("stroke", "red");
+          svgIcon.setAttribute("stroke-width", "2");
+          svgIcon.setAttribute("stroke-linecap", "round");
+          svgIcon.setAttribute("stroke-linejoin", "round");
+          svgIcon.classList.add("feather", "x-icon");
+          svgIcon.id = "x-icon";
+          const circle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle"
+          );
+          circle.setAttribute("cx", "12");
+          circle.setAttribute("cy", "12");
+          circle.setAttribute("r", "10");
+          svgIcon.appendChild(circle);
 
-              const circle = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "circle"
-              );
-              circle.setAttribute("cx", "12");
-              circle.setAttribute("cy", "12");
-              circle.setAttribute("r", "10");
-              svgIcon.appendChild(circle);
-
-              const line1 = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "line"
-              );
-              line1.setAttribute("x1", "15");
-              line1.setAttribute("y1", "9");
-              line1.setAttribute("x2", "9");
-              line1.setAttribute("y2", "15");
-              svgIcon.appendChild(line1);
-
-              const line2 = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "line"
-              );
-              line2.setAttribute("x1", "9");
-              line2.setAttribute("y1", "9");
-              line2.setAttribute("x2", "15");
-              line2.setAttribute("y2", "15");
-              svgIcon.appendChild(line2);
-              headerDiv.appendChild(svgIcon);
-              popupContent.appendChild(headerDiv);
-              const label = document.createElement("label");
-              label.setAttribute("for", "name");
-              label.className = "form-label";
-              label.id = "autofill-url-label";
-              if (autofillCheckbox.checked) {
-                label.textContent = "Autofill URL:";
-              } else {
-                label.textContent = "Autofill URL: (Not Enabled)";
-              }
-              popupContent.appendChild(label);
-              const urlInput = document.createElement("input");
-              urlInput.type = "text";
-              urlInput.id = "autofill-url-input";
-              urlInput.className = "form-input enter-url-placeholder";
-              urlInput.placeholder = "Enter URL";
-              urlInput.disabled = !autofillCheckbox.checked;
-              autofillCheckbox.addEventListener("change", function () {
-                if (autofillCheckbox.checked) {
-                  urlInput.disabled = false;
-                } else {
-                  urlInput.disabled = true;
-                }
-              });
-
-              popupContent.appendChild(urlInput);
-              let saveUrlButton = document.createElement("button");
-              saveUrlButton.id = "save-url-button";
-              saveUrlButton.className = "wide-button";
-              saveUrlButton.textContent = "Save URL";
-              popupContent.appendChild(saveUrlButton);
-              const inlineUrlDiv = document.createElement("div");
-              inlineUrlDiv.className = "inline-url";
-              const inlineLabel = document.createElement("label");
-              inlineLabel.className = "form-label";
-              inlineLabel.textContent = "Currently Saved:";
-              inlineUrlDiv.appendChild(inlineLabel);
-              const currentUrlDiv = document.createElement("div");
-              currentUrlDiv.id = "current-url";
-              currentUrlDiv.className = "form-label";
-              if (!autofillCheckbox.checked) {
-                currentUrlDiv.textContent = "";
-              } else {
-                currentUrlDiv.textContent = shortenedUrl;
-              }
-              inlineUrlDiv.appendChild(currentUrlDiv);
-              popupContent.appendChild(inlineUrlDiv);
-              const buttonsContainer = document.createElement("div");
-              buttonsContainer.className = "buttons-container";
-              const deleteButton = document.createElement("button");
-              deleteButton.className = "delete-token";
-              deleteButton.id = "delete-token";
-              deleteButton.textContent = "Delete";
-              buttonsContainer.appendChild(deleteButton);
-              const closeButton = document.createElement("button");
-              closeButton.className = "close-popup";
-              closeButton.textContent = "Close";
-              buttonsContainer.appendChild(closeButton);
-              popupContent.appendChild(buttonsContainer);
-              popupContainer.appendChild(popupContent);
-              document.body.appendChild(popupContainer);
-              let redXButton = document.getElementById("x-icon");
-              redXButton.addEventListener("click", () => {
-                document.body.removeChild(popupContainer);
-              });
-              let autofillUrlInput =
-                document.getElementById("autofill-url-input");
-              autofillUrlInput.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") {
-                  saveUrlButton.click();
-                }
-              });
-              saveUrlButton.addEventListener("click", () => {
-                const newUrl = document
-                  .getElementById("autofill-url-input")
-                  .value.trim();
-                if (!newUrl) {
-                  return;
-                }
-                chrome.storage.local.get(["tokens"], (result) => {
-                  let tokens = result.tokens || [];
-                  const tokenIndex = tokens.findIndex(
-                    (tokenObj) => tokenObj.name === name
-                  );
-                  if (tokenIndex !== -1) {
-                    tokens[tokenIndex].url = newUrl;
-                    const saveToLocal = () => {
-                      chrome.storage.local.set({ tokens }, () => {});
-                    };
-                    const saveToSync = () => {
-                      chrome.storage.sync.set({ tokens }, () => {});
-                    };
-                    saveToLocal();
-                    if (syncCheckbox.checked) {
-                      saveToSync();
-                    }
-                    const displayUrl =
-                      newUrl.length > urlLength
-                        ? newUrl.substring(0, urlLength) + "..."
-                        : newUrl;
-                    document.getElementById("current-url").textContent =
-                      displayUrl;
-                  }
-                });
-              });
-              popupContent
-                .querySelector(".close-popup")
-                .addEventListener("click", () => {
-                  document.body.removeChild(popupContainer);
-                });
-              popupContainer.addEventListener("click", (e) => {
-                if (e.target === popupContainer) {
-                  document.body.removeChild(popupContainer);
-                }
-              });
-              popupContent
-                .querySelector("#delete-token")
-                .addEventListener("click", () => {
-                  confirmDelete(name, secret);
-                  document.body.removeChild(popupContainer);
-                });
+          const line1 = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+          line1.setAttribute("x1", "15");
+          line1.setAttribute("y1", "9");
+          line1.setAttribute("x2", "9");
+          line1.setAttribute("y2", "15");
+          svgIcon.appendChild(line1);
+          const line2 = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+          );
+          line2.setAttribute("x1", "9");
+          line2.setAttribute("y1", "9");
+          line2.setAttribute("x2", "15");
+          line2.setAttribute("y2", "15");
+          svgIcon.appendChild(line2);
+          headerDiv.appendChild(svgIcon);
+          popupContent.appendChild(headerDiv);
+          const label = document.createElement("label");
+          label.setAttribute("for", "name");
+          label.className = "form-label";
+          label.id = "autofill-url-label";
+          if (autofillCheckbox.checked) {
+            label.textContent = chrome.i18n.getMessage("autofill_url");
+          } else {
+            label.textContent = chrome.i18n.getMessage(
+              "autofill_url_not_enabled"
+            );
+          }
+          popupContent.appendChild(label);
+          const urlInput = document.createElement("input");
+          urlInput.type = "text";
+          urlInput.id = "autofill-url-input";
+          urlInput.className = "form-input enter-url-placeholder";
+          urlInput.disabled = !autofillCheckbox.checked;
+          autofillCheckbox.addEventListener("change", function () {
+            if (autofillCheckbox.checked) {
+              urlInput.disabled = false;
+            } else {
+              urlInput.disabled = true;
             }
           });
+          popupContent.appendChild(urlInput);
+          let saveUrlButton = document.createElement("button");
+          saveUrlButton.id = "save-url-button";
+          saveUrlButton.className = "wide-button";
+          saveUrlButton.textContent = chrome.i18n.getMessage("save_url");
+          popupContent.appendChild(saveUrlButton);
+          const inlineUrlDiv = document.createElement("div");
+          inlineUrlDiv.className = "inline-url";
+          const inlineLabel = document.createElement("label");
+          inlineLabel.className = "form-label";
+          inlineLabel.textContent = chrome.i18n.getMessage("currently_saved");
+          inlineUrlDiv.appendChild(inlineLabel);
+          const currentUrlDiv = document.createElement("div");
+          currentUrlDiv.id = "current-url";
+          currentUrlDiv.className = "form-label";
+          if (!autofillCheckbox.checked) {
+            currentUrlDiv.textContent = "";
+          } else {
+            currentUrlDiv.textContent = shortenedUrl;
+          }
+          inlineUrlDiv.appendChild(currentUrlDiv);
+          popupContent.appendChild(inlineUrlDiv);
+          const buttonsContainer = document.createElement("div");
+          buttonsContainer.className = "buttons-container";
+          const deleteButton = document.createElement("button");
+          deleteButton.className = "delete-token";
+          deleteButton.id = "delete-token";
+          deleteButton.textContent = chrome.i18n.getMessage("delete");
+          buttonsContainer.appendChild(deleteButton);
+          const closeButton = document.createElement("button");
+          closeButton.className = "close-popup";
+          closeButton.textContent = chrome.i18n.getMessage("close");
+          buttonsContainer.appendChild(closeButton);
+          popupContent.appendChild(buttonsContainer);
+          popupContainer.appendChild(popupContent);
+          document.body.appendChild(popupContainer);
+          let redXButton = document.getElementById("x-icon");
+          redXButton.addEventListener("click", () => {
+            document.body.removeChild(popupContainer);
+          });
+          let autofillUrlInput = document.getElementById("autofill-url-input");
+          autofillUrlInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              saveUrlButton.click();
+            }
+          });
+          saveUrlButton.addEventListener("click", () => {
+            const newUrl = document.getElementById("autofill-url-input").value;
+            if (!newUrl) {
+              return;
+            }
+            chrome.storage.local.get(["tokens"], (result) => {
+              let tokens = result.tokens || [];
+              const tokenIndex = tokens.findIndex(
+                (tokenObj) => tokenObj.name === name
+              );
+              if (tokenIndex !== -1) {
+                tokens[tokenIndex].url = newUrl;
+                const saveToLocal = () => {
+                  chrome.storage.local.set({ tokens }, () => {});
+                };
+                const saveToSync = () => {
+                  chrome.storage.sync.set({ tokens }, () => {});
+                };
+                saveToLocal();
+                if (syncCheckbox.checked) {
+                  saveToSync();
+                }
+                const displayUrl =
+                  newUrl.length > urlLength
+                    ? newUrl.substring(0, urlLength) + "..."
+                    : newUrl;
+                document.getElementById("current-url").textContent = displayUrl;
+              }
+            });
+          });
+          popupContent
+            .querySelector(".close-popup")
+            .addEventListener("click", () => {
+              document.body.removeChild(popupContainer);
+            });
+          popupContainer.addEventListener("click", (e) => {
+            if (e.target === popupContainer) {
+              document.body.removeChild(popupContainer);
+            }
+          });
+          popupContent
+            .querySelector("#delete-token")
+            .addEventListener("click", () => {
+              confirmDelete(name, secret);
+              document.body.removeChild(popupContainer);
+            });
         });
       })
-      .catch((error) => console.error("Error fetching the SVG:", error));
+      .catch((error) => {
+        console.log(error);
+      });
 
     fetch("./icons/clipboard.svg")
       .then((response) => response.text())
@@ -53963,8 +54108,9 @@ document.addEventListener("DOMContentLoaded", () => {
         tokenCopy.setAttribute("id", name + "-token-copy");
         tokenElement.appendChild(tokenCopy);
       })
-      .catch((error) => console.error(error));
-
+      .catch((error) => {
+        console.log(error);
+      });
     const tokenQRButton = document.createElement("img");
     tokenQRButton.src = "./icons/tiny-qr.svg";
     tokenQRButton.className = "token-qr-button";
@@ -53981,14 +54127,15 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
           qrDataURL = await qrcode__WEBPACK_IMPORTED_MODULE_3__.toDataURL(secret, { width: 140 });
         } catch (error) {
-          console.error("Error generating QR code:", error);
+          console.log(error);
           return;
         }
         popupContent.textContent = "";
         const qrContainer = document.createElement("div");
         const secretHeader = document.createElement("h2");
         secretHeader.className = "centered-headings shorter-width-heading";
-        secretHeader.textContent = `${name} Secret:`;
+        const secretText = chrome.i18n.getMessage("secret");
+        secretHeader.textContent = `${name} ${secretText}`;
         qrContainer.appendChild(secretHeader);
         const secretValue = document.createElement("h3");
         secretValue.className = "centered-secret shorter-width-heading";
@@ -53999,7 +54146,6 @@ document.addEventListener("DOMContentLoaded", () => {
         qrImage.alt = `${name} QR Code`;
         qrImage.style.width = "140px";
         qrContainer.appendChild(qrImage);
-
         const svgIcon = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "svg"
@@ -54014,7 +54160,6 @@ document.addEventListener("DOMContentLoaded", () => {
         svgIcon.setAttribute("stroke-linejoin", "round");
         svgIcon.classList.add("feather", "x-icon");
         svgIcon.id = "x-icon";
-
         const circle = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "circle"
@@ -54023,7 +54168,6 @@ document.addEventListener("DOMContentLoaded", () => {
         circle.setAttribute("cy", "12");
         circle.setAttribute("r", "10");
         svgIcon.appendChild(circle);
-
         const line1 = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "line"
@@ -54033,7 +54177,6 @@ document.addEventListener("DOMContentLoaded", () => {
         line1.setAttribute("x2", "9");
         line1.setAttribute("y2", "15");
         svgIcon.appendChild(line1);
-
         const line2 = document.createElementNS(
           "http://www.w3.org/2000/svg",
           "line"
@@ -54057,7 +54200,7 @@ document.addEventListener("DOMContentLoaded", () => {
           document.body.removeChild(popupContainer);
         });
       } catch (error) {
-        console.error("Error showing QR code:", error);
+        console.log(error);
       }
     });
     tokenElement.appendChild(nameHeader);
@@ -54070,7 +54213,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!clipboardCopyingCheckbox.checked) {
         const copiedMessage = document.createElement("div");
         copiedMessage.className = "not-copied-message";
-        copiedMessage.textContent = "Enable Clipboard Copy in settings";
+        copiedMessage.textContent = chrome.i18n.getMessage(
+          "enable_clipboard_copy_message"
+        );
         tokenElement.appendChild(copiedMessage);
         canClick = false;
         setTimeout(() => {
@@ -54078,11 +54223,14 @@ document.addEventListener("DOMContentLoaded", () => {
           canClick = true;
         }, 3000);
       } else if (clipboardCopyingCheckbox.checked) {
-        document.getElementById("");
-        navigator.clipboard.writeText(otp).then(() => {
+        const tokenValue =
+          tokenElement.closest(".token-box")?.querySelector(".token-value")
+            ?.textContent || "";
+
+        navigator.clipboard.writeText(tokenValue).then(() => {
           const copiedMessage = document.createElement("div");
           copiedMessage.className = "copied-message";
-          copiedMessage.textContent = "Copied!";
+          copiedMessage.textContent = chrome.i18n.getMessage("copied");
           tokenElement.appendChild(copiedMessage);
           canClick = false;
           setTimeout(() => {
@@ -54121,7 +54269,6 @@ document.addEventListener("DOMContentLoaded", () => {
     circle.setAttribute("cy", "12");
     circle.setAttribute("r", "10");
     svgIcon.appendChild(circle);
-
     const line1 = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "line"
@@ -54131,7 +54278,6 @@ document.addEventListener("DOMContentLoaded", () => {
     line1.setAttribute("x2", "9");
     line1.setAttribute("y2", "15");
     svgIcon.appendChild(line1);
-
     const line2 = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "line"
@@ -54144,18 +54290,18 @@ document.addEventListener("DOMContentLoaded", () => {
     popupContent.appendChild(svgIcon);
     const messageHeader = document.createElement("h3");
     messageHeader.className = "centered-headings";
-    messageHeader.textContent = "Are you sure? This action is permanent.";
+    messageHeader.textContent = chrome.i18n.getMessage("are_you_sure_message");
     popupContent.appendChild(messageHeader);
     const buttonsContainer = document.createElement("div");
     buttonsContainer.className = "buttons-container";
     const deleteButton = document.createElement("button");
     deleteButton.className = "delete-token-confirmation";
     deleteButton.id = "delete-token";
-    deleteButton.textContent = "Delete";
+    deleteButton.textContent = chrome.i18n.getMessage("delete");
     buttonsContainer.appendChild(deleteButton);
     const closeButton = document.createElement("button");
     closeButton.className = "close-popup";
-    closeButton.textContent = "Close";
+    closeButton.textContent = chrome.i18n.getMessage("close");
     buttonsContainer.appendChild(closeButton);
     popupContent.appendChild(buttonsContainer);
     popupContainer.appendChild(popupContent);

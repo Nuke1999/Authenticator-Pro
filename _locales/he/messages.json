@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "אסימונים פעילים:"
+  },
+  "add_token": {
+    "message": "הוסף אסימון"
+  },
+  "add_qr_code_via": {
+    "message": "הוסף קוד QR באמצעות:"
+  },
+  "advanced_add": {
+    "message": "הוספה מתקדמת"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "כפתור הוספה מתקדמת"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "מאפשר למשתמשים להוסיף סודות באמצעות קוד QR (מצלמה, קובץ או קישור)."
+  },
+  "are_you_sure_message": {
+    "message": "אתה בטוח? פעולה זו היא קבועה."
+  },
+  "autofill_checkbox_label": {
+    "message": "השלמה אוטומטית"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "ממלא באופן אוטומטי את שדה ה-OTP באמצעות כתובת ה-URL להשלמה אוטומטית עבור כל אסימון."
+  },
+  "autofill_url": {
+    "message": "כתובת ה-URL להשלמה אוטומטית:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "כתובת ה-URL להשלמה אוטומטית: (לא הופעלה)"
+  },
+  "camera_permission_button": {
+    "message": "כפתור הרשאת מצלמה"
+  },
+  "camera_permission_message_1": {
+    "message": "*הכפתור לוחץ אוטומטית בעת טעינת הדף*"
+  },
+  "camera_permission_message_2": {
+    "message": "כפתור המצלמה יעבוד לאחר שתאפשר גישה למצלמה"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "העתקת לוח"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "מאפשר העתקה של ה-OTP ללוח כאשר לוחצים על תיבת אסימון."
+  },
+  "close": {
+    "message": "סגור"
+  },
+  "confirm_password": {
+    "message": "אשר סיסמה:"
+  },
+  "copied": {
+    "message": "הועתק!"
+  },
+  "currently_saved": {
+    "message": "נשמר כרגע: "
+  },
+  "dark_theme": {
+    "message": "נושא כהה"
+  },
+  "delete": {
+    "message": "מחק"
+  },
+  "disable_password_protection": {
+    "message": "בטל הגנת סיסמה"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "אפשר העתקת לוח בהגדרות"
+  },
+  "enable_password_protection": {
+    "message": "אפשר הגנת סיסמה"
+  },
+  "enter_name": {
+    "message": "הזן שם:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "אנא הכנס גם את השם וגם את הסוד."
+  },
+  "enter_password": {
+    "message": "הזן סיסמה:"
+  },
+  "enter_secret": {
+    "message": "הזן סוד:"
+  },
+  "enter_url": {
+    "message": "הזן URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro היא כלי חזק שמייצר סיסמת שימוש חד פעמי (OTP) כל 30 שניות בהתבסס על סוד שניתן."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "הסתר את הוספת האסימונים"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "מסתיר את טופס הוספת האסימונים; מספק נראות קלה יותר של אסימונים שמורים."
+  },
+  "image": {
+    "message": "תמונה"
+  },
+  "image_url": {
+    "message": "כתובת URL של התמונה:"
+  },
+  "incorrect_password_message": {
+    "message": "סיסמה שגויה"
+  },
+  "incorrect_url_message": {
+    "message": "URL שגוי, או ש-URL לא הכיל קוד QR."
+  },
+  "invalid_secret_message": {
+    "message": "סוד לא חוקי. אנא הכנס מיתר מקודד ב-Base32."
+  },
+  "light_theme": {
+    "message": "נושא בהיר"
+  },
+  "main_enter_password_message": {
+    "message": "הזן סיסמה כדי לשחרר"
+  },
+  "name_already_exists_message": {
+    "message": "אסימון עם שם זה כבר קיים."
+  },
+  "name_too_long_message": {
+    "message": "שם ארוך מדי, אנא הכנס שם קצר יותר."
+  },
+  "online_time_checkbox_label": {
+    "message": "סנכרון זמן אונליין"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "מסנכרן עם הזמן אונליין לדיוק; אחרת משתמש בזמן המקומי של המכשיר."
+  },
+  "password_protected_checkbox_label": {
+    "message": "הגנת סיסמה"
+  },
+  "password_protected_checkbox_message": {
+    "message": "כדי לאפשר, בטל את הסנכרון בין Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "מגנה ומצפינה את הסודות השמורים עם סיסמה."
+  },
+  "password_protection_setup": {
+    "message": "הגדרת הגנת סיסמה"
+  },
+  "passwords_dont_match": {
+    "message": "הסיסמאות אינן תואמות"
+  },
+  "password_warning_message": {
+    "message": "אזהרה: אם הסיסמה נשכחת, לא ניתן לשחזר אותה."
+  },
+  "permissions": {
+    "message": "הרשאות"
+  },
+  "permissions_page_header": {
+    "message": "דף ההרשאות של Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "מצב חלון קופץ"
+  },
+  "popup_mode_tooltip": {
+    "message": "פותח את Authenticator Pro בחלון נפרד."
+  },
+  "qr_found_message": {
+    "message": "קוד QR נמצא!"
+  },
+  "qr_not_found_message": {
+    "message": "קוד QR לא נמצא. נסה תמונה אחרת."
+  },
+  "remove_password": {
+    "message": "הסר סיסמה"
+  },
+  "save_url": {
+    "message": "שמור URL"
+  },
+  "scanning": {
+    "message": "סורק..."
+  },
+  "secret": {
+    "message": " סוד:"
+  },
+  "secret_already_added_message": {
+    "message": "כבר הוספת סוד זה."
+  },
+  "settings": {
+    "message": "הגדרות"
+  },
+  "submit": {
+    "message": "שלח"
+  },
+  "sync_checkbox_label": {
+    "message": "סנכרן בין Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "כדי לאפשר, בטל את הגנת הסיסמה"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "מסנכרן אסימונים במכשירים המחוברים ל-Chrome; אחרת, המצב הוא מקומי בלבד."
+  },
+  "themes": {
+    "message": "נושאים"
+  },
+  "token_settings": {
+    "message": "הגדרות האסימונים"
+  },
+  "webcam": {
+    "message": "מצלמת רשת"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktiv Tokenlər:"
+  },
+  "add_token": {
+    "message": "Token Əlavə et"
+  },
+  "add_qr_code_via": {
+    "message": "QR Kodu Əlavə Etmə Yolu ilə:"
+  },
+  "advanced_add": {
+    "message": "Ətraflı Əlavə"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Ətraflı Əlavə Düyməsi"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "İstifadəçilərə QR kodu (kamera, fayl və ya link vasitəsilə) ilə sirrlər əlavə etməyə imkan verir."
+  },
+  "are_you_sure_message": {
+    "message": "Əminsiniz? Bu əməliyyat qalıcıdır."
+  },
+  "autofill_checkbox_label": {
+    "message": "Avtomatik Doldurma"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Hər token üçün OTP sahəsini Avtomatik Doldurma URL-i ilə avtomatik doldurur."
+  },
+  "autofill_url": {
+    "message": "Avtomatik Doldurma URL-i:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Avtomatik Doldurma URL-i: (Aktiv deyil)"
+  },
+  "camera_permission_button": {
+    "message": "Kamera İcazə Düyməsi"
+  },
+  "camera_permission_message_1": {
+    "message": "*Düymə səhifə yüklənəndə avtomatik kliklənir*"
+  },
+  "camera_permission_message_2": {
+    "message": "Kamera icazəsi verildikdən sonra kamera düyməsi işləyəcək"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Clipboarda Kopyalama"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Token qutusuna kliklədikdə OTP-i clipboarda kopyalamağa imkan verir."
+  },
+  "close": {
+    "message": "Bağla"
+  },
+  "confirm_password": {
+    "message": "Parolu Təsdiqləyin:"
+  },
+  "copied": {
+    "message": "Kopyalandı!"
+  },
+  "currently_saved": {
+    "message": "Hazırda Yadda Saxlanılıb: "
+  },
+  "dark_theme": {
+    "message": "Qaranlıq Mövzu"
+  },
+  "delete": {
+    "message": "Sil"
+  },
+  "disable_password_protection": {
+    "message": "Parol Mühafizəsini Deaktiv Et"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Clipboarda Kopyalamak üçün parametrləri aktivləşdirin"
+  },
+  "enable_password_protection": {
+    "message": "Parol Mühafizəsini Aktiv Et"
+  },
+  "enter_name": {
+    "message": "Adı Daxil Edin:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Ad və sirri daxil edin."
+  },
+  "enter_password": {
+    "message": "Parolu Daxil Edin:"
+  },
+  "enter_secret": {
+    "message": "Sirri Daxil Edin:"
+  },
+  "enter_url": {
+    "message": "URL Daxil Edin"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro, hər 30 saniyədən bir verilmiş sirrə əsasən Bir Dəfəlik Parol (OTP) yaradan güclü bir vasitədir."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Token Əlavəetmə Gizlə"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Token əlavəetmə formasını gizlədir; yadda saxlanmış tokenlərin görünməsini asanlaşdırır."
+  },
+  "image": {
+    "message": "Şəkil"
+  },
+  "image_url": {
+    "message": "Şəkil URL-i:"
+  },
+  "incorrect_password_message": {
+    "message": "Yanlış Parol"
+  },
+  "incorrect_url_message": {
+    "message": "Yanlış URL və ya URL QR kodu içermirdi."
+  },
+  "invalid_secret_message": {
+    "message": "Yanlış sirr. Zəhmət olmasa, Base32 kodlu bir sıra daxil edin."
+  },
+  "light_theme": {
+    "message": "İşıqlı Mövzu"
+  },
+  "main_enter_password_message": {
+    "message": "Açmaq üçün Parolu Daxil Edin"
+  },
+  "name_already_exists_message": {
+    "message": "Bu adda artıq bir token mövcuddur."
+  },
+  "name_too_long_message": {
+    "message": "Ad çox uzun, zəhmət olmasa daha qısa bir ad daxil edin."
+  },
+  "online_time_checkbox_label": {
+    "message": "Onlayn Zaman Sinxronizasiyası"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Dəqiqlik üçün onlayn vaxtla sinxronizasiya edir; əks halda cihazın yerli vaxtından istifadə edir."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Parolla Qoruma"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Aktiv etmək üçün Chrome Üzərindən Sinxronizasiyanı deaktiv edin"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Saxlanılan sirləri parol ilə şifrələyir və qoruyur."
+  },
+  "password_protection_setup": {
+    "message": "Parolla Qoruma Ayarları"
+  },
+  "passwords_dont_match": {
+    "message": "Parollar Uyğun Gəlmir"
+  },
+  "password_warning_message": {
+    "message": "XƏBƏRDARLIQ: Parol unudulsa, bərpa edilə bilməz."
+  },
+  "permissions": {
+    "message": "İcazələr"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro İcazə Səhifəsi"
+  },
+  "popup_mode_label": {
+    "message": "Popup Rejimi"
+  },
+  "popup_mode_tooltip": {
+    "message": "Authenticator Pro ayrıca bir pəncərədə açır."
+  },
+  "qr_found_message": {
+    "message": "QR kod tapıldı!"
+  },
+  "qr_not_found_message": {
+    "message": "QR kod tapılmadı. Başqa bir şəkil yoxlayın."
+  },
+  "remove_password": {
+    "message": "Parolu Sil"
+  },
+  "save_url": {
+    "message": "URL Yadda Saxla"
+  },
+  "scanning": {
+    "message": "Skan edilir..."
+  },
+  "secret": {
+    "message": " Sirr:"
+  },
+  "secret_already_added_message": {
+    "message": "Bu sirri artıq əlavə etmisiniz."
+  },
+  "settings": {
+    "message": "Parametrlər"
+  },
+  "submit": {
+    "message": "Təsdiqlə"
+  },
+  "sync_checkbox_label": {
+    "message": "Chrome Üzərindən Sinxronizasiya"
+  },
+  "sync_checkbox_message": {
+    "message": "Aktiv etmək üçün Parolla Qorumayı deaktiv edin"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Chrome-da giriş etmiş cihazlarda tokenləri sinxronizasiya edir; əks halda vəziyyət yalnız yerli olur."
+  },
+  "themes": {
+    "message": "Mövzular"
+  },
+  "token_settings": {
+    "message": "Token Ayarları"
+  },
+  "webcam": {
+    "message": "Vebkamera"
+  }
+}

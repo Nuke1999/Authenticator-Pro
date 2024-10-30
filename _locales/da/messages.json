@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktive Tokens:"
+  },
+  "add_token": {
+    "message": "Tilføj Token"
+  },
+  "add_qr_code_via": {
+    "message": "Tilføj QR-kode Via:"
+  },
+  "advanced_add": {
+    "message": "Avanceret Tilføjelse"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Knap til Avanceret Tilføjelse"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Giver brugere mulighed for at tilføje hemmelige koder via QR-kode (webcam, fil eller link)."
+  },
+  "are_you_sure_message": {
+    "message": "Er du sikker? Denne handling er permanent."
+  },
+  "autofill_checkbox_label": {
+    "message": "Autoudfyld"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Udfylder OTP-feltet automatisk ved hjælp af autoudfyld-URL for hver token."
+  },
+  "autofill_url": {
+    "message": "Autoudfyld URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Autoudfyld URL: (Ikke aktiveret)"
+  },
+  "camera_permission_button": {
+    "message": "Kameratilladelsesknap"
+  },
+  "camera_permission_message_1": {
+    "message": "*Knap klikkes automatisk ved indlæsning af siden*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webcam-knappen vil fungere efter godkendelse af kameraadgang"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Kopiering til Udklipsholder"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Gør det muligt at kopiere OTP til udklipsholderen ved at klikke på en tokenboks."
+  },
+  "close": {
+    "message": "Luk"
+  },
+  "confirm_password": {
+    "message": "Bekræft Adgangskode:"
+  },
+  "copied": {
+    "message": "Kopieret!"
+  },
+  "currently_saved": {
+    "message": "Gemte Tokens: "
+  },
+  "dark_theme": {
+    "message": "Mørkt Tema"
+  },
+  "delete": {
+    "message": "Slet"
+  },
+  "disable_password_protection": {
+    "message": "Deaktiver Adgangskodebeskyttelse"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Aktiver Kopiering til Udklipsholder i indstillinger"
+  },
+  "enable_password_protection": {
+    "message": "Aktiver Adgangskodebeskyttelse"
+  },
+  "enter_name": {
+    "message": "Indtast Navn:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Indtast både navn og hemmelig kode."
+  },
+  "enter_password": {
+    "message": "Indtast Adgangskode:"
+  },
+  "enter_secret": {
+    "message": "Indtast Hemmelig Kode:"
+  },
+  "enter_url": {
+    "message": "Indtast URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro er et kraftfuldt værktøj, der genererer en engangskode (OTP) hvert 30. sekund baseret på en given hemmelig kode."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Skjul Token-tilføjelse"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Skjuler formularen til tilføjelse af token; giver bedre overblik over gemte tokens."
+  },
+  "image": {
+    "message": "Billede"
+  },
+  "image_url": {
+    "message": "Billed-URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Forkert Adgangskode"
+  },
+  "incorrect_url_message": {
+    "message": "Forkert URL eller URL'en indeholdt ikke en QR-kode."
+  },
+  "invalid_secret_message": {
+    "message": "Ugyldig hemmelig kode. Indtast en Base32-kodet streng."
+  },
+  "light_theme": {
+    "message": "Lyst Tema"
+  },
+  "main_enter_password_message": {
+    "message": "Indtast Adgangskode for at Låse Op"
+  },
+  "name_already_exists_message": {
+    "message": "En token med dette navn eksisterer allerede."
+  },
+  "name_too_long_message": {
+    "message": "Navn for langt, indtast et kortere navn."
+  },
+  "online_time_checkbox_label": {
+    "message": "Online Tidssynkronisering"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Synkroniserer med online tid for præcision; bruger ellers enhedens tid."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Adgangskodebeskyttelse"
+  },
+  "password_protected_checkbox_message": {
+    "message": "For at aktivere skal Synkronisering i Chrome være slået fra"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Krypterer og beskytter gemte hemmelige koder med en adgangskode."
+  },
+  "password_protection_setup": {
+    "message": "Opsætning af Adgangskodebeskyttelse"
+  },
+  "passwords_dont_match": {
+    "message": "Adgangskoder Matcher Ikke"
+  },
+  "password_warning_message": {
+    "message": "ADVARSEL: Hvis adgangskoden glemmes, kan den ikke gendannes."
+  },
+  "permissions": {
+    "message": "Tilladelser"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro Tilladelser"
+  },
+  "popup_mode_label": {
+    "message": "Popup-tilstand"
+  },
+  "popup_mode_tooltip": {
+    "message": "Åbner Authenticator Pro i et separat vindue."
+  },
+  "qr_found_message": {
+    "message": "QR-kode fundet!"
+  },
+  "qr_not_found_message": {
+    "message": "QR-kode ikke fundet. Prøv et andet billede."
+  },
+  "remove_password": {
+    "message": "Fjern Adgangskode"
+  },
+  "save_url": {
+    "message": "Gem URL"
+  },
+  "scanning": {
+    "message": "Scanner..."
+  },
+  "secret": {
+    "message": " Hemmelig Kode:"
+  },
+  "secret_already_added_message": {
+    "message": "Denne hemmelige kode er allerede tilføjet."
+  },
+  "settings": {
+    "message": "Indstillinger"
+  },
+  "submit": {
+    "message": "Indsend"
+  },
+  "sync_checkbox_label": {
+    "message": "Synkroniser i Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "For at aktivere skal Adgangskodebeskyttelse være slået fra"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Synkroniserer tokens på tilsluttede Chrome-enheder; ellers kun lokal lagring."
+  },
+  "themes": {
+    "message": "Temaer"
+  },
+  "token_settings": {
+    "message": "Tokenindstillinger"
+  },
+  "webcam": {
+    "message": "Webkamera"
+  }
+}

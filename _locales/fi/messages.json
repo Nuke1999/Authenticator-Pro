@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktiiviset tunnukset:"
+  },
+  "add_token": {
+    "message": "Lisää tunnus"
+  },
+  "add_qr_code_via": {
+    "message": "Lisää QR-koodi kautta:"
+  },
+  "advanced_add": {
+    "message": "Lisäasetusten lisääminen"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Lisäasetusten painike"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Sallii käyttäjien lisätä salaisuuksia QR-koodin kautta (web-kamera, tiedosto tai linkki)."
+  },
+  "are_you_sure_message": {
+    "message": "Oletko varma? Tämä toiminto on pysyvä."
+  },
+  "autofill_checkbox_label": {
+    "message": "Automaattinen täyttö"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Täyttää OTP-kentän automaattisesti kunkin tunnuksen täyttö-URL:lla."
+  },
+  "autofill_url": {
+    "message": "Täyttö-URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Täyttö-URL: (Ei käytössä)"
+  },
+  "camera_permission_button": {
+    "message": "Kameran lupapainike"
+  },
+  "camera_permission_message_1": {
+    "message": "*Painike napsautetaan automaattisesti sivun latauksessa*"
+  },
+  "camera_permission_message_2": {
+    "message": "Web-kameran painike toimii kameran käyttöluvan jälkeen"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Leikepöydän kopiointi"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Mahdollistaa OTP:n kopioinnin leikepöydälle napsauttamalla tunnuskenttää."
+  },
+  "close": {
+    "message": "Sulje"
+  },
+  "confirm_password": {
+    "message": "Vahvista salasana:"
+  },
+  "copied": {
+    "message": "Kopioitu!"
+  },
+  "currently_saved": {
+    "message": "Tällä hetkellä tallennettu: "
+  },
+  "dark_theme": {
+    "message": "Tumma teema"
+  },
+  "delete": {
+    "message": "Poista"
+  },
+  "disable_password_protection": {
+    "message": "Poista salasanan suojaus käytöstä"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Ota leikepöydän kopiointi käyttöön asetuksissa"
+  },
+  "enable_password_protection": {
+    "message": "Ota salasanan suojaus käyttöön"
+  },
+  "enter_name": {
+    "message": "Anna nimi:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Syötä sekä nimi että salaisuus."
+  },
+  "enter_password": {
+    "message": "Syötä salasana:"
+  },
+  "enter_secret": {
+    "message": "Syötä salaisuus:"
+  },
+  "enter_url": {
+    "message": "Anna URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro on tehokas työkalu, joka luo kertakäyttöisen salasanan (OTP) joka 30. sekunti annetun salaisuuden perusteella."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Piilota tunnuksen lisääjä"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Piilottaa tunnuksen lisäämislomakkeen; helpottaa tallennettujen tunnusten näkyvyyttä."
+  },
+  "image": {
+    "message": "Kuva"
+  },
+  "image_url": {
+    "message": "Kuvan URL:"
+  },
+  "incorrect_password_message": {
+    "message": "Virheellinen salasana"
+  },
+  "incorrect_url_message": {
+    "message": "Virheellinen URL, tai URL ei sisältänyt QR-koodia."
+  },
+  "invalid_secret_message": {
+    "message": "Virheellinen salaisuus. Syötä Base32-koodattu merkkijono."
+  },
+  "light_theme": {
+    "message": "Vaalea teema"
+  },
+  "main_enter_password_message": {
+    "message": "Anna salasana avataksesi"
+  },
+  "name_already_exists_message": {
+    "message": "Tunnus tällä nimellä on jo olemassa."
+  },
+  "name_too_long_message": {
+    "message": "Nimi on liian pitkä, syötä lyhyempi nimi."
+  },
+  "online_time_checkbox_label": {
+    "message": "Ajan synkronointi verkossa"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Synkronoituu verkon ajan kanssa; muutoin käyttää laitteen paikallista aikaa."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Salasanasuojaus"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Ota käyttöön poistamalla Chrome-synkronointi käytöstä"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Salasana suojaa ja salaa tallennetut salaisuudet."
+  },
+  "password_protection_setup": {
+    "message": "Salasanasuojauksen asennus"
+  },
+  "passwords_dont_match": {
+    "message": "Salasanat eivät täsmää"
+  },
+  "password_warning_message": {
+    "message": "VAROITUS: Jos salasana unohtuu, sitä ei voi palauttaa."
+  },
+  "permissions": {
+    "message": "Oikeudet"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro -oikeussivu"
+  },
+  "popup_mode_label": {
+    "message": "Ponnahdusikkuna"
+  },
+  "popup_mode_tooltip": {
+    "message": "Avaa Authenticator Pro erillisessä ikkunassa."
+  },
+  "qr_found_message": {
+    "message": "QR-koodi löytyi!"
+  },
+  "qr_not_found_message": {
+    "message": "QR-koodia ei löydy. Kokeile eri kuvaa."
+  },
+  "remove_password": {
+    "message": "Poista salasana"
+  },
+  "save_url": {
+    "message": "Tallenna URL"
+  },
+  "scanning": {
+    "message": "Skannataan..."
+  },
+  "secret": {
+    "message": "Salaisuus:"
+  },
+  "secret_already_added_message": {
+    "message": "Olet jo lisännyt tämän salaisuuden."
+  },
+  "settings": {
+    "message": "Asetukset"
+  },
+  "submit": {
+    "message": "Lähetä"
+  },
+  "sync_checkbox_label": {
+    "message": "Synkronoi Chromeen"
+  },
+  "sync_checkbox_message": {
+    "message": "Ota käyttöön poistamalla salasanasuojaus käytöstä"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Synkronoi tunnukset kirjautuneilla Chrome-laitteilla; muutoin paikallinen tila."
+  },
+  "themes": {
+    "message": "Teemat"
+  },
+  "token_settings": {
+    "message": "Tunnusasetukset"
+  },
+  "webcam": {
+    "message": "Web-kamera"
+  }
+}

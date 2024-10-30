@@ -16,7 +16,6 @@ window.Buffer = Buffer;
     return authenticator.generate(secret);
   }
   function autoFillAuthInputs(token) {
-    console.log("inside autofill auth inputs, checking for right id:");
     const inputs = document.querySelectorAll("input");
     const activeElement = document.activeElement;
     inputs.forEach((input) => {
@@ -45,29 +44,22 @@ window.Buffer = Buffer;
   }
 
   function checkAndFillAuthInputs() {
-    console.log("check and fill auth inputs called");
     if (
       typeof chrome.runtime === "undefined" ||
       chrome.runtime.id === undefined
     ) {
-      console.log("chrome runtime was undefined");
       return;
     }
 
     try {
       chrome.runtime.sendMessage({ type: "GET_TAB_URL" }, (response) => {
         if (chrome.runtime.lastError) {
-          console.error(
-            "Error in sending message to get tab URL:",
-            chrome.runtime.lastError
-          );
+          console.log(chrome.runtime.lastError);
           return;
         }
 
         try {
           const currentTabUrl = response.url || "";
-          // console.log("Current tab URL:", currentTabUrl);
-
           chrome.storage.local.get(
             [
               "tokens",
@@ -79,16 +71,10 @@ window.Buffer = Buffer;
             ],
             async (result) => {
               if (chrome.runtime.lastError) {
-                console.error(
-                  "Error in accessing storage:",
-                  chrome.runtime.lastError
-                );
+                console.log(chrome.runtime.lastError);
                 return;
               }
-
               try {
-                console.log("Storage result:", result);
-
                 if (
                   result.autofillEnabled &&
                   result.passwordCheckbox === false
@@ -99,7 +85,6 @@ window.Buffer = Buffer;
                     const secret = tokenObj.secret;
                     if (savedUrl && currentTabUrl.includes(savedUrl)) {
                       let generatedToken = generateToken(secret);
-                      console.log("Generated token:", generatedToken);
                       autoFillAuthInputs(generatedToken);
                     }
                   });
@@ -116,26 +101,22 @@ window.Buffer = Buffer;
                       const savedUrl = tokenObj.url;
                       const tokenOtp = tokenObj.otp;
                       if (savedUrl && currentTabUrl.includes(savedUrl)) {
-                        console.log("Auto-filling OTP:", tokenOtp);
                         autoFillAuthInputs(tokenOtp);
                       }
                     });
                   }
                 }
               } catch (error) {
-                console.error("Error processing tokens or autofill:", error);
+                console.log(error);
               }
             }
           );
         } catch (error) {
-          console.error(
-            "Error in retrieving current tab URL or storage data:",
-            error
-          );
+          console.log(error);
         }
       });
     } catch (error) {
-      console.error("Error in sending message to get tab URL:", error);
+      console.log(error);
     }
   }
 
@@ -158,13 +139,11 @@ window.Buffer = Buffer;
   }
   chrome.storage.onChanged.addListener((changes) => {
     if (changes.tokens || changes.autofillEnabled) {
-      console.log("updated tokens or updated checkbox");
       checkAndFillAuthInputs();
     }
   });
   function onDOMContentLoaded() {
     try {
-      console.log("dom content loaded..");
       checkAndFillAuthInputs();
       alignToInterval();
       document.addEventListener("visibilitychange", onVisibilityChange);

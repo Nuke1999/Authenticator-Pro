@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "توکن‌های فعال:"
+  },
+  "add_token": {
+    "message": "افزودن توکن"
+  },
+  "add_qr_code_via": {
+    "message": "افزودن کد QR از طریق:"
+  },
+  "advanced_add": {
+    "message": "افزودن پیشرفته"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "دکمه افزودن پیشرفته"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "امکان افزودن کدهای مخفی از طریق کد QR (وب‌کم، فایل یا لینک)."
+  },
+  "are_you_sure_message": {
+    "message": "آیا مطمئن هستید؟ این عمل دائمی است."
+  },
+  "autofill_checkbox_label": {
+    "message": "تکمیل خودکار"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "به‌طور خودکار فیلد OTP را با استفاده از URL تکمیل خودکار برای هر توکن پر می‌کند."
+  },
+  "autofill_url": {
+    "message": "URL تکمیل خودکار:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL تکمیل خودکار: (فعال نیست)"
+  },
+  "camera_permission_button": {
+    "message": "دکمه اجازه دوربین"
+  },
+  "camera_permission_message_1": {
+    "message": "*دکمه به‌طور خودکار هنگام بارگذاری صفحه کلیک می‌شود*"
+  },
+  "camera_permission_message_2": {
+    "message": "دکمه وب‌کم پس از اجازه دسترسی به دوربین کار خواهد کرد"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "کپی به کلیپ‌بورد"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "اجازه کپی OTP به کلیپ‌بورد هنگام کلیک بر روی جعبه توکن."
+  },
+  "close": {
+    "message": "بستن"
+  },
+  "confirm_password": {
+    "message": "تایید رمز عبور:"
+  },
+  "copied": {
+    "message": "کپی شد!"
+  },
+  "currently_saved": {
+    "message": "در حال حاضر ذخیره شده: "
+  },
+  "dark_theme": {
+    "message": "تم تیره"
+  },
+  "delete": {
+    "message": "حذف"
+  },
+  "disable_password_protection": {
+    "message": "غیرفعال کردن حفاظت رمز عبور"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "کپی به کلیپ‌بورد را در تنظیمات فعال کنید"
+  },
+  "enable_password_protection": {
+    "message": "فعال کردن حفاظت رمز عبور"
+  },
+  "enter_name": {
+    "message": "وارد کردن نام:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "لطفاً هم نام و هم کد مخفی را وارد کنید."
+  },
+  "enter_password": {
+    "message": "وارد کردن رمز عبور:"
+  },
+  "enter_secret": {
+    "message": "وارد کردن کد مخفی:"
+  },
+  "enter_url": {
+    "message": "وارد کردن URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro ابزاری قدرتمند است که هر ۳۰ ثانیه یک کلمه رمز یک‌بار مصرف (OTP) را بر اساس کد مخفی ارائه شده تولید می‌کند."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "پنهان کردن افزاینده توکن"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "فرم افزودن توکن را پنهان می‌کند؛ دیدن توکن‌های ذخیره‌شده را ساده‌تر می‌سازد."
+  },
+  "image": {
+    "message": "تصویر"
+  },
+  "image_url": {
+    "message": "URL تصویر:"
+  },
+  "incorrect_password_message": {
+    "message": "رمز عبور اشتباه است"
+  },
+  "incorrect_url_message": {
+    "message": "URL نادرست است یا حاوی کد QR نبود."
+  },
+  "invalid_secret_message": {
+    "message": "کد مخفی نامعتبر است. لطفاً یک رشته کدگذاری شده Base32 وارد کنید."
+  },
+  "light_theme": {
+    "message": "تم روشن"
+  },
+  "main_enter_password_message": {
+    "message": "برای باز کردن رمز عبور وارد کنید"
+  },
+  "name_already_exists_message": {
+    "message": "یک توکن با این نام قبلاً وجود دارد."
+  },
+  "name_too_long_message": {
+    "message": "نام بیش از حد طولانی است، لطفاً نام کوتاه‌تری وارد کنید."
+  },
+  "online_time_checkbox_label": {
+    "message": "همگام‌سازی زمان آنلاین"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "با زمان آنلاین برای دقت همگام می‌شود؛ در غیر این صورت از زمان دستگاه محلی استفاده می‌کند."
+  },
+  "password_protected_checkbox_label": {
+    "message": "حفاظت رمز عبور"
+  },
+  "password_protected_checkbox_message": {
+    "message": "برای فعال کردن، همگام‌سازی در Chrome را غیرفعال کنید"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "رمزها و اطلاعات ذخیره‌شده را با رمز عبور رمزگذاری و محافظت می‌کند."
+  },
+  "password_protection_setup": {
+    "message": "راه‌اندازی حفاظت رمز عبور"
+  },
+  "passwords_dont_match": {
+    "message": "رمزهای عبور مطابقت ندارند"
+  },
+  "password_warning_message": {
+    "message": "هشدار: در صورت فراموشی رمز عبور، بازیابی امکان‌پذیر نیست."
+  },
+  "permissions": {
+    "message": "دسترسی‌ها"
+  },
+  "permissions_page_header": {
+    "message": "صفحه دسترسی‌های Authenticator Pro"
+  },
+  "popup_mode_label": {
+    "message": "حالت پاپ‌آپ"
+  },
+  "popup_mode_tooltip": {
+    "message": "Authenticator Pro را در یک پنجره جداگانه باز می‌کند."
+  },
+  "qr_found_message": {
+    "message": "کد QR یافت شد!"
+  },
+  "qr_not_found_message": {
+    "message": "کد QR یافت نشد. تصویر دیگری را امتحان کنید."
+  },
+  "remove_password": {
+    "message": "حذف رمز عبور"
+  },
+  "save_url": {
+    "message": "ذخیره URL"
+  },
+  "scanning": {
+    "message": "اسکن..."
+  },
+  "secret": {
+    "message": "کد مخفی:"
+  },
+  "secret_already_added_message": {
+    "message": "این کد مخفی قبلاً اضافه شده است."
+  },
+  "settings": {
+    "message": "تنظیمات"
+  },
+  "submit": {
+    "message": "ارسال"
+  },
+  "sync_checkbox_label": {
+    "message": "همگام‌سازی در Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "برای فعال کردن، حفاظت رمز عبور را غیرفعال کنید"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "توکن‌ها را در دستگاه‌های Chrome همگام می‌کند؛ در غیر این صورت وضعیت فقط محلی است."
+  },
+  "themes": {
+    "message": "تم‌ها"
+  },
+  "token_settings": {
+    "message": "تنظیمات توکن"
+  },
+  "webcam": {
+    "message": "وب‌کم"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Aktif Tokenler:"
+  },
+  "add_token": {
+    "message": "Token Ekle"
+  },
+  "add_qr_code_via": {
+    "message": "QR Kodunu Ekleyin:"
+  },
+  "advanced_add": {
+    "message": "Gelişmiş Ekle"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Gelişmiş Ekle Butonu"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Kullanıcıların QR kodu (web kamerası, dosya veya bağlantı) ile sırlar eklemesine izin verir."
+  },
+  "are_you_sure_message": {
+    "message": "Emin misiniz? Bu işlem kalıcıdır."
+  },
+  "autofill_checkbox_label": {
+    "message": "Otomatik Doldurma"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Her token için otomatik doldurma URL'sini kullanarak OTP alanını otomatik olarak doldurur."
+  },
+  "autofill_url": {
+    "message": "Otomatik Doldurma URL'si:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "Otomatik Doldurma URL'si: (Açık Değil)"
+  },
+  "camera_permission_button": {
+    "message": "Kamera İzni Butonu"
+  },
+  "camera_permission_message_1": {
+    "message": "*Buton sayfa yüklendiğinde otomatik olarak tıklanır*"
+  },
+  "camera_permission_message_2": {
+    "message": "Webcam Butonu, kamera erişimi verildikten sonra çalışacaktır."
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Panoya Kopyalama"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Bir token kutusuna tıklayarak OTP'yi panoya kopyalar."
+  },
+  "close": {
+    "message": "Kapat"
+  },
+  "confirm_password": {
+    "message": "Şifreyi Onayla:"
+  },
+  "copied": {
+    "message": "Kopyalandı!"
+  },
+  "currently_saved": {
+    "message": "Mevcut Olarak Kaydedilen: "
+  },
+  "dark_theme": {
+    "message": "Karanlık Tema"
+  },
+  "delete": {
+    "message": "Sil"
+  },
+  "disable_password_protection": {
+    "message": "Şifre Korumasını Kapat"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Ayarlar bölümünden panoya kopyalamayı etkinleştir"
+  },
+  "enable_password_protection": {
+    "message": "Şifre Korumasını Etkinleştir"
+  },
+  "enter_name": {
+    "message": "İsim Girin:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Lütfen hem ismi hem de sırrı girin."
+  },
+  "enter_password": {
+    "message": "Şifre Girin:"
+  },
+  "enter_secret": {
+    "message": "Sırrı Girin:"
+  },
+  "enter_url": {
+    "message": "URL Girin"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro, sağlanan bir sır temelinde her 30 saniyede bir Tek Kullanımlık Şifre (OTP) üreten güçlü bir araçtır."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Token Ekleme Formunu Gizle"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Token ekleme formunu gizler; kaydedilmiş token'ların daha iyi görünmesini sağlar."
+  },
+  "image": {
+    "message": "Görüntü"
+  },
+  "image_url": {
+    "message": "Görüntü URL'si:"
+  },
+  "incorrect_password_message": {
+    "message": "Yanlış Şifre"
+  },
+  "incorrect_url_message": {
+    "message": "Yanlış URL veya URL QR kodunu içermiyor."
+  },
+  "invalid_secret_message": {
+    "message": "Geçersiz sır. Lütfen Base32 kodlanmış bir dize girin."
+  },
+  "light_theme": {
+    "message": "Aydınlık Tema"
+  },
+  "main_enter_password_message": {
+    "message": "Kilidi Açmak İçin Şifre Girin"
+  },
+  "name_already_exists_message": {
+    "message": "Bu isimde bir token zaten var."
+  },
+  "name_too_long_message": {
+    "message": "İsim çok uzun, lütfen daha kısa bir isim girin."
+  },
+  "online_time_checkbox_label": {
+    "message": "Çevrimiçi Zaman Senkronizasyonu"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Doğruluk için çevrimiçi zamanla senkronize eder; aksi takdirde yerel cihaz zamanını kullanır."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Şifre Koruması"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Etkinleştirmek için, Chrome Arası Senkronizasyonu kapatın"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Kaydedilmiş sırları bir şifre ile şifreler ve korur."
+  },
+  "password_protection_setup": {
+    "message": "Şifre Koruma Ayarı"
+  },
+  "passwords_dont_match": {
+    "message": "Şifreler Uyuşmuyor"
+  },
+  "password_warning_message": {
+    "message": "UYARI: Şifre unutulursa, geri alınamaz."
+  },
+  "permissions": {
+    "message": "İzinler"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro İzinler Sayfası "
+  },
+  "popup_mode_label": {
+    "message": "Açılır Mod"
+  },
+  "popup_mode_tooltip": {
+    "message": "Authenticator Pro'yu ayrı bir pencerede açar."
+  },
+  "qr_found_message": {
+    "message": "QR kodu bulundu!"
+  },
+  "qr_not_found_message": {
+    "message": "QR Kodu bulunamadı. Başka bir görüntü deneyin."
+  },
+  "remove_password": {
+    "message": "Şifreyi Kaldır"
+  },
+  "save_url": {
+    "message": "URL'yi Kaydet"
+  },
+  "scanning": {
+    "message": "Tarama..."
+  },
+  "secret": {
+    "message": " Sır:"
+  },
+  "secret_already_added_message": {
+    "message": "Bu sırrı zaten eklediniz."
+  },
+  "settings": {
+    "message": "Ayarlar"
+  },
+  "submit": {
+    "message": "Gönder"
+  },
+  "sync_checkbox_label": {
+    "message": "Chrome Arası Senkronizasyon"
+  },
+  "sync_checkbox_message": {
+    "message": "Etkinleştirmek için, Şifre Korumasını kapatın"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Oturum açmış Chrome cihazlarında token'ları senkronize eder; aksi takdirde durum yalnızca yereldir."
+  },
+  "themes": {
+    "message": "Temalar"
+  },
+  "token_settings": {
+    "message": "Token Ayarları"
+  },
+  "webcam": {
+    "message": "Web Kamerası"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "Token Attivi:"
+  },
+  "add_token": {
+    "message": "Aggiungi Token"
+  },
+  "add_qr_code_via": {
+    "message": "Aggiungi QR Code tramite:"
+  },
+  "advanced_add": {
+    "message": "Aggiunta Avanzata"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "Pulsante Aggiunta Avanzata"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "Consente agli utenti di aggiungere segreti tramite QR code (webcam, file o link)."
+  },
+  "are_you_sure_message": {
+    "message": "Sei sicuro? Questa azione è permanente."
+  },
+  "autofill_checkbox_label": {
+    "message": "Compilazione Automatica"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "Compila automaticamente il campo OTP utilizzando l'URL di compilazione automatica per ogni token."
+  },
+  "autofill_url": {
+    "message": "URL di Compilazione Automatica:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "URL di Compilazione Automatica: (Non Abilitato)"
+  },
+  "camera_permission_button": {
+    "message": "Pulsante di Permesso della Camera"
+  },
+  "camera_permission_message_1": {
+    "message": "*Il pulsante viene cliccato automaticamente al caricamento della pagina*"
+  },
+  "camera_permission_message_2": {
+    "message": "Il pulsante Webcam funzionerà dopo aver consentito l'accesso alla fotocamera"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "Copia in Appunti"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "Consente di copiare l'OTP negli appunti cliccando sulla casella del token."
+  },
+  "close": {
+    "message": "Chiudi"
+  },
+  "confirm_password": {
+    "message": "Conferma Password:"
+  },
+  "copied": {
+    "message": "Copiato!"
+  },
+  "currently_saved": {
+    "message": "Attualmente Salvato: "
+  },
+  "dark_theme": {
+    "message": "Tema Scuro"
+  },
+  "delete": {
+    "message": "Elimina"
+  },
+  "disable_password_protection": {
+    "message": "Disabilita Protezione con Password"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "Abilita Copia negli Appunti nelle impostazioni"
+  },
+  "enable_password_protection": {
+    "message": "Abilita Protezione con Password"
+  },
+  "enter_name": {
+    "message": "Inserisci Nome:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "Inserisci sia il nome che il segreto."
+  },
+  "enter_password": {
+    "message": "Inserisci Password:"
+  },
+  "enter_secret": {
+    "message": "Inserisci Segreto:"
+  },
+  "enter_url": {
+    "message": "Inserisci URL"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro è uno strumento potente che genera una Password Usa e Getta (OTP) ogni 30 secondi basata su un segreto fornito."
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "Nascondi Aggiunta Token"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "Nasconde il modulo di aggiunta token; fornisce una visione più chiara dei token salvati."
+  },
+  "image": {
+    "message": "Immagine"
+  },
+  "image_url": {
+    "message": "URL Immagine:"
+  },
+  "incorrect_password_message": {
+    "message": "Password Errata"
+  },
+  "incorrect_url_message": {
+    "message": "URL Errato, o l'URL non conteneva un QR code."
+  },
+  "invalid_secret_message": {
+    "message": "Segreto non valido. Inserisci una stringa codificata in Base32."
+  },
+  "light_theme": {
+    "message": "Tema Chiaro"
+  },
+  "main_enter_password_message": {
+    "message": "Inserisci Password per Sbloccare"
+  },
+  "name_already_exists_message": {
+    "message": "Esiste già un token con questo nome."
+  },
+  "name_too_long_message": {
+    "message": "Nome troppo lungo, inserisci un nome più corto."
+  },
+  "online_time_checkbox_label": {
+    "message": "Sincronizzazione Ora Online"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "Si sincronizza con l'orario online per precisione; altrimenti utilizza l'ora del dispositivo locale."
+  },
+  "password_protected_checkbox_label": {
+    "message": "Protezione con Password"
+  },
+  "password_protected_checkbox_message": {
+    "message": "Per abilitare, disattiva la Sincronizzazione tra Chrome"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "Cripta e protegge i segreti salvati con una password."
+  },
+  "password_protection_setup": {
+    "message": "Impostazione Protezione con Password"
+  },
+  "passwords_dont_match": {
+    "message": "Le Password Non Corrispondono"
+  },
+  "password_warning_message": {
+    "message": "ATTENZIONE: Se la password viene dimenticata, non può essere recuperata."
+  },
+  "permissions": {
+    "message": "Autorizzazioni"
+  },
+  "permissions_page_header": {
+    "message": "Pagina Autorizzazioni Authenticator Pro "
+  },
+  "popup_mode_label": {
+    "message": "Modalità Popup"
+  },
+  "popup_mode_tooltip": {
+    "message": "Apre Authenticator Pro in una finestra separata."
+  },
+  "qr_found_message": {
+    "message": "QR code trovato!"
+  },
+  "qr_not_found_message": {
+    "message": "QR Code non trovato. Prova un'altra immagine."
+  },
+  "remove_password": {
+    "message": "Rimuovi Password"
+  },
+  "save_url": {
+    "message": "Salva URL"
+  },
+  "scanning": {
+    "message": "Scansione..."
+  },
+  "secret": {
+    "message": " Segreto:"
+  },
+  "secret_already_added_message": {
+    "message": "Hai già aggiunto questo segreto."
+  },
+  "settings": {
+    "message": "Impostazioni"
+  },
+  "submit": {
+    "message": "Invia"
+  },
+  "sync_checkbox_label": {
+    "message": "Sincronizza tra Chrome"
+  },
+  "sync_checkbox_message": {
+    "message": "Per abilitare, disattiva la Protezione con Password"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "Sincronizza i token sui dispositivi Chrome collegati; altrimenti, lo stato è solo locale."
+  },
+  "themes": {
+    "message": "Temi"
+  },
+  "token_settings": {
+    "message": "Impostazioni Token"
+  },
+  "webcam": {
+    "message": "Webcam"
+  }
+}

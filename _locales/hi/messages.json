@@ -1,0 +1,212 @@
+{
+  "active_tokens": {
+    "message": "सक्रिय टोकन:"
+  },
+  "add_token": {
+    "message": "टोकन जोड़ें"
+  },
+  "add_qr_code_via": {
+    "message": "QR कोड जोड़ें:"
+  },
+  "advanced_add": {
+    "message": "उन्नत जोड़ें"
+  },
+  "advanced_add_checkbox_label": {
+    "message": "उन्नत जोड़ें बटन"
+  },
+  "advanced_add_checkbox_tooltip": {
+    "message": "उपयोगकर्ताओं को QR कोड (वेबकैम, फ़ाइल, या लिंक) के माध्यम से रहस्यों को जोड़ने की अनुमति देता है।"
+  },
+  "are_you_sure_message": {
+    "message": "क्या आप सुनिश्चित हैं? यह क्रिया स्थायी है।"
+  },
+  "autofill_checkbox_label": {
+    "message": "स्वतः भरें"
+  },
+  "autofill_checkbox_tooltip": {
+    "message": "प्रत्येक टोकन के लिए स्वचालित URL का उपयोग करके OTP फ़ील्ड को स्वचालित रूप से भरता है।"
+  },
+  "autofill_url": {
+    "message": "स्वतः भरें URL:"
+  },
+  "autofill_url_not_enabled": {
+    "message": "स्वतः भरें URL: (अक्षम)"
+  },
+  "camera_permission_button": {
+    "message": "कैमरा अनुमति बटन"
+  },
+  "camera_permission_message_1": {
+    "message": "*पृष्ठ लोड पर बटन स्वचालित रूप से क्लिक करता है*"
+  },
+  "camera_permission_message_2": {
+    "message": "कैमरा एक्सेस की अनुमति देने के बाद वेबकैम बटन काम करेगा"
+  },
+  "clipboard_copying_checkbox_label": {
+    "message": "क्लिपबोर्ड कॉपी करना"
+  },
+  "clipboard_copying_checkbox_tooltip": {
+    "message": "टोकन बॉक्स पर क्लिक करते समय OTP को क्लिपबोर्ड में कॉपी करने की अनुमति देता है।"
+  },
+  "close": {
+    "message": "बंद करें"
+  },
+  "confirm_password": {
+    "message": "पासवर्ड की पुष्टि करें:"
+  },
+  "copied": {
+    "message": "कॉपी किया गया!"
+  },
+  "currently_saved": {
+    "message": "वर्तमान में सहेजा गया: "
+  },
+  "dark_theme": {
+    "message": "गहरा विषय"
+  },
+  "delete": {
+    "message": "हटाएँ"
+  },
+  "disable_password_protection": {
+    "message": "पासवर्ड सुरक्षा अक्षम करें"
+  },
+  "enable_clipboard_copy_message": {
+    "message": "सेटिंग्स में क्लिपबोर्ड कॉपी सक्षम करें"
+  },
+  "enable_password_protection": {
+    "message": "पासवर्ड सुरक्षा सक्षम करें"
+  },
+  "enter_name": {
+    "message": "नाम दर्ज करें:"
+  },
+  "enter_name_and_secret_message": {
+    "message": "कृपया नाम और रहस्य दोनों दर्ज करें।"
+  },
+  "enter_password": {
+    "message": "पासवर्ड दर्ज करें:"
+  },
+  "enter_secret": {
+    "message": "रहस्य दर्ज करें:"
+  },
+  "enter_url": {
+    "message": "URL दर्ज करें"
+  },
+  "extension_description": {
+    "message": "Authenticator Pro एक शक्तिशाली उपकरण है जो प्रदान किए गए रहस्य के आधार पर हर 30 सेकंड में एक बार-बार उपयोग होने वाला पासवर्ड (OTP) उत्पन्न करता है।"
+  },
+  "extension_name": {
+    "message": "Authenticator Pro"
+  },
+  "hide_token_adder_checkbox_label": {
+    "message": "टोकन जोड़ने वाला छिपाएँ"
+  },
+  "hide_token_adder_checkbox_tooltip": {
+    "message": "टोकन जोड़ने वाला फॉर्म छुपाता है; सहेजे गए टोकनों की दृश्यता को आसान बनाता है।"
+  },
+  "image": {
+    "message": "छवि"
+  },
+  "image_url": {
+    "message": "छवि URL:"
+  },
+  "incorrect_password_message": {
+    "message": "गलत पासवर्ड"
+  },
+  "incorrect_url_message": {
+    "message": "गलत URL, या URL में QR कोड नहीं था।"
+  },
+  "invalid_secret_message": {
+    "message": "अवैध रहस्य। कृपया Base32 एन्कोडेड स्ट्रिंग दर्ज करें।"
+  },
+  "light_theme": {
+    "message": "हल्का विषय"
+  },
+  "main_enter_password_message": {
+    "message": "अनलॉक करने के लिए पासवर्ड दर्ज करें"
+  },
+  "name_already_exists_message": {
+    "message": "इस नाम का एक टोकन पहले से मौजूद है।"
+  },
+  "name_too_long_message": {
+    "message": "नाम बहुत लंबा है, कृपया एक छोटा नाम दर्ज करें।"
+  },
+  "online_time_checkbox_label": {
+    "message": "ऑनलाइन समय समन्वय"
+  },
+  "online_time_checkbox_tooltip": {
+    "message": "सटीकता के लिए ऑनलाइन समय के साथ समन्वयित करता है; अन्यथा स्थानीय डिवाइस समय का उपयोग करता है।"
+  },
+  "password_protected_checkbox_label": {
+    "message": "पासवर्ड सुरक्षा"
+  },
+  "password_protected_checkbox_message": {
+    "message": "सक्षम करने के लिए, Chrome में समन्वय बंद करें"
+  },
+  "password_protected_checkbox_tooltip": {
+    "message": "सहेजे गए रहस्यों को एक पासवर्ड के साथ एन्क्रिप्ट और सुरक्षित करता है।"
+  },
+  "password_protection_setup": {
+    "message": "पासवर्ड सुरक्षा सेटअप"
+  },
+  "passwords_dont_match": {
+    "message": "पासवर्ड मेल नहीं खाते"
+  },
+  "password_warning_message": {
+    "message": "चेतावनी: यदि पासवर्ड भूल जाते हैं, तो इसे पुनर्प्राप्त नहीं किया जा सकता।"
+  },
+  "permissions": {
+    "message": "अनुमतियाँ"
+  },
+  "permissions_page_header": {
+    "message": "Authenticator Pro अनुमतियाँ पृष्ठ"
+  },
+  "popup_mode_label": {
+    "message": "पॉपअप मोड"
+  },
+  "popup_mode_tooltip": {
+    "message": "Authenticator Pro को एक अलग विंडो में खोलता है।"
+  },
+  "qr_found_message": {
+    "message": "QR कोड मिला!"
+  },
+  "qr_not_found_message": {
+    "message": "QR कोड नहीं मिला। कृपया एक अलग छवि आज़माएँ।"
+  },
+  "remove_password": {
+    "message": "पासवर्ड हटाएँ"
+  },
+  "save_url": {
+    "message": "URL सहेजें"
+  },
+  "scanning": {
+    "message": "स्कैनिंग..."
+  },
+  "secret": {
+    "message": " रहस्य:"
+  },
+  "secret_already_added_message": {
+    "message": "आपने पहले ही इस रहस्य को जोड़ा है।"
+  },
+  "settings": {
+    "message": "सेटिंग्स"
+  },
+  "submit": {
+    "message": "जमा करें"
+  },
+  "sync_checkbox_label": {
+    "message": "Chrome में समन्वय"
+  },
+  "sync_checkbox_message": {
+    "message": "सक्षम करने के लिए, पासवर्ड सुरक्षा बंद करें"
+  },
+  "sync_checkbox_tooltip": {
+    "message": "लॉग इन किए गए Chrome उपकरणों पर टोकनों को समन्वयित करता है; अन्यथा, स्थिति केवल स्थानीय होती है।"
+  },
+  "themes": {
+    "message": "थीम्स"
+  },
+  "token_settings": {
+    "message": "टोकन सेटिंग्स"
+  },
+  "webcam": {
+    "message": "वेबकैम"
+  }
+}
