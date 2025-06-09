@@ -1,0 +1,9 @@
+# Dependency directories
+/node_modules/
+
+# Build output
+/dist/
+
+# Editor configs
+.vscode/
+.idea/
