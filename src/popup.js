@@ -1442,8 +1442,6 @@ document.addEventListener("DOMContentLoaded", () => {
       popupContent.appendChild(buttonContainer);
       popupContainer.appendChild(popupContent);
       document.body.appendChild(popupContainer);
-      popupContainer.appendChild(popupContent);
-      document.body.appendChild(popupContainer);
       document.getElementById("x-icon").addEventListener("click", () => {
         document.body.removeChild(popupContainer);
       });
@@ -1772,8 +1770,6 @@ document.addEventListener("DOMContentLoaded", () => {
     formLabelContainer.appendChild(imageUrlInput);
     formLabelContainer.appendChild(urlButton);
     popupContent.appendChild(formLabelContainer);
-    popupContainer.appendChild(popupContent);
-    document.body.appendChild(popupContainer);
     popupContainer.appendChild(popupContent);
     document.body.appendChild(popupContainer);
     webcamButton.appendChild(webcamOnIcon);
