@@ -1265,6 +1265,11 @@ document.addEventListener("DOMContentLoaded", () => {
       passwordConfirmationInput.id = "password-confirmation";
       passwordConfirmationInput.className = "form-input enter-url-placeholder";
       passwordConfirmationInput.placeholder = "";
+      passwordConfirmationInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          protectionButton.click();
+        }
+      });
       formLabelContainer.appendChild(passwordConfirmationInput);
       const warningMessage = document.createElement("div");
       warningMessage.className = "password-warning-message";
@@ -1295,17 +1300,6 @@ document.addEventListener("DOMContentLoaded", () => {
           document.body.removeChild(popupContainer);
         }
       });
-      passwordInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          protectionButton.click();
-        }
-        passwordConfirmationInput.addEventListener("keydown", (e) => {
-          if (e.key === "Enter") {
-            protectionButton.click();
-          }
-        });
-      });
-      document;
       protectionButton.addEventListener("click", async () => {
         let passwordInput = document.getElementById("password").value;
         let passwordInputConfirmation = document.getElementById(
