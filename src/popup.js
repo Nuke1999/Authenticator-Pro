@@ -406,20 +406,67 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function updateClock() {
+  // Store time sync data in chrome.storage
+  const TIME_SYNC_KEY = 'timeSyncData';
+  const SYNC_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
+
+  async function getTimeSyncData() {
+    const data = await new Promise(resolve => {
+      chrome.storage.local.get(TIME_SYNC_KEY, result => resolve(result[TIME_SYNC_KEY] || null));
+    });
+    return data || { lastSync: 0, offset: 0 };
+  }
+
+  async function setTimeSyncData(offset) {
+    const data = {
+      lastSync: Date.now(),
+      offset: offset
+    };
+    await new Promise(resolve => {
+      chrome.storage.local.set({ [TIME_SYNC_KEY]: data }, resolve);
+    });
+    return data;
+  }
+
+  async function updateClock() {
+    console.log("updating clock")
     const timeApiUrl = "https://worldtimeapi.org/api/timezone/Etc/UTC";
     let initialTime;
     let offset = 0;
 
     if (isTimeCheckboxChecked) {
-      getSecondsFromTimeApi()
-        .then((seconds) => startClock(seconds))
-        .catch((error) => {
-          startClock(getSecondsFromLocalTime());
-        });
+      try {
+        const syncData = await getTimeSyncData();
+        const timeSinceLastSync = Date.now() - syncData.lastSync;
+        
+        // If we have a recent sync, use the stored offset
+        if (timeSinceLastSync < SYNC_INTERVAL_MS) {
+          console.log("less than 1 hour, not calling api")
+          offset = syncData.offset;
+          startClock(getSecondsFromLocalTime(offset));
+          // Schedule the next sync
+          setTimeout(updateClock, SYNC_INTERVAL_MS - timeSinceLastSync);
+          return;
+        }
+        
+        // Otherwise, try to sync with the time API
+        console.log("calling api")
+        const seconds = await getSecondsFromTimeApi();
+        await setTimeSyncData(offset);
+        startClock(seconds);
+        // Schedule the next sync
+        setTimeout(updateClock, SYNC_INTERVAL_MS);
+      } catch (error) {
+        console.log('Time sync error, using local time:', error);
+        const syncData = await getTimeSyncData();
+        startClock(getSecondsFromLocalTime(syncData.offset));
+        // Retry sooner on error (after 5 minutes)
+        setTimeout(updateClock, 5 * 60 * 1000);
+      }
     } else {
-      offset = 0;
-      const seconds = getSecondsFromLocalTime();
+      const syncData = await getTimeSyncData();
+      offset = syncData.offset;
+      const seconds = getSecondsFromLocalTime(offset);
       startClock(seconds);
     }
 
@@ -443,7 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ]);
     }
 
-    function getSecondsFromLocalTime() {
+    function getSecondsFromLocalTime(offset = 0) {
       const now = new Date(Date.now() + offset);
       return now.getSeconds() + now.getMilliseconds() / 1000;
     }
@@ -955,6 +1002,13 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
       console.log(error);
     }
+
+    if (onlineTimeCheckbox.checked) {
+      console.log("online time enabled");
+      updateClock();
+    } else {
+      console.log("online time disabled");
+    }
   });
 
   const advancedAddCheckbox = document.getElementById("advanced-add-checkbox");
@@ -1442,8 +1496,6 @@ document.addEventListener("DOMContentLoaded", () => {
       popupContent.appendChild(buttonContainer);
       popupContainer.appendChild(popupContent);
       document.body.appendChild(popupContainer);
-      popupContainer.appendChild(popupContent);
-      document.body.appendChild(popupContainer);
       document.getElementById("x-icon").addEventListener("click", () => {
         document.body.removeChild(popupContainer);
       });
@@ -1499,7 +1551,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       chrome.storage.local.set({ popupModeCheckbox: false });
       if (syncCheckbox.checked) {
-        chrome.stroage.sync.set({ popupModeCheckbox: false });
+        chrome.storage.sync.set({ popupModeCheckbox: false });
       }
     }
   });
@@ -1772,8 +1824,6 @@ document.addEventListener("DOMContentLoaded", () => {
     formLabelContainer.appendChild(imageUrlInput);
     formLabelContainer.appendChild(urlButton);
     popupContent.appendChild(formLabelContainer);
-    popupContainer.appendChild(popupContent);
-    document.body.appendChild(popupContainer);
     popupContainer.appendChild(popupContent);
     document.body.appendChild(popupContainer);
     webcamButton.appendChild(webcamOnIcon);
