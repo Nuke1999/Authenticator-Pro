@@ -1,5 +1,6 @@
 import { authenticator } from "otplib";
 import QRCode from "qrcode";
+import { buildCloseAction, openModal } from "./ui.js";
 
 export function isValidBase32(secret) {
   const base32Regex = /^[A-Z2-7]+=*$/;
@@ -15,13 +16,13 @@ export function generateToken(secret) {
 
 export function createTokenUI({
   tokensContainer,
-  syncCheckbox,
-  clipboardCopyingCheckbox,
-  autofillCheckbox,
+  syncCheckbox: syncChk,
+  clipboardCopyingCheckbox: clipboardChk,
+  autofillCheckbox: autofillChk,
   confirmDelete,
   deleteToken,
   createXIcon,
-  i18nGetMessage,
+  i18nGetMessage: t,
   popupUpdate,
 }) {
   function addTokenToDOM(name, secret, url, otp) {
@@ -57,17 +58,14 @@ export function createTokenUI({
           if (url && url.length > urlLength) {
             shortenedUrl = url.substring(0, urlLength) + "...";
           }
-          const popupContainer = document.createElement("div");
-          popupContainer.className = "popup-container";
-          const popupContent = document.createElement("div");
-          popupContent.className = "popup-content";
+          const { container: popupContainer, content: popupContent, close } = openModal({ contentClass: "popup-content" });
           popupContent.textContent = "";
 
           const headerDiv = document.createElement("div");
           headerDiv.className = "centered-header";
           const headerText = document.createElement("h2");
           headerText.className = "centered-headings shorter-width-heading";
-          headerText.textContent = `${name} ${i18nGetMessage("token_settings")}`;
+          headerText.textContent = `${name} ${t("token_settings")}`;
           headerDiv.appendChild(headerText);
 
           const svgIcon = createXIcon({
@@ -82,25 +80,25 @@ export function createTokenUI({
           label.setAttribute("for", "name");
           label.className = "form-label";
           label.id = "autofill-url-label";
-          label.textContent = autofillCheckbox && autofillCheckbox.checked
-            ? i18nGetMessage("autofill_url")
-            : i18nGetMessage("autofill_url_not_enabled");
+          label.textContent = autofillChk && autofillChk.checked
+            ? t("autofill_url")
+            : t("autofill_url_not_enabled");
           popupContent.appendChild(label);
 
           const urlInput = document.createElement("input");
           urlInput.type = "text";
           urlInput.id = "autofill-url-input";
           urlInput.className = "form-input enter-url-placeholder";
-          urlInput.disabled = !(autofillCheckbox && autofillCheckbox.checked);
+          urlInput.disabled = !(autofillChk && autofillChk.checked);
           popupContent.appendChild(urlInput);
-          if (autofillCheckbox) {
-            autofillCheckbox.addEventListener("change", function () {
-              if (autofillCheckbox.checked) {
+          if (autofillChk) {
+            autofillChk.addEventListener("change", function () {
+              if (autofillChk.checked) {
                 urlInput.disabled = false;
-                label.textContent = i18nGetMessage("autofill_url");
+                label.textContent = t("autofill_url");
               } else {
                 urlInput.disabled = true;
-                label.textContent = i18nGetMessage("autofill_url_not_enabled");
+                label.textContent = t("autofill_url_not_enabled");
               }
             });
           }
@@ -108,14 +106,14 @@ export function createTokenUI({
           const saveUrlButton = document.createElement("button");
           saveUrlButton.id = "save-url-button";
           saveUrlButton.className = "wide-button";
-          saveUrlButton.textContent = i18nGetMessage("save_url");
+          saveUrlButton.textContent = t("save_url");
           popupContent.appendChild(saveUrlButton);
 
           const inlineUrlDiv = document.createElement("div");
           inlineUrlDiv.className = "inline-url";
           const inlineLabel = document.createElement("label");
           inlineLabel.className = "form-label";
-          inlineLabel.textContent = i18nGetMessage("currently_saved");
+          inlineLabel.textContent = t("currently_saved");
           inlineUrlDiv.appendChild(inlineLabel);
           const currentUrlDiv = document.createElement("div");
           currentUrlDiv.id = "current-url";
@@ -129,15 +127,12 @@ export function createTokenUI({
           const deleteButton = document.createElement("button");
           deleteButton.className = "delete-token";
           deleteButton.id = "delete-token";
-          deleteButton.textContent = i18nGetMessage("delete");
+          deleteButton.textContent = t("delete");
           buttonsContainer.appendChild(deleteButton);
-          const closeButton = document.createElement("button");
-          closeButton.className = "close-popup";
-          closeButton.textContent = i18nGetMessage("close");
-          buttonsContainer.appendChild(closeButton);
+          const { container: closeAction, button: closeButton } = buildCloseAction("close");
+          buttonsContainer.appendChild(closeAction);
           popupContent.appendChild(buttonsContainer);
           popupContainer.appendChild(popupContent);
-          document.body.appendChild(popupContainer);
 
           document.getElementById("x-icon").addEventListener("click", () => {
             document.body.removeChild(popupContainer);
@@ -157,18 +152,16 @@ export function createTokenUI({
                 const saveToLocal = () => chrome.storage.local.set({ tokens }, () => {});
                 const saveToSync = () => chrome.storage.sync.set({ tokens }, () => {});
                 saveToLocal();
-                if (syncCheckbox && syncCheckbox.checked) saveToSync();
+                if (syncChk && syncChk.checked) saveToSync();
                 const displayUrl = newUrl.length > 50 ? newUrl.substring(0, 50) + "..." : newUrl;
                 currentUrlDiv.textContent = displayUrl;
               }
             });
           });
 
-          closeButton.addEventListener("click", () => {
-            document.body.removeChild(popupContainer);
-          });
+          closeButton.addEventListener("click", close);
           popupContainer.addEventListener("click", (e) => {
-            if (e.target === popupContainer) document.body.removeChild(popupContainer);
+            if (e.target === popupContainer) close();
           });
 
           deleteButton.addEventListener("click", () => {
@@ -181,7 +174,7 @@ export function createTokenUI({
                 addTokenToDOM
               )
             );
-            document.body.removeChild(popupContainer);
+            close();
           });
         });
       })
@@ -207,16 +200,13 @@ export function createTokenUI({
     tokenQRButton.addEventListener("click", async (e) => {
       e.stopPropagation();
       try {
-        const popupContainer = document.createElement("div");
-        popupContainer.className = "popup-container";
-        const popupContent = document.createElement("div");
-        popupContent.className = "popup-content-qr";
+        const { container: popupContainer, content: popupContent, close } = openModal({ contentClass: "popup-content-qr" });
         let qrDataURL = await QRCode.toDataURL(secret, { width: 140 });
         popupContent.textContent = "";
         const qrContainer = document.createElement("div");
         const secretHeader = document.createElement("h2");
         secretHeader.className = "centered-headings shorter-width-heading";
-        secretHeader.textContent = `${name} ${i18nGetMessage("secret")}`;
+        secretHeader.textContent = `${name} ${t("secret")}`;
         qrContainer.appendChild(secretHeader);
         const secretValue = document.createElement("h3");
         secretValue.className = "centered-secret shorter-width-heading";
@@ -231,14 +221,11 @@ export function createTokenUI({
         qrContainer.appendChild(svgIcon);
         popupContent.appendChild(qrContainer);
         popupContainer.appendChild(popupContent);
-        document.body.appendChild(popupContainer);
         popupContainer.addEventListener("click", (e) => {
-          if (e.target === popupContainer) document.body.removeChild(popupContainer);
+          if (e.target === popupContainer) close();
         });
         const redXButton = document.getElementById("x-icon");
-        redXButton.addEventListener("click", () => {
-          document.body.removeChild(popupContainer);
-        });
+        redXButton.addEventListener("click", close);
       } catch (error) {
         console.log(error);
       }
@@ -252,10 +239,10 @@ export function createTokenUI({
     let canClick = true;
     tokenElement.addEventListener("click", async () => {
       if (!canClick) return;
-      if (!clipboardCopyingCheckbox || !clipboardCopyingCheckbox.checked) {
+      if (!clipboardChk || !clipboardChk.checked) {
         const copiedMessage = document.createElement("div");
         copiedMessage.className = "not-copied-message";
-        copiedMessage.textContent = i18nGetMessage("enable_clipboard_copy_message");
+        copiedMessage.textContent = t("enable_clipboard_copy_message");
         tokenElement.appendChild(copiedMessage);
         canClick = false;
         setTimeout(() => {
@@ -267,7 +254,7 @@ export function createTokenUI({
         navigator.clipboard.writeText(tokenValue).then(() => {
           const copiedMessage = document.createElement("div");
           copiedMessage.className = "copied-message";
-          copiedMessage.textContent = i18nGetMessage("copied");
+          copiedMessage.textContent = t("copied");
           tokenElement.appendChild(copiedMessage);
           canClick = false;
           setTimeout(() => {

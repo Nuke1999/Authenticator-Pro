@@ -151,6 +151,16 @@ export function confirmDelete(name, secret, onDelete) {
   });
 }
 
+export function el(tag, { className, id, text, attrs } = {}, ...children) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (id) node.id = id;
+  if (text !== undefined && text !== null) node.textContent = text;
+  if (attrs) setAttributes(node, attrs);
+  if (children && children.length) node.append(...children);
+  return node;
+}
+
 export function createXIcon({ stroke = "red", className, id } = {}) {
   const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   setAttributes(svgIcon, {
@@ -180,6 +190,40 @@ export function createXIcon({ stroke = "red", className, id } = {}) {
   return svgIcon;
 }
 
+export function buildCloseAction(labelKey = "close") {
+  const container = el("div", { className: "close-popup-container" });
+  const button = el("button", {
+    className: "close-popup",
+    text: chrome.i18n.getMessage(labelKey),
+  });
+  container.appendChild(button);
+  return { container, button };
+}
+
+export function buildHeader({
+  title,
+  level = "h2",
+  headerClass = "centered-header",
+  headingClass = "centered-headings shorter-width-heading",
+  showClose = true,
+  xId = "x-icon",
+  stroke = "red",
+} = {}) {
+  const header = el("div", { className: headerClass });
+  if (title) {
+    const heading = document.createElement(level);
+    heading.className = headingClass;
+    heading.textContent = title;
+    header.appendChild(heading);
+  }
+  let xIcon;
+  if (showClose) {
+    xIcon = createXIcon({ className: "feather x-icon", id: xId, stroke });
+    header.appendChild(xIcon);
+  }
+  return { header, xIcon };
+}
+
 export function createPopup(message) {
   if (document.querySelector(".popup-container")) {
     return;
@@ -189,20 +233,14 @@ export function createPopup(message) {
   const popupContent = document.createElement("div");
   popupContent.className = "popup-message";
 
-  const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
-  const headerDiv = document.createElement("div");
-  headerDiv.appendChild(svgIcon);
+  const { header: headerDiv, xIcon: svgIcon } = buildHeader({ showClose: true });
 
   const messageHeading = document.createElement("h3");
   messageHeading.className = "centered-headings shorter-width-heading";
   messageHeading.textContent = message;
 
-  const closeButtonContainer = document.createElement("div");
-  closeButtonContainer.className = "close-popup-container";
-  const closeButton = document.createElement("button");
-  closeButton.className = "close-popup";
-  closeButton.textContent = chrome.i18n.getMessage("close");
-  closeButtonContainer.appendChild(closeButton);
+  const { container: closeButtonContainer, button: closeButton } =
+    buildCloseAction("close");
 
   popupContent.appendChild(headerDiv);
   popupContent.appendChild(messageHeading);
@@ -216,4 +254,24 @@ export function createPopup(message) {
   svgIcon.addEventListener("click", () => {
     document.body.removeChild(popupContainer);
   });
+}
+
+export function openModal({ contentClass = "popup-content", onClose, overlayClose = true } = {}) {
+  const container = el("div", { className: "popup-container" });
+  const content = el("div", { className: contentClass });
+  container.appendChild(content);
+  document.body.appendChild(container);
+
+  const close = () => {
+    try {
+      document.body.removeChild(container);
+    } catch (_) {}
+    if (onClose) onClose();
+  };
+  if (overlayClose) {
+    container.addEventListener("click", (e) => {
+      if (e.target === container) close();
+    });
+  }
+  return { container, content, close };
 }

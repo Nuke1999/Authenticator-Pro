@@ -1,12 +1,13 @@
 import { Buffer } from "buffer";
-import QrScanner from "qr-scanner";
 import QRCode from "qrcode";
+import { startWebcam, stopWebcam, scanImageFile, scanImageUrl } from "./scanner.js";
 import {
   createSwitchElement,
   setAdvancedAddMessage,
   confirmDelete,
   createXIcon,
   createPopup,
+  openModal,
 } from "./ui.js";
 import {
   encryptSecret,
@@ -17,7 +18,7 @@ import {
   convertKeyToCryptoKey,
   decryptTokens,
 } from "./auth.js";
-import { getTimeSyncData, setTimeSyncData } from "./timeSync.js";
+import { startClock } from "./timeSync.js";
 import {
   requestAutofillPermission,
   requestClipboardPermission,
@@ -200,76 +201,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const SYNC_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
+  let clockCtrl = null;
 
-  async function updateClock() {
-    console.log("updating clock")
-    const timeApiUrl = "https://worldtimeapi.org/api/timezone/Etc/UTC";
-    let initialTime;
-    let offset = 0;
-
-    if (isTimeCheckboxChecked) {
-      try {
-        const syncData = await getTimeSyncData();
-        const timeSinceLastSync = Date.now() - syncData.lastSync;
-        
-        // If we have a recent sync, use the stored offset
-        if (timeSinceLastSync < SYNC_INTERVAL_MS) {
-          console.log("less than 1 hour, not calling api")
-          offset = syncData.offset;
-          startClock(getSecondsFromLocalTime(offset));
-          // Schedule the next sync
-          setTimeout(updateClock, SYNC_INTERVAL_MS - timeSinceLastSync);
-          return;
-        }
-        
-        // Otherwise, try to sync with the time API
-        console.log("calling api")
-        const seconds = await getSecondsFromTimeApi();
-        await setTimeSyncData(offset);
-        startClock(seconds);
-        // Schedule the next sync
-        setTimeout(updateClock, SYNC_INTERVAL_MS);
-      } catch (error) {
-        console.log('Time sync error, using local time:', error);
-        const syncData = await getTimeSyncData();
-        startClock(getSecondsFromLocalTime(syncData.offset));
-        // Retry sooner on error (after 5 minutes)
-        setTimeout(updateClock, 5 * 60 * 1000);
-      }
-    } else {
-      const syncData = await getTimeSyncData();
-      offset = syncData.offset;
-      const seconds = getSecondsFromLocalTime(offset);
-      startClock(seconds);
-    }
-
-    function getSecondsFromTimeApi() {
-      return Promise.race([
-        fetch(timeApiUrl)
-          .then((response) => {
-            if (!response.ok) throw new Error("Network response was not ok");
-            return response.json();
-          })
-          .then((data) => {
-            initialTime = new Date(data.datetime);
-            offset = initialTime.getTime() - Date.now();
-            return (
-              initialTime.getSeconds() + initialTime.getMilliseconds() / 1000
-            );
-          }),
-        new Promise((resolve) =>
-          setTimeout(() => resolve(getSecondsFromLocalTime()), 500)
-        ),
-      ]);
-    }
-
-    function getSecondsFromLocalTime(offset = 0) {
-      const now = new Date(Date.now() + offset);
-      return now.getSeconds() + now.getMilliseconds() / 1000;
-    }
-
-    function updateClockWithSeconds(seconds) {
+  function updateClockWithSeconds(seconds) {
       let progressOffset;
       if (seconds <= 30) {
         progressOffset = -251.2 * (seconds / 30);
@@ -283,29 +217,15 @@ document.addEventListener("DOMContentLoaded", () => {
       clockTextElement.textContent = displayText;
       const fractionalSecond = seconds % 1;
       clockTextElement.style.opacity = 1 - fractionalSecond;
-    }
+  }
 
-    function startClock(initialSeconds) {
-      let lastUpdateTime = -1;
-      function tick(seconds) {
-        try {
-          if (seconds === undefined) seconds = getSecondsFromLocalTime();
-          updateClockWithSeconds(seconds);
-          const currentSecond = Math.floor(seconds);
-          if (
-            (currentSecond === 0 || currentSecond === 30) &&
-            currentSecond !== lastUpdateTime
-          ) {
-            updateTokensAtInterval();
-            lastUpdateTime = currentSecond;
-          }
-          requestAnimationFrame(() => tick(getSecondsFromLocalTime()));
-        } catch (error) {
-          console.log("Error in tick function:", error);
-        }
-      }
-      tick(initialSeconds);
-    }
+  function updateClock() {
+    if (clockCtrl) clockCtrl.stop();
+    clockCtrl = startClock({
+      useOnline: isTimeCheckboxChecked,
+      onSecondsUpdate: updateClockWithSeconds,
+      onBoundary: updateTokensAtInterval,
+    });
   }
 
   function updateTokensAtInterval() {
@@ -1082,10 +1002,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (document.querySelector(".popup-container")) {
         return;
       }
-      let popupContainer = document.createElement("div");
-      popupContainer.className = "popup-container";
-      let popupContent = document.createElement("div");
-      popupContent.className = "popup-content";
+      const { container: popupContainer, content: popupContent, close } = openModal({ contentClass: "popup-content" });
       const h2 = document.createElement("h2");
       h2.className = "centered-headings";
       h2.textContent = chrome.i18n.getMessage("disable_password_protection");
@@ -1130,15 +1047,10 @@ document.addEventListener("DOMContentLoaded", () => {
       buttonContainer.appendChild(removePasswordButton);
       popupContent.appendChild(buttonContainer);
       popupContainer.appendChild(popupContent);
-      document.body.appendChild(popupContainer);
-      document.getElementById("x-icon").addEventListener("click", () => {
-        document.body.removeChild(popupContainer);
-      });
+      document.getElementById("x-icon").addEventListener("click", close);
 
       popupContainer.addEventListener("click", (e) => {
-        if (e.target === popupContainer) {
-          document.body.removeChild(popupContainer);
-        }
+        if (e.target === popupContainer) close();
       });
 
       document
@@ -1148,7 +1060,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let passwordInput = document.getElementById("password").value;
             const isValid = await verifyPassword(passwordInput);
             if (isValid) {
-              document.body.removeChild(popupContainer);
+              close();
               passwordProtectedCheckbox.checked = false;
               isPasswordCheckboxChecked = false;
               chrome.storage.local.set({ passwordCheckbox: false });
@@ -1372,11 +1284,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let saveUrlButton = document.getElementById("add-url-button");
     function saveImageUrl() {
       let addImageUrl = imageUrlInput.value;
-      QrScanner.scanImage(addImageUrl, { returnDetailedScanResult: true })
-        .then((result) => {
-          const decodedData = result.data;
-
-          secretInput.value = decodedData;
+      scanImageUrl(addImageUrl)
+        .then((data) => {
+          if (!data) throw new Error("No QR data");
+          secretInput.value = data;
           qrCodeFound();
           document.body.removeChild(popupContainer);
         })
@@ -1402,7 +1313,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let redXButton = document.getElementById("x-icon");
     redXButton.addEventListener("click", () => {
       stopCameraAndScanner();
-      document.body.removeChild(popupContainer);
+      close();
       isCooldown = true;
       setTimeout(() => {
         isCooldown = false;
@@ -1414,8 +1325,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
           stopCameraAndScanner();
         }, 1000);
-
-        document.body.removeChild(popupContainer);
+        close();
         isCooldown = true;
         setTimeout(() => {
           isCooldown = false;
@@ -1438,9 +1348,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const videoElem = document.getElementById("video");
 
         if (stream) {
-          stream.getTracks().forEach((track) => track.stop());
+          stopWebcam({ scanner: qrScanner, stream, videoEl: videoElem });
+          qrScanner = null;
           stream = null;
-          videoElem.pause();
           document.querySelector(".video-container").style.display = "none";
           webcamButton.textContent = "Webcam";
           webcamButton.appendChild(webcamOnIcon);
@@ -1449,38 +1359,28 @@ document.addEventListener("DOMContentLoaded", () => {
             false
           );
         } else {
-          stream = await navigator.mediaDevices.getUserMedia({
-            video: true,
+          const started = await startWebcam(videoElem, (data) => {
+            if (data) {
+              qrCodeFound();
+              secretInput.value = data;
+              stopWebcam({ scanner: qrScanner, stream, videoEl: videoElem });
+              qrScanner = null;
+              stream = null;
+              document.querySelector(".video-container").style.display = "none";
+              document.body.removeChild(popupContainer);
+              nameInput.focus();
+              setAdvancedAddMessage(
+                chrome.i18n.getMessage("qr_not_found_message"),
+                false
+              );
+            }
           });
-          videoElem.srcObject = stream;
+          qrScanner = started.scanner;
+          stream = started.stream;
           document.querySelector(".video-container").style.display = "block";
           webcamButton.textContent = chrome.i18n.getMessage("webcam");
           webcamButton.appendChild(webcamOffIcon);
           setAdvancedAddMessage(chrome.i18n.getMessage("scanning"), true);
-          qrScanner = new QrScanner(
-            videoElem,
-            (result) => {
-              if (result.data) {
-                qrCodeFound();
-
-                secretInput.value = result.data;
-                stream.getTracks().forEach((track) => track.stop());
-                stream = null;
-                videoElem.pause();
-                document.querySelector(".video-container").style.display =
-                  "none";
-                document.body.removeChild(popupContainer);
-                nameInput.focus();
-                setAdvancedAddMessage(
-                  chrome.i18n.getMessage("qr_not_found_message"),
-                  false
-                );
-              } else {
-              }
-            },
-            { returnDetailedScanResult: true }
-          );
-          qrScanner.start();
         }
       } catch (error) {
         if (
@@ -1523,10 +1423,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (file) {
           try {
-            const result = await QrScanner.scanImage(file, {
-              returnDetailedScanResult: true,
-            });
-            const data = decodeURIComponent(result.data);
+            const raw = await scanImageFile(file);
+            const data = decodeURIComponent(raw);
             const secretMatch = data.match(/secret=([^&]+)/);
             const issuerMatch = data.match(/issuer=([^&]+)/);
             const labelMatch = data.match(/totp\/([^:?]+)/);
@@ -1542,7 +1440,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
               nameInput.value = "";
             }
-            document.body.removeChild(popupContainer);
+            close();
             qrCodeFound();
             isCooldown = true;
             setTimeout(() => {
