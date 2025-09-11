@@ -1,4 +1,3 @@
-import { authenticator } from "otplib";
 import { Buffer } from "buffer";
 import QrScanner from "qr-scanner";
 import QRCode from "qrcode";
@@ -6,14 +5,25 @@ import {
   createSwitchElement,
   setAdvancedAddMessage,
   confirmDelete,
+  createXIcon,
+  createPopup,
 } from "./ui.js";
 import {
   encryptSecret,
   decryptSecret,
   verifyPassword,
   hexToText,
+  hashWithSalt,
+  convertKeyToCryptoKey,
+  decryptTokens,
 } from "./auth.js";
+import { getTimeSyncData, setTimeSyncData } from "./timeSync.js";
+import {
+  requestAutofillPermission,
+  requestClipboardPermission,
+} from "./permissions.js";
 import { deleteToken } from "./storage.js";
+import { createTokenUI, generateToken, isValidBase32 } from "./tokens.js";
 window.Buffer = Buffer;
 
 chrome.storage.local.set({
@@ -143,82 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   
 
-  async function hashWithSalt(password) {
-    const salt = window.crypto.getRandomValues(new Uint8Array(16));
-    const saltString = Array.from(salt)
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-    const encoder = new TextEncoder();
-    const passwordWithSalt = encoder.encode(password + saltString);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", passwordWithSalt);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
-    const keyMaterial = await crypto.subtle.importKey(
-      "raw",
-      encoder.encode(password),
-      "PBKDF2",
-      false,
-      ["deriveKey"]
-    );
-    const derivedEncryptionKey = await crypto.subtle.deriveKey(
-      {
-        name: "PBKDF2",
-        salt: salt,
-        iterations: 100000,
-        hash: "SHA-256",
-      },
-      keyMaterial,
-      { name: "AES-GCM", length: 256 },
-      true,
-      ["encrypt", "decrypt"]
-    );
-    const jwkEncryptionKey = await crypto.subtle.exportKey(
-      "jwk",
-      derivedEncryptionKey
-    );
-    const encryptedHashedPassword = await crypto.subtle.encrypt(
-      {
-        name: "AES-GCM",
-        iv: iv,
-      },
-      derivedEncryptionKey,
-      encoder.encode(hashHex)
-    );
-    const encryptedBase64 = btoa(
-      String.fromCharCode.apply(null, new Uint8Array(encryptedHashedPassword))
-    );
-    const ivBase64 = btoa(String.fromCharCode.apply(null, iv));
-    chrome.storage.local.set({
-      salt: saltString,
-      iv: ivBase64,
-      encryptedHashedPassword: encryptedBase64,
-      encryptionKeyInMemory: jwkEncryptionKey,
-      isPasswordVerified: true,
-    });
-    return {
-      salt: saltString,
-      derivedEncryptionKey: derivedEncryptionKey,
-    };
-  }
-  async function convertKeyToCryptoKey(jwkKey) {
-    try {
-      const importedKey = await crypto.subtle.importKey(
-        "jwk",
-        jwkKey,
-        { name: "AES-GCM", length: 256 },
-        true,
-        ["encrypt", "decrypt"]
-      );
-      return importedKey;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-
   function popupUpdate() {
     try {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -266,27 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Store time sync data in chrome.storage
-  const TIME_SYNC_KEY = 'timeSyncData';
   const SYNC_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
-
-  async function getTimeSyncData() {
-    const data = await new Promise(resolve => {
-      chrome.storage.local.get(TIME_SYNC_KEY, result => resolve(result[TIME_SYNC_KEY] || null));
-    });
-    return data || { lastSync: 0, offset: 0 };
-  }
-
-  async function setTimeSyncData(offset) {
-    const data = {
-      lastSync: Date.now(),
-      offset: offset
-    };
-    await new Promise(resolve => {
-      chrome.storage.local.set({ [TIME_SYNC_KEY]: data }, resolve);
-    });
-    return data;
-  }
 
   async function updateClock() {
     console.log("updating clock")
@@ -592,31 +506,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  async function decryptTokens(encryptionKey) {
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.get(["tokens", "iv"], async (result) => {
-        if (chrome.runtime.lastError) {
-          reject(chrome.runtime.lastError);
-        }
-        let tokens = result.tokens || [];
-        const decryptedTokens = [];
-        for (let token of tokens) {
-          try {
-            const decryptedSecret = await decryptSecret(
-              token.secret,
-              encryptionKey,
-              result.iv
-            );
-            decryptedTokens.push({ ...token, secret: decryptedSecret });
-          } catch (error) {
-            console.log(error);
-            reject(error);
-          }
-        }
-        resolve(decryptedTokens);
-      });
-    });
-  }
+  // decryptTokens moved to auth.js
 
   try {
     chrome.storage.local.get((localResult) => {
@@ -740,18 +630,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  async function requestAutofillPermission() {
-    return new Promise((resolve) => {
-      chrome.permissions.request(
-        {
-          origins: ["http://*/*", "https://*/*"],
-        },
-        (granted) => {
-          resolve(granted);
-        }
-      );
-    });
-  }
+  
 
   const syncCheckbox = document.getElementById("sync-checkbox");
 
@@ -828,18 +707,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  async function requestClipboardPermission() {
-    return new Promise((resolve) => {
-      chrome.permissions.request(
-        {
-          permissions: ["clipboardWrite"],
-        },
-        (granted) => {
-          resolve(granted);
-        }
-      );
-    });
-  }
+
 
   const onlineTimeCheckbox = document.getElementById("online-time-checkbox");
 
@@ -1088,50 +956,7 @@ document.addEventListener("DOMContentLoaded", () => {
       heading.textContent = chrome.i18n.getMessage("password_protection_setup");
       containerDiv.appendChild(heading);
 
-      const svgIcon = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "svg"
-      );
-      svgIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-      svgIcon.setAttribute("width", "24");
-      svgIcon.setAttribute("height", "24");
-      svgIcon.setAttribute("viewBox", "0 0 24 24");
-      svgIcon.setAttribute("fill", "none");
-      svgIcon.setAttribute("stroke", "red");
-      svgIcon.setAttribute("stroke-width", "2");
-      svgIcon.setAttribute("stroke-linecap", "round");
-      svgIcon.setAttribute("stroke-linejoin", "round");
-      svgIcon.classList.add("feather", "x-icon");
-      svgIcon.id = "x-icon";
-
-      const circle = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "circle"
-      );
-      circle.setAttribute("cx", "12");
-      circle.setAttribute("cy", "12");
-      circle.setAttribute("r", "10");
-      svgIcon.appendChild(circle);
-
-      const line1 = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "line"
-      );
-      line1.setAttribute("x1", "15");
-      line1.setAttribute("y1", "9");
-      line1.setAttribute("x2", "9");
-      line1.setAttribute("y2", "15");
-      svgIcon.appendChild(line1);
-
-      const line2 = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "line"
-      );
-      line2.setAttribute("x1", "9");
-      line2.setAttribute("y1", "9");
-      line2.setAttribute("x2", "15");
-      line2.setAttribute("y2", "15");
-      svgIcon.appendChild(line2);
+      const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
       containerDiv.appendChild(svgIcon);
       const passDontMatchMessage = document.createElement("div");
       passDontMatchMessage.className = "wrong-or-nonmatch-passwords";
@@ -1266,49 +1091,7 @@ document.addEventListener("DOMContentLoaded", () => {
       h2.textContent = chrome.i18n.getMessage("disable_password_protection");
 
       popupContent.appendChild(h2);
-      const svgIcon = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "svg"
-      );
-      svgIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-      svgIcon.setAttribute("width", "24");
-      svgIcon.setAttribute("height", "24");
-      svgIcon.setAttribute("viewBox", "0 0 24 24");
-      svgIcon.setAttribute("fill", "none");
-      svgIcon.setAttribute("stroke", "red");
-      svgIcon.setAttribute("stroke-width", "2");
-      svgIcon.setAttribute("stroke-linecap", "round");
-      svgIcon.setAttribute("stroke-linejoin", "round");
-      svgIcon.classList.add("feather", "x-icon");
-      svgIcon.id = "x-icon";
-      const circle = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "circle"
-      );
-      circle.setAttribute("cx", "12");
-      circle.setAttribute("cy", "12");
-      circle.setAttribute("r", "10");
-
-      const line1 = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "line"
-      );
-      line1.setAttribute("x1", "15");
-      line1.setAttribute("y1", "9");
-      line1.setAttribute("x2", "9");
-      line1.setAttribute("y2", "15");
-
-      const line2 = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "line"
-      );
-      line2.setAttribute("x1", "9");
-      line2.setAttribute("y1", "9");
-      line2.setAttribute("x2", "15");
-      line2.setAttribute("y2", "15");
-      svgIcon.appendChild(circle);
-      svgIcon.appendChild(line1);
-      svgIcon.appendChild(line2);
+      const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
       const wrongPasswordMessage = document.createElement("div");
       wrongPasswordMessage.className = "wrong-or-nonmatch-passwords";
       wrongPasswordMessage.id = "wrong-remove-password-message";
@@ -1507,39 +1290,7 @@ document.addEventListener("DOMContentLoaded", () => {
     errorMessage.style.visibility = "hidden";
     errorMessage.textContent = "QR Code not found. Try a different image.";
     headerDiv.appendChild(errorMessage);
-    let svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svgIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    svgIcon.setAttribute("width", "24");
-    svgIcon.setAttribute("height", "24");
-    svgIcon.setAttribute("viewBox", "0 0 24 24");
-    svgIcon.setAttribute("fill", "none");
-    svgIcon.setAttribute("stroke", "red");
-    svgIcon.setAttribute("stroke-width", "2");
-    svgIcon.setAttribute("stroke-linecap", "round");
-    svgIcon.setAttribute("stroke-linejoin", "round");
-    svgIcon.classList.add("feather", "x-icon");
-    svgIcon.id = "x-icon";
-
-    let circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
-    circle.setAttribute("cx", "12");
-    circle.setAttribute("cy", "12");
-    circle.setAttribute("r", "10");
-    svgIcon.appendChild(circle);
-    let line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line1.setAttribute("x1", "15");
-    line1.setAttribute("y1", "9");
-    line1.setAttribute("x2", "9");
-    line1.setAttribute("y2", "15");
-    svgIcon.appendChild(line1);
-    let line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line2.setAttribute("x1", "9");
-    line2.setAttribute("y1", "9");
-    line2.setAttribute("x2", "15");
-    line2.setAttribute("y2", "15");
-    svgIcon.appendChild(line2);
+    let svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
     headerDiv.appendChild(svgIcon);
     popupContent.appendChild(headerDiv);
     let videoContainer = document.createElement("div");
@@ -1821,464 +1572,23 @@ document.addEventListener("DOMContentLoaded", () => {
     webcamButton.dispatchEvent(clickEvent);
   }
 
-  function createPopup(message) {
-    if (document.querySelector(".popup-container")) {
-      return;
-    }
-    const popupContainer = document.createElement("div");
-    popupContainer.className = "popup-container";
-    const popupContent = document.createElement("div");
-    popupContent.className = "popup-message";
-    const svgIcon = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "svg"
-    );
-    svgIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    svgIcon.setAttribute("width", "24");
-    svgIcon.setAttribute("height", "24");
-    svgIcon.setAttribute("viewBox", "0 0 24 24");
-    svgIcon.setAttribute("fill", "none");
-    svgIcon.setAttribute("stroke", "red");
-    svgIcon.setAttribute("stroke-width", "2");
-    svgIcon.setAttribute("stroke-linecap", "round");
-    svgIcon.setAttribute("stroke-linejoin", "round");
-    svgIcon.classList.add("feather", "x-icon");
-    svgIcon.id = "x-icon";
-    const circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
-    circle.setAttribute("cx", "12");
-    circle.setAttribute("cy", "12");
-    circle.setAttribute("r", "10");
-    svgIcon.appendChild(circle);
-    const line1 = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
-    line1.setAttribute("x1", "15");
-    line1.setAttribute("y1", "9");
-    line1.setAttribute("x2", "9");
-    line1.setAttribute("y2", "15");
-    svgIcon.appendChild(line1);
-    const line2 = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
-    line2.setAttribute("x1", "9");
-    line2.setAttribute("y1", "9");
-    line2.setAttribute("x2", "15");
-    line2.setAttribute("y2", "15");
-    svgIcon.appendChild(line2);
-    const headerDiv = document.createElement("div");
-    headerDiv.appendChild(svgIcon);
-    const messageHeading = document.createElement("h3");
-    messageHeading.className = "centered-headings shorter-width-heading";
-    messageHeading.textContent = message;
-    const closeButtonContainer = document.createElement("div");
-    closeButtonContainer.className = "close-popup-container";
-    const closeButton = document.createElement("button");
-    closeButton.className = "close-popup";
-    closeButton.textContent = chrome.i18n.getMessage("close");
-    closeButtonContainer.appendChild(closeButton);
-    popupContent.appendChild(headerDiv);
-    popupContent.appendChild(messageHeading);
-    popupContent.appendChild(closeButtonContainer);
-    popupContainer.appendChild(popupContent);
-    document.body.appendChild(popupContainer);
-    closeButton.addEventListener("click", () => {
-      document.body.removeChild(popupContainer);
-    });
-    svgIcon.addEventListener("click", () => {
-      document.body.removeChild(popupContainer);
-    });
-  }
-  function isValidBase32(secret) {
-    const base32Regex = /^[A-Z2-7]+=*$/;
-    return base32Regex.test(secret);
-  }
-  function generateToken(secret) {
-    if (isValidBase32(secret)) {
-      return authenticator.generate(secret);
-    } else {
-      return false;
-    }
-  }
+  // createPopup moved to ui.js
+  const { addTokenToDOM: addTokenToDOMImpl, updateToken: updateTokenImpl } = createTokenUI({
+    tokensContainer,
+    syncCheckbox,
+    clipboardCopyingCheckbox,
+    autofillCheckbox,
+    confirmDelete,
+    deleteToken,
+    createXIcon,
+    i18nGetMessage: (key) => chrome.i18n.getMessage(key),
+    popupUpdate,
+  });
   function addTokenToDOM(name, secret, url, otp) {
-    const tokenElement = document.createElement("div");
-    tokenElement.id = `token-${name}`;
-    tokenElement.classList.add("token-box");
-    const nameHeader = document.createElement("h2");
-    nameHeader.className = "token-name";
-    nameHeader.textContent = `${name}`;
-    const tokenHeader = document.createElement("h1");
-    tokenHeader.className = "token-value";
-    tokenHeader.textContent = otp;
-    fetch("./icons/gearIcon.svg")
-      .then((response) => response.text())
-      .then((svgText) => {
-        const parser = new DOMParser();
-        const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
-        let tokenSettings = svgDoc.documentElement;
-
-        tokenSettings.setAttribute(
-          "class",
-          "feather feather-settings token-settings"
-        );
-        tokenSettings.setAttribute("id", name + "-token-settings");
-        tokenElement.appendChild(tokenSettings);
-        tokenSettings.addEventListener("click", (e) => {
-          e.stopPropagation();
-          let shortenedUrl = url || "";
-          let urlLength = 50;
-          if (url.length > urlLength) {
-            shortenedUrl = url.substring(0, urlLength) + "...";
-          }
-          let popupContainer = document.createElement("div");
-          popupContainer.className = "popup-container";
-          let popupContent = document.createElement("div");
-          popupContent.className = "popup-content";
-          popupContent.textContent = "";
-          const headerDiv = document.createElement("div");
-          headerDiv.className = "centered-header";
-          const headerText = document.createElement("h2");
-          headerText.className = "centered-headings shorter-width-heading";
-          const tokenSettings = chrome.i18n.getMessage("token_settings");
-          headerText.textContent = `${name} ${tokenSettings}`;
-          headerDiv.appendChild(headerText);
-          const svgIcon = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "svg"
-          );
-          svgIcon.setAttribute("width", "24");
-          svgIcon.setAttribute("height", "24");
-          svgIcon.setAttribute("viewBox", "0 0 24 24");
-          svgIcon.setAttribute("fill", "none");
-          svgIcon.setAttribute("stroke", "red");
-          svgIcon.setAttribute("stroke-width", "2");
-          svgIcon.setAttribute("stroke-linecap", "round");
-          svgIcon.setAttribute("stroke-linejoin", "round");
-          svgIcon.classList.add("feather", "x-icon");
-          svgIcon.id = "x-icon";
-          const circle = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "circle"
-          );
-          circle.setAttribute("cx", "12");
-          circle.setAttribute("cy", "12");
-          circle.setAttribute("r", "10");
-          svgIcon.appendChild(circle);
-
-          const line1 = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "line"
-          );
-          line1.setAttribute("x1", "15");
-          line1.setAttribute("y1", "9");
-          line1.setAttribute("x2", "9");
-          line1.setAttribute("y2", "15");
-          svgIcon.appendChild(line1);
-          const line2 = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "line"
-          );
-          line2.setAttribute("x1", "9");
-          line2.setAttribute("y1", "9");
-          line2.setAttribute("x2", "15");
-          line2.setAttribute("y2", "15");
-          svgIcon.appendChild(line2);
-          headerDiv.appendChild(svgIcon);
-          popupContent.appendChild(headerDiv);
-          const label = document.createElement("label");
-          label.setAttribute("for", "name");
-          label.className = "form-label";
-          label.id = "autofill-url-label";
-          if (autofillCheckbox.checked) {
-            label.textContent = chrome.i18n.getMessage("autofill_url");
-          } else {
-            label.textContent = chrome.i18n.getMessage(
-              "autofill_url_not_enabled"
-            );
-          }
-          popupContent.appendChild(label);
-          const urlInput = document.createElement("input");
-          urlInput.type = "text";
-          urlInput.id = "autofill-url-input";
-          urlInput.className = "form-input enter-url-placeholder";
-          urlInput.disabled = !autofillCheckbox.checked;
-          autofillCheckbox.addEventListener("change", function () {
-            if (autofillCheckbox.checked) {
-              urlInput.disabled = false;
-            } else {
-              urlInput.disabled = true;
-            }
-          });
-          popupContent.appendChild(urlInput);
-          let saveUrlButton = document.createElement("button");
-          saveUrlButton.id = "save-url-button";
-          saveUrlButton.className = "wide-button";
-          saveUrlButton.textContent = chrome.i18n.getMessage("save_url");
-          popupContent.appendChild(saveUrlButton);
-          const inlineUrlDiv = document.createElement("div");
-          inlineUrlDiv.className = "inline-url";
-          const inlineLabel = document.createElement("label");
-          inlineLabel.className = "form-label";
-          inlineLabel.textContent = chrome.i18n.getMessage("currently_saved");
-          inlineUrlDiv.appendChild(inlineLabel);
-          const currentUrlDiv = document.createElement("div");
-          currentUrlDiv.id = "current-url";
-          currentUrlDiv.className = "form-label";
-          if (!autofillCheckbox.checked) {
-            currentUrlDiv.textContent = "";
-          } else {
-            currentUrlDiv.textContent = shortenedUrl;
-          }
-          inlineUrlDiv.appendChild(currentUrlDiv);
-          popupContent.appendChild(inlineUrlDiv);
-          const buttonsContainer = document.createElement("div");
-          buttonsContainer.className = "buttons-container";
-          const deleteButton = document.createElement("button");
-          deleteButton.className = "delete-token";
-          deleteButton.id = "delete-token";
-          deleteButton.textContent = chrome.i18n.getMessage("delete");
-          buttonsContainer.appendChild(deleteButton);
-          const closeButton = document.createElement("button");
-          closeButton.className = "close-popup";
-          closeButton.textContent = chrome.i18n.getMessage("close");
-          buttonsContainer.appendChild(closeButton);
-          popupContent.appendChild(buttonsContainer);
-          popupContainer.appendChild(popupContent);
-          document.body.appendChild(popupContainer);
-          let redXButton = document.getElementById("x-icon");
-          redXButton.addEventListener("click", () => {
-            document.body.removeChild(popupContainer);
-          });
-          let autofillUrlInput = document.getElementById("autofill-url-input");
-          autofillUrlInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              saveUrlButton.click();
-            }
-          });
-          saveUrlButton.addEventListener("click", () => {
-            const newUrl = document.getElementById("autofill-url-input").value;
-            if (!newUrl) {
-              return;
-            }
-            chrome.storage.local.get(["tokens"], (result) => {
-              let tokens = result.tokens || [];
-              const tokenIndex = tokens.findIndex(
-                (tokenObj) => tokenObj.name === name
-              );
-              if (tokenIndex !== -1) {
-                tokens[tokenIndex].url = newUrl;
-                const saveToLocal = () => {
-                  chrome.storage.local.set({ tokens }, () => {});
-                };
-                const saveToSync = () => {
-                  chrome.storage.sync.set({ tokens }, () => {});
-                };
-                saveToLocal();
-                if (syncCheckbox.checked) {
-                  saveToSync();
-                }
-                const displayUrl =
-                  newUrl.length > urlLength
-                    ? newUrl.substring(0, urlLength) + "..."
-                    : newUrl;
-                document.getElementById("current-url").textContent = displayUrl;
-              }
-            });
-          });
-          popupContent
-            .querySelector(".close-popup")
-            .addEventListener("click", () => {
-              document.body.removeChild(popupContainer);
-            });
-          popupContainer.addEventListener("click", (e) => {
-            if (e.target === popupContainer) {
-              document.body.removeChild(popupContainer);
-            }
-          });
-          popupContent
-            .querySelector("#delete-token")
-            .addEventListener("click", () => {
-              confirmDelete(name, secret, () =>
-                deleteToken(
-                  name,
-                  secret,
-                  syncCheckbox.checked,
-                  tokensContainer,
-                  addTokenToDOM
-                )
-              );
-              document.body.removeChild(popupContainer);
-            });
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    fetch("./icons/clipboard.svg")
-      .then((response) => response.text())
-      .then((svgText) => {
-        const parser = new DOMParser();
-        const svgDoc = parser.parseFromString(svgText, "image/svg+xml");
-        let tokenCopy = svgDoc.documentElement;
-        tokenCopy.setAttribute("class", "feather feather-clipboard token-copy");
-        tokenCopy.setAttribute("id", name + "-token-copy");
-        tokenElement.appendChild(tokenCopy);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    const tokenQRButton = document.createElement("img");
-    tokenQRButton.src = "./icons/tiny-qr.svg";
-    tokenQRButton.className = "token-qr-button";
-    tokenQRButton.id = name + "-token-qr-button";
-    tokenElement.appendChild(tokenQRButton);
-    tokenQRButton.addEventListener("click", async (e) => {
-      e.stopPropagation();
-      try {
-        let popupContainer = document.createElement("div");
-        popupContainer.className = "popup-container";
-        let popupContent = document.createElement("div");
-        popupContent.className = "popup-content-qr";
-        let qrDataURL;
-        try {
-          qrDataURL = await QRCode.toDataURL(secret, { width: 140 });
-        } catch (error) {
-          console.log(error);
-          return;
-        }
-        popupContent.textContent = "";
-        const qrContainer = document.createElement("div");
-        const secretHeader = document.createElement("h2");
-        secretHeader.className = "centered-headings shorter-width-heading";
-        const secretText = chrome.i18n.getMessage("secret");
-        secretHeader.textContent = `${name} ${secretText}`;
-        qrContainer.appendChild(secretHeader);
-        const secretValue = document.createElement("h3");
-        secretValue.className = "centered-secret shorter-width-heading";
-        secretValue.textContent = secret;
-        qrContainer.appendChild(secretValue);
-        const qrImage = document.createElement("img");
-        qrImage.src = qrDataURL;
-        qrImage.alt = `${name} QR Code`;
-        qrImage.style.width = "140px";
-        qrContainer.appendChild(qrImage);
-        const svgIcon = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "svg"
-        );
-        svgIcon.setAttribute("width", "24");
-        svgIcon.setAttribute("height", "24");
-        svgIcon.setAttribute("viewBox", "0 0 24 24");
-        svgIcon.setAttribute("fill", "none");
-        svgIcon.setAttribute("stroke", "red");
-        svgIcon.setAttribute("stroke-width", "2");
-        svgIcon.setAttribute("stroke-linecap", "round");
-        svgIcon.setAttribute("stroke-linejoin", "round");
-        svgIcon.classList.add("feather", "x-icon");
-        svgIcon.id = "x-icon";
-        const circle = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "circle"
-        );
-        circle.setAttribute("cx", "12");
-        circle.setAttribute("cy", "12");
-        circle.setAttribute("r", "10");
-        svgIcon.appendChild(circle);
-        const line1 = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "line"
-        );
-        line1.setAttribute("x1", "15");
-        line1.setAttribute("y1", "9");
-        line1.setAttribute("x2", "9");
-        line1.setAttribute("y2", "15");
-        svgIcon.appendChild(line1);
-        const line2 = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "line"
-        );
-        line2.setAttribute("x1", "9");
-        line2.setAttribute("y1", "9");
-        line2.setAttribute("x2", "15");
-        line2.setAttribute("y2", "15");
-        svgIcon.appendChild(line2);
-        qrContainer.appendChild(svgIcon);
-        popupContent.appendChild(qrContainer);
-        popupContainer.appendChild(popupContent);
-        document.body.appendChild(popupContainer);
-        popupContainer.addEventListener("click", (e) => {
-          if (e.target === popupContainer) {
-            document.body.removeChild(popupContainer);
-          }
-        });
-        let redXButton = document.getElementById("x-icon");
-        redXButton.addEventListener("click", () => {
-          document.body.removeChild(popupContainer);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    });
-    tokenElement.appendChild(nameHeader);
-    tokenElement.appendChild(tokenHeader);
-    tokensContainer.appendChild(tokenElement);
-    updateToken(name, secret);
-    let canClick = true;
-    tokenElement.addEventListener("click", async () => {
-      if (!canClick) return;
-      if (!clipboardCopyingCheckbox.checked) {
-        const copiedMessage = document.createElement("div");
-        copiedMessage.className = "not-copied-message";
-        copiedMessage.textContent = chrome.i18n.getMessage(
-          "enable_clipboard_copy_message"
-        );
-        tokenElement.appendChild(copiedMessage);
-        canClick = false;
-        setTimeout(() => {
-          tokenElement.removeChild(copiedMessage);
-          canClick = true;
-        }, 3000);
-      } else if (clipboardCopyingCheckbox.checked) {
-        const tokenValue =
-          tokenElement.closest(".token-box")?.querySelector(".token-value")
-            ?.textContent || "";
-
-        navigator.clipboard.writeText(tokenValue).then(() => {
-          const copiedMessage = document.createElement("div");
-          copiedMessage.className = "copied-message";
-          copiedMessage.textContent = chrome.i18n.getMessage("copied");
-          tokenElement.appendChild(copiedMessage);
-          canClick = false;
-          setTimeout(() => {
-            tokenElement.removeChild(copiedMessage);
-            canClick = true;
-          }, 2000);
-        });
-      }
-    });
+    return addTokenToDOMImpl(name, secret, url, otp);
   }
-
-  
-
-  async function updateToken(name, secret) {
-    popupUpdate();
-    const token = generateToken(secret);
-    const tokenElement = document.getElementById(`token-${name}`);
-    if (tokenElement) {
-      tokenElement.querySelector(".token-value").textContent = `${token}`;
-    }
-    chrome.storage.local.get(["tokens"], (result) => {
-      let tokens = result.tokens || [];
-      const tokenIndex = tokens.findIndex((tokenObj) => tokenObj.name === name);
-      if (tokenIndex !== -1) {
-        tokens[tokenIndex].otp = token;
-        chrome.storage.local.set({ tokens }, () => {});
-      }
-    });
+  function updateToken(name, secret) {
+    return updateTokenImpl(name, secret);
   }
+  // updateToken moved into tokens.js (via createTokenUI)
 });

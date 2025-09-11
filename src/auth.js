@@ -151,3 +151,99 @@ export async function verifyPassword(passInput) {
     );
   });
 }
+
+export async function decryptTokens(encryptionKey) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get(["tokens", "iv"], async (result) => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+        return;
+      }
+      try {
+        const tokens = result.tokens || [];
+        const decryptedTokens = [];
+        for (const token of tokens) {
+          const decryptedSecret = await decryptSecret(
+            token.secret,
+            encryptionKey,
+            result.iv
+          );
+          decryptedTokens.push({ ...token, secret: decryptedSecret });
+        }
+        resolve(decryptedTokens);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  });
+}
+
+export async function hashWithSalt(password) {
+  const salt = window.crypto.getRandomValues(new Uint8Array(16));
+  const saltString = Array.from(salt)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  const encoder = new TextEncoder();
+  const passwordWithSalt = encoder.encode(password + saltString);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", passwordWithSalt);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+
+  const iv = window.crypto.getRandomValues(new Uint8Array(12));
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(password),
+    "PBKDF2",
+    false,
+    ["deriveKey"]
+  );
+  const derivedEncryptionKey = await crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 100000,
+      hash: "SHA-256",
+    },
+    keyMaterial,
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+  const jwkEncryptionKey = await crypto.subtle.exportKey("jwk", derivedEncryptionKey);
+
+  const encryptedHashedPassword = await crypto.subtle.encrypt(
+    {
+      name: "AES-GCM",
+      iv: iv,
+    },
+    derivedEncryptionKey,
+    encoder.encode(hashHex)
+  );
+  const encryptedBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(encryptedHashedPassword)));
+  const ivBase64 = btoa(String.fromCharCode.apply(null, iv));
+
+  chrome.storage.local.set({
+    salt: saltString,
+    iv: ivBase64,
+    encryptedHashedPassword: encryptedBase64,
+    encryptionKeyInMemory: jwkEncryptionKey,
+    isPasswordVerified: true,
+  });
+
+  return {
+    salt: saltString,
+    derivedEncryptionKey: derivedEncryptionKey,
+  };
+}
+
+export async function convertKeyToCryptoKey(jwkKey) {
+  const importedKey = await crypto.subtle.importKey(
+    "jwk",
+    jwkKey,
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+  return importedKey;
+}

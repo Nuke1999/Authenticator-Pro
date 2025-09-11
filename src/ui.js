@@ -1,6 +1,8 @@
 export function setAttributes(element, attributes) {
   Object.entries(attributes).forEach(([key, value]) => {
-    element.setAttribute(key, value);
+    if (value !== undefined && value !== null) {
+      element.setAttribute(key, value);
+    }
   });
 }
 
@@ -149,3 +151,69 @@ export function confirmDelete(name, secret, onDelete) {
   });
 }
 
+export function createXIcon({ stroke = "red", className, id } = {}) {
+  const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  setAttributes(svgIcon, {
+    xmlns: "http://www.w3.org/2000/svg",
+    width: "24",
+    height: "24",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: stroke,
+    "stroke-width": "2",
+    "stroke-linecap": "round",
+    "stroke-linejoin": "round",
+    class: className,
+    id: id,
+  });
+
+  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  setAttributes(circle, { cx: "12", cy: "12", r: "10" });
+
+  const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  setAttributes(line1, { x1: "15", y1: "9", x2: "9", y2: "15" });
+
+  const line2 = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  setAttributes(line2, { x1: "9", y1: "9", x2: "15", y2: "15" });
+
+  svgIcon.append(circle, line1, line2);
+  return svgIcon;
+}
+
+export function createPopup(message) {
+  if (document.querySelector(".popup-container")) {
+    return;
+  }
+  const popupContainer = document.createElement("div");
+  popupContainer.className = "popup-container";
+  const popupContent = document.createElement("div");
+  popupContent.className = "popup-message";
+
+  const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
+  const headerDiv = document.createElement("div");
+  headerDiv.appendChild(svgIcon);
+
+  const messageHeading = document.createElement("h3");
+  messageHeading.className = "centered-headings shorter-width-heading";
+  messageHeading.textContent = message;
+
+  const closeButtonContainer = document.createElement("div");
+  closeButtonContainer.className = "close-popup-container";
+  const closeButton = document.createElement("button");
+  closeButton.className = "close-popup";
+  closeButton.textContent = chrome.i18n.getMessage("close");
+  closeButtonContainer.appendChild(closeButton);
+
+  popupContent.appendChild(headerDiv);
+  popupContent.appendChild(messageHeading);
+  popupContent.appendChild(closeButtonContainer);
+  popupContainer.appendChild(popupContent);
+  document.body.appendChild(popupContainer);
+
+  closeButton.addEventListener("click", () => {
+    document.body.removeChild(popupContainer);
+  });
+  svgIcon.addEventListener("click", () => {
+    document.body.removeChild(popupContainer);
+  });
+}
