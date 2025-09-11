@@ -2,6 +2,18 @@ import { authenticator } from "otplib";
 import { Buffer } from "buffer";
 import QrScanner from "qr-scanner";
 import QRCode from "qrcode";
+import {
+  createSwitchElement,
+  setAdvancedAddMessage,
+  confirmDelete,
+} from "./ui.js";
+import {
+  encryptSecret,
+  decryptSecret,
+  verifyPassword,
+  hexToText,
+} from "./auth.js";
+import { deleteToken } from "./storage.js";
 window.Buffer = Buffer;
 
 chrome.storage.local.set({
@@ -105,93 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
   settingsContent.style.display = "none";
   mainContent.insertAdjacentElement("afterend", settingsContent);
 
-  function createSwitchElement({
-    id,
-    label,
-    tooltip,
-    extraMessage,
-    extraMessageId,
-    isLast,
-  }) {
-    const switchBox = document.createElement("div");
-    switchBox.className = isLast ? "switch-box-last" : "switch-box";
-    const switchLabel = document.createElement("label");
-    switchLabel.className = "switch";
-    if (id === "password-protected-checkbox" || id === "sync-checkbox") {
-      switchLabel.id =
-        id === "password-protected-checkbox"
-          ? "password-protected-label"
-          : "sync-check-label";
-    }
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.id = id;
-    const slider = document.createElement("span");
-    slider.className = "slider round";
-    switchLabel.appendChild(checkbox);
-    switchLabel.appendChild(slider);
-    const switchText = document.createElement("div");
-    switchText.className = "switch-text";
-    switchText.textContent = chrome.i18n.getMessage(label);
-    const tooltipContainer = document.createElement("div");
-    tooltipContainer.className = "tooltip";
-    const tooltipIcon = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "svg"
-    );
-    tooltipIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    tooltipIcon.setAttribute("width", "24");
-    tooltipIcon.setAttribute("height", "24");
-    tooltipIcon.setAttribute("viewBox", "0 0 24 24");
-    tooltipIcon.setAttribute("fill", "none");
-    tooltipIcon.setAttribute("stroke", "currentColor");
-    tooltipIcon.setAttribute("stroke-width", "2");
-    tooltipIcon.setAttribute("stroke-linecap", "round");
-    tooltipIcon.setAttribute("stroke-linejoin", "round");
-    tooltipIcon.classList.add("feather", "feather-info");
-    const circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
-    circle.setAttribute("cx", "12");
-    circle.setAttribute("cy", "12");
-    circle.setAttribute("r", "10");
-    const line1 = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
-    line1.setAttribute("x1", "12");
-    line1.setAttribute("y1", "16");
-    line1.setAttribute("x2", "12");
-    line1.setAttribute("y2", "12");
-    const line2 = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
-    line2.setAttribute("x1", "12");
-    line2.setAttribute("y1", "8");
-    line2.setAttribute("x2", "12.01");
-    line2.setAttribute("y2", "8");
-    tooltipIcon.appendChild(circle);
-    tooltipIcon.appendChild(line1);
-    tooltipIcon.appendChild(line2);
-    const tooltipText = document.createElement("span");
-    tooltipText.className = "tooltiptext";
-    tooltipText.textContent = chrome.i18n.getMessage(tooltip);
-    tooltipContainer.appendChild(tooltipIcon);
-    tooltipContainer.appendChild(tooltipText);
-    if (extraMessage) {
-      const extraMessageDiv = document.createElement("span");
-      extraMessageDiv.className = extraMessageId;
-      extraMessageDiv.id = extraMessageId;
-      extraMessageDiv.textContent = chrome.i18n.getMessage(extraMessage);
-      tooltipContainer.appendChild(extraMessageDiv);
-    }
-    switchBox.appendChild(switchLabel);
-    switchBox.appendChild(switchText);
-    switchBox.appendChild(tooltipContainer);
-    return switchBox;
-  }
+
 
   function localizePopup() {
     document.querySelectorAll("*:not(script):not(style)").forEach((element) => {
@@ -215,73 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   localizePopup();
 
-  async function encryptSecret(secret, encryptionKey) {
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.get(["salt", "iv"], async (result) => {
-        if (chrome.runtime.lastError) {
-          reject(chrome.runtime.lastError);
-          return;
-        }
-        let salt = result.salt;
-        let iv = result.iv;
-        if (!salt || !iv) {
-          reject("Missing necessary values from storage.");
-          return;
-        }
-        salt = new Uint8Array(
-          salt.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
-        );
-        iv = Uint8Array.from(atob(iv), (c) => c.charCodeAt(0));
-        try {
-          const encoder = new TextEncoder();
-          const encodedSecret = encoder.encode(secret);
-          const encryptedSecret = await crypto.subtle.encrypt(
-            {
-              name: "AES-GCM",
-              iv: iv,
-            },
-            encryptionKey,
-            encodedSecret
-          );
-          const encryptedBase64 = btoa(
-            String.fromCharCode.apply(null, new Uint8Array(encryptedSecret))
-          );
-          resolve({
-            encryptedData: encryptedBase64,
-          });
-        } catch (error) {
-          console.log(error);
-          reject(error);
-        }
-      });
-    });
-  }
-
-  async function decryptSecret(encryptedData, encryptionKey, iv) {
-    try {
-      if (typeof iv === "string") {
-        iv = Uint8Array.from(atob(iv), (c) => c.charCodeAt(0));
-      }
-      if (typeof encryptedData === "string") {
-        encryptedData = Uint8Array.from(atob(encryptedData), (c) =>
-          c.charCodeAt(0)
-        );
-      }
-      const decryptedSecretBuffer = await crypto.subtle.decrypt(
-        {
-          name: "AES-GCM",
-          iv: iv,
-        },
-        encryptionKey,
-        encryptedData
-      );
-      const decryptedSecret = new TextDecoder().decode(decryptedSecretBuffer);
-      return decryptedSecret;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
+  
 
   async function hashWithSalt(password) {
     const salt = window.crypto.getRandomValues(new Uint8Array(16));
@@ -608,14 +468,6 @@ document.addEventListener("DOMContentLoaded", () => {
   minimizeButton.addEventListener("click", () => {
     window.close();
   });
-
-  function hexToText(hexString) {
-    let result = "";
-    for (let i = 0; i < hexString.length; i += 2) {
-      result += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
-    }
-    return result;
-  }
 
   passwordInputField.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -1623,97 +1475,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  async function verifyPassword(passInput) {
-    return new Promise((resolve, reject) => {
-      chrome.storage.local.get(
-        ["salt", "iv", "encryptedHashedPassword"],
-        async (result) => {
-          if (chrome.runtime.lastError) {
-            reject(chrome.runtime.lastError);
-            return;
-          }
-          const storedSalt = result.salt;
-          const storedIV = result.iv;
-          const storedEncryptedHash = result.encryptedHashedPassword;
-          if (!storedSalt || !storedIV || !storedEncryptedHash) {
-            reject("Salt, IV, or encrypted hashed password not found.");
-            return;
-          }
-          try {
-            const ivArray = Uint8Array.from(atob(storedIV), (c) =>
-              c.charCodeAt(0)
-            );
-            const encryptedHashArray = Uint8Array.from(
-              atob(storedEncryptedHash),
-              (c) => c.charCodeAt(0)
-            );
-            const encoder = new TextEncoder();
-            const saltedPassword = encoder.encode(passInput + storedSalt);
-            const hashedInputBuffer = await crypto.subtle.digest(
-              "SHA-256",
-              saltedPassword
-            );
-            const hashedInputHex = Array.from(new Uint8Array(hashedInputBuffer))
-              .map((b) => b.toString(16).padStart(2, "0"))
-              .join("");
-
-            const keyMaterial = await crypto.subtle.importKey(
-              "raw",
-              encoder.encode(passInput),
-              "PBKDF2",
-              false,
-              ["deriveKey"]
-            );
-            const derivedKey = await crypto.subtle.deriveKey(
-              {
-                name: "PBKDF2",
-                salt: new Uint8Array(
-                  storedSalt.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
-                ),
-                iterations: 100000,
-                hash: "SHA-256",
-              },
-              keyMaterial,
-              { name: "AES-GCM", length: 256 },
-              false,
-              ["decrypt"]
-            );
-            const decryptedHashedPasswordBuffer = await crypto.subtle.decrypt(
-              {
-                name: "AES-GCM",
-                iv: ivArray,
-              },
-              derivedKey,
-              encryptedHashArray
-            );
-            const decryptedHashedPasswordHex = Array.from(
-              new Uint8Array(decryptedHashedPasswordBuffer)
-            )
-              .map((b) => b.toString(16).padStart(2, "0"))
-              .join("");
-            let hexToTextVal = hexToText(decryptedHashedPasswordHex);
-            if (hashedInputHex === hexToTextVal) {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
-          } catch (error) {
-            console.log(error);
-            reject(error);
-          }
-        }
-      );
-    });
-  }
-
-  function setAdvancedAddMessage(text, visible) {
-    const videoMessages = document.getElementById("advanced-add-messages");
-    if (videoMessages) {
-      videoMessages.textContent = text;
-      videoMessages.style.visibility = visible ? "visible" : "hidden";
-    }
-  }
-
   const webcamButton = document.createElement("button");
   advancedAddButton.addEventListener("click", async () => {
     if (document.querySelector(".popup-container") || isCooldown) {
@@ -2341,7 +2102,15 @@ document.addEventListener("DOMContentLoaded", () => {
           popupContent
             .querySelector("#delete-token")
             .addEventListener("click", () => {
-              confirmDelete(name, secret);
+              confirmDelete(name, secret, () =>
+                deleteToken(
+                  name,
+                  secret,
+                  syncCheckbox.checked,
+                  tokensContainer,
+                  addTokenToDOM
+                )
+              );
               document.body.removeChild(popupContainer);
             });
         });
@@ -2494,107 +2263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function confirmDelete(name, secret) {
-    const popupContainer = document.createElement("div");
-    popupContainer.className = "popup-container";
-    const popupContent = document.createElement("div");
-    popupContent.className = "popup-message";
-    const svgIcon = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "svg"
-    );
-    svgIcon.setAttribute("width", "24");
-    svgIcon.setAttribute("height", "24");
-    svgIcon.setAttribute("viewBox", "0 0 24 24");
-    svgIcon.setAttribute("fill", "none");
-    svgIcon.setAttribute("stroke", "red");
-    svgIcon.setAttribute("stroke-width", "2");
-    svgIcon.setAttribute("stroke-linecap", "round");
-    svgIcon.setAttribute("stroke-linejoin", "round");
-    svgIcon.classList.add("feather", "x-icon");
-    svgIcon.id = "x-icon";
-    const circle = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
-    circle.setAttribute("cx", "12");
-    circle.setAttribute("cy", "12");
-    circle.setAttribute("r", "10");
-    svgIcon.appendChild(circle);
-    const line1 = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
-    line1.setAttribute("x1", "15");
-    line1.setAttribute("y1", "9");
-    line1.setAttribute("x2", "9");
-    line1.setAttribute("y2", "15");
-    svgIcon.appendChild(line1);
-    const line2 = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
-    line2.setAttribute("x1", "9");
-    line2.setAttribute("y1", "9");
-    line2.setAttribute("x2", "15");
-    line2.setAttribute("y2", "15");
-    svgIcon.appendChild(line2);
-    popupContent.appendChild(svgIcon);
-    const messageHeader = document.createElement("h3");
-    messageHeader.className = "centered-headings";
-    messageHeader.textContent = chrome.i18n.getMessage("are_you_sure_message");
-    popupContent.appendChild(messageHeader);
-    const buttonsContainer = document.createElement("div");
-    buttonsContainer.className = "buttons-container";
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "delete-token-confirmation";
-    deleteButton.id = "delete-token";
-    deleteButton.textContent = chrome.i18n.getMessage("delete");
-    buttonsContainer.appendChild(deleteButton);
-    const closeButton = document.createElement("button");
-    closeButton.className = "close-popup";
-    closeButton.textContent = chrome.i18n.getMessage("close");
-    buttonsContainer.appendChild(closeButton);
-    popupContent.appendChild(buttonsContainer);
-    popupContainer.appendChild(popupContent);
-    document.body.appendChild(popupContainer);
-    closeButton.addEventListener("click", () => {
-      document.body.removeChild(popupContainer);
-    });
-    deleteButton.addEventListener("click", () => {
-      deleteToken(name, secret);
-      document.body.removeChild(popupContainer);
-    });
-    svgIcon.addEventListener("click", () => {
-      document.body.removeChild(popupContainer);
-    });
-  }
-
-  function deleteToken(name, secret) {
-    chrome.storage.local.get(["tokens"], (result) => {
-      let tokens = result.tokens || [];
-      tokens = tokens.filter(
-        (tokenObj) => tokenObj.name !== name && tokenObj.secret !== secret
-      );
-      tokens.sort((a, b) => a.name.localeCompare(b.name));
-      if (syncCheckbox.checked == true) {
-        chrome.storage.sync.set({ tokens }, (result) => {});
-      }
-      chrome.storage.local.set({ tokens }, () => {
-        while (tokensContainer.firstChild) {
-          tokensContainer.removeChild(tokensContainer.firstChild);
-        }
-        tokens.forEach((tokenObj) => {
-          addTokenToDOM(
-            tokenObj.name,
-            tokenObj.secret,
-            tokenObj.url,
-            tokenObj.otp
-          );
-        });
-      });
-    });
-  }
+  
 
   async function updateToken(name, secret) {
     popupUpdate();
