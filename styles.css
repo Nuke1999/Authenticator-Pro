@@ -10,11 +10,10 @@ body {
   height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 450px;
 }
 
 body::-webkit-scrollbar {
-  width: 8px;
+  width: var(--scrollbar-width);
 }
 
 body::-webkit-scrollbar-track {
@@ -50,6 +49,12 @@ body.theme-dark {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   transition: background-color 0.3s, box-shadow 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.token-box.dragging {
+  opacity: 0.6;
 }
 
 .theme-dark .token-box:hover {
@@ -247,6 +252,21 @@ body.theme-dark {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content,
+.popup-content-qr,
+.popup-message,
+.popup-video-content {
+  margin-right: var(--scrollbar-width);
+}
+
+#qr-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 8px;
+  border-radius: 4px;
 }
 
 .theme-dark .popup-message {
@@ -1221,4 +1241,9 @@ input:checked + .slider:before {
   color: red;
   margin-left: 12px;
   visibility: hidden;
+}
+:root {
+  --ui-scale: 1;
+  --scrollbar-base: 8px;
+  --scrollbar-width: calc(var(--scrollbar-base) * var(--ui-scale));
 }

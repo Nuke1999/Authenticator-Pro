@@ -1,6 +1,5 @@
 import { Buffer } from "buffer";
-import QrScanner from "qr-scanner";
-import QRCode from "qrcode";
+// QrScanner moved to scanner.js
 import {
   createSwitchElement,
   setAdvancedAddMessage,
@@ -8,6 +7,7 @@ import {
   createXIcon,
   createPopup,
 } from "./ui.js";
+import { initScaleControl, applyStoredScale } from "./settings.js";
 import {
   encryptSecret,
   decryptSecret,
@@ -17,13 +17,20 @@ import {
   convertKeyToCryptoKey,
   decryptTokens,
 } from "./auth.js";
-import { getTimeSyncData, setTimeSyncData } from "./timeSync.js";
+import { getTimeSyncData, setTimeSyncData, initTimeSync } from "./timeSync.js";
 import {
   requestAutofillPermission,
   requestClipboardPermission,
 } from "./permissions.js";
 import { deleteToken } from "./storage.js";
 import { createTokenUI, generateToken, isValidBase32 } from "./tokens.js";
+import {
+  initThemeControls,
+  initPopupModeResizer,
+  initBasicToggles,
+} from "./settings.js";
+import { initAdvancedAdd } from "./scanner.js";
+
 window.Buffer = Buffer;
 
 chrome.storage.local.set({
@@ -121,14 +128,36 @@ document.addEventListener("DOMContentLoaded", () => {
       permissionsHeader.insertAdjacentElement("afterend", switchElement);
     });
 
-  const settingsContent = document.createElement("div");
-  settingsContent.id = "settings-content";
-  settingsContent.className = "settings-content";
-  settingsContent.style.display = "none";
-  mainContent.insertAdjacentElement("afterend", settingsContent);
+  // Grab toggle elements after they are inserted above
+  const autofillCheckbox = document.getElementById("autofill-checkbox");
+  const syncCheckbox = document.getElementById("sync-checkbox");
+  const clipboardCopyingCheckbox = document.getElementById(
+    "clipboard-copying-checkbox"
+  );
+  const onlineTimeCheckbox = document.getElementById("online-time-checkbox");
+  const advancedAddCheckbox = document.getElementById("advanced-add-checkbox");
+  const popupModeCheckbox = document.getElementById("popup-mode-checkbox");
+  const hideTokenAdderCheckbox = document.getElementById(
+    "hide-token-adder-checkbox"
+  );
+  const passwordProtectedCheckbox = document.getElementById(
+    "password-protected-checkbox"
+  );
 
-
-
+  // Apply stored UI scale early and ensure settings UI uses the existing settings-content container
+  try {
+    applyStoredScale();
+  } catch (e) {
+    console.log(e);
+  }
+  if (settingsPage) {
+    try {
+      initScaleControl(settingsPage);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  // Advanced add / QR scanner will be initialized below (after theme controls)
   function localizePopup() {
     document.querySelectorAll("*:not(script):not(style)").forEach((element) => {
       if (
@@ -151,8 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   localizePopup();
 
-  
-
   function popupUpdate() {
     try {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -165,21 +192,67 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  lightThemeButton.addEventListener("click", () => {
-    document.body.classList.remove("theme-dark");
-    document.body.classList.add("theme-light");
-    chrome.storage.local.set({ theme: "theme-light" });
-    if (syncCheckbox.checked) {
-      chrome.storage.sync.set({ theme: "theme-light" });
-    }
+  // Theme and popup mode moved into settings module
+  initThemeControls({ lightThemeButton, darkThemeButton, syncCheckbox });
+  initPopupModeResizer({ popupModeCheckbox, syncCheckbox });
+
+  // Initialize advanced add / QR scanner
+  const scanner = initAdvancedAdd({
+    advancedAddButton,
+    secretFormLabel,
+    nameInput,
+    secretInput,
+    setAdvancedAddMessage,
+    i18nGetMessage: (key) => chrome.i18n.getMessage(key),
   });
-  darkThemeButton.addEventListener("click", () => {
-    document.body.classList.remove("theme-light");
-    document.body.classList.add("theme-dark");
-    chrome.storage.local.set({ theme: "theme-dark" });
-    if (syncCheckbox.checked) {
-      chrome.storage.sync.set({ theme: "theme-dark" });
+
+  // Create token UI early so addTokenToDOM is available for initial rendering
+  const { addTokenToDOM: addTokenToDOMImpl, updateToken: updateTokenImpl } =
+    createTokenUI({
+      tokensContainer,
+      syncCheckbox,
+      clipboardCopyingCheckbox,
+      autofillCheckbox,
+      confirmDelete,
+      deleteToken,
+      createXIcon,
+      i18nGetMessage: (key) => chrome.i18n.getMessage(key),
+      popupUpdate,
+    });
+  function reorderTokensByOrderArray(tokens, order) {
+    if (!Array.isArray(tokens)) return [];
+    if (!Array.isArray(order) || order.length === 0) return tokens.slice();
+    const indexMap = new Map(order.map((n, i) => [n, i]));
+    const inOrder = [];
+    const rest = [];
+    for (const t of tokens) {
+      if (indexMap.has(t.name)) inOrder.push(t);
+      else rest.push(t);
     }
+    inOrder.sort((a, b) => indexMap.get(a.name) - indexMap.get(b.name));
+    rest.sort((a, b) => a.name.localeCompare(b.name));
+    return inOrder.concat(rest);
+  }
+  function addTokenToDOM(name, secret, url, otp) {
+    return addTokenToDOMImpl(name, secret, url, otp);
+  }
+  function updateToken(name, secret) {
+    return updateTokenImpl(name, secret);
+  }
+  // Initialize core toggle behaviors
+  initBasicToggles({
+    autofillCheckbox,
+    syncCheckbox,
+    clipboardCopyingCheckbox,
+    onlineTimeCheckbox,
+    advancedAddCheckbox,
+    hideTokenAdderCheckbox,
+    formContainer,
+    advancedAddButton,
+    popupUpdate,
+    addTokenToDOM,
+    tokensContainer,
+    passwordProtectedCheckbox,
   });
 
   function lastSeconds(seconds) {
@@ -203,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const SYNC_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
 
   async function updateClock() {
-    console.log("updating clock")
+    console.log("updating clock");
     const timeApiUrl = "https://worldtimeapi.org/api/timezone/Etc/UTC";
     let initialTime;
     let offset = 0;
@@ -212,26 +285,26 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const syncData = await getTimeSyncData();
         const timeSinceLastSync = Date.now() - syncData.lastSync;
-        
+
         // If we have a recent sync, use the stored offset
         if (timeSinceLastSync < SYNC_INTERVAL_MS) {
-          console.log("less than 1 hour, not calling api")
+          console.log("less than 1 hour, not calling api");
           offset = syncData.offset;
           startClock(getSecondsFromLocalTime(offset));
           // Schedule the next sync
           setTimeout(updateClock, SYNC_INTERVAL_MS - timeSinceLastSync);
           return;
         }
-        
+
         // Otherwise, try to sync with the time API
-        console.log("calling api")
+        console.log("calling api");
         const seconds = await getSecondsFromTimeApi();
         await setTimeSyncData(offset);
         startClock(seconds);
         // Schedule the next sync
         setTimeout(updateClock, SYNC_INTERVAL_MS);
       } catch (error) {
-        console.log('Time sync error, using local time:', error);
+        console.log("Time sync error, using local time:", error);
         const syncData = await getTimeSyncData();
         startClock(getSecondsFromLocalTime(syncData.offset));
         // Retry sooner on error (after 5 minutes)
@@ -517,14 +590,17 @@ document.addEventListener("DOMContentLoaded", () => {
         authenticatorMainContent.style.display = "block";
         passwordPromptContainer.style.display = "none";
         let tokens = localResult.tokens || [];
-        tokens.sort((a, b) => a.name.localeCompare(b.name));
-        tokens.forEach((tokenObj) => {
-          addTokenToDOM(
-            tokenObj.name,
-            tokenObj.secret,
-            tokenObj.url,
-            tokenObj.otp
-          );
+        chrome.storage.local.get(["tokenOrder"], (orderRes) => {
+          const order = orderRes.tokenOrder || [];
+          const ordered = reorderTokensByOrderArray(tokens, order);
+          ordered.forEach((tokenObj) => {
+            addTokenToDOM(
+              tokenObj.name,
+              tokenObj.secret,
+              tokenObj.url,
+              tokenObj.otp
+            );
+          });
         });
       } else {
         authenticatorMainContent.style.display = "none";
@@ -540,8 +616,7 @@ document.addEventListener("DOMContentLoaded", () => {
         passwordProtectedCheckbox.checked = false;
         popupModeCheckbox.checked = false;
         isTimeCheckboxChecked = false;
-        hideTokenAdder.checked = false;
-        updateClock();
+        hideTokenAdderCheckbox.checked = false;
         chrome.storage.local.set({
           tokens: [],
           autofillEnabled: false,
@@ -553,6 +628,7 @@ document.addEventListener("DOMContentLoaded", () => {
           popupModeCheckbox: false,
           firstTime: false,
           theme: "theme-light",
+          uiScale: 1,
           hideTokenAdder: false,
         });
       } else {
@@ -568,10 +644,9 @@ document.addEventListener("DOMContentLoaded", () => {
         popupModeCheckbox.checked = localResult.popupModeCheckbox;
         isTimeCheckboxChecked = localResult.onlineTimeEnabled;
         isPasswordCheckboxChecked = localResult.passwordCheckbox;
-        hideTokenAdder.checked = localResult.hideTokenAdder;
-        updateClock();
+        hideTokenAdderCheckbox.checked = localResult.hideTokenAdder;
 
-        if (hideTokenAdder.checked) {
+        if (hideTokenAdderCheckbox.checked) {
           formContainer.style.display = "none";
         }
 
@@ -584,13 +659,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (popupModeCheckbox.checked && !isPopup) {
-          chrome.windows.create({
-            url: chrome.runtime.getURL("authenticator.html") + "?isPopup=true",
-            type: "popup",
-            width: 314,
-            height: 480,
+          chrome.storage.local.get(["uiScale"], (res) => {
+            const scale =
+              typeof res.uiScale === "number" && res.uiScale > 0
+                ? res.uiScale
+                : 1;
+            const BASE_W = 300,
+              BASE_H = 450,
+              CHROME_W = 14,
+              CHROME_H = 30;
+            chrome.windows.create(
+              {
+                url:
+                  chrome.runtime.getURL("authenticator.html") +
+                  "?isPopup=true",
+                type: "popup",
+                focused: true,
+                width: Math.round(BASE_W * scale + CHROME_W),
+                height: Math.round(BASE_H * scale + CHROME_H),
+              },
+              () => {
+                // Close original action popup after new window is created
+                try {
+                  window.close();
+                } catch (_) {}
+              }
+            );
           });
-          window.close();
         }
 
         if (localResult.theme == "theme-light") {
@@ -608,151 +703,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(error);
   }
 
-  const autofillCheckbox = document.getElementById("autofill-checkbox");
-
-  autofillCheckbox.addEventListener("change", async () => {
-    if (autofillCheckbox.checked) {
-      document.getElementById("autofill-url-label");
-      try {
-        const granted = await requestAutofillPermission();
-        if (granted) {
-          chrome.storage.local.set({ autofillEnabled: true });
-          popupUpdate();
-        } else {
-          autofillCheckbox.checked = false;
-        }
-      } catch (error) {
-        console.log(error);
-        autofillCheckbox.checked = false;
-      }
-    } else {
-      chrome.storage.local.set({ autofillEnabled: false });
-    }
-  });
-
-  
-
-  const syncCheckbox = document.getElementById("sync-checkbox");
-
-  syncCheckbox.addEventListener("change", (e) => {
-    if (passwordProtectedCheckbox.checked) {
-      e.preventDefault();
-      syncCheckbox.checked = false;
-      return;
-    }
-    try {
-      if (syncCheckbox.checked) {
-        chrome.storage.local.get(["tokens"], (localResult) => {
-          chrome.storage.sync.get(["tokens"], (syncResult) => {
-            let localTokens = Array.isArray(localResult.tokens)
-              ? localResult.tokens
-              : [];
-            let syncTokens = Array.isArray(syncResult.tokens)
-              ? syncResult.tokens
-              : [];
-            localTokens.forEach((localToken) => {
-              const match = syncTokens.find(
-                (syncToken) => syncToken.name === localToken.name
-              );
-              if (!match) {
-                syncTokens.push(localToken);
-              }
-            });
-            chrome.storage.sync.set({ tokens: syncTokens }, () => {
-              chrome.storage.local.set({ tokens: syncTokens }, () => {
-                syncTokens.forEach((tokenObj) => {
-                  if (!document.getElementById(`token-${tokenObj.name}`)) {
-                    addTokenToDOM(
-                      tokenObj.name,
-                      tokenObj.secret,
-                      tokenObj.url,
-                      tokenObj.otp
-                    );
-                  }
-                });
-              });
-            });
-          });
-        });
-      } else {
-      }
-      chrome.storage.local.set({ syncEnabled: syncCheckbox.checked });
-      chrome.storage.sync.set({ syncEnabled: syncCheckbox.checked });
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
-  const clipboardCopyingCheckbox = document.getElementById(
-    "clipboard-copying-checkbox"
-  );
-
-  clipboardCopyingCheckbox.addEventListener("change", async () => {
-    if (clipboardCopyingCheckbox.checked) {
-      try {
-        const granted = await requestClipboardPermission();
-        if (granted) {
-          chrome.storage.local.set({ clipboardCopyingEnabled: true });
-          chrome.storage.sync.set({ clipboardCopyingEnabled: true });
-        } else {
-          clipboardCopyingCheckbox.checked = false;
-        }
-      } catch (error) {
-        console.log(error);
-        clipboardCopyingCheckbox.checked = false;
-      }
-    } else {
-      chrome.storage.local.set({ clipboardCopyingEnabled: false });
-      chrome.storage.sync.set({ clipboardCopyingEnabled: false });
-    }
-  });
-
-
-
-  const onlineTimeCheckbox = document.getElementById("online-time-checkbox");
-
-  onlineTimeCheckbox.addEventListener("change", () => {
-    try {
-      chrome.storage.local.set({
-        onlineTimeEnabled: onlineTimeCheckbox.checked,
-      });
-      chrome.storage.sync.set({
-        onlineTimeEnabled: onlineTimeCheckbox.checked,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
-    if (onlineTimeCheckbox.checked) {
-      console.log("online time enabled");
-      updateClock();
-    } else {
-      console.log("online time disabled");
-    }
-  });
-
-  const advancedAddCheckbox = document.getElementById("advanced-add-checkbox");
-
-  advancedAddCheckbox.addEventListener("change", () => {
-    if (advancedAddCheckbox.checked) {
-      advancedAddButton.className = "advanced-add-button";
-      formContainer.appendChild(advancedAddButton);
-      advancedAddButton.style.display = "block";
-    } else {
-      advancedAddButton.style.display = "none";
-    }
-    try {
-      chrome.storage.local.set({
-        advancedAddEnabled: advancedAddCheckbox.checked,
-      });
-      chrome.storage.sync.set({
-        advancedAddEnabled: advancedAddCheckbox.checked,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
+  // (moved) â€” toggles initialized below after token UI is created
   addTokenButton.addEventListener("click", () => {
     const name = nameInput.value.trim();
     let nameLength = false;
@@ -798,22 +749,33 @@ document.addEventListener("DOMContentLoaded", () => {
                     otp,
                   };
                   tokens.push(newTokenObj);
-                  tokens.sort((a, b) => a.name.localeCompare(b.name));
-                  if (syncCheckbox.checked === true) {
-                    chrome.storage.sync.set({ tokens }, () => {
-                      while (tokensContainer.firstChild) {
-                        tokensContainer.removeChild(tokensContainer.firstChild);
-                      }
-                      tokens.forEach((tokenObj) => {
-                        addTokenToDOM(
-                          tokenObj.name,
-                          tokenObj.secret,
-                          tokenObj.url,
-                          tokenObj.otp
-                        );
-                      });
-                    });
-                  }
+                   // update order to append new token if not present
+                   chrome.storage.local.get(["tokenOrder"], (o) => {
+                     const order = Array.isArray(o.tokenOrder) ? o.tokenOrder.slice() : [];
+                     if (!order.includes(name)) order.push(name);
+                     chrome.storage.local.set({ tokenOrder: order });
+                     if (syncCheckbox.checked === true) {
+                       chrome.storage.sync.set({ tokenOrder: order });
+                     }
+                   });
+                   if (syncCheckbox.checked === true) {
+                     chrome.storage.sync.set({ tokens }, () => {
+                       while (tokensContainer.firstChild) {
+                         tokensContainer.removeChild(tokensContainer.firstChild);
+                       }
+                       chrome.storage.local.get(["tokenOrder"], (orderRes) => {
+                         const ordered = reorderTokensByOrderArray(tokens, orderRes.tokenOrder || []);
+                         ordered.forEach((tokenObj) => {
+                           addTokenToDOM(
+                             tokenObj.name,
+                             tokenObj.secret,
+                             tokenObj.url,
+                             tokenObj.otp
+                           );
+                         });
+                       });
+                     });
+                   }
                   if (isPasswordCheckboxChecked === true) {
                     let cryptoKey = await convertKeyToCryptoKey(
                       result.encryptionKeyInMemory
@@ -831,34 +793,40 @@ document.addEventListener("DOMContentLoaded", () => {
                       }
                       return tokenObj;
                     });
-                    chrome.storage.local.set({ tokens }, () => {
-                      while (tokensContainer.firstChild) {
-                        tokensContainer.removeChild(tokensContainer.firstChild);
-                      }
-                      tokens.forEach((tokenObj) => {
-                        addTokenToDOM(
-                          tokenObj.name,
-                          secret,
-                          tokenObj.url,
-                          tokenObj.otp
-                        );
-                      });
-                    });
-                  } else {
-                    chrome.storage.local.set({ tokens }, () => {
-                      while (tokensContainer.firstChild) {
-                        tokensContainer.removeChild(tokensContainer.firstChild);
-                      }
-                      tokens.forEach((tokenObj) => {
-                        addTokenToDOM(
-                          tokenObj.name,
-                          tokenObj.secret,
-                          tokenObj.url,
-                          tokenObj.otp
-                        );
-                      });
-                    });
-                  }
+                     chrome.storage.local.set({ tokens }, () => {
+                       while (tokensContainer.firstChild) {
+                         tokensContainer.removeChild(tokensContainer.firstChild);
+                       }
+                       chrome.storage.local.get(["tokenOrder"], (orderRes) => {
+                         const ordered = reorderTokensByOrderArray(tokens, orderRes.tokenOrder || []);
+                         ordered.forEach((tokenObj) => {
+                           addTokenToDOM(
+                             tokenObj.name,
+                             secret,
+                             tokenObj.url,
+                             tokenObj.otp
+                           );
+                         });
+                       });
+                     });
+                   } else {
+                     chrome.storage.local.set({ tokens }, () => {
+                       while (tokensContainer.firstChild) {
+                         tokensContainer.removeChild(tokensContainer.firstChild);
+                       }
+                       chrome.storage.local.get(["tokenOrder"], (orderRes) => {
+                         const ordered = reorderTokensByOrderArray(tokens, orderRes.tokenOrder || []);
+                         ordered.forEach((tokenObj) => {
+                           addTokenToDOM(
+                             tokenObj.name,
+                             tokenObj.secret,
+                             tokenObj.url,
+                             tokenObj.otp
+                           );
+                         });
+                       });
+                     });
+                   }
                 } else {
                   throw new Error("Invalid token generated.");
                 }
@@ -916,9 +884,7 @@ document.addEventListener("DOMContentLoaded", () => {
     checkboxMessageSync.style.visibility = "hidden";
   });
 
-  const passwordProtectedCheckbox = document.getElementById(
-    "password-protected-checkbox"
-  );
+  // passwordProtectedCheckbox already declared above
 
   passwordProtectedCheckbox.addEventListener("click", (e) => {
     e.preventDefault();
@@ -956,7 +922,11 @@ document.addEventListener("DOMContentLoaded", () => {
       heading.textContent = chrome.i18n.getMessage("password_protection_setup");
       containerDiv.appendChild(heading);
 
-      const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
+      const svgIcon = createXIcon({
+        className: "feather x-icon",
+        id: "x-icon",
+        stroke: "red",
+      });
       containerDiv.appendChild(svgIcon);
       const passDontMatchMessage = document.createElement("div");
       passDontMatchMessage.className = "wrong-or-nonmatch-passwords";
@@ -1091,7 +1061,11 @@ document.addEventListener("DOMContentLoaded", () => {
       h2.textContent = chrome.i18n.getMessage("disable_password_protection");
 
       popupContent.appendChild(h2);
-      const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
+      const svgIcon = createXIcon({
+        className: "feather x-icon",
+        id: "x-icon",
+        stroke: "red",
+      });
       const wrongPasswordMessage = document.createElement("div");
       wrongPasswordMessage.className = "wrong-or-nonmatch-passwords";
       wrongPasswordMessage.id = "wrong-remove-password-message";
@@ -1175,38 +1149,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const popupModeCheckbox = document.getElementById("popup-mode-checkbox");
+  // popup mode checkbox already declared above; resizer initialized earlier
 
-  popupModeCheckbox.addEventListener("click", () => {
-    if (popupModeCheckbox.checked) {
-      chrome.storage.local.set({ popupModeCheckbox: true });
-      if (syncCheckbox.checked) {
-        chrome.storage.sync.set({ popupModeCheckbox: true });
-      }
-    } else {
-      chrome.storage.local.set({ popupModeCheckbox: false });
-      if (syncCheckbox.checked) {
-        chrome.storage.sync.set({ popupModeCheckbox: false });
-      }
-    }
-  });
+  // popup mode click handled in settings module
 
-  const hideTokenAdder = document.getElementById("hide-token-adder-checkbox");
-  hideTokenAdder.addEventListener("change", (e) => {
-    if (e.target.checked) {
-      formContainer.style.display = "none";
-      chrome.storage.local.set({ hideTokenAdder: true });
-      if (syncCheckbox.checked) {
-        chrome.storage.sync.set({ hideTokenAdder: true });
-      }
-    } else {
-      formContainer.style.display = "";
-      chrome.storage.local.set({ hideTokenAdder: false });
-      if (syncCheckbox.checked) {
-        chrome.storage.sync.set({ hideTokenAdder: false });
-      }
-    }
-  });
+  // hide token adder handled in settings module
 
   async function decryptAllTokens(importedKey) {
     chrome.storage.local.get(["tokens", "iv", "salt"], async (result) => {
@@ -1258,337 +1205,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const webcamButton = document.createElement("button");
-  advancedAddButton.addEventListener("click", async () => {
-    if (document.querySelector(".popup-container") || isCooldown) {
-      return;
-    }
-    let popupContainer = document.createElement("div");
-    popupContainer.className = "popup-container";
-    let popupContent = document.createElement("div");
-    popupContent.className = "popup-video-content";
-    let webcamOffIcon = document.createElement("img");
-    webcamOffIcon.src = "./icons/video-off.svg";
-    webcamOffIcon.className = "webcam-off-icon";
-    webcamOffIcon.id = "webcam-off-icon";
-    let webcamOnIcon = document.createElement("img");
-    webcamOnIcon.src = "./icons/video.svg";
-    webcamOnIcon.className = "webcam-on-icon";
-    webcamOnIcon.id = "webcam-on-icon";
-    let imageIcon = document.createElement("img");
-    imageIcon.src = "./icons/image.svg";
-    imageIcon.className = "image-icon";
-    imageIcon.id = "image-icon";
-    let headerDiv = document.createElement("div");
-    let heading = document.createElement("h2");
-    heading.className = "centered-headings";
-    heading.textContent = chrome.i18n.getMessage("add_qr_code_via");
-    headerDiv.appendChild(heading);
-    let errorMessage = document.createElement("h3");
-    errorMessage.className = "advanced-add-messages";
-    errorMessage.id = "advanced-add-messages";
-    errorMessage.style.visibility = "hidden";
-    errorMessage.textContent = "QR Code not found. Try a different image.";
-    headerDiv.appendChild(errorMessage);
-    let svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
-    headerDiv.appendChild(svgIcon);
-    popupContent.appendChild(headerDiv);
-    let videoContainer = document.createElement("div");
-    videoContainer.className = "video-container";
-    videoContainer.style.display = "none";
-    let videoElement = document.createElement("video");
-    videoElement.id = "video";
-    videoElement.setAttribute("autoplay", "");
-    videoElement.setAttribute("playsinline", "");
-    videoElement.style.width = "100%";
-    videoContainer.appendChild(videoElement);
-    popupContent.appendChild(videoContainer);
-    let buttonsContainer = document.createElement("div");
-    buttonsContainer.className = "buttons-container";
-
-    webcamButton.className = "webcam-add-button";
-    webcamButton.id = "webcam-add-button";
-    webcamButton.textContent = chrome.i18n.getMessage("webcam");
-    const imageButton = document.createElement("button");
-    imageButton.className = "image-add-button";
-    imageButton.id = "image-add-button";
-    imageButton.textContent = chrome.i18n.getMessage("image");
-    buttonsContainer.appendChild(webcamButton);
-    buttonsContainer.appendChild(imageButton);
-    popupContent.appendChild(buttonsContainer);
-    let formLabelContainer = document.createElement("div");
-    formLabelContainer.className = "form-label-container";
-    let label = document.createElement("label");
-    label.setAttribute("for", "name");
-    label.className = "form-label";
-    label.textContent = chrome.i18n.getMessage("image_url");
-    let imageUrlInput = document.createElement("input");
-    imageUrlInput.type = "text";
-    imageUrlInput.id = "image-url-input";
-    imageUrlInput.className = "form-input enter-url-placeholder";
-    imageUrlInput.setAttribute("placeholder", "https://...");
-    imageUrlInput.value = "";
-    let urlButton = document.createElement("button");
-    urlButton.id = "add-url-button";
-    urlButton.className = "wide-button";
-    urlButton.textContent = chrome.i18n.getMessage("enter_url");
-    formLabelContainer.appendChild(label);
-    formLabelContainer.appendChild(imageUrlInput);
-    formLabelContainer.appendChild(urlButton);
-    popupContent.appendChild(formLabelContainer);
-    popupContainer.appendChild(popupContent);
-    document.body.appendChild(popupContainer);
-    webcamButton.appendChild(webcamOnIcon);
-    const fileAddButton = document.getElementById("image-add-button");
-    fileAddButton.appendChild(imageIcon);
-    let qrCodeFoundMessage = document.createElement("div");
-    qrCodeFoundMessage.className = "secret-found-message";
-    qrCodeFoundMessage.textContent = chrome.i18n.getMessage("qr_found_message");
-
-    function qrCodeFound() {
-      secretFormLabel.insertAdjacentElement("afterend", qrCodeFoundMessage);
-      setTimeout(() => {
-        qrCodeFoundMessage.remove();
-      }, 3000);
-    }
-
-    let stream;
-    let qrScanner;
-
-    const stopCameraAndScanner = () => {
-      if (qrScanner) {
-        qrScanner.stop();
-        qrScanner = null;
-      }
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-        stream = null;
-      }
-      setAdvancedAddMessage(
-        chrome.i18n.getMessage("qr_not_found_message"),
-        false
-      );
-    };
-    let saveUrlButton = document.getElementById("add-url-button");
-    function saveImageUrl() {
-      let addImageUrl = imageUrlInput.value;
-      QrScanner.scanImage(addImageUrl, { returnDetailedScanResult: true })
-        .then((result) => {
-          const decodedData = result.data;
-
-          secretInput.value = decodedData;
-          qrCodeFound();
-          document.body.removeChild(popupContainer);
-        })
-        .catch((error) => {
-          setAdvancedAddMessage(
-            chrome.i18n.getMessage("incorrect_url_message"),
-            true
-          );
-          setTimeout(() => {
-            setAdvancedAddMessage(
-              chrome.i18n.getMessage("qr_not_found_message"),
-              false
-            );
-          }, 3000);
-        });
-    }
-    saveUrlButton.addEventListener("click", saveImageUrl);
-    imageUrlInput.addEventListener("keypress", (event) => {
-      if (event.key === "Enter") {
-        saveImageUrl();
-      }
-    });
-    let redXButton = document.getElementById("x-icon");
-    redXButton.addEventListener("click", () => {
-      stopCameraAndScanner();
-      document.body.removeChild(popupContainer);
-      isCooldown = true;
-      setTimeout(() => {
-        isCooldown = false;
-      }, 2000);
-    });
-
-    popupContainer.addEventListener("click", (e) => {
-      if (e.target === popupContainer) {
-        setTimeout(() => {
-          stopCameraAndScanner();
-        }, 1000);
-
-        document.body.removeChild(popupContainer);
-        isCooldown = true;
-        setTimeout(() => {
-          isCooldown = false;
-        }, 2000);
-      }
-    });
-
-    document.addEventListener("click", () => {
-      if (!document.querySelector(".popup-container")) {
-        stopCameraAndScanner();
-      }
-    });
-
-    webcamButton.addEventListener("click", async () => {
-      if (isCooldown) {
-        return;
-      }
-
-      try {
-        const videoElem = document.getElementById("video");
-
-        if (stream) {
-          stream.getTracks().forEach((track) => track.stop());
-          stream = null;
-          videoElem.pause();
-          document.querySelector(".video-container").style.display = "none";
-          webcamButton.textContent = "Webcam";
-          webcamButton.appendChild(webcamOnIcon);
-          setAdvancedAddMessage(
-            chrome.i18n.getMessage("qr_not_found_message"),
-            false
-          );
-        } else {
-          stream = await navigator.mediaDevices.getUserMedia({
-            video: true,
-          });
-          videoElem.srcObject = stream;
-          document.querySelector(".video-container").style.display = "block";
-          webcamButton.textContent = chrome.i18n.getMessage("webcam");
-          webcamButton.appendChild(webcamOffIcon);
-          setAdvancedAddMessage(chrome.i18n.getMessage("scanning"), true);
-          qrScanner = new QrScanner(
-            videoElem,
-            (result) => {
-              if (result.data) {
-                qrCodeFound();
-
-                secretInput.value = result.data;
-                stream.getTracks().forEach((track) => track.stop());
-                stream = null;
-                videoElem.pause();
-                document.querySelector(".video-container").style.display =
-                  "none";
-                document.body.removeChild(popupContainer);
-                nameInput.focus();
-                setAdvancedAddMessage(
-                  chrome.i18n.getMessage("qr_not_found_message"),
-                  false
-                );
-              } else {
-              }
-            },
-            { returnDetailedScanResult: true }
-          );
-          qrScanner.start();
-        }
-      } catch (error) {
-        if (
-          document.querySelector(".popup-video-content") &&
-          !isVideoPermission &&
-          !isPopup
-        ) {
-          chrome.windows.create({
-            url:
-              chrome.runtime.getURL("authenticator.html") +
-              "?isPopup=true&isVideoPermission=true",
-            type: "popup",
-            width: 314,
-            height: 480,
-          });
-          window.close();
-        }
-      }
-
-      isCooldown = true;
-      setTimeout(() => {
-        isCooldown = false;
-      }, 2000);
-    });
-
-    document
-      .getElementById("image-add-button")
-      .addEventListener("click", () => {
-        setTimeout(() => {
-          stopCameraAndScanner();
-          document.querySelector(".video-container").style.display = "none";
-        }, 1500);
-        document.getElementById("file-input").click();
-      });
-
-    document
-      .getElementById("file-input")
-      .addEventListener("change", async (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-          try {
-            const result = await QrScanner.scanImage(file, {
-              returnDetailedScanResult: true,
-            });
-            const data = decodeURIComponent(result.data);
-            const secretMatch = data.match(/secret=([^&]+)/);
-            const issuerMatch = data.match(/issuer=([^&]+)/);
-            const labelMatch = data.match(/totp\/([^:?]+)/);
-            if (secretMatch) {
-              secretInput.value = secretMatch[1];
-            } else {
-              secretInput.value = data;
-            }
-            if (issuerMatch) {
-              nameInput.value = issuerMatch[1];
-            } else if (labelMatch) {
-              nameInput.value = labelMatch[1];
-            } else {
-              nameInput.value = "";
-            }
-            document.body.removeChild(popupContainer);
-            qrCodeFound();
-            isCooldown = true;
-            setTimeout(() => {
-              isCooldown = false;
-            }, 2000);
-            nameInput.focus();
-          } catch (error) {
-            setAdvancedAddMessage(
-              chrome.i18n.getMessage("incorrect_url_message"),
-              true
-            );
-            setTimeout(() => {
-              setAdvancedAddMessage(
-                chrome.i18n.getMessage("qr_not_found_message"),
-                false
-              );
-            }, 3000);
-          }
-          e.target.value = "";
-        }
-      });
-  });
-
-  if (isPopup && isVideoPermission) {
-    const clickEvent = new Event("click");
-    advancedAddButton.dispatchEvent(clickEvent);
-    webcamButton.dispatchEvent(clickEvent);
-  }
-
-  // createPopup moved to ui.js
-  const { addTokenToDOM: addTokenToDOMImpl, updateToken: updateTokenImpl } = createTokenUI({
-    tokensContainer,
-    syncCheckbox,
-    clipboardCopyingCheckbox,
-    autofillCheckbox,
-    confirmDelete,
-    deleteToken,
-    createXIcon,
-    i18nGetMessage: (key) => chrome.i18n.getMessage(key),
-    popupUpdate,
-  });
-  function addTokenToDOM(name, secret, url, otp) {
-    return addTokenToDOMImpl(name, secret, url, otp);
-  }
-  function updateToken(name, secret) {
-    return updateTokenImpl(name, secret);
+  // Start time sync/clock updates
+  try {
+    initTimeSync({ updateToken });
+  } catch (e) {
+    console.log(e);
   }
   // updateToken moved into tokens.js (via createTokenUI)
 });
