@@ -10,6 +10,12 @@ import {
   openModal,
 } from "./ui.js";
 import {
+  applyStoredScale,
+  initScaleControl,
+  initExportControls,
+  initThemeControls,
+} from "./settings.js";
+import {
   encryptSecret,
   decryptSecret,
   verifyPassword,
@@ -49,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const backButton = document.getElementById("back-button");
   const lightThemeButton = document.getElementById("light-theme-button");
   const darkThemeButton = document.getElementById("dark-theme-button");
+  const oceanThemeButton = document.getElementById("ocean-theme-button");
+  const forestThemeButton = document.getElementById("forest-theme-button");
   advancedAddButton.className = "advanced-add-button";
   advancedAddButton.textContent = chrome.i18n.getMessage("advanced_add");
   const authenticatorMainContent = document.getElementById(
@@ -166,22 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  lightThemeButton.addEventListener("click", () => {
-    document.body.classList.remove("theme-dark");
-    document.body.classList.add("theme-light");
-    chrome.storage.local.set({ theme: "theme-light" });
-    if (syncCheckbox.checked) {
-      chrome.storage.sync.set({ theme: "theme-light" });
-    }
-  });
-  darkThemeButton.addEventListener("click", () => {
-    document.body.classList.remove("theme-light");
-    document.body.classList.add("theme-dark");
-    chrome.storage.local.set({ theme: "theme-dark" });
-    if (syncCheckbox.checked) {
-      chrome.storage.sync.set({ theme: "theme-dark" });
-    }
-  });
+  // Apply stored UI scale as early as possible
+  try { applyStoredScale(); } catch (_) {}
 
   function lastSeconds(seconds) {
     const wholeSeconds = Math.floor(seconds);
@@ -553,6 +547,19 @@ document.addEventListener("DOMContentLoaded", () => {
   
 
   const syncCheckbox = document.getElementById("sync-checkbox");
+  // Initialize theme controls (includes Ocean and Forest buttons if present)
+  try {
+    initThemeControls({
+      lightThemeButton,
+      darkThemeButton,
+      oceanThemeButton,
+      forestThemeButton,
+      syncCheckbox,
+    });
+  } catch (_) {}
+  // Initialize scale control and export controls into settings page
+  try { if (settingsPage) initScaleControl(settingsPage); } catch (_) {}
+  try { if (settingsPage) initExportControls(settingsPage); } catch (_) {}
 
   syncCheckbox.addEventListener("change", (e) => {
     if (passwordProtectedCheckbox.checked) {

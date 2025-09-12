@@ -1,5 +1,13 @@
+:root {
+  --ui-scale: 1;
+  --scrollbar-width: 8px;
+}
+
 html {
-  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: calc(300px * var(--ui-scale));
+  height: calc(450px * var(--ui-scale));
   overflow: hidden;
 }
 
@@ -10,22 +18,36 @@ body {
   height: 450px;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 450px;
+  transform: scale(var(--ui-scale, 1));
+  transform-origin: top left;
 }
 
 body::-webkit-scrollbar {
-  width: 8px;
+  width: var(--scrollbar-width);
 }
 
 body::-webkit-scrollbar-track {
   background: white;
-  margin-block: 0.25em;
+}
+
+/* Match track to themes */
+body.theme-dark::-webkit-scrollbar-track {
+  background: #000000;
+}
+body.theme-ocean::-webkit-scrollbar-track {
+  background: #0e2a3a;
+}
+body.theme-forest::-webkit-scrollbar-track {
+  background: #0f2017;
+}
+/* During modal, match overlay shade */
+body.modal-active::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
 }
 
 body::-webkit-scrollbar-thumb {
   background: grey;
   border-radius: 10px;
-  max-height: 20px;
 }
 
 body.theme-dark {
@@ -198,6 +220,8 @@ body.theme-dark {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: scale(var(--ui-scale));
+  transform-origin: center;
 }
 
 .theme-dark .popup-content-qr {
@@ -1089,6 +1113,13 @@ input:checked + .slider:before {
   display: flex;
   justify-content: space-between;
   padding-bottom: 15px;
+}
+
+/* Export modal buttons layout */
+.export-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .dark-theme-button {
