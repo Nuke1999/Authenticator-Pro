@@ -87,6 +87,13 @@ export function setAdvancedAddMessage(text, visible) {
 export function confirmDelete(name, secret, onDelete) {
   const popupContainer = document.createElement("div");
   popupContainer.className = "popup-container";
+  try {
+    const hasVScroll = document.body.scrollHeight > document.body.clientHeight;
+    if (hasVScroll) {
+      const sbw = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+      popupContainer.style.paddingRight = sbw + "px";
+    }
+  } catch (_) {}
 
   const popupContent = document.createElement("div");
   popupContent.className = "popup-message";
@@ -140,9 +147,13 @@ export function confirmDelete(name, secret, onDelete) {
 
   popupContent.appendChild(buttonsContainer);
   popupContainer.appendChild(popupContent);
-  document.body.appendChild(popupContainer);
+  document.documentElement.appendChild(popupContainer);
+  try { document.body.classList.add("modal-active"); } catch (_) {}
 
-  const removePopup = () => document.body.removeChild(popupContainer);
+  const removePopup = () => {
+    try { popupContainer.remove(); } catch (_) {}
+    try { document.body.classList.remove("modal-active"); } catch (_) {}
+  };
   closeButton.addEventListener("click", removePopup);
   svgIcon.addEventListener("click", removePopup);
   deleteButton.addEventListener("click", () => {
@@ -186,6 +197,13 @@ export function createPopup(message) {
   }
   const popupContainer = document.createElement("div");
   popupContainer.className = "popup-container";
+  try {
+    const hasVScroll = document.body.scrollHeight > document.body.clientHeight;
+    if (hasVScroll) {
+      const sbw = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+      popupContainer.style.paddingRight = sbw + "px";
+    }
+  } catch (_) {}
   const popupContent = document.createElement("div");
   popupContent.className = "popup-message";
 
@@ -208,12 +226,13 @@ export function createPopup(message) {
   popupContent.appendChild(messageHeading);
   popupContent.appendChild(closeButtonContainer);
   popupContainer.appendChild(popupContent);
-  document.body.appendChild(popupContainer);
+  document.documentElement.appendChild(popupContainer);
+  try { document.body.classList.add("modal-active"); } catch (_) {}
 
-  closeButton.addEventListener("click", () => {
-    document.body.removeChild(popupContainer);
-  });
-  svgIcon.addEventListener("click", () => {
-    document.body.removeChild(popupContainer);
-  });
+  const removeMsgPopup = () => {
+    try { popupContainer.remove(); } catch (_) {}
+    try { document.body.classList.remove("modal-active"); } catch (_) {}
+  };
+  closeButton.addEventListener("click", removeMsgPopup);
+  svgIcon.addEventListener("click", removeMsgPopup);
 }

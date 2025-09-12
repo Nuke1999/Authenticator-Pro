@@ -1,15 +1,7 @@
-html {
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  width: 300px;
-  height: 450px;
-  overflow-y: auto;
-  overflow-x: hidden;
+:root {
+  --ui-scale: 1;
+  --scrollbar-base: 8px;
+  --scrollbar-width: 8px;
 }
 
 body::-webkit-scrollbar {
@@ -18,13 +10,47 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-track {
   background: white;
-  margin-block: 0.25em;
+  /* margin-block: 0.25em; */
+}
+
+/* Match track to themes */
+body.theme-dark::-webkit-scrollbar-track {
+  background: #000000;
+}
+body.theme-ocean::-webkit-scrollbar-track {
+  background: #0e2a3a;
+}
+body.theme-forest::-webkit-scrollbar-track {
+  background: #0f2017;
+}
+/* During modal, match overlay shade */
+body.modal-active::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
 }
 
 body::-webkit-scrollbar-thumb {
   background: grey;
   border-radius: 10px;
-  max-height: 20px;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: calc(300px * var(--ui-scale));
+  height: calc(450px * var(--ui-scale));
+  overflow: hidden;
+}
+
+body {
+  background-color: white;
+  transform: scale(var(--ui-scale, 1));
+  transform-origin: top left;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  height: 450px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 body.theme-dark {
@@ -48,14 +74,15 @@ body.theme-dark {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  /* transition: background-color 0.3s, box-shadow 0.3s, transform 120ms ease; */
   user-select: none;
   -webkit-user-select: none;
 }
 
-.token-box.dragging {
-  opacity: 0.6;
-}
+/* .token-box.dragging {
+  opacity: 1;
+  transform: scale(0.8);
+} */
 
 .theme-dark .token-box:hover {
   background-color: rgb(40, 40, 40);
@@ -167,18 +194,29 @@ body.theme-dark {
   z-index: 1;
 }
 
-.popup-container {
+/* .popup-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  box-sizing: border-box;
+  z-index: 3;
+} */
+
+.popup-container {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 9999;
 }
+
+/* dynamic padding applied inline in JS per real scrollbar width */
 
 .theme-dark .popup-content {
   background: black;
@@ -186,6 +224,7 @@ body.theme-dark {
 }
 
 .popup-content {
+  /* transform: scale(var(--ui-scale, 1)); */
   border: 3px solid white;
   z-index: 4;
   background: white;
@@ -203,6 +242,8 @@ body.theme-dark {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: scale(var(--ui-scale));
+  transform-origin: center;
 }
 
 .theme-dark .popup-content-qr {
@@ -227,6 +268,8 @@ body.theme-dark {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 4;
+  transform: scale(var(--ui-scale));
+  transform-origin: center;
 }
 
 .theme-dark .popup-video-content {
@@ -252,13 +295,17 @@ body.theme-dark {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: scale(var(--ui-scale));
+  transform-origin: center;
+  z-index: 4;
 }
 
 .popup-content,
 .popup-content-qr,
 .popup-message,
 .popup-video-content {
-  margin-right: var(--scrollbar-width);
+  z-index: 4;
+  margin-right: 0; /* true center; scrollbar compensation handled by container */
 }
 
 #qr-video {
@@ -267,6 +314,15 @@ body.theme-dark {
   display: block;
   margin-top: 8px;
   border-radius: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Export modal buttons layout */
+.export-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .theme-dark .popup-message {
@@ -293,6 +349,8 @@ body.theme-dark {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transform: scale(var(--ui-scale));
+  transform-origin: center;
 }
 
 .buttons-container {
@@ -533,6 +591,7 @@ body.theme-dark {
   transform: translate(-55px, -45px) scale(0.85);
 }
 
+/* Restore dark theme form container color */
 .theme-dark .form-container {
   background-color: rgb(70, 70, 70);
 }
@@ -761,7 +820,6 @@ body.theme-dark {
   padding: 10px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   height: 400px;
 }
 
@@ -952,6 +1010,12 @@ input:checked + .slider:before {
 
 .video-container {
   padding-bottom: 10px;
+  z-index: 5;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 200px !important; /* guarantees nonzero height */
+  /* background: black; */
 }
 
 .token-qr-button {
@@ -1149,6 +1213,35 @@ input:checked + .slider:before {
   background-color: rgb(219, 219, 219);
 }
 
+/* Additional theme buttons */
+.ocean-theme-button,
+.forest-theme-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.ocean-theme-button {
+  background-color: #2bb1ff;
+  color: #06202c;
+}
+.ocean-theme-button:hover {
+  background-color: #1f99e6;
+}
+.forest-theme-button {
+  background-color: #69c17d;
+  color: #0f2017;
+}
+.forest-theme-button:hover {
+  background-color: #56a865;
+}
+
 .theme-dark .options-page-header {
   color: white;
 }
@@ -1226,7 +1319,7 @@ input:checked + .slider:before {
   padding: 5px;
   border-radius: 5px;
   position: absolute;
-  z-index: 10;
+  z-index: 2;
 }
 
 #incorrect-password-message {
@@ -1241,9 +1334,4 @@ input:checked + .slider:before {
   color: red;
   margin-left: 12px;
   visibility: hidden;
-}
-:root {
-  --ui-scale: 1;
-  --scrollbar-base: 8px;
-  --scrollbar-width: calc(var(--scrollbar-base) * var(--ui-scale));
 }

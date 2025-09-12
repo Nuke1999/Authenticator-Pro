@@ -10,16 +10,16 @@ export async function getStoredScale() {
 export function applyScale(scale) {
   const s = typeof scale === "number" && scale > 0 ? scale : 1;
   document.documentElement.style.setProperty("--ui-scale", String(s));
-  // Round body dimensions to avoid subpixel gaps that show as white bars
-  const BASE_W = 300;
-  const BASE_H = 450;
-  const w = Math.round(BASE_W * s);
-  const h = Math.round(BASE_H * s);
-  const body = document.body;
-  if (body) {
-    body.style.width = `${w}px`;
-    body.style.height = `${h}px`;
-  }
+  // If we are in popup window mode, update the outer window size to match scale
+  try {
+    chrome.windows.getCurrent((win) => {
+      if (!win || win.type !== "popup") return;
+      const BASE_W = 300, BASE_H = 450, CHROME_W = 14, CHROME_H = 30;
+      const width = Math.round(BASE_W * s + CHROME_W);
+      const height = Math.round(BASE_H * s + CHROME_H);
+      chrome.windows.update(win.id, { width, height });
+    });
+  } catch (_) {}
 }
 
 export async function applyStoredScale() {
@@ -77,6 +77,12 @@ export function initScaleControl(settingsContainer) {
   select.addEventListener("change", () => {
     const val = parseFloat(select.value);
     chrome.storage.local.set({ uiScale: val }, () => {});
+    try {
+      const syncCheckbox = document.getElementById("sync-checkbox");
+      if (syncCheckbox && syncCheckbox.checked) {
+        chrome.storage.sync.set({ uiScale: val }, () => {});
+      }
+    } catch (_) {}
     applyScale(val);
     // If in popup window mode, resize the window to match new scale
     try {
@@ -111,30 +117,168 @@ export function initScaleControl(settingsContainer) {
   }
 }
 
+export function initExportControls(settingsContainer) {
+  if (settingsContainer.querySelector("#export-section")) return;
+
+  const section = document.createElement("div");
+  section.id = "export-section";
+
+  const header = document.createElement("h2");
+  header.className = "themes-header";
+  header.textContent = "Export";
+  section.appendChild(header);
+
+  const row = document.createElement("div");
+  row.className = "theme-buttons-container";
+
+  const exportBtn = document.createElement("button");
+  exportBtn.className = "light-theme-button";
+  exportBtn.textContent = "Export Data";
+  row.appendChild(exportBtn);
+  section.appendChild(row);
+
+  const insertAfter = settingsContainer.querySelector(".scale-section");
+  if (insertAfter) insertAfter.insertAdjacentElement("afterend", section);
+  else settingsContainer.appendChild(section);
+
+  exportBtn.addEventListener("click", () => {
+    const popupContainer = document.createElement("div");
+    popupContainer.className = "popup-container";
+    try {
+      const sbw = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+      if (sbw) popupContainer.style.paddingRight = sbw + "px";
+    } catch (_) {}
+    const popupContent = document.createElement("div");
+    popupContent.className = "popup-content";
+
+    const heading = document.createElement("h2");
+    heading.className = "centered-headings";
+    heading.textContent = "Export Options";
+    popupContent.appendChild(heading);
+
+    const btns = document.createElement("div");
+    btns.className = "export-buttons";
+
+    const csvBtn = document.createElement("button");
+    csvBtn.className = "wide-button";
+    csvBtn.textContent = "Export CSV";
+    btns.appendChild(csvBtn);
+
+    const pdfBtn = document.createElement("button");
+    pdfBtn.className = "wide-button";
+    pdfBtn.textContent = "Export PDF";
+    btns.appendChild(pdfBtn);
+
+    const docBtn = document.createElement("button");
+    docBtn.className = "wide-button";
+    docBtn.textContent = "Export Word (.doc)";
+    btns.appendChild(docBtn);
+
+    popupContent.appendChild(btns);
+    popupContainer.appendChild(popupContent);
+    document.documentElement.appendChild(popupContainer);
+    try { document.body.classList.add("modal-active"); } catch (_) {}
+
+    const close = () => {
+      try { popupContainer.remove(); } catch (_) {}
+      try { document.body.classList.remove("modal-active"); } catch (_) {}
+    };
+    popupContainer.addEventListener("click", (e) => { if (e.target === popupContainer) close(); });
+
+    function downloadBlob(filename, mime, content) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function exportCSV(tokens) {
+      const header = ['name','secret','url','otp'];
+      const lines = [header.join(',')];
+      tokens.forEach(t => {
+        const vals = [t.name||'', t.secret||'', t.url||'', t.otp||'']
+          .map(v => '"' + String(v).replace(/"/g,'""') + '"');
+        lines.push(vals.join(','));
+      });
+      downloadBlob('authenticator-export.csv', 'text/csv;charset=utf-8', lines.join('\r\n'));
+    }
+
+    function exportDOC(tokens) {
+      const rows = tokens.map(t => `<tr><td>${t.name||''}</td><td>${t.secret||''}</td><td>${t.url||''}</td><td>${t.otp||''}</td></tr>`).join('');
+      const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Export</title></head><body><table border="1" cellspacing="0" cellpadding="4"><thead><tr><th>Name</th><th>Secret</th><th>URL</th><th>OTP</th></tr></thead><tbody>${rows}</tbody></table></body></html>`;
+      downloadBlob('authenticator-export.doc', 'application/msword', html);
+    }
+
+    function exportPDF(tokens) {
+      const rows = tokens.map(t => `<tr><td>${t.name||''}</td><td>${t.secret||''}</td><td>${t.url||''}</td><td>${t.otp||''}</td></tr>`).join('');
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Export PDF</title><style>body{font-family:Arial, sans-serif;padding:16px;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #333;padding:6px;font-size:12px;}</style></head><body><h2>Authenticator Export</h2><table><thead><tr><th>Name</th><th>Secret</th><th>URL</th><th>OTP</th></tr></thead><tbody>${rows}</tbody></table><script>window.onload=function(){window.print();}</script></body></html>`;
+      const w = window.open('', '_blank');
+      if (w) {
+        w.document.open();
+        w.document.write(html);
+        w.document.close();
+      }
+    }
+
+    csvBtn.addEventListener('click', () => {
+      chrome.storage.local.get(['tokens'], (res) => {
+        exportCSV(Array.isArray(res.tokens) ? res.tokens : []);
+        close();
+      });
+    });
+    docBtn.addEventListener('click', () => {
+      chrome.storage.local.get(['tokens'], (res) => {
+        exportDOC(Array.isArray(res.tokens) ? res.tokens : []);
+        close();
+      });
+    });
+    pdfBtn.addEventListener('click', () => {
+      chrome.storage.local.get(['tokens'], (res) => {
+        exportPDF(Array.isArray(res.tokens) ? res.tokens : []);
+        close();
+      });
+    });
+  });
+}
+
 export function initThemeControls({
   lightThemeButton,
   darkThemeButton,
   syncCheckbox,
+  oceanThemeButton,
+  forestThemeButton,
 }) {
+  // Fallback: query buttons if not provided
+  if (!lightThemeButton) lightThemeButton = document.getElementById("light-theme-button");
+  if (!darkThemeButton) darkThemeButton = document.getElementById("dark-theme-button");
+  if (!oceanThemeButton) oceanThemeButton = document.getElementById("ocean-theme-button");
+  if (!forestThemeButton) forestThemeButton = document.getElementById("forest-theme-button");
+
+  const applyTheme = (theme) => {
+    const classes = ["theme-light", "theme-dark", "theme-ocean", "theme-forest"];
+    document.body.classList.remove(...classes);
+    document.body.classList.add(theme);
+    chrome.storage.local.set({ theme });
+    if (syncCheckbox && syncCheckbox.checked) {
+      chrome.storage.sync.set({ theme });
+    }
+  };
   if (lightThemeButton) {
-    lightThemeButton.addEventListener("click", () => {
-      document.body.classList.remove("theme-dark");
-      document.body.classList.add("theme-light");
-      chrome.storage.local.set({ theme: "theme-light" });
-      if (syncCheckbox && syncCheckbox.checked) {
-        chrome.storage.sync.set({ theme: "theme-light" });
-      }
-    });
+    lightThemeButton.addEventListener("click", () => applyTheme("theme-light"));
   }
   if (darkThemeButton) {
-    darkThemeButton.addEventListener("click", () => {
-      document.body.classList.remove("theme-light");
-      document.body.classList.add("theme-dark");
-      chrome.storage.local.set({ theme: "theme-dark" });
-      if (syncCheckbox && syncCheckbox.checked) {
-        chrome.storage.sync.set({ theme: "theme-dark" });
-      }
-    });
+    darkThemeButton.addEventListener("click", () => applyTheme("theme-dark"));
+  }
+  if (oceanThemeButton) {
+    oceanThemeButton.addEventListener("click", () => applyTheme("theme-ocean"));
+  }
+  if (forestThemeButton) {
+    forestThemeButton.addEventListener("click", () => applyTheme("theme-forest"));
   }
 }
 

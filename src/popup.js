@@ -1,5 +1,4 @@
 import { Buffer } from "buffer";
-// QrScanner moved to scanner.js
 import {
   createSwitchElement,
   setAdvancedAddMessage,
@@ -18,16 +17,16 @@ import {
   decryptTokens,
 } from "./auth.js";
 import { getTimeSyncData, setTimeSyncData, initTimeSync } from "./timeSync.js";
-import {
-  requestAutofillPermission,
-  requestClipboardPermission,
-} from "./permissions.js";
+import // requestAutofillPermission,
+// requestClipboardPermission,
+"./permissions.js";
 import { deleteToken } from "./storage.js";
 import { createTokenUI, generateToken, isValidBase32 } from "./tokens.js";
 import {
   initThemeControls,
   initPopupModeResizer,
   initBasicToggles,
+  initExportControls,
 } from "./settings.js";
 import { initAdvancedAdd } from "./scanner.js";
 
@@ -39,7 +38,7 @@ chrome.storage.local.set({
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const isPopup = urlParams.get("isPopup") === "true";
-  const isVideoPermission = urlParams.get("isVideoPermission") === "true";
+  // const isVideoPermission = urlParams.get("isVideoPermission") === "true";
   const nameInput = document.getElementById("name");
   const secretInput = document.getElementById("secret");
   const tokensContainer = document.getElementById("tokens");
@@ -156,6 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (e) {
       console.log(e);
     }
+    try {
+      initExportControls(settingsPage);
+    } catch (e) {
+      console.log(e);
+    }
   }
   // Advanced add / QR scanner will be initialized below (after theme controls)
   function localizePopup() {
@@ -193,7 +197,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Theme and popup mode moved into settings module
-  initThemeControls({ lightThemeButton, darkThemeButton, syncCheckbox });
+  // Also pick up optional Ocean/Forest theme buttons if present
+  const oceanThemeButton = document.getElementById("ocean-theme-button");
+  const forestThemeButton = document.getElementById("forest-theme-button");
+  initThemeControls({
+    lightThemeButton,
+    darkThemeButton,
+    syncCheckbox,
+    oceanThemeButton,
+    forestThemeButton,
+  });
   initPopupModeResizer({ popupModeCheckbox, syncCheckbox });
 
   // Initialize advanced add / QR scanner
@@ -583,6 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   try {
     chrome.storage.local.get((localResult) => {
+      console.log(localResult);
       if (
         localResult.passwordCheckbox == false ||
         localResult.passwordCheckbox == undefined
@@ -671,8 +685,7 @@ document.addEventListener("DOMContentLoaded", () => {
             chrome.windows.create(
               {
                 url:
-                  chrome.runtime.getURL("authenticator.html") +
-                  "?isPopup=true",
+                  chrome.runtime.getURL("authenticator.html") + "?isPopup=true",
                 type: "popup",
                 focused: true,
                 width: Math.round(BASE_W * scale + CHROME_W),
@@ -688,15 +701,18 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
 
-        if (localResult.theme == "theme-light") {
-          document.body.classList.remove("theme-dark");
-          document.body.classList.add("theme-light");
-          chrome.storage.local.set({ theme: "theme-light" });
-        } else if (localResult.theme == "theme-dark") {
-          document.body.classList.remove("theme-light");
-          document.body.classList.add("theme-dark");
-          chrome.storage.local.set({ theme: "theme-dark" });
-        }
+        const allThemes = [
+          "theme-light",
+          "theme-dark",
+          "theme-ocean",
+          "theme-forest",
+        ];
+        const theme = allThemes.includes(localResult.theme)
+          ? localResult.theme
+          : "theme-light";
+        document.body.classList.remove(...allThemes);
+        document.body.classList.add(theme);
+        chrome.storage.local.set({ theme });
       }
     });
   } catch (error) {
@@ -749,33 +765,38 @@ document.addEventListener("DOMContentLoaded", () => {
                     otp,
                   };
                   tokens.push(newTokenObj);
-                   // update order to append new token if not present
-                   chrome.storage.local.get(["tokenOrder"], (o) => {
-                     const order = Array.isArray(o.tokenOrder) ? o.tokenOrder.slice() : [];
-                     if (!order.includes(name)) order.push(name);
-                     chrome.storage.local.set({ tokenOrder: order });
-                     if (syncCheckbox.checked === true) {
-                       chrome.storage.sync.set({ tokenOrder: order });
-                     }
-                   });
-                   if (syncCheckbox.checked === true) {
-                     chrome.storage.sync.set({ tokens }, () => {
-                       while (tokensContainer.firstChild) {
-                         tokensContainer.removeChild(tokensContainer.firstChild);
-                       }
-                       chrome.storage.local.get(["tokenOrder"], (orderRes) => {
-                         const ordered = reorderTokensByOrderArray(tokens, orderRes.tokenOrder || []);
-                         ordered.forEach((tokenObj) => {
-                           addTokenToDOM(
-                             tokenObj.name,
-                             tokenObj.secret,
-                             tokenObj.url,
-                             tokenObj.otp
-                           );
-                         });
-                       });
-                     });
-                   }
+                  // update order to append new token if not present
+                  chrome.storage.local.get(["tokenOrder"], (o) => {
+                    const order = Array.isArray(o.tokenOrder)
+                      ? o.tokenOrder.slice()
+                      : [];
+                    if (!order.includes(name)) order.push(name);
+                    chrome.storage.local.set({ tokenOrder: order });
+                    if (syncCheckbox.checked === true) {
+                      chrome.storage.sync.set({ tokenOrder: order });
+                    }
+                  });
+                  if (syncCheckbox.checked === true) {
+                    chrome.storage.sync.set({ tokens }, () => {
+                      while (tokensContainer.firstChild) {
+                        tokensContainer.removeChild(tokensContainer.firstChild);
+                      }
+                      chrome.storage.local.get(["tokenOrder"], (orderRes) => {
+                        const ordered = reorderTokensByOrderArray(
+                          tokens,
+                          orderRes.tokenOrder || []
+                        );
+                        ordered.forEach((tokenObj) => {
+                          addTokenToDOM(
+                            tokenObj.name,
+                            tokenObj.secret,
+                            tokenObj.url,
+                            tokenObj.otp
+                          );
+                        });
+                      });
+                    });
+                  }
                   if (isPasswordCheckboxChecked === true) {
                     let cryptoKey = await convertKeyToCryptoKey(
                       result.encryptionKeyInMemory
@@ -793,40 +814,46 @@ document.addEventListener("DOMContentLoaded", () => {
                       }
                       return tokenObj;
                     });
-                     chrome.storage.local.set({ tokens }, () => {
-                       while (tokensContainer.firstChild) {
-                         tokensContainer.removeChild(tokensContainer.firstChild);
-                       }
-                       chrome.storage.local.get(["tokenOrder"], (orderRes) => {
-                         const ordered = reorderTokensByOrderArray(tokens, orderRes.tokenOrder || []);
-                         ordered.forEach((tokenObj) => {
-                           addTokenToDOM(
-                             tokenObj.name,
-                             secret,
-                             tokenObj.url,
-                             tokenObj.otp
-                           );
-                         });
-                       });
-                     });
-                   } else {
-                     chrome.storage.local.set({ tokens }, () => {
-                       while (tokensContainer.firstChild) {
-                         tokensContainer.removeChild(tokensContainer.firstChild);
-                       }
-                       chrome.storage.local.get(["tokenOrder"], (orderRes) => {
-                         const ordered = reorderTokensByOrderArray(tokens, orderRes.tokenOrder || []);
-                         ordered.forEach((tokenObj) => {
-                           addTokenToDOM(
-                             tokenObj.name,
-                             tokenObj.secret,
-                             tokenObj.url,
-                             tokenObj.otp
-                           );
-                         });
-                       });
-                     });
-                   }
+                    chrome.storage.local.set({ tokens }, () => {
+                      while (tokensContainer.firstChild) {
+                        tokensContainer.removeChild(tokensContainer.firstChild);
+                      }
+                      chrome.storage.local.get(["tokenOrder"], (orderRes) => {
+                        const ordered = reorderTokensByOrderArray(
+                          tokens,
+                          orderRes.tokenOrder || []
+                        );
+                        ordered.forEach((tokenObj) => {
+                          addTokenToDOM(
+                            tokenObj.name,
+                            secret,
+                            tokenObj.url,
+                            tokenObj.otp
+                          );
+                        });
+                      });
+                    });
+                  } else {
+                    chrome.storage.local.set({ tokens }, () => {
+                      while (tokensContainer.firstChild) {
+                        tokensContainer.removeChild(tokensContainer.firstChild);
+                      }
+                      chrome.storage.local.get(["tokenOrder"], (orderRes) => {
+                        const ordered = reorderTokensByOrderArray(
+                          tokens,
+                          orderRes.tokenOrder || []
+                        );
+                        ordered.forEach((tokenObj) => {
+                          addTokenToDOM(
+                            tokenObj.name,
+                            tokenObj.secret,
+                            tokenObj.url,
+                            tokenObj.otp
+                          );
+                        });
+                      });
+                    });
+                  }
                 } else {
                   throw new Error("Invalid token generated.");
                 }
@@ -911,6 +938,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       let popupContainer = document.createElement("div");
       popupContainer.className = "popup-container";
+      try {
+        const hasVScroll =
+          document.body.scrollHeight > document.body.clientHeight;
+        if (hasVScroll) {
+          const sbw = Math.max(
+            0,
+            window.innerWidth - document.documentElement.clientWidth
+          );
+          popupContainer.style.paddingRight = sbw + "px";
+        }
+      } catch (_) {}
       let popupContent = document.createElement("div");
       popupContent.className = "popup-content";
       while (popupContent.firstChild) {
@@ -987,13 +1025,26 @@ document.addEventListener("DOMContentLoaded", () => {
       containerDiv.appendChild(buttonContainer);
       popupContent.appendChild(containerDiv);
       popupContainer.appendChild(popupContent);
-      document.body.appendChild(popupContainer);
+      document.documentElement.appendChild(popupContainer);
+      try {
+        document.body.classList.add("modal-active");
+      } catch (_) {}
       document.getElementById("x-icon").addEventListener("click", () => {
-        document.body.removeChild(popupContainer);
+        try {
+          popupContainer.remove();
+        } catch (_) {}
+        try {
+          document.body.classList.remove("modal-active");
+        } catch (_) {}
       });
       popupContainer.addEventListener("click", (e) => {
         if (e.target === popupContainer) {
-          document.body.removeChild(popupContainer);
+          try {
+            popupContainer.remove();
+          } catch (_) {}
+          try {
+            document.body.classList.remove("modal-active");
+          } catch (_) {}
         }
       });
       passwordInput.addEventListener("keydown", (e) => {
@@ -1039,7 +1090,7 @@ document.addEventListener("DOMContentLoaded", () => {
               passwordCheckbox: true,
             });
             try {
-              document.body.removeChild(popupContainer);
+              popupContainer.remove();
             } catch (error) {
               console.log(error);
             }
@@ -1054,6 +1105,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       let popupContainer = document.createElement("div");
       popupContainer.className = "popup-container";
+      try {
+        const hasVScroll =
+          document.body.scrollHeight > document.body.clientHeight;
+        if (hasVScroll) {
+          const sbw = Math.max(
+            0,
+            window.innerWidth - document.documentElement.clientWidth
+          );
+          popupContainer.style.paddingRight = sbw + "px";
+        }
+      } catch (_) {}
       let popupContent = document.createElement("div");
       popupContent.className = "popup-content";
       const h2 = document.createElement("h2");
@@ -1104,14 +1166,27 @@ document.addEventListener("DOMContentLoaded", () => {
       buttonContainer.appendChild(removePasswordButton);
       popupContent.appendChild(buttonContainer);
       popupContainer.appendChild(popupContent);
-      document.body.appendChild(popupContainer);
+      document.documentElement.appendChild(popupContainer);
+      try {
+        document.body.classList.add("modal-active");
+      } catch (_) {}
       document.getElementById("x-icon").addEventListener("click", () => {
-        document.body.removeChild(popupContainer);
+        try {
+          popupContainer.remove();
+        } catch (_) {}
+        try {
+          document.body.classList.remove("modal-active");
+        } catch (_) {}
       });
 
       popupContainer.addEventListener("click", (e) => {
         if (e.target === popupContainer) {
-          document.body.removeChild(popupContainer);
+          try {
+            popupContainer.remove();
+          } catch (_) {}
+          try {
+            document.body.classList.remove("modal-active");
+          } catch (_) {}
         }
       });
 
@@ -1122,7 +1197,12 @@ document.addEventListener("DOMContentLoaded", () => {
             let passwordInput = document.getElementById("password").value;
             const isValid = await verifyPassword(passwordInput);
             if (isValid) {
-              document.body.removeChild(popupContainer);
+              try {
+                popupContainer.remove();
+              } catch (_) {}
+              try {
+                document.body.classList.remove("modal-active");
+              } catch (_) {}
               passwordProtectedCheckbox.checked = false;
               isPasswordCheckboxChecked = false;
               chrome.storage.local.set({ passwordCheckbox: false });

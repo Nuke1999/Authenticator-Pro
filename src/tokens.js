@@ -28,8 +28,9 @@ export function createTokenUI({
   let dndBound = false;
 
   function saveOrderFromDOM() {
-    const order = Array.from(tokensContainer.querySelectorAll('.token-box'))
-      .map((el) => el.getAttribute('data-token-name'));
+    const order = Array.from(
+      tokensContainer.querySelectorAll(".token-box")
+    ).map((el) => el.getAttribute("data-token-name"));
     try {
       chrome.storage.local.set({ tokenOrder: order });
       if (syncCheckbox && syncCheckbox.checked) {
@@ -53,27 +54,35 @@ export function createTokenUI({
   function bindDndContainerOnce() {
     if (dndBound) return;
     dndBound = true;
-    tokensContainer.addEventListener('dragover', (e) => {
+    tokensContainer.addEventListener("dragover", (e) => {
       e.preventDefault();
-      const dragging = tokensContainer.querySelector('.token-box.dragging');
+      const dragging = tokensContainer.querySelector(".token-box.dragging");
       if (!dragging) return;
       const after = getDragAfterElement(tokensContainer, e.clientY);
       if (after == null) tokensContainer.appendChild(dragging);
       else tokensContainer.insertBefore(dragging, after);
       const rect = tokensContainer.getBoundingClientRect();
-      const edge = 20;
-      if (e.clientY > rect.bottom - edge) tokensContainer.scrollTop += 12;
-      if (e.clientY < rect.top + edge) tokensContainer.scrollTop -= 12;
+      const edge = 36; // px threshold near edges
+      const maxSpeed = 24; // px per dragover event
+      if (e.clientY > rect.bottom - edge) {
+        const proximity = Math.min(edge, e.clientY - (rect.bottom - edge));
+        const speed = Math.max(2, Math.round((proximity / edge) * maxSpeed));
+        tokensContainer.scrollTop += speed;
+      } else if (e.clientY < rect.top + edge) {
+        const proximity = Math.min(edge, rect.top + edge - e.clientY);
+        const speed = Math.max(2, Math.round((proximity / edge) * maxSpeed));
+        tokensContainer.scrollTop -= speed;
+      }
     });
-    tokensContainer.addEventListener('drop', (e) => {
+    tokensContainer.addEventListener("drop", (e) => {
       e.preventDefault();
-      const dragging = tokensContainer.querySelector('.token-box.dragging');
-      if (dragging) dragging.classList.remove('dragging');
+      const dragging = tokensContainer.querySelector(".token-box.dragging");
+      if (dragging) dragging.classList.remove("dragging");
       saveOrderFromDOM();
     });
-    tokensContainer.addEventListener('dragend', () => {
-      const dragging = tokensContainer.querySelector('.token-box.dragging');
-      if (dragging) dragging.classList.remove('dragging');
+    tokensContainer.addEventListener("dragend", () => {
+      const dragging = tokensContainer.querySelector(".token-box.dragging");
+      if (dragging) dragging.classList.remove("dragging");
       saveOrderFromDOM();
     });
   }
@@ -81,8 +90,8 @@ export function createTokenUI({
     const tokenElement = document.createElement("div");
     tokenElement.id = `token-${name}`;
     tokenElement.classList.add("token-box");
-    tokenElement.setAttribute('data-token-name', name);
-    tokenElement.setAttribute('draggable', 'true');
+    tokenElement.setAttribute("data-token-name", name);
+    tokenElement.setAttribute("draggable", "true");
 
     const nameHeader = document.createElement("h2");
     nameHeader.className = "token-name";
@@ -114,6 +123,17 @@ export function createTokenUI({
           }
           const popupContainer = document.createElement("div");
           popupContainer.className = "popup-container";
+          try {
+            const hasVScroll =
+              document.body.scrollHeight > document.body.clientHeight;
+            if (hasVScroll) {
+              const sbw = Math.max(
+                0,
+                window.innerWidth - document.documentElement.clientWidth
+              );
+              popupContainer.style.paddingRight = sbw + "px";
+            }
+          } catch (_) {}
           const popupContent = document.createElement("div");
           popupContent.className = "popup-content";
           popupContent.textContent = "";
@@ -195,10 +215,18 @@ export function createTokenUI({
           buttonsContainer.appendChild(closeButton);
           popupContent.appendChild(buttonsContainer);
           popupContainer.appendChild(popupContent);
-          document.body.appendChild(popupContainer);
+          document.documentElement.appendChild(popupContainer);
+          try {
+            document.body.classList.add("modal-active");
+          } catch (_) {}
 
           document.getElementById("x-icon").addEventListener("click", () => {
-            document.body.removeChild(popupContainer);
+            try {
+              popupContainer.remove();
+            } catch (_) {}
+            try {
+              document.body.classList.remove("modal-active");
+            } catch (_) {}
           });
           urlInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter") saveUrlButton.click();
@@ -226,11 +254,22 @@ export function createTokenUI({
           });
 
           closeButton.addEventListener("click", () => {
-            document.body.removeChild(popupContainer);
+            try {
+              popupContainer.remove();
+            } catch (_) {}
+            try {
+              document.body.classList.remove("modal-active");
+            } catch (_) {}
           });
           popupContainer.addEventListener("click", (e) => {
-            if (e.target === popupContainer)
-              document.body.removeChild(popupContainer);
+            if (e.target === popupContainer) {
+              try {
+                popupContainer.remove();
+              } catch (_) {}
+              try {
+                document.body.classList.remove("modal-active");
+              } catch (_) {}
+            }
           });
 
           deleteButton.addEventListener("click", () => {
@@ -243,7 +282,12 @@ export function createTokenUI({
                 addTokenToDOM
               )
             );
-            document.body.removeChild(popupContainer);
+            try {
+              popupContainer.remove();
+            } catch (_) {}
+            try {
+              document.body.classList.remove("modal-active");
+            } catch (_) {}
           });
         });
       })
@@ -271,6 +315,17 @@ export function createTokenUI({
       try {
         const popupContainer = document.createElement("div");
         popupContainer.className = "popup-container";
+        try {
+          const hasVScroll =
+            document.body.scrollHeight > document.body.clientHeight;
+          if (hasVScroll) {
+            const sbw = Math.max(
+              0,
+              window.innerWidth - document.documentElement.clientWidth
+            );
+            popupContainer.style.paddingRight = sbw + "px";
+          }
+        } catch (_) {}
         const popupContent = document.createElement("div");
         popupContent.className = "popup-content-qr";
         let qrDataURL = await QRCode.toDataURL(secret, { width: 140 });
@@ -297,23 +352,36 @@ export function createTokenUI({
         qrContainer.appendChild(svgIcon);
         popupContent.appendChild(qrContainer);
         popupContainer.appendChild(popupContent);
-        document.body.appendChild(popupContainer);
+        document.documentElement.appendChild(popupContainer);
+        try {
+          document.body.classList.add("modal-active");
+        } catch (_) {}
         popupContainer.addEventListener("click", (e) => {
           if (e.target === popupContainer)
-            document.body.removeChild(popupContainer);
+            try {
+              popupContainer.remove();
+            } catch (_) {}
         });
         const redXButton = document.getElementById("x-icon");
         redXButton.addEventListener("click", () => {
-          document.body.removeChild(popupContainer);
+          try {
+            popupContainer.remove();
+          } catch (_) {}
+          try {
+            document.body.classList.remove("modal-active");
+          } catch (_) {}
         });
       } catch (error) {
         console.log(error);
       }
     });
 
-    tokenElement.addEventListener('dragstart', (e) => {
-      tokenElement.classList.add('dragging');
-      try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', name); } catch (_) {}
+    tokenElement.addEventListener("dragstart", (e) => {
+      tokenElement.classList.add("dragging");
+      try {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", name);
+      } catch (_) {}
     });
 
     tokenElement.appendChild(nameHeader);
@@ -324,7 +392,7 @@ export function createTokenUI({
 
     let canClick = true;
     tokenElement.addEventListener("click", async () => {
-      if (tokenElement.classList.contains('dragging')) return;
+      if (tokenElement.classList.contains("dragging")) return;
       if (!canClick) return;
       if (!clipboardCopyingCheckbox || !clipboardCopyingCheckbox.checked) {
         const copiedMessage = document.createElement("div");
