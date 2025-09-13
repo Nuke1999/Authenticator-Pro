@@ -198,6 +198,12 @@ export function createTokenUI({
           }
 
           const saveUrlButton = document.createElement("button");
+          if (autofillChk.checked) {
+            saveUrlButton.disabled = false;
+          } else {
+            saveUrlButton.disabled = true;
+            console.log("autofill is NOT CHECKED");
+          }
           saveUrlButton.id = "save-url-button";
           saveUrlButton.className = "wide-button";
           saveUrlButton.textContent = t("save_url");

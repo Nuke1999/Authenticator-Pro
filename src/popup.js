@@ -1,5 +1,4 @@
 import { Buffer } from "buffer";
-// import QRCode from "qrcode";
 import {
   startWebcam,
   stopWebcam,
@@ -36,6 +35,10 @@ import {
 } from "./permissions.js";
 import { deleteToken } from "./storage.js";
 import { createTokenUI, generateToken, isValidBase32 } from "./tokens.js";
+
+// Global references for the last opened modal elements (if needed elsewhere)
+let globalPopupContainer = null;
+let globalPopupContent = null;
 
 // Keep token rendering order stable based on stored order, else alphabetical by name
 function reorderTokensByOrderArray(tokens, order) {
@@ -83,10 +86,8 @@ function preventKeys(e) {
   }
 }
 
-// Centralized scroll lock when any modal is present
 (function setupModalScrollLock() {
   let scrollLocked = false;
-
   const updateScrollLock = () => {
     const hasPopup = !!document.querySelector(".popup-container");
     if (hasPopup && !scrollLocked) {
@@ -99,13 +100,10 @@ function preventKeys(e) {
   };
 
   const init = () => {
-    // Initial check
     updateScrollLock();
-    // Watch for popup containers being added/removed
     const target = document.documentElement;
     if (!target) return;
     const observer = new MutationObserver(() => {
-      // Batch DOM changes into one check
       updateScrollLock();
     });
     observer.observe(target, { childList: true, subtree: true });
@@ -507,8 +505,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   });
 
-  // decryptTokens moved to auth.js
-
   try {
     chrome.storage.local.get((localResult) => {
       if (
@@ -596,19 +592,50 @@ document.addEventListener("DOMContentLoaded", () => {
           window.close();
         }
 
-        if (localResult.theme == "theme-light") {
-          document.body.classList.remove("theme-dark");
-          document.body.classList.add("theme-light");
-          chrome.storage.local.set({ theme: "theme-light" });
-        } else if (localResult.theme == "theme-dark") {
-          document.body.classList.remove("theme-light");
-          document.body.classList.add("theme-dark");
-          chrome.storage.local.set({ theme: "theme-dark" });
+        {
+          const theme = localResult.theme;
+          const themes = [
+            "theme-light",
+            "theme-dark",
+            "theme-ocean",
+            "theme-forest",
+          ];
+          const applied = themes.includes(theme) ? theme : "theme-light";
+          try {
+            document.body.classList.remove(...themes);
+          } catch (_) {}
+          document.body.classList.add(applied);
+          // normalize stored value if missing/invalid
+          if (theme !== applied) chrome.storage.local.set({ theme: applied });
         }
       }
     });
   } catch (error) {
     console.log(error);
+  }
+
+  let saveUrlButton = document.getElementById("add-url-button");
+  function saveImageUrl() {
+    let addImageUrl = imageUrlInput.value;
+    scanImageUrl(addImageUrl)
+      .then((data) => {
+        if (!data) throw new Error("No QR data");
+        secretInput.value = data;
+        qrCodeFound();
+        document.body.removeChild(popupContainer);
+      })
+      .catch((error) => {
+        setAdvancedAddMessage(
+          chrome.i18n.getMessage("incorrect_url_message"),
+          true
+        );
+        setTimeout(() => {
+          setAdvancedAddMessage(
+            chrome.i18n.getMessage("qr_not_found_message"),
+            false
+          );
+        }, 3000);
+      });
   }
 
   const autofillCheckbox = document.getElementById("autofill-checkbox");
@@ -619,6 +646,7 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const granted = await requestAutofillPermission();
         if (granted) {
+          console;
           chrome.storage.local.set({ autofillEnabled: true });
           popupUpdate();
         } else {
@@ -650,27 +678,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     try {
       if (syncCheckbox.checked) {
-        chrome.storage.local.get(["tokens"], (localResult) => {
+        chrome.storage.local.get(["tokens", "theme"], (localResult) => {
           chrome.storage.sync.get(["tokens"], (syncResult) => {
-            let localTokens = Array.isArray(localResult.tokens)
+            const localTokens = Array.isArray(localResult.tokens)
               ? localResult.tokens
               : [];
-            let syncTokens = Array.isArray(syncResult.tokens)
+            const syncTokensRaw = Array.isArray(syncResult.tokens)
               ? syncResult.tokens
               : [];
-            localTokens.forEach((localToken) => {
-              const match = syncTokens.find(
-                (syncToken) => syncToken.name === localToken.name
-              );
-              if (!match) {
-                syncTokens.push(localToken);
-              }
-            });
-            chrome.storage.sync.set({ tokens: syncTokens }, () => {
-              chrome.storage.local.set({ tokens: syncTokens }, () => {
+
+            // Prefer local tokens. Remove incoming duplicates by secret and name.
+            const localSecrets = new Set(localTokens.map((t) => t.secret));
+            const localNames = new Set(localTokens.map((t) => t.name));
+
+            const finalTokens = [...localTokens];
+            for (const t of syncTokensRaw) {
+              if (localSecrets.has(t.secret)) continue;
+              if (localNames.has(t.name)) continue;
+              finalTokens.push(t);
+            }
+
+            chrome.storage.sync.set({ tokens: finalTokens }, () => {
+              chrome.storage.local.set({ tokens: finalTokens }, () => {
                 chrome.storage.local.get(["tokenOrder"], (o) => {
                   const ordered = reorderTokensByOrderArray(
-                    syncTokens,
+                    finalTokens,
                     o.tokenOrder || []
                   );
                   while (tokensContainer.firstChild) {
@@ -687,6 +719,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
               });
             });
+
+            // Sync the current device theme to Chrome sync as source of truth when enabling sync
+            const themes = [
+              "theme-light",
+              "theme-dark",
+              "theme-ocean",
+              "theme-forest",
+            ];
+            let currentTheme = themes.find((th) =>
+              document.body.classList.contains(th)
+            );
+            if (!currentTheme) {
+              currentTheme =
+                localResult.theme && themes.includes(localResult.theme)
+                  ? localResult.theme
+                  : "theme-light";
+            }
+            try {
+              chrome.storage.sync.set({ theme: currentTheme });
+            } catch (_) {}
           });
         });
       } else {
@@ -777,11 +829,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const secret = secretInput.value.trim();
+    console.log(secret);
     if (name && nameLength && secret) {
       if (isValidBase32(secret)) {
         chrome.storage.local.get(
           ["tokens", "encryptionKeyInMemory"],
           async (result) => {
+            console.log(result);
             let tokens = result.tokens || [];
             const nameExists = tokens.some(
               (tokenObj) => tokenObj.name === name
@@ -794,6 +848,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 chrome.i18n.getMessage("name_already_exists_message")
               );
             } else if (secretExists) {
+              console.log("secret already exists");
               createPopup(
                 chrome.i18n.getMessage("secret_already_added_message")
               );
@@ -983,6 +1038,8 @@ document.addEventListener("DOMContentLoaded", () => {
       popupContainer.className = "popup-container";
       let popupContent = document.createElement("div");
       popupContent.className = "popup-content";
+      globalPopupContainer = popupContainer;
+      globalPopupContent = popupContent;
       while (popupContent.firstChild) {
         popupContent.removeChild(popupContent.firstChild);
       }
@@ -1128,6 +1185,8 @@ document.addEventListener("DOMContentLoaded", () => {
         content: popupContent,
         close,
       } = openModal({ contentClass: "popup-content" });
+      globalPopupContainer = popupContainer;
+      globalPopupContent = popupContent;
       const h2 = document.createElement("h2");
       h2.className = "centered-headings";
       h2.textContent = chrome.i18n.getMessage("disable_password_protection");
@@ -1307,15 +1366,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const webcamButton = document.createElement("button");
   advancedAddButton.addEventListener("click", async () => {
-    if (document.querySelector(".popup-container") || isCooldown) {
+    if (document.querySelector(".popup-container")) {
       return;
     }
     document.body.classList.add("modal-active");
-
     let popupContainer = document.createElement("div");
     popupContainer.className = "popup-container";
     let popupContent = document.createElement("div");
     popupContent.className = "popup-video-content";
+    globalPopupContainer = popupContainer;
+    globalPopupContent = popupContent;
     let webcamOffIcon = document.createElement("img");
     webcamOffIcon.src = "./icons/video-off.svg";
     webcamOffIcon.className = "webcam-off-icon";
@@ -1358,7 +1418,6 @@ document.addEventListener("DOMContentLoaded", () => {
     popupContent.appendChild(videoContainer);
     let buttonsContainer = document.createElement("div");
     buttonsContainer.className = "buttons-container";
-
     webcamButton.className = "webcam-add-button";
     webcamButton.id = "webcam-add-button";
     webcamButton.textContent = chrome.i18n.getMessage("webcam");
@@ -1379,7 +1438,6 @@ document.addEventListener("DOMContentLoaded", () => {
     imageUrlInput.type = "text";
     imageUrlInput.id = "image-url-input";
     imageUrlInput.className = "form-input enter-url-placeholder";
-    imageUrlInput.setAttribute("placeholder", "https://...");
     imageUrlInput.value = "";
     let urlButton = document.createElement("button");
     urlButton.id = "add-url-button";
@@ -1410,6 +1468,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const stopCameraAndScanner = () => {
       if (qrScanner) {
+        console.log("qrScanner was true");
         qrScanner.stop();
         qrScanner = null;
       }
@@ -1463,20 +1522,14 @@ document.addEventListener("DOMContentLoaded", () => {
     redXButton.addEventListener("click", () => {
       document.body.classList.remove("modal-active");
       closeAdvanced();
-      isCooldown = true;
-      setTimeout(() => {
-        isCooldown = false;
-      }, 2000);
     });
 
     popupContainer.addEventListener("click", (e) => {
       if (e.target === popupContainer) {
+        console.log("should be stopping camera and scanner");
+        stopCameraAndScanner();
         document.body.classList.remove("modal-active");
         closeAdvanced();
-        isCooldown = true;
-        setTimeout(() => {
-          isCooldown = false;
-        }, 2000);
       }
     });
 
@@ -1488,8 +1541,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     webcamButton.addEventListener("click", async () => {
       if (isCooldown) {
+        console.log("Blocked: cooldown active, ignoring click.");
         return;
       }
+
+      console.log("Webcam button clicked, fired");
+      isCooldown = true;
+      webcamButton.disabled = true; // always disable button immediately
+      console.log("Webcam button disabled for 3 seconds");
+
+      // 🔒 optional overlay for outside clicks
+      const overlay = document.createElement("div");
+      overlay.style.position = "fixed";
+      overlay.style.top = "0";
+      overlay.style.left = "0";
+      overlay.style.width = "100%";
+      overlay.style.height = "100%";
+      overlay.style.background = "transparent";
+      overlay.style.zIndex = "9999";
+      document.body.appendChild(overlay);
+
+      // 🔒 ENFORCED: only this timer resets cooldown
+      setTimeout(() => {
+        if (overlay.parentNode) overlay.remove();
+        webcamButton.disabled = false;
+        isCooldown = false;
+        console.log("Cooldown ended (3s), button re-enabled.");
+      }, 3000);
 
       try {
         const videoElem = document.getElementById("video");
@@ -1522,6 +1600,7 @@ document.addEventListener("DOMContentLoaded", () => {
               );
             }
           });
+
           qrScanner = started.scanner;
           stream = started.stream;
           document.querySelector(".video-container").style.display = "block";
@@ -1530,7 +1609,10 @@ document.addEventListener("DOMContentLoaded", () => {
           setAdvancedAddMessage(chrome.i18n.getMessage("scanning"), true);
         }
       } catch (error) {
+        console.error("Webcam error:", error);
+
         if (
+          error.name !== "AbortError" &&
           document.querySelector(".popup-video-content") &&
           !isVideoPermission &&
           !isPopup
@@ -1540,17 +1622,12 @@ document.addEventListener("DOMContentLoaded", () => {
               chrome.runtime.getURL("authenticator.html") +
               "?isPopup=true&isVideoPermission=true",
             type: "popup",
-            width: 314,
-            height: 480,
+            width: 300,
+            height: 400,
           });
           window.close();
         }
       }
-
-      isCooldown = true;
-      setTimeout(() => {
-        isCooldown = false;
-      }, 2000);
     });
 
     document
@@ -1591,10 +1668,6 @@ document.addEventListener("DOMContentLoaded", () => {
               popupContainer.remove();
             } catch (_) {}
             qrCodeFound();
-            isCooldown = true;
-            setTimeout(() => {
-              isCooldown = false;
-            }, 2000);
             nameInput.focus();
           } catch (error) {
             setAdvancedAddMessage(
@@ -1619,7 +1692,6 @@ document.addEventListener("DOMContentLoaded", () => {
     webcamButton.dispatchEvent(clickEvent);
   }
 
-  // createPopup moved to ui.js
   const { addTokenToDOM: addTokenToDOMImpl, updateToken: updateTokenImpl } =
     createTokenUI({
       tokensContainer,
@@ -1638,5 +1710,4 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateToken(name, secret) {
     return updateTokenImpl(name, secret);
   }
-  // updateToken moved into tokens.js (via createTokenUI)
 });

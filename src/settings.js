@@ -1,5 +1,5 @@
 import { jsPDF } from "jspdf";
-import { createXIcon } from "./ui.js";
+import { openModal, buildHeader } from "./ui.js";
 export async function getStoredScale() {
   return new Promise((resolve) => {
     chrome.storage.local.get(["uiScale"], (result) => {
@@ -28,8 +28,8 @@ export function buildSettingsUI(settingsContainer) {
   const exportRow = document.createElement("div");
   exportRow.className = "theme-buttons-container";
   const exportBtn = document.createElement("button");
-  exportBtn.id = "export-data-button";
-  exportBtn.className = "light-theme-button"; // reuse button style
+  exportBtn.className = "export-data-button";
+  // exportBtn.className = "light-theme-button"; // reuse button style
   exportBtn.textContent = "Export Data";
   exportRow.appendChild(exportBtn);
   exportContainer.appendChild(exportHeader);
@@ -216,26 +216,29 @@ export function initScaleControl(settingsContainer) {
 }
 
 export function initExportControls(settingsContainer) {
-  let exportBtn = settingsContainer.querySelector("#export-data-button");
-
-  let redXButton = document.getElementById("x-icon");
+  let exportBtn = settingsContainer.querySelector(".export-data-button");
 
   const onClick = () => {
-    const popupContainer = document.createElement("div");
-    popupContainer.className = "popup-container";
+    const {
+      container: popupContainer,
+      content: popupContent,
+      close,
+    } = openModal({
+      contentClass: "popup-content",
+      onClose: () => {
+        try {
+          document.body.classList.remove("modal-active");
+        } catch (_) {}
+      },
+    });
+    // Optional: maintain legacy body class side-effect if styles rely on it
     try {
-      const sbw = Math.max(
-        0,
-        window.innerWidth - document.documentElement.clientWidth
-      );
-      if (sbw) popupContainer.style.paddingRight = sbw + "px";
+      document.body.classList.add("modal-active");
     } catch (_) {}
-    const popupContent = document.createElement("div");
-    popupContent.className = "popup-content";
-    const heading = document.createElement("h2");
-    heading.className = "centered-headings";
-    heading.textContent = "Export Options";
-    popupContent.appendChild(heading);
+
+    const { header, xIcon } = buildHeader({ title: "Export Options" });
+    popupContent.appendChild(header);
+
     const btns = document.createElement("div");
     btns.className = "export-buttons";
     const csvBtn = document.createElement("button");
@@ -251,23 +254,9 @@ export function initExportControls(settingsContainer) {
     docBtn.textContent = "Export Word (.doc)";
     btns.appendChild(docBtn);
     popupContent.appendChild(btns);
-    popupContainer.appendChild(popupContent);
-    document.documentElement.appendChild(popupContainer);
-    try {
-      document.body.classList.add("modal-active");
-    } catch (_) {}
 
-    const close = () => {
-      try {
-        popupContainer.remove();
-      } catch (_) {}
-      try {
-        document.body.classList.remove("modal-active");
-      } catch (_) {}
-    };
-    popupContainer.addEventListener("click", (e) => {
-      if (e.target === popupContainer) close();
-    });
+    // Red X closes
+    if (xIcon) xIcon.addEventListener("click", close);
 
     function downloadBlob(filename, mime, content) {
       const blob = new Blob([content], { type: mime });
@@ -561,30 +550,47 @@ export function initBasicToggles({
       }
       try {
         if (syncCheckbox.checked) {
-          chrome.storage.local.get(["tokens"], (localResult) => {
+          chrome.storage.local.get(["tokens", "theme"], (localResult) => {
             chrome.storage.sync.get(["tokens"], (syncResult) => {
-              let localTokens = Array.isArray(localResult.tokens)
+              const localTokens = Array.isArray(localResult.tokens)
                 ? localResult.tokens
                 : [];
-              let syncTokens = Array.isArray(syncResult.tokens)
+              const syncTokensRaw = Array.isArray(syncResult.tokens)
                 ? syncResult.tokens
                 : [];
-              localTokens.forEach((localToken) => {
-                if (!syncTokens.find((t) => t.name === localToken.name)) {
-                  syncTokens.push(localToken);
-                }
-              });
-              chrome.storage.sync.set({ tokens: syncTokens }, () => {
-                chrome.storage.local.set({ tokens: syncTokens }, () => {
+              const localSecrets = new Set(localTokens.map((t) => t.secret));
+              const localNames = new Set(localTokens.map((t) => t.name));
+              const finalTokens = [...localTokens];
+              for (const t of syncTokensRaw) {
+                if (localSecrets.has(t.secret)) continue; // discard incoming duplicate by secret
+                if (localNames.has(t.name)) continue; // prefer local by name
+                finalTokens.push(t);
+              }
+              chrome.storage.sync.set({ tokens: finalTokens }, () => {
+                chrome.storage.local.set({ tokens: finalTokens }, () => {
                   if (tokensContainer && addTokenToDOM) {
                     while (tokensContainer.firstChild)
                       tokensContainer.removeChild(tokensContainer.firstChild);
-                    syncTokens.forEach((t) =>
+                    finalTokens.forEach((t) =>
                       addTokenToDOM(t.name, t.secret, t.url, t.otp)
                     );
                   }
                 });
               });
+              // Push current device theme to sync when enabling sync
+              try {
+                const classes = [
+                  "theme-light",
+                  "theme-dark",
+                  "theme-ocean",
+                  "theme-forest",
+                ];
+                const active = classes.find((c) =>
+                  document.body.classList.contains(c)
+                );
+                const th = active || localResult.theme || "theme-light";
+                chrome.storage.sync.set({ theme: th });
+              } catch (_) {}
             });
           });
         }

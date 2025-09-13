@@ -217,8 +217,8 @@ export function buildCloseAction(labelKey = "close") {
     className: "close-popup",
     text: chrome.i18n.getMessage(labelKey),
   });
-  buttonsContainer.appendChild(button);
-  return { button };
+  container.appendChild(button);
+  return { container, button };
 }
 
 export function buildHeader({
@@ -270,6 +270,14 @@ export function createPopup(message) {
   popupContent.appendChild(closeButtonContainer);
   popupContainer.appendChild(popupContent);
   document.body.appendChild(popupContainer);
+  // Close on overlay click to match other modals
+  popupContainer.addEventListener("click", (e) => {
+    if (e.target === popupContainer) {
+      try {
+        document.body.removeChild(popupContainer);
+      } catch (_) {}
+    }
+  });
 
   closeButton.addEventListener("click", () => {
     document.body.removeChild(popupContainer);
@@ -278,6 +286,10 @@ export function createPopup(message) {
     document.body.removeChild(popupContainer);
   });
 }
+
+// popupContainer.addEventListener("click", (e) => {
+//   if (e.target === popupContainer) close();
+// });
 
 export function openModal({
   contentClass = "popup-content",
