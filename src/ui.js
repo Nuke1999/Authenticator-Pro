@@ -6,7 +6,14 @@ export function setAttributes(element, attributes) {
   });
 }
 
-export function createSwitchElement({ id, label, tooltip, extraMessage, extraMessageId, isLast }) {
+export function createSwitchElement({
+  id,
+  label,
+  tooltip,
+  extraMessage,
+  extraMessageId,
+  isLast,
+}) {
   const switchBox = document.createElement("div");
   switchBox.className = isLast ? "switch-box-last" : "switch-box";
 
@@ -14,7 +21,9 @@ export function createSwitchElement({ id, label, tooltip, extraMessage, extraMes
   switchLabel.className = "switch";
   if (id === "password-protected-checkbox" || id === "sync-checkbox") {
     switchLabel.id =
-      id === "password-protected-checkbox" ? "password-protected-label" : "sync-check-label";
+      id === "password-protected-checkbox"
+        ? "password-protected-label"
+        : "sync-check-label";
   }
 
   const checkbox = document.createElement("input");
@@ -33,7 +42,10 @@ export function createSwitchElement({ id, label, tooltip, extraMessage, extraMes
   const tooltipContainer = document.createElement("div");
   tooltipContainer.className = "tooltip";
 
-  const tooltipIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  const tooltipIcon = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "svg"
+  );
   setAttributes(tooltipIcon, {
     xmlns: "http://www.w3.org/2000/svg",
     width: "24",
@@ -47,7 +59,10 @@ export function createSwitchElement({ id, label, tooltip, extraMessage, extraMes
     class: "feather feather-info",
   });
 
-  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  const circle = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
   setAttributes(circle, { cx: "12", cy: "12", r: "10" });
 
   const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -105,7 +120,10 @@ export function confirmDelete(name, secret, onDelete) {
     id: "x-icon",
   });
 
-  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  const circle = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
   setAttributes(circle, { cx: "12", cy: "12", r: "10" });
   svgIcon.appendChild(circle);
 
@@ -177,7 +195,10 @@ export function createXIcon({ stroke = "red", className, id } = {}) {
     id: id,
   });
 
-  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  const circle = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
   setAttributes(circle, { cx: "12", cy: "12", r: "10" });
 
   const line1 = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -191,13 +212,13 @@ export function createXIcon({ stroke = "red", className, id } = {}) {
 }
 
 export function buildCloseAction(labelKey = "close") {
-  const container = el("div", { className: "close-popup-container" });
+  // const container = el("div", { className: "buttons-container" });
   const button = el("button", {
     className: "close-popup",
     text: chrome.i18n.getMessage(labelKey),
   });
-  container.appendChild(button);
-  return { container, button };
+  buttonsContainer.appendChild(button);
+  return { button };
 }
 
 export function buildHeader({
@@ -233,7 +254,9 @@ export function createPopup(message) {
   const popupContent = document.createElement("div");
   popupContent.className = "popup-message";
 
-  const { header: headerDiv, xIcon: svgIcon } = buildHeader({ showClose: true });
+  const { header: headerDiv, xIcon: svgIcon } = buildHeader({
+    showClose: true,
+  });
 
   const messageHeading = document.createElement("h3");
   messageHeading.className = "centered-headings shorter-width-heading";
@@ -256,7 +279,11 @@ export function createPopup(message) {
   });
 }
 
-export function openModal({ contentClass = "popup-content", onClose, overlayClose = true } = {}) {
+export function openModal({
+  contentClass = "popup-content",
+  onClose,
+  overlayClose = true,
+} = {}) {
   const container = el("div", { className: "popup-container" });
   const content = el("div", { className: contentClass });
   container.appendChild(content);

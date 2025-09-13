@@ -1,3 +1,4 @@
+import { jsPDF } from "jspdf";
 export async function getStoredScale() {
   return new Promise((resolve) => {
     chrome.storage.local.get(["uiScale"], (result) => {
@@ -7,14 +8,121 @@ export async function getStoredScale() {
   });
 }
 
+export function buildSettingsUI(settingsContainer) {
+  if (!settingsContainer) return;
+  // Clear existing content
+  while (settingsContainer.firstChild)
+    settingsContainer.removeChild(settingsContainer.firstChild);
+
+  // 1) Export (header + button) in export-container
+  const exportContainer = document.createElement("div");
+  exportContainer.className = "export-container";
+  const exportHeader = document.createElement("h2");
+  exportHeader.className = "export-header";
+  try {
+    exportHeader.textContent = chrome.i18n.getMessage("export") || "Export";
+  } catch (_) {
+    exportHeader.textContent = "Export";
+  }
+  const exportRow = document.createElement("div");
+  exportRow.className = "theme-buttons-container";
+  const exportBtn = document.createElement("button");
+  exportBtn.id = "export-data-button";
+  exportBtn.className = "light-theme-button"; // reuse button style
+  exportBtn.textContent = "Export Data";
+  exportRow.appendChild(exportBtn);
+  exportContainer.appendChild(exportHeader);
+  exportContainer.appendChild(exportRow);
+  settingsContainer.appendChild(exportContainer);
+
+  // 2) Permissions header + container
+  const permContainer = document.createElement("div");
+  permContainer.className = "switch-boxes-container";
+  permContainer.id = "switch-boxes-container";
+  const permHeader = document.createElement("h2");
+  permHeader.className = "permissions-header";
+  try {
+    permHeader.textContent =
+      chrome.i18n.getMessage("permissions") || "Permissions";
+  } catch (_) {
+    permHeader.textContent = "Permissions";
+  }
+  permContainer.appendChild(permHeader);
+  settingsContainer.appendChild(permContainer);
+
+  // 3) Scale header + dropdown
+  initScaleControl(settingsContainer);
+
+  // 4) Themes header + buttons
+
+  const themesContainer = document.createElement("div");
+  themesContainer.className = "themes-container";
+
+  settingsContainer.appendChild(themesContainer);
+  const themesHeader = document.createElement("h2");
+  themesHeader.className = "themes-header";
+  try {
+    themesHeader.textContent = chrome.i18n.getMessage("themes") || "Themes";
+  } catch (_) {
+    themesHeader.textContent = "Themes";
+  }
+  settingsContainer.appendChild(themesContainer);
+
+  themesContainer.appendChild(themesHeader);
+
+  //here it is
+
+  const themeButtonsContainer = document.createElement("div");
+  themeButtonsContainer.className = "theme-buttons-container";
+
+  // themesContainer.appendChild(themeButtonsContainer);
+  themesContainer.appendChild(themeButtonsContainer);
+
+  const lightBtn = document.createElement("button");
+  lightBtn.className = "light-theme-button";
+  lightBtn.id = "light-theme-button";
+  try {
+    lightBtn.textContent =
+      chrome.i18n.getMessage("light_theme") || "Light Theme";
+  } catch (_) {
+    lightBtn.textContent = "Light Theme";
+  }
+  const darkBtn = document.createElement("button");
+  darkBtn.className = "dark-theme-button";
+  darkBtn.id = "dark-theme-button";
+  try {
+    darkBtn.textContent = chrome.i18n.getMessage("dark_theme") || "Dark Theme";
+  } catch (_) {
+    darkBtn.textContent = "Dark Theme";
+  }
+  const oceanBtn = document.createElement("button");
+  oceanBtn.className = "ocean-theme-button";
+  oceanBtn.id = "ocean-theme-button";
+  oceanBtn.textContent = "Ocean Theme";
+  const forestBtn = document.createElement("button");
+  forestBtn.className = "forest-theme-button";
+  forestBtn.id = "forest-theme-button";
+  forestBtn.textContent = "Forest Theme";
+  themeButtonsContainer.appendChild(lightBtn);
+  themeButtonsContainer.appendChild(darkBtn);
+  themeButtonsContainer.appendChild(oceanBtn);
+  themeButtonsContainer.appendChild(forestBtn);
+  // settingsContainer.appendChild(themeButtonsContainer);
+
+  // Theme/export wiring is initialized by popup after switches are available
+}
+
 export function applyScale(scale) {
   const s = typeof scale === "number" && scale > 0 ? scale : 1;
   document.documentElement.style.setProperty("--ui-scale", String(s));
-  // If we are in popup window mode, update the outer window size to match scale
+
   try {
     chrome.windows.getCurrent((win) => {
       if (!win || win.type !== "popup") return;
-      const BASE_W = 300, BASE_H = 450, CHROME_W = 14, CHROME_H = 30;
+      const BASE_W = 300,
+        BASE_H = 450,
+        CHROME_W = 14,
+        CHROME_H = 30;
       const width = Math.round(BASE_W * s + CHROME_W);
       const height = Math.round(BASE_H * s + CHROME_H);
       chrome.windows.update(win.id, { width, height });
@@ -26,18 +134,13 @@ export async function applyStoredScale() {
   try {
     const scale = await getStoredScale();
     applyScale(scale);
-  } catch (e) {
-    // no-op
-  }
+  } catch (e) {}
 }
 
 export function initScaleControl(settingsContainer) {
-  // Avoid duplicate control
   if (settingsContainer.querySelector("#ui-scale-control")) return;
-
   const section = document.createElement("div");
-  section.className = "scale-section";
-
+  section.className = "scale-container";
   const header = document.createElement("h2");
   header.className = "scale-header";
   header.textContent = "Scale";
@@ -62,7 +165,6 @@ export function initScaleControl(settingsContainer) {
     select.appendChild(o);
   });
 
-  // Load current value
   getStoredScale().then((scale) => {
     const closest = options
       .map((o) => o.value)
@@ -108,43 +210,45 @@ export function initScaleControl(settingsContainer) {
   });
 
   section.appendChild(select);
-  // Insert after the theme buttons section to avoid overlapping headers
-  const buttons = settingsContainer.querySelector(".theme-buttons-container");
-  if (buttons) {
-    buttons.insertAdjacentElement("afterend", section);
-  } else {
-    settingsContainer.appendChild(section);
-  }
+  // Default: append at end; caller controls order by when it runs
+  settingsContainer.appendChild(section);
 }
 
 export function initExportControls(settingsContainer) {
-  if (settingsContainer.querySelector("#export-section")) return;
+  // Bind to an existing Export button if present; otherwise, create a minimal one.
+  let exportBtn =
+    (settingsContainer &&
+      settingsContainer.querySelector("#export-data-button")) ||
+    document.getElementById("export-data-button");
 
-  const section = document.createElement("div");
-  section.id = "export-section";
+  if (!exportBtn) {
+    // Fallback: create a simple export container at the top
+    const container = document.createElement("div");
+    container.className = "export-container";
+    const exportHeader = document.createElement("h2");
+    exportHeader.className = "export-header";
+    exportHeader.textContent = "Export";
+    const row = document.createElement("div");
+    row.className = "theme-buttons-container";
+    exportBtn = document.createElement("button");
+    exportBtn.id = "export-data-button";
+    exportBtn.className = "light-theme-button";
+    exportBtn.textContent = "Export Data";
+    row.appendChild(exportBtn);
+    container.appendChild(header);
+    container.appendChild(row);
+    if (settingsContainer) settingsContainer.prepend(container);
+    else document.body.appendChild(container);
+  }
 
-  const header = document.createElement("h2");
-  header.className = "themes-header";
-  header.textContent = "Export";
-
-  const row = document.createElement("div");
-  row.className = "theme-buttons-container";
-
-  const exportBtn = document.createElement("button");
-  exportBtn.className = "light-theme-button";
-  exportBtn.textContent = "Export Data";
-  row.appendChild(exportBtn);
-  section.appendChild(row);
-
-  const insertAfter = settingsContainer.querySelector(".scale-section");
-  if (insertAfter) insertAfter.insertAdjacentElement("afterend", section);
-  else settingsContainer.appendChild(section);
-
-  exportBtn.addEventListener("click", () => {
+  const onClick = () => {
     const popupContainer = document.createElement("div");
     popupContainer.className = "popup-container";
     try {
-      const sbw = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+      const sbw = Math.max(
+        0,
+        window.innerWidth - document.documentElement.clientWidth
+      );
       if (sbw) popupContainer.style.paddingRight = sbw + "px";
     } catch (_) {}
     const popupContent = document.createElement("div");
@@ -176,18 +280,26 @@ export function initExportControls(settingsContainer) {
     popupContent.appendChild(btns);
     popupContainer.appendChild(popupContent);
     document.documentElement.appendChild(popupContainer);
-    try { document.body.classList.add("modal-active"); } catch (_) {}
+    try {
+      document.body.classList.add("modal-active");
+    } catch (_) {}
 
     const close = () => {
-      try { popupContainer.remove(); } catch (_) {}
-      try { document.body.classList.remove("modal-active"); } catch (_) {}
+      try {
+        popupContainer.remove();
+      } catch (_) {}
+      try {
+        document.body.classList.remove("modal-active");
+      } catch (_) {}
     };
-    popupContainer.addEventListener("click", (e) => { if (e.target === popupContainer) close(); });
+    popupContainer.addEventListener("click", (e) => {
+      if (e.target === popupContainer) close();
+    });
 
     function downloadBlob(filename, mime, content) {
       const blob = new Blob([content], { type: mime });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = filename;
       document.body.appendChild(a);
@@ -197,52 +309,108 @@ export function initExportControls(settingsContainer) {
     }
 
     function exportCSV(tokens) {
-      const header = ['name','secret','url','otp'];
-      const lines = [header.join(',')];
-      tokens.forEach(t => {
-        const vals = [t.name||'', t.secret||'', t.url||'', t.otp||'']
-          .map(v => '"' + String(v).replace(/"/g,'""') + '"');
-        lines.push(vals.join(','));
+      const header = ["name", "secret", "url", "otp"];
+      const lines = [header.join(",")];
+      tokens.forEach((t) => {
+        const vals = [
+          t.name || "",
+          t.secret || "",
+          t.url || "",
+          t.otp || "",
+        ].map((v) => '"' + String(v).replace(/"/g, '""') + '"');
+        lines.push(vals.join(","));
       });
-      downloadBlob('authenticator-export.csv', 'text/csv;charset=utf-8', lines.join('\r\n'));
+      downloadBlob(
+        "authenticator-export.csv",
+        "text/csv;charset=utf-8",
+        lines.join("\r\n")
+      );
     }
 
     function exportDOC(tokens) {
-      const rows = tokens.map(t => `<tr><td>${t.name||''}</td><td>${t.secret||''}</td><td>${t.url||''}</td><td>${t.otp||''}</td></tr>`).join('');
+      const rows = tokens
+        .map(
+          (t) =>
+            `<tr><td>${t.name || ""}</td><td>${t.secret || ""}</td><td>${
+              t.url || ""
+            }</td><td>${t.otp || ""}</td></tr>`
+        )
+        .join("");
       const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Export</title></head><body><table border="1" cellspacing="0" cellpadding="4"><thead><tr><th>Name</th><th>Secret</th><th>URL</th><th>OTP</th></tr></thead><tbody>${rows}</tbody></table></body></html>`;
-      downloadBlob('authenticator-export.doc', 'application/msword', html);
+      downloadBlob("authenticator-export.doc", "application/msword", html);
     }
 
     function exportPDF(tokens) {
-      const rows = tokens.map(t => `<tr><td>${t.name||''}</td><td>${t.secret||''}</td><td>${t.url||''}</td><td>${t.otp||''}</td></tr>`).join('');
-      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Export PDF</title><style>body{font-family:Arial, sans-serif;padding:16px;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #333;padding:6px;font-size:12px;}</style></head><body><h2>Authenticator Export</h2><table><thead><tr><th>Name</th><th>Secret</th><th>URL</th><th>OTP</th></tr></thead><tbody>${rows}</tbody></table><script>window.onload=function(){window.print();}</script></body></html>`;
-      const w = window.open('', '_blank');
-      if (w) {
-        w.document.open();
-        w.document.write(html);
-        w.document.close();
-      }
+      const doc = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
+      const margin = 36;
+      const lineHeight = 18;
+      const colX = [margin, margin + 160, margin + 360, margin + 480];
+      let y = margin + 12;
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(14);
+      doc.text("Authenticator Export", margin, y);
+      y += 24;
+      doc.setFontSize(11);
+      doc.setFont("Helvetica", "bold");
+      doc.text("Name", colX[0], y);
+      doc.text("Secret", colX[1], y);
+      doc.text("URL", colX[2], y);
+      doc.text("OTP", colX[3], y);
+      y += 12;
+      doc.setFont("Helvetica", "normal");
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const maxY = pageHeight - margin;
+      const wrap = (str, max) =>
+        String(str || "").length > max
+          ? String(str).slice(0, max - 3) + "..."
+          : String(str || "");
+      tokens.forEach((t) => {
+        if (y > maxY) {
+          doc.addPage();
+          y = margin;
+        }
+        doc.text(wrap(t.name, 24), colX[0], y);
+        doc.text(wrap(t.secret, 28), colX[1], y);
+        doc.text(wrap(t.url, 36), colX[2], y);
+        doc.text(wrap(t.otp, 8), colX[3], y);
+        y += lineHeight;
+      });
+      let suggested = "authenticator-export.pdf";
+      try {
+        const stamp = new Date()
+          .toISOString()
+          .slice(0, 19)
+          .replace(/[:T]/g, "-");
+        suggested = `authenticator-export-${stamp}.pdf`;
+      } catch (_) {}
+      const name =
+        typeof window !== "undefined" && window.prompt
+          ? window.prompt("Save PDF as:", suggested)
+          : suggested;
+      doc.save(name || suggested);
     }
 
-    csvBtn.addEventListener('click', () => {
-      chrome.storage.local.get(['tokens'], (res) => {
+    csvBtn.addEventListener("click", () => {
+      chrome.storage.local.get(["tokens"], (res) => {
         exportCSV(Array.isArray(res.tokens) ? res.tokens : []);
         close();
       });
     });
-    docBtn.addEventListener('click', () => {
-      chrome.storage.local.get(['tokens'], (res) => {
+    docBtn.addEventListener("click", () => {
+      chrome.storage.local.get(["tokens"], (res) => {
         exportDOC(Array.isArray(res.tokens) ? res.tokens : []);
         close();
       });
     });
-    pdfBtn.addEventListener('click', () => {
-      chrome.storage.local.get(['tokens'], (res) => {
+    pdfBtn.addEventListener("click", () => {
+      chrome.storage.local.get(["tokens"], (res) => {
         exportPDF(Array.isArray(res.tokens) ? res.tokens : []);
         close();
       });
     });
-  });
+  };
+
+  exportBtn.addEventListener("click", onClick);
 }
 
 export function initThemeControls({
@@ -253,13 +421,22 @@ export function initThemeControls({
   forestThemeButton,
 }) {
   // Fallback: query buttons if not provided
-  if (!lightThemeButton) lightThemeButton = document.getElementById("light-theme-button");
-  if (!darkThemeButton) darkThemeButton = document.getElementById("dark-theme-button");
-  if (!oceanThemeButton) oceanThemeButton = document.getElementById("ocean-theme-button");
-  if (!forestThemeButton) forestThemeButton = document.getElementById("forest-theme-button");
+  if (!lightThemeButton)
+    lightThemeButton = document.getElementById("light-theme-button");
+  if (!darkThemeButton)
+    darkThemeButton = document.getElementById("dark-theme-button");
+  if (!oceanThemeButton)
+    oceanThemeButton = document.getElementById("ocean-theme-button");
+  if (!forestThemeButton)
+    forestThemeButton = document.getElementById("forest-theme-button");
 
   const applyTheme = (theme) => {
-    const classes = ["theme-light", "theme-dark", "theme-ocean", "theme-forest"];
+    const classes = [
+      "theme-light",
+      "theme-dark",
+      "theme-ocean",
+      "theme-forest",
+    ];
     document.body.classList.remove(...classes);
     document.body.classList.add(theme);
     chrome.storage.local.set({ theme });
@@ -277,7 +454,9 @@ export function initThemeControls({
     oceanThemeButton.addEventListener("click", () => applyTheme("theme-ocean"));
   }
   if (forestThemeButton) {
-    forestThemeButton.addEventListener("click", () => applyTheme("theme-forest"));
+    forestThemeButton.addEventListener("click", () =>
+      applyTheme("theme-forest")
+    );
   }
 }
 
@@ -297,18 +476,27 @@ export function initPopupModeResizer({ popupModeCheckbox, syncCheckbox }) {
         if (checked && !isPopupWin) {
           // enable: open popup window
           chrome.storage.local.get(["uiScale"], (res) => {
-            const scale = typeof res.uiScale === "number" && res.uiScale > 0 ? res.uiScale : 1;
-            const BASE_W = 300, BASE_H = 450, CHROME_W = 14, CHROME_H = 30;
+            const scale =
+              typeof res.uiScale === "number" && res.uiScale > 0
+                ? res.uiScale
+                : 1;
+            const BASE_W = 300,
+              BASE_H = 450,
+              CHROME_W = 14,
+              CHROME_H = 30;
             chrome.windows.create(
               {
-                url: chrome.runtime.getURL("authenticator.html") + "?isPopup=true",
+                url:
+                  chrome.runtime.getURL("authenticator.html") + "?isPopup=true",
                 type: "popup",
                 focused: true,
                 width: Math.round(BASE_W * scale + CHROME_W),
                 height: Math.round(BASE_H * scale + CHROME_H),
               },
               () => {
-                try { window.close(); } catch (_) {}
+                try {
+                  window.close();
+                } catch (_) {}
               }
             );
           });
@@ -318,14 +506,32 @@ export function initPopupModeResizer({ popupModeCheckbox, syncCheckbox }) {
             if (chrome.action && chrome.action.openPopup) {
               chrome.action.openPopup(() => {
                 // close popup window regardless of result
-                try { chrome.windows.remove(win.id); } catch (_) { try { window.close(); } catch (_) {} }
+                try {
+                  chrome.windows.remove(win.id);
+                } catch (_) {
+                  try {
+                    window.close();
+                  } catch (_) {}
+                }
               });
             } else {
               // best effort: just close the popup window
-              try { chrome.windows.remove(win.id); } catch (_) { try { window.close(); } catch (_) {} }
+              try {
+                chrome.windows.remove(win.id);
+              } catch (_) {
+                try {
+                  window.close();
+                } catch (_) {}
+              }
             }
           } catch (e) {
-            try { chrome.windows.remove(win.id); } catch (_) { try { window.close(); } catch (_) {} }
+            try {
+              chrome.windows.remove(win.id);
+            } catch (_) {
+              try {
+                window.close();
+              } catch (_) {}
+            }
           }
         }
       });
@@ -371,6 +577,8 @@ export function initBasicToggles({
       }
     });
   }
+
+  // Build the settings page structure and sections in order.
 
   if (syncCheckbox) {
     syncCheckbox.addEventListener("change", (e) => {
@@ -473,4 +681,3 @@ export function initBasicToggles({
     });
   }
 }
-

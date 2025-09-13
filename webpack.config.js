@@ -15,6 +15,9 @@ module.exports = {
   mode: "development",
   devtool: "cheap-module-source-map",
   resolve: {
+    alias: {
+      'process/browser': require.resolve('process/browser'),
+    },
     fallback: {
       crypto: require.resolve("crypto-browserify"),
       buffer: require.resolve("buffer/"),

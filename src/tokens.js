@@ -25,10 +25,93 @@ export function createTokenUI({
   i18nGetMessage: t,
   popupUpdate,
 }) {
+  // Drag & drop state
+  let dndBound = false;
+
+  function saveOrderFromDOM() {
+    const order = Array.from(
+      tokensContainer.querySelectorAll(".token-box")
+    ).map((el) => el.getAttribute("data-token-name"));
+    try {
+      chrome.storage.local.set({ tokenOrder: order });
+      if (syncChk && syncChk.checked) {
+        chrome.storage.sync.set({ tokenOrder: order });
+      }
+    } catch (e) {}
+  }
+
+  function getDragAfterElement(container, y) {
+    const els = [...container.querySelectorAll(".token-box:not(.dragging)")];
+    return els.reduce(
+      (closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - (box.top + box.height / 2);
+        if (offset < 0 && offset > closest.offset) {
+          return { offset, element: child };
+        }
+        return closest;
+      },
+      { offset: Number.NEGATIVE_INFINITY, element: null }
+    ).element;
+  }
+
+  function bindDndContainerOnce() {
+    if (dndBound) return;
+    dndBound = true;
+    tokensContainer.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const dragging = tokensContainer.querySelector(".token-box.dragging");
+      if (!dragging) return;
+      // Do not auto-scroll if a modal overlay is open
+      if (
+        document.body.classList.contains("modal-active") ||
+        document.querySelector(".popup-container")
+      ) {
+        return;
+      }
+      const after = getDragAfterElement(tokensContainer, e.clientY);
+      if (after == null) tokensContainer.appendChild(dragging);
+      else tokensContainer.insertBefore(dragging, after);
+      // Auto-scroll window near viewport edges while dragging (smooth gradient)
+      const viewportH = document.documentElement.clientHeight;
+      const topThreshold = 100; // px from top
+      const bottomStart = viewportH - 100; // start of bottom gradient
+      const maxStep = 20; // px per event at deepest point
+      if (e.clientY < topThreshold && window.pageYOffset > 0) {
+        const intensity = Math.min(
+          4,
+          (topThreshold - e.clientY) / topThreshold
+        ); // 0..1
+        const dy = Math.max(1, Math.round(maxStep * intensity));
+        window.scrollBy(0, -dy - 1);
+        console.log("scrolling up", dy);
+      } else if (e.clientY > bottomStart) {
+        const intensity = Math.min(4, (e.clientY - bottomStart) / 50);
+        const dy = Math.max(1, Math.round(maxStep * intensity));
+        window.scrollBy(0, dy + 1);
+        console.log("scrolling down", dy);
+      }
+    });
+    tokensContainer.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const dragging = tokensContainer.querySelector(".token-box.dragging");
+      if (dragging) dragging.classList.remove("dragging");
+      try { document.body.classList.remove("dragging-tokens"); } catch (_) {}
+      saveOrderFromDOM();
+    });
+    tokensContainer.addEventListener("dragend", () => {
+      const dragging = tokensContainer.querySelector(".token-box.dragging");
+      if (dragging) dragging.classList.remove("dragging");
+      try { document.body.classList.remove("dragging-tokens"); } catch (_) {}
+      saveOrderFromDOM();
+    });
+  }
   function addTokenToDOM(name, secret, url, otp) {
     const tokenElement = document.createElement("div");
     tokenElement.id = `token-${name}`;
     tokenElement.classList.add("token-box");
+    tokenElement.setAttribute("data-token-name", name);
+    tokenElement.setAttribute("draggable", "true");
 
     const nameHeader = document.createElement("h2");
     nameHeader.className = "token-name";
@@ -53,12 +136,18 @@ export function createTokenUI({
 
         tokenSettings.addEventListener("click", (e) => {
           e.stopPropagation();
+          document.body.classList.add("modal-active");
+
           let shortenedUrl = url || "";
           const urlLength = 50;
           if (url && url.length > urlLength) {
             shortenedUrl = url.substring(0, urlLength) + "...";
           }
-          const { container: popupContainer, content: popupContent, close } = openModal({ contentClass: "popup-content" });
+          const {
+            container: popupContainer,
+            content: popupContent,
+            close,
+          } = openModal({ contentClass: "popup-content" });
           popupContent.textContent = "";
 
           const headerDiv = document.createElement("div");
@@ -80,9 +169,10 @@ export function createTokenUI({
           label.setAttribute("for", "name");
           label.className = "form-label";
           label.id = "autofill-url-label";
-          label.textContent = autofillChk && autofillChk.checked
-            ? t("autofill_url")
-            : t("autofill_url_not_enabled");
+          label.textContent =
+            autofillChk && autofillChk.checked
+              ? t("autofill_url")
+              : t("autofill_url_not_enabled");
           popupContent.appendChild(label);
 
           const urlInput = document.createElement("input");
@@ -108,7 +198,9 @@ export function createTokenUI({
           saveUrlButton.className = "wide-button";
           saveUrlButton.textContent = t("save_url");
           popupContent.appendChild(saveUrlButton);
-
+          const buttonsContainer = document.createElement("div");
+          buttonsContainer.className = "buttons-container";
+          popupContent.appendChild(buttonsContainer);
           const inlineUrlDiv = document.createElement("div");
           inlineUrlDiv.className = "inline-url";
           const inlineLabel = document.createElement("label");
@@ -121,19 +213,17 @@ export function createTokenUI({
           currentUrlDiv.textContent = shortenedUrl;
           inlineUrlDiv.appendChild(currentUrlDiv);
           popupContent.appendChild(inlineUrlDiv);
-
-          const buttonsContainer = document.createElement("div");
-          buttonsContainer.className = "buttons-container";
           const deleteButton = document.createElement("button");
           deleteButton.className = "delete-token";
           deleteButton.id = "delete-token";
+          const closeButton = document.createElement("button");
+          closeButton.className = "close-popup";
+          closeButton.textContent = chrome.i18n.getMessage("close");
           deleteButton.textContent = t("delete");
           buttonsContainer.appendChild(deleteButton);
-          const { container: closeAction, button: closeButton } = buildCloseAction("close");
-          buttonsContainer.appendChild(closeAction);
+          buttonsContainer.appendChild(closeButton);
           popupContent.appendChild(buttonsContainer);
           popupContainer.appendChild(popupContent);
-
           document.getElementById("x-icon").addEventListener("click", () => {
             document.body.removeChild(popupContainer);
           });
@@ -149,11 +239,14 @@ export function createTokenUI({
               const tokenIndex = tokens.findIndex((t) => t.name === name);
               if (tokenIndex !== -1) {
                 tokens[tokenIndex].url = newUrl;
-                const saveToLocal = () => chrome.storage.local.set({ tokens }, () => {});
-                const saveToSync = () => chrome.storage.sync.set({ tokens }, () => {});
+                const saveToLocal = () =>
+                  chrome.storage.local.set({ tokens }, () => {});
+                const saveToSync = () =>
+                  chrome.storage.sync.set({ tokens }, () => {});
                 saveToLocal();
                 if (syncChk && syncChk.checked) saveToSync();
-                const displayUrl = newUrl.length > 50 ? newUrl.substring(0, 50) + "..." : newUrl;
+                const displayUrl =
+                  newUrl.length > 50 ? newUrl.substring(0, 50) + "..." : newUrl;
                 currentUrlDiv.textContent = displayUrl;
               }
             });
@@ -169,7 +262,7 @@ export function createTokenUI({
               deleteToken(
                 name,
                 secret,
-                !!(syncCheckbox && syncCheckbox.checked),
+                !!(syncChk && syncChk.checked),
                 tokensContainer,
                 addTokenToDOM
               )
@@ -200,7 +293,11 @@ export function createTokenUI({
     tokenQRButton.addEventListener("click", async (e) => {
       e.stopPropagation();
       try {
-        const { container: popupContainer, content: popupContent, close } = openModal({ contentClass: "popup-content-qr" });
+        const {
+          container: popupContainer,
+          content: popupContent,
+          close,
+        } = openModal({ contentClass: "popup-content-qr" });
         let qrDataURL = await QRCode.toDataURL(secret, { width: 140 });
         popupContent.textContent = "";
         const qrContainer = document.createElement("div");
@@ -217,7 +314,11 @@ export function createTokenUI({
         qrImage.alt = `${name} QR Code`;
         qrImage.style.width = "140px";
         qrContainer.appendChild(qrImage);
-        const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
+        const svgIcon = createXIcon({
+          className: "feather x-icon",
+          id: "x-icon",
+          stroke: "red",
+        });
         qrContainer.appendChild(svgIcon);
         popupContent.appendChild(qrContainer);
         popupContainer.appendChild(popupContent);
@@ -231,13 +332,33 @@ export function createTokenUI({
       }
     });
 
+    tokenElement.addEventListener("dragstart", (e) => {
+      tokenElement.classList.add("dragging");
+      try { document.body.classList.add("dragging-tokens"); } catch (_) {}
+      try {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", name);
+        // Ensure drag image reflects current scaled size
+        try {
+          const rect = tokenElement.getBoundingClientRect();
+          e.dataTransfer.setDragImage(
+            tokenElement,
+            rect.width / 2,
+            rect.height / 2
+          );
+        } catch (_) {}
+      } catch (_) {}
+    });
+
     tokenElement.appendChild(nameHeader);
     tokenElement.appendChild(tokenHeader);
     tokensContainer.appendChild(tokenElement);
+    bindDndContainerOnce();
     updateToken(name, secret);
 
     let canClick = true;
     tokenElement.addEventListener("click", async () => {
+      if (tokenElement.classList.contains("dragging")) return;
       if (!canClick) return;
       if (!clipboardChk || !clipboardChk.checked) {
         const copiedMessage = document.createElement("div");
@@ -250,7 +371,9 @@ export function createTokenUI({
           canClick = true;
         }, 3000);
       } else {
-        const tokenValue = tokenElement.closest(".token-box")?.querySelector(".token-value")?.textContent || "";
+        const tokenValue =
+          tokenElement.closest(".token-box")?.querySelector(".token-value")
+            ?.textContent || "";
         navigator.clipboard.writeText(tokenValue).then(() => {
           const copiedMessage = document.createElement("div");
           copiedMessage.className = "copied-message";

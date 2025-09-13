@@ -1,6 +1,11 @@
 import { Buffer } from "buffer";
 import QRCode from "qrcode";
-import { startWebcam, stopWebcam, scanImageFile, scanImageUrl } from "./scanner.js";
+import {
+  startWebcam,
+  stopWebcam,
+  scanImageFile,
+  scanImageUrl,
+} from "./scanner.js";
 import {
   createSwitchElement,
   setAdvancedAddMessage,
@@ -11,9 +16,9 @@ import {
 } from "./ui.js";
 import {
   applyStoredScale,
-  initScaleControl,
-  initExportControls,
+  buildSettingsUI,
   initThemeControls,
+  initExportControls,
 } from "./settings.js";
 import {
   encryptSecret,
@@ -31,6 +36,26 @@ import {
 } from "./permissions.js";
 import { deleteToken } from "./storage.js";
 import { createTokenUI, generateToken, isValidBase32 } from "./tokens.js";
+
+// Keep token rendering order stable based on stored order, else alphabetical by name
+function reorderTokensByOrderArray(tokens, order) {
+  if (!Array.isArray(tokens)) return [];
+  const list = tokens.slice();
+  if (!Array.isArray(order) || order.length === 0) {
+    return list.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  const indexMap = new Map(order.map((n, i) => [n, i]));
+  const inOrder = [];
+  const rest = [];
+  for (const t of list) {
+    if (indexMap.has(t.name)) inOrder.push(t);
+    else rest.push(t);
+  }
+  inOrder.sort((a, b) => indexMap.get(a.name) - indexMap.get(b.name));
+  rest.sort((a, b) => a.name.localeCompare(b.name));
+  return inOrder.concat(rest);
+}
+
 window.Buffer = Buffer;
 
 chrome.storage.local.set({
@@ -53,10 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainSettings = document.getElementById("main-settings");
   const settingsPage = document.getElementById("settings-content");
   const backButton = document.getElementById("back-button");
-  const lightThemeButton = document.getElementById("light-theme-button");
-  const darkThemeButton = document.getElementById("dark-theme-button");
-  const oceanThemeButton = document.getElementById("ocean-theme-button");
-  const forestThemeButton = document.getElementById("forest-theme-button");
+  // Theme buttons will be created dynamically in settings UI
   advancedAddButton.className = "advanced-add-button";
   advancedAddButton.textContent = chrome.i18n.getMessage("advanced_add");
   const authenticatorMainContent = document.getElementById(
@@ -72,6 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let isTimeCheckboxChecked;
   let isPasswordCheckboxChecked;
   nameInput.focus();
+
+  // Build settings UI (Export → Permissions → Scale → Themes)
+  try {
+    if (settingsPage) buildSettingsUI(settingsPage);
+  } catch (_) {}
 
   const switches = [
     {
@@ -126,17 +153,15 @@ document.addEventListener("DOMContentLoaded", () => {
     .forEach((switchConfig) => {
       const switchElement = createSwitchElement(switchConfig);
       const permissionsHeader = document.querySelector("h2.permissions-header");
-
-      permissionsHeader.insertAdjacentElement("afterend", switchElement);
+      if (permissionsHeader) {
+        permissionsHeader.insertAdjacentElement("afterend", switchElement);
+      } else {
+        const permContainer = document.getElementById("switch-boxes-container");
+        if (permContainer) permContainer.appendChild(switchElement);
+      }
     });
 
-  const settingsContent = document.createElement("div");
-  settingsContent.id = "settings-content";
-  settingsContent.className = "settings-content";
-  settingsContent.style.display = "none";
-  mainContent.insertAdjacentElement("afterend", settingsContent);
-
-
+  // settings-content is present in HTML; dynamic content built above
 
   function localizePopup() {
     document.querySelectorAll("*:not(script):not(style)").forEach((element) => {
@@ -160,8 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   localizePopup();
 
-  
-
   function popupUpdate() {
     try {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -175,7 +198,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Apply stored UI scale as early as possible
-  try { applyStoredScale(); } catch (_) {}
+  try {
+    applyStoredScale();
+  } catch (_) {}
 
   function lastSeconds(seconds) {
     const wholeSeconds = Math.floor(seconds);
@@ -198,19 +223,19 @@ document.addEventListener("DOMContentLoaded", () => {
   let clockCtrl = null;
 
   function updateClockWithSeconds(seconds) {
-      let progressOffset;
-      if (seconds <= 30) {
-        progressOffset = -251.2 * (seconds / 30);
-      } else {
-        progressOffset = -251.2 * ((seconds - 30) / 30);
-      }
-      document.querySelector(".progress-circle").style.strokeDashoffset =
-        progressOffset;
-      const displayText = lastSeconds(seconds);
-      const clockTextElement = document.querySelector(".clock-text");
-      clockTextElement.textContent = displayText;
-      const fractionalSecond = seconds % 1;
-      clockTextElement.style.opacity = 1 - fractionalSecond;
+    let progressOffset;
+    if (seconds <= 30) {
+      progressOffset = -251.2 * (seconds / 30);
+    } else {
+      progressOffset = -251.2 * ((seconds - 30) / 30);
+    }
+    document.querySelector(".progress-circle").style.strokeDashoffset =
+      progressOffset;
+    const displayText = lastSeconds(seconds);
+    const clockTextElement = document.querySelector(".clock-text");
+    clockTextElement.textContent = displayText;
+    const fractionalSecond = seconds % 1;
+    clockTextElement.style.opacity = 1 - fractionalSecond;
   }
 
   function updateClock() {
@@ -431,14 +456,16 @@ document.addEventListener("DOMContentLoaded", () => {
         authenticatorMainContent.style.display = "block";
         passwordPromptContainer.style.display = "none";
         let tokens = localResult.tokens || [];
-        tokens.sort((a, b) => a.name.localeCompare(b.name));
-        tokens.forEach((tokenObj) => {
-          addTokenToDOM(
-            tokenObj.name,
-            tokenObj.secret,
-            tokenObj.url,
-            tokenObj.otp
-          );
+        chrome.storage.local.get(["tokenOrder"], (o) => {
+          const ordered = reorderTokensByOrderArray(tokens, o.tokenOrder || []);
+          ordered.forEach((tokenObj) => {
+            addTokenToDOM(
+              tokenObj.name,
+              tokenObj.secret,
+              tokenObj.url,
+              tokenObj.otp
+            );
+          });
         });
       } else {
         authenticatorMainContent.style.display = "none";
@@ -544,22 +571,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  
-
   const syncCheckbox = document.getElementById("sync-checkbox");
-  // Initialize theme controls (includes Ocean and Forest buttons if present)
+  // Initialize export and theme controls now that DOM and switches exist
   try {
-    initThemeControls({
-      lightThemeButton,
-      darkThemeButton,
-      oceanThemeButton,
-      forestThemeButton,
-      syncCheckbox,
-    });
+    if (settingsPage) initExportControls(settingsPage);
   } catch (_) {}
-  // Initialize scale control and export controls into settings page
-  try { if (settingsPage) initScaleControl(settingsPage); } catch (_) {}
-  try { if (settingsPage) initExportControls(settingsPage); } catch (_) {}
+  try {
+    initThemeControls({ syncCheckbox });
+  } catch (_) {}
 
   syncCheckbox.addEventListener("change", (e) => {
     if (passwordProtectedCheckbox.checked) {
@@ -587,15 +606,22 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             chrome.storage.sync.set({ tokens: syncTokens }, () => {
               chrome.storage.local.set({ tokens: syncTokens }, () => {
-                syncTokens.forEach((tokenObj) => {
-                  if (!document.getElementById(`token-${tokenObj.name}`)) {
+                chrome.storage.local.get(["tokenOrder"], (o) => {
+                  const ordered = reorderTokensByOrderArray(
+                    syncTokens,
+                    o.tokenOrder || []
+                  );
+                  while (tokensContainer.firstChild) {
+                    tokensContainer.removeChild(tokensContainer.firstChild);
+                  }
+                  ordered.forEach((tokenObj) => {
                     addTokenToDOM(
                       tokenObj.name,
                       tokenObj.secret,
                       tokenObj.url,
                       tokenObj.otp
                     );
-                  }
+                  });
                 });
               });
             });
@@ -633,8 +659,6 @@ document.addEventListener("DOMContentLoaded", () => {
       chrome.storage.sync.set({ clipboardCopyingEnabled: false });
     }
   });
-
-
 
   const onlineTimeCheckbox = document.getElementById("online-time-checkbox");
 
@@ -725,19 +749,26 @@ document.addEventListener("DOMContentLoaded", () => {
                     otp,
                   };
                   tokens.push(newTokenObj);
-                  tokens.sort((a, b) => a.name.localeCompare(b.name));
                   if (syncCheckbox.checked === true) {
                     chrome.storage.sync.set({ tokens }, () => {
-                      while (tokensContainer.firstChild) {
-                        tokensContainer.removeChild(tokensContainer.firstChild);
-                      }
-                      tokens.forEach((tokenObj) => {
-                        addTokenToDOM(
-                          tokenObj.name,
-                          tokenObj.secret,
-                          tokenObj.url,
-                          tokenObj.otp
+                      chrome.storage.local.get(["tokenOrder"], (o) => {
+                        const ordered = reorderTokensByOrderArray(
+                          tokens,
+                          o.tokenOrder || []
                         );
+                        while (tokensContainer.firstChild) {
+                          tokensContainer.removeChild(
+                            tokensContainer.firstChild
+                          );
+                        }
+                        ordered.forEach((tokenObj) => {
+                          addTokenToDOM(
+                            tokenObj.name,
+                            tokenObj.secret,
+                            tokenObj.url,
+                            tokenObj.otp
+                          );
+                        });
                       });
                     });
                   }
@@ -759,30 +790,46 @@ document.addEventListener("DOMContentLoaded", () => {
                       return tokenObj;
                     });
                     chrome.storage.local.set({ tokens }, () => {
-                      while (tokensContainer.firstChild) {
-                        tokensContainer.removeChild(tokensContainer.firstChild);
-                      }
-                      tokens.forEach((tokenObj) => {
-                        addTokenToDOM(
-                          tokenObj.name,
-                          secret,
-                          tokenObj.url,
-                          tokenObj.otp
+                      chrome.storage.local.get(["tokenOrder"], (o) => {
+                        const ordered = reorderTokensByOrderArray(
+                          tokens,
+                          o.tokenOrder || []
                         );
+                        while (tokensContainer.firstChild) {
+                          tokensContainer.removeChild(
+                            tokensContainer.firstChild
+                          );
+                        }
+                        ordered.forEach((tokenObj) => {
+                          addTokenToDOM(
+                            tokenObj.name,
+                            secret,
+                            tokenObj.url,
+                            tokenObj.otp
+                          );
+                        });
                       });
                     });
                   } else {
                     chrome.storage.local.set({ tokens }, () => {
-                      while (tokensContainer.firstChild) {
-                        tokensContainer.removeChild(tokensContainer.firstChild);
-                      }
-                      tokens.forEach((tokenObj) => {
-                        addTokenToDOM(
-                          tokenObj.name,
-                          tokenObj.secret,
-                          tokenObj.url,
-                          tokenObj.otp
+                      chrome.storage.local.get(["tokenOrder"], (o) => {
+                        const ordered = reorderTokensByOrderArray(
+                          tokens,
+                          o.tokenOrder || []
                         );
+                        while (tokensContainer.firstChild) {
+                          tokensContainer.removeChild(
+                            tokensContainer.firstChild
+                          );
+                        }
+                        ordered.forEach((tokenObj) => {
+                          addTokenToDOM(
+                            tokenObj.name,
+                            tokenObj.secret,
+                            tokenObj.url,
+                            tokenObj.otp
+                          );
+                        });
                       });
                     });
                   }
@@ -883,7 +930,11 @@ document.addEventListener("DOMContentLoaded", () => {
       heading.textContent = chrome.i18n.getMessage("password_protection_setup");
       containerDiv.appendChild(heading);
 
-      const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
+      const svgIcon = createXIcon({
+        className: "feather x-icon",
+        id: "x-icon",
+        stroke: "red",
+      });
       containerDiv.appendChild(svgIcon);
       const passDontMatchMessage = document.createElement("div");
       passDontMatchMessage.className = "wrong-or-nonmatch-passwords";
@@ -951,6 +1002,7 @@ document.addEventListener("DOMContentLoaded", () => {
       popupContainer.addEventListener("click", (e) => {
         if (e.target === popupContainer) {
           document.body.removeChild(popupContainer);
+          document.body.classList.remove("modal-active");
         }
       });
       passwordInput.addEventListener("keydown", (e) => {
@@ -1009,13 +1061,21 @@ document.addEventListener("DOMContentLoaded", () => {
       if (document.querySelector(".popup-container")) {
         return;
       }
-      const { container: popupContainer, content: popupContent, close } = openModal({ contentClass: "popup-content" });
+      const {
+        container: popupContainer,
+        content: popupContent,
+        close,
+      } = openModal({ contentClass: "popup-content" });
       const h2 = document.createElement("h2");
       h2.className = "centered-headings";
       h2.textContent = chrome.i18n.getMessage("disable_password_protection");
 
       popupContent.appendChild(h2);
-      const svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
+      const svgIcon = createXIcon({
+        className: "feather x-icon",
+        id: "x-icon",
+        stroke: "red",
+      });
       const wrongPasswordMessage = document.createElement("div");
       wrongPasswordMessage.className = "wrong-or-nonmatch-passwords";
       wrongPasswordMessage.id = "wrong-remove-password-message";
@@ -1152,13 +1212,19 @@ document.addEventListener("DOMContentLoaded", () => {
       while (tokensContainer.firstChild) {
         tokensContainer.removeChild(tokensContainer.firstChild);
       }
-      decryptedTokens.forEach((tokenObj) => {
-        addTokenToDOM(
-          tokenObj.name,
-          tokenObj.secret,
-          tokenObj.url,
-          tokenObj.otp
+      chrome.storage.local.get(["tokenOrder"], (o) => {
+        const ordered = reorderTokensByOrderArray(
+          decryptedTokens,
+          o.tokenOrder || []
         );
+        ordered.forEach((tokenObj) => {
+          addTokenToDOM(
+            tokenObj.name,
+            tokenObj.secret,
+            tokenObj.url,
+            tokenObj.otp
+          );
+        });
       });
       if (syncCheckbox.checked) {
         chrome.storage.sync.get(["tokens"], async (syncResult) => {
@@ -1182,6 +1248,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.querySelector(".popup-container") || isCooldown) {
       return;
     }
+    document.body.classList.add("modal-active");
+
     let popupContainer = document.createElement("div");
     popupContainer.className = "popup-container";
     let popupContent = document.createElement("div");
@@ -1209,7 +1277,11 @@ document.addEventListener("DOMContentLoaded", () => {
     errorMessage.style.visibility = "hidden";
     errorMessage.textContent = "QR Code not found. Try a different image.";
     headerDiv.appendChild(errorMessage);
-    let svgIcon = createXIcon({ className: "feather x-icon", id: "x-icon", stroke: "red" });
+    let svgIcon = createXIcon({
+      className: "feather x-icon",
+      id: "x-icon",
+      stroke: "red",
+    });
     headerDiv.appendChild(svgIcon);
     popupContent.appendChild(headerDiv);
     let videoContainer = document.createElement("div");
@@ -1317,10 +1389,19 @@ document.addEventListener("DOMContentLoaded", () => {
         saveImageUrl();
       }
     });
+    const closeAdvanced = () => {
+      try {
+        stopCameraAndScanner();
+      } catch (_) {}
+      try {
+        popupContainer.remove();
+      } catch (_) {}
+    };
     let redXButton = document.getElementById("x-icon");
+    console.log("red x press");
     redXButton.addEventListener("click", () => {
-      stopCameraAndScanner();
-      close();
+      document.body.classList.remove("modal-active");
+      closeAdvanced();
       isCooldown = true;
       setTimeout(() => {
         isCooldown = false;
@@ -1329,10 +1410,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     popupContainer.addEventListener("click", (e) => {
       if (e.target === popupContainer) {
-        setTimeout(() => {
-          stopCameraAndScanner();
-        }, 1000);
-        close();
+        document.body.classList.remove("modal-active");
+        closeAdvanced();
         isCooldown = true;
         setTimeout(() => {
           isCooldown = false;
@@ -1447,7 +1526,9 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
               nameInput.value = "";
             }
-            close();
+            try {
+              popupContainer.remove();
+            } catch (_) {}
             qrCodeFound();
             isCooldown = true;
             setTimeout(() => {
@@ -1478,17 +1559,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // createPopup moved to ui.js
-  const { addTokenToDOM: addTokenToDOMImpl, updateToken: updateTokenImpl } = createTokenUI({
-    tokensContainer,
-    syncCheckbox,
-    clipboardCopyingCheckbox,
-    autofillCheckbox,
-    confirmDelete,
-    deleteToken,
-    createXIcon,
-    i18nGetMessage: (key) => chrome.i18n.getMessage(key),
-    popupUpdate,
-  });
+  const { addTokenToDOM: addTokenToDOMImpl, updateToken: updateTokenImpl } =
+    createTokenUI({
+      tokensContainer,
+      syncCheckbox,
+      clipboardCopyingCheckbox,
+      autofillCheckbox,
+      confirmDelete,
+      deleteToken,
+      createXIcon,
+      i18nGetMessage: (key) => chrome.i18n.getMessage(key),
+      popupUpdate,
+    });
   function addTokenToDOM(name, secret, url, otp) {
     return addTokenToDOMImpl(name, secret, url, otp);
   }

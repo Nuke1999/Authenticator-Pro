@@ -54,6 +54,40 @@ body.theme-dark {
   background-color: #000000;
 }
 
+/* .theme-dark .token-box {
+  background-color: rgb(70, 70, 70);
+  border: 2px solid;
+  color: rgb(169, 169, 169);
+}
+
+.token-box {
+  border: 2px solid #007bff;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 120ms ease;
+}
+
+.theme-dark .token-box:hover {
+  background-color: rgb(40, 40, 40);
+}
+
+/* .token-box:hover {
+  background-color: #e7f1ff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+} */
+/* 
+.token-box.dragging:hover {
+  background-color: #e7f1ff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+}  */
+
 .theme-dark .token-box {
   background-color: rgb(70, 70, 70);
   border: 2px solid;
@@ -71,16 +105,31 @@ body.theme-dark {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 120ms ease;
+}
+
+/* Normal hover */
+.token-box:hover {
+  background-color: #e7f1ff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
 }
 
 .theme-dark .token-box:hover {
   background-color: rgb(40, 40, 40);
 }
 
-.token-box:hover {
-  background-color: #e7f1ff;
-  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+/* Disable ALL hover while dragging globally */
+.dragging-tokens .token-box:hover,
+.theme-dark.dragging-tokens .token-box:hover {
+  background-color: inherit !important;
+  box-shadow: none !important;
+}
+
+/* Cancel hover when dragging */
+.token-box.dragging:hover,
+.theme-dark .token-box.dragging:hover {
+  background-color: inherit !important;
+  box-shadow: none !important;
 }
 
 .theme-dark .centered-title {
@@ -186,15 +235,13 @@ body.theme-dark {
 
 .popup-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 4;
+  box-sizing: border-box;
 }
 
 .theme-dark .popup-content {
@@ -221,7 +268,12 @@ body.theme-dark {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transform: scale(var(--ui-scale));
-  transform-origin: center;
+  /* transform-origin: center; */
+}
+
+/* Prevent underlying scroll when modal is active */
+body.modal-active {
+  overflow: hidden;
 }
 
 .theme-dark .popup-content-qr {
@@ -765,12 +817,21 @@ body.theme-dark {
   padding: 10px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   height: 400px;
 }
 
 .theme-dark .switch-box {
   background-color: rgba(141, 141, 141);
+}
+
+.export-container {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: -14.94px;
+}
+
+.scale-container {
+  padding: 10px;
 }
 
 .switch-box {
@@ -1034,6 +1095,13 @@ input:checked + .slider:before {
   margin-bottom: 10px;
 }
 
+.themes-container {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  margin-top: -14.94px;
+}
+
 .theme-dark .permissions-header {
   color: white;
 }
@@ -1109,10 +1177,21 @@ input:checked + .slider:before {
   margin-bottom: 0px;
 }
 
-.theme-buttons-container {
+/* .theme-buttons-container {
   display: flex;
   justify-content: space-between;
   padding-bottom: 15px;
+} */
+
+.theme-buttons-container {
+  display: flex;
+  flex-wrap: wrap; /* allow wrapping onto new lines */
+  gap: 10px; /* optional: spacing between buttons */
+}
+
+.theme-buttons-container button {
+  flex: 1 1 calc(50% - 10px); /* each button ~50% width minus gap */
+  box-sizing: border-box; /* keep padding/borders inside */
 }
 
 /* Export modal buttons layout */
@@ -1252,4 +1331,36 @@ input:checked + .slider:before {
   color: red;
   margin-left: 12px;
   visibility: hidden;
+}
+
+.token-box.dragging {
+  transform: scale(0.8);
+  opacity: 1;
+}
+
+.ocean-theme-button,
+.forest-theme-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(195, 195, 195);
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.ocean-theme-button:hover,
+.forest-theme-button:hover {
+  background-color: rgb(219, 219, 219);
+}
+
+.stop-scrolling {
+  .stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+  }
 }
