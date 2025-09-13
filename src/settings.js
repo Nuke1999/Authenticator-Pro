@@ -1,4 +1,5 @@
 import { jsPDF } from "jspdf";
+import { createXIcon } from "./ui.js";
 export async function getStoredScale() {
   return new Promise((resolve) => {
     chrome.storage.local.get(["uiScale"], (result) => {
@@ -150,13 +151,13 @@ export function initScaleControl(settingsContainer) {
   select.id = "ui-scale-control";
   select.className = "form-input";
   const options = [
-    { label: "75%", value: 0.75 },
+    { label: "70%", value: 0.7 },
+    { label: "80%", value: 0.8 },
     { label: "90%", value: 0.9 },
     { label: "100%", value: 1 },
     { label: "110%", value: 1.1 },
     { label: "120%", value: 1.2 },
     { label: "130%", value: 1.3 },
-    { label: "150%", value: 1.5 },
   ];
   options.forEach((opt) => {
     const o = document.createElement("option");
@@ -215,31 +216,9 @@ export function initScaleControl(settingsContainer) {
 }
 
 export function initExportControls(settingsContainer) {
-  // Bind to an existing Export button if present; otherwise, create a minimal one.
-  let exportBtn =
-    (settingsContainer &&
-      settingsContainer.querySelector("#export-data-button")) ||
-    document.getElementById("export-data-button");
+  let exportBtn = settingsContainer.querySelector("#export-data-button");
 
-  if (!exportBtn) {
-    // Fallback: create a simple export container at the top
-    const container = document.createElement("div");
-    container.className = "export-container";
-    const exportHeader = document.createElement("h2");
-    exportHeader.className = "export-header";
-    exportHeader.textContent = "Export";
-    const row = document.createElement("div");
-    row.className = "theme-buttons-container";
-    exportBtn = document.createElement("button");
-    exportBtn.id = "export-data-button";
-    exportBtn.className = "light-theme-button";
-    exportBtn.textContent = "Export Data";
-    row.appendChild(exportBtn);
-    container.appendChild(header);
-    container.appendChild(row);
-    if (settingsContainer) settingsContainer.prepend(container);
-    else document.body.appendChild(container);
-  }
+  let redXButton = document.getElementById("x-icon");
 
   const onClick = () => {
     const popupContainer = document.createElement("div");
@@ -253,30 +232,24 @@ export function initExportControls(settingsContainer) {
     } catch (_) {}
     const popupContent = document.createElement("div");
     popupContent.className = "popup-content";
-
     const heading = document.createElement("h2");
     heading.className = "centered-headings";
     heading.textContent = "Export Options";
     popupContent.appendChild(heading);
-
     const btns = document.createElement("div");
     btns.className = "export-buttons";
-
     const csvBtn = document.createElement("button");
     csvBtn.className = "wide-button";
     csvBtn.textContent = "Export CSV";
     btns.appendChild(csvBtn);
-
     const pdfBtn = document.createElement("button");
     pdfBtn.className = "wide-button";
     pdfBtn.textContent = "Export PDF";
     btns.appendChild(pdfBtn);
-
     const docBtn = document.createElement("button");
     docBtn.className = "wide-button";
     docBtn.textContent = "Export Word (.doc)";
     btns.appendChild(docBtn);
-
     popupContent.appendChild(btns);
     popupContainer.appendChild(popupContent);
     document.documentElement.appendChild(popupContainer);
@@ -409,7 +382,6 @@ export function initExportControls(settingsContainer) {
       });
     });
   };
-
   exportBtn.addEventListener("click", onClick);
 }
 

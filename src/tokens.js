@@ -14,6 +14,8 @@ export function generateToken(secret) {
   return false;
 }
 
+// Scroll locking for modals is handled centrally in popup.js
+
 export function createTokenUI({
   tokensContainer,
   syncCheckbox: syncChk,
@@ -96,13 +98,17 @@ export function createTokenUI({
       e.preventDefault();
       const dragging = tokensContainer.querySelector(".token-box.dragging");
       if (dragging) dragging.classList.remove("dragging");
-      try { document.body.classList.remove("dragging-tokens"); } catch (_) {}
+      try {
+        document.body.classList.remove("dragging-tokens");
+      } catch (_) {}
       saveOrderFromDOM();
     });
     tokensContainer.addEventListener("dragend", () => {
       const dragging = tokensContainer.querySelector(".token-box.dragging");
       if (dragging) dragging.classList.remove("dragging");
-      try { document.body.classList.remove("dragging-tokens"); } catch (_) {}
+      try {
+        document.body.classList.remove("dragging-tokens");
+      } catch (_) {}
       saveOrderFromDOM();
     });
   }
@@ -136,8 +142,6 @@ export function createTokenUI({
 
         tokenSettings.addEventListener("click", (e) => {
           e.stopPropagation();
-          document.body.classList.add("modal-active");
-
           let shortenedUrl = url || "";
           const urlLength = 50;
           if (url && url.length > urlLength) {
@@ -224,9 +228,12 @@ export function createTokenUI({
           buttonsContainer.appendChild(closeButton);
           popupContent.appendChild(buttonsContainer);
           popupContainer.appendChild(popupContent);
-          document.getElementById("x-icon").addEventListener("click", () => {
-            document.body.removeChild(popupContainer);
-          });
+          const xButton = document
+            .getElementById("x-icon")
+            .addEventListener("click", () => {
+              document.body.classList.remove("modal-active");
+              document.body.removeChild(popupContainer);
+            });
           urlInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter") saveUrlButton.click();
           });
@@ -334,7 +341,9 @@ export function createTokenUI({
 
     tokenElement.addEventListener("dragstart", (e) => {
       tokenElement.classList.add("dragging");
-      try { document.body.classList.add("dragging-tokens"); } catch (_) {}
+      try {
+        document.body.classList.add("dragging-tokens");
+      } catch (_) {}
       try {
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("text/plain", name);

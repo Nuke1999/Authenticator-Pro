@@ -14,6 +14,12 @@ html {
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  width: calc(300px * var(--ui-scale));
+  height: calc(450px * var(--ui-scale));
+}
+
+#app-root {
   width: 300px;
   height: 450px;
   overflow-y: auto;
@@ -22,15 +28,23 @@ body {
   transform-origin: top left;
 }
 
-body::-webkit-scrollbar {
+#app-root::-webkit-scrollbar {
   width: var(--scrollbar-width);
+}
+
+#app-root::-webkit-scrollbar-track {
+  background: white;
+}
+
+#app-root::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 8px;
 }
 
 body::-webkit-scrollbar-track {
   background: white;
 }
 
-/* Match track to themes */
 body.theme-dark::-webkit-scrollbar-track {
   background: #000000;
 }
@@ -40,53 +54,15 @@ body.theme-ocean::-webkit-scrollbar-track {
 body.theme-forest::-webkit-scrollbar-track {
   background: #0f2017;
 }
-/* During modal, match overlay shade */
-body.modal-active::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.6);
-}
 
 body::-webkit-scrollbar-thumb {
   background: grey;
-  border-radius: 10px;
+  border-radius: 6x;
 }
 
 body.theme-dark {
   background-color: #000000;
 }
-
-/* .theme-dark .token-box {
-  background-color: rgb(70, 70, 70);
-  border: 2px solid;
-  color: rgb(169, 169, 169);
-}
-
-.token-box {
-  border: 2px solid #007bff;
-  padding: 10px;
-  margin: 5px;
-  cursor: pointer;
-  display: inline-block;
-  width: 250px;
-  height: 50px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  transition: background-color 0.3s, box-shadow 0.3s, transform 120ms ease;
-}
-
-.theme-dark .token-box:hover {
-  background-color: rgb(40, 40, 40);
-}
-
-/* .token-box:hover {
-  background-color: #e7f1ff;
-  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
-} */
-/* 
-.token-box.dragging:hover {
-  background-color: #e7f1ff;
-  box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
-}  */
 
 .theme-dark .token-box {
   background-color: rgb(70, 70, 70);
@@ -140,6 +116,13 @@ body.theme-dark {
   text-align: center;
   size: 110%;
 }
+
+/* .centered-title {
+  text-align: center;
+  size: 110%;
+  width: 100vw;
+  box-sizing: border-box;
+} */
 
 .centered-secret {
   display: inline-block;
@@ -237,7 +220,6 @@ body.theme-dark {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
-  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 4;
@@ -249,7 +231,7 @@ body.theme-dark {
   border: 3px solid white;
 }
 
-.popup-content {
+/* .popup-content {
   border: 3px solid white;
   z-index: 4;
   background: white;
@@ -268,22 +250,38 @@ body.theme-dark {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transform: scale(var(--ui-scale));
-  /* transform-origin: center; */
+} */
+
+.popup-content {
+  border: 3px solid white;
+  z-index: 4;
+  background: white;
+  padding: 10px;
+  width: 255px;
+  height: 275px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(var(--ui-scale));
 }
 
 /* Prevent underlying scroll when modal is active */
-body.modal-active {
+/* body.modal-active {
   overflow: hidden;
-}
+} */
 
 .theme-dark .popup-content-qr {
   background: black;
   border: 3px solid white;
 }
 
-.popup-content-qr {
+/* .popup-content-qr {
   border: 3px solid white;
-
   text-align: center;
   background: white;
   padding-left: 10px;
@@ -298,6 +296,28 @@ body.modal-active {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 4;
+} */
+
+.popup-content-qr {
+  border: 3px solid white;
+  text-align: center;
+  background: white;
+  padding: 10px;
+  width: 255px;
+  height: 275px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 4;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /* Center in viewport */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(var(--ui-scale));
 }
 
 .theme-dark .popup-video-content {
@@ -305,7 +325,7 @@ body.modal-active {
   border: 3px solid white;
 }
 
-.popup-video-content {
+/* .popup-video-content {
   border: 3px solid white;
 
   background: white;
@@ -323,6 +343,26 @@ body.modal-active {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+.popup-video-content {
+  border: 3px solid white;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: 255px;
+  height: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: fixed; /* stays relative to viewport, like a modal */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centers it on X & Y axis */
+  z-index: 9999; /* ensure it's above other content */
 }
 
 .theme-dark .popup-message {
@@ -330,9 +370,8 @@ body.modal-active {
   border: 3px solid white;
 }
 
-.popup-message {
+/* .popup-message {
   border: 3px solid white;
-
   background: white;
   padding-top: 10px;
   padding-left: 10px;
@@ -349,6 +388,27 @@ body.modal-active {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+.popup-message {
+  border: 3px solid white;
+  background: white;
+  padding: 10px;
+  width: 255px;
+  height: 125px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /* Make it always centered */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(var(--ui-scale));
+  z-index: 4;
 }
 
 .buttons-container {

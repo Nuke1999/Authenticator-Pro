@@ -1,5 +1,5 @@
 import { Buffer } from "buffer";
-import QRCode from "qrcode";
+// import QRCode from "qrcode";
 import {
   startWebcam,
   stopWebcam,
@@ -55,6 +55,68 @@ function reorderTokensByOrderArray(tokens, order) {
   rest.sort((a, b) => a.name.localeCompare(b.name));
   return inOrder.concat(rest);
 }
+
+function disableScroll() {
+  window.addEventListener("wheel", preventScroll, { passive: false });
+  window.addEventListener("touchmove", preventScroll, { passive: false }); // for mobile
+  window.addEventListener("keydown", preventKeys, { passive: false }); // arrow keys, space, etc.
+}
+
+function enableScroll() {
+  window.removeEventListener("wheel", preventScroll, { passive: false });
+  window.removeEventListener("touchmove", preventScroll, { passive: false });
+  window.removeEventListener("keydown", preventKeys, { passive: false });
+}
+
+function preventScroll(e) {
+  e.preventDefault();
+}
+
+function preventKeys(e) {
+  // Keys that trigger scrolling
+  if (
+    ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(
+      e.key
+    )
+  ) {
+    e.preventDefault();
+  }
+}
+
+// Centralized scroll lock when any modal is present
+(function setupModalScrollLock() {
+  let scrollLocked = false;
+
+  const updateScrollLock = () => {
+    const hasPopup = !!document.querySelector(".popup-container");
+    if (hasPopup && !scrollLocked) {
+      disableScroll();
+      scrollLocked = true;
+    } else if (!hasPopup && scrollLocked) {
+      enableScroll();
+      scrollLocked = false;
+    }
+  };
+
+  const init = () => {
+    // Initial check
+    updateScrollLock();
+    // Watch for popup containers being added/removed
+    const target = document.documentElement;
+    if (!target) return;
+    const observer = new MutationObserver(() => {
+      // Batch DOM changes into one check
+      updateScrollLock();
+    });
+    observer.observe(target, { childList: true, subtree: true });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
 
 window.Buffer = Buffer;
 
@@ -1398,7 +1460,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } catch (_) {}
     };
     let redXButton = document.getElementById("x-icon");
-    console.log("red x press");
     redXButton.addEventListener("click", () => {
       document.body.classList.remove("modal-active");
       closeAdvanced();

@@ -212,7 +212,7 @@ export function createXIcon({ stroke = "red", className, id } = {}) {
 }
 
 export function buildCloseAction(labelKey = "close") {
-  // const container = el("div", { className: "buttons-container" });
+  const container = el("div", { className: "buttons-container" });
   const button = el("button", {
     className: "close-popup",
     text: chrome.i18n.getMessage(labelKey),
