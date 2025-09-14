@@ -1,5 +1,7 @@
 # Authenticator-Pro
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/036b13eb78784d79913e3d56a6bb4642)](https://app.codacy.com/gh/Nuke1999/Authenticator-Pro?utm_source=github.com&utm_medium=referral&utm_content=Nuke1999/Authenticator-Pro&utm_campaign=Badge_Grade)
+
 Authenticator-Pro is a customizable authenticator extension that generates and autofills one-time passwords (OTPs) with various customization options.
 
 ## Features
