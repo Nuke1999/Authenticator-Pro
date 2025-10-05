@@ -12,7 +12,11 @@
         accept="image/*"
         style="display: none"
       />
-      <div id="password-prompt-container" class="password-prompt-container">
+      <div
+        id="password-prompt-container"
+        class="password-prompt-container"
+        style="display: none"
+      >
         <h2 class="centered-title">__MSG_main_enter_password_message__</h2>
         <div class="form-container">
           <input type="password" id="password-input" class="form-input" />
@@ -26,16 +30,17 @@
         ></h2>
         <div class="logo-container">
           <svg
-            viewBox="0 1 412 411"
+            viewBox="0 0 412 412"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
             width="412"
-            height="411"
+            height="412"
           >
             <path
+              shape-rendering="crispEdges"
               class="logo-path"
-              d="M0 0 C135.96 0 271.92 0 412 0 C412 135.96 412 271.92 412 412 C276.04 412 140.08 412 0 412 C0 276.04 0 140.08 0 0 Z "
-              fill="#FEFEFE"
+              d="M1 1 C136 1 271 1 411 1 C411 136 411 271 411 411 C276 411 141 411 1 411 C1 276 1 141 1 1 Z"
+              fill="white"
               transform="translate(0,0)"
             />
             <path
@@ -188,7 +193,11 @@
           </svg>
         </div>
       </div>
-      <div class="authenticator-main-content" id="authenticator-main-content">
+      <div
+        class="authenticator-main-content"
+        id="authenticator-main-content"
+        style="display: none"
+      >
         <div class="header-container">
           <h2 class="centered-title" id="centered-title">
             __MSG_extension_name__

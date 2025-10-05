@@ -65,7 +65,7 @@ body.theme-forest {
 
 body::-webkit-scrollbar-thumb {
   background: grey;
-  border-radius: 6x;
+  border-radius: 6px;
 }
 
 body.theme-dark {

@@ -509,8 +509,8 @@ const startPopup = () => {
         localResult.passwordCheckbox == false ||
         localResult.passwordCheckbox == undefined
       ) {
-        authenticatorMainContent.style.display = "block";
         passwordPromptContainer.style.display = "none";
+        authenticatorMainContent.style.display = "block";
         let tokens = localResult.tokens || [];
         chrome.storage.local.get(["tokenOrder"], (o) => {
           const ordered = reorderTokensByOrderArray(tokens, o.tokenOrder || []);

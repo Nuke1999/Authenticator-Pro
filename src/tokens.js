@@ -29,6 +29,33 @@ export function createTokenUI({
 }) {
   // Drag & drop state
   let dndBound = false;
+  let dragPlaceholder = null;
+
+  function ensureDragPlaceholder() {
+    if (dragPlaceholder && dragPlaceholder.isConnected) {
+      return dragPlaceholder;
+    }
+    dragPlaceholder = document.createElement("div");
+    dragPlaceholder.setAttribute("data-role", "drag-placeholder");
+    const style = dragPlaceholder.style;
+    style.position = "fixed";
+    style.top = "0";
+    style.left = "0";
+    style.width = "1px";
+    style.height = "1px";
+    style.opacity = "0";
+    style.pointerEvents = "none";
+    style.zIndex = "-1";
+    document.body.appendChild(dragPlaceholder);
+    return dragPlaceholder;
+  }
+
+  function cleanupDragPlaceholder() {
+    if (dragPlaceholder && dragPlaceholder.isConnected) {
+      dragPlaceholder.remove();
+    }
+    dragPlaceholder = null;
+  }
 
   function saveOrderFromDOM() {
     const order = Array.from(
@@ -101,6 +128,7 @@ export function createTokenUI({
       try {
         document.body.classList.remove("dragging-tokens");
       } catch (_) {}
+      cleanupDragPlaceholder();
       saveOrderFromDOM();
     });
     tokensContainer.addEventListener("dragend", () => {
@@ -109,6 +137,7 @@ export function createTokenUI({
       try {
         document.body.classList.remove("dragging-tokens");
       } catch (_) {}
+      cleanupDragPlaceholder();
       saveOrderFromDOM();
     });
   }
@@ -401,14 +430,8 @@ export function createTokenUI({
       try {
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("text/plain", name);
-        // Ensure drag image reflects current scaled size
         try {
-          const rect = tokenElement.getBoundingClientRect();
-          e.dataTransfer.setDragImage(
-            tokenElement,
-            rect.width / 2,
-            rect.height / 2
-          );
+          e.dataTransfer.setDragImage(ensureDragPlaceholder(), 0, 0);
         } catch (_) {}
       } catch (_) {}
     });
