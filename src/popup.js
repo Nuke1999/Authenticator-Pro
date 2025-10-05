@@ -23,10 +23,10 @@ import {
   encryptSecret,
   decryptSecret,
   verifyPassword,
-  hexToText,
   hashWithSalt,
-  convertKeyToCryptoKey,
   decryptTokens,
+  getCachedEncryptionKey,
+  clearCachedEncryptionKey,
 } from "./auth.js";
 import { startClock } from "./timeSync.js";
 import {
@@ -34,7 +34,12 @@ import {
   requestClipboardPermission,
 } from "./permissions.js";
 import { deleteToken } from "./storage.js";
-import { createTokenUI, generateToken, isValidBase32 } from "./tokens.js";
+import {
+  createTokenUI,
+  generateToken,
+  isValidBase32,
+  normalizeSecret,
+} from "./tokens.js";
 import { runStorageMigrations } from "./migrations.js";
 
 // Global references for the last opened modal elements (if needed elsewhere)
@@ -251,7 +256,7 @@ const startPopup = () => {
           .catch((error) => {});
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -307,39 +312,28 @@ const startPopup = () => {
 
   function updateTokensAtInterval() {
     chrome.storage.local.get(
-      ["tokens", "passwordCheckbox", "encryptionKeyInMemory", "iv", "salt"],
+      ["tokens", "passwordCheckbox", "iv"],
       async (result) => {
+        const tokens = result.tokens || [];
         if (result.passwordCheckbox === true) {
-          const jwk = result.encryptionKeyInMemory;
-          if (jwk) {
+          const key = getCachedEncryptionKey();
+          if (!key) {
+            return;
+          }
+          for (const token of tokens) {
             try {
-              const importedKey = await crypto.subtle.importKey(
-                "jwk",
-                jwk,
-                { name: "AES-GCM", length: 256 },
-                true,
-                ["encrypt", "decrypt"]
+              const decryptedSecret = await decryptSecret(
+                token.secret,
+                key,
+                result.iv
               );
-              let tokens = result.tokens || [];
-              for (let token of tokens) {
-                try {
-                  const decryptedSecret = await decryptSecret(
-                    token.secret,
-                    importedKey,
-                    result.iv
-                  );
-                  updateToken(token.name, decryptedSecret);
-                } catch (error) {
-                  console.log(error);
-                }
-              }
+              updateToken(token.name, decryptedSecret);
             } catch (error) {
-              console.log(error);
+              console.error(error);
             }
           }
         } else {
-          let tokens = result.tokens || [];
-          for (let tokenObj of tokens) {
+          for (const tokenObj of tokens) {
             updateToken(tokenObj.name, tokenObj.secret);
           }
         }
@@ -389,120 +383,47 @@ const startPopup = () => {
 
   passwordSubmitButton.addEventListener("click", async () => {
     const userPasswordInput = passwordInputField.value;
-    chrome.storage.local.get(
-      ["salt", "iv", "encryptedHashedPassword", "encryptionKeyInMemory"],
-      async (result) => {
-        if (chrome.runtime.lastError) {
-          return;
-        }
-        const storedSalt = result.salt;
-        const storedIV = result.iv;
-        const storedEncryptedHash = result.encryptedHashedPassword;
-        const storedEncryptionKeyJwk = result.encryptionKeyInMemory;
-        if (
-          !storedSalt ||
-          !storedIV ||
-          !storedEncryptedHash ||
-          !storedEncryptionKeyJwk
-        ) {
-          return;
-        }
-        try {
-          const encoder = new TextEncoder();
-          const saltArray = new Uint8Array(
-            storedSalt.match(/.{1,2}/g).map((byte) => parseInt(byte, 16))
-          );
-          const saltedPassword = encoder.encode(userPasswordInput + storedSalt);
-          const hashedInputBuffer = await crypto.subtle.digest(
-            "SHA-256",
-            saltedPassword
-          );
-          const hashedInputHex = Array.from(new Uint8Array(hashedInputBuffer))
-            .map((b) => b.toString(16).padStart(2, "0"))
-            .join("");
-          const keyMaterial = await crypto.subtle.importKey(
-            "raw",
-            encoder.encode(userPasswordInput),
-            "PBKDF2",
-            false,
-            ["deriveKey"]
-          );
-          const derivedKey = await crypto.subtle.deriveKey(
-            {
-              name: "PBKDF2",
-              salt: saltArray,
-              iterations: 100000,
-              hash: "SHA-256",
-            },
-            keyMaterial,
-            { name: "AES-GCM", length: 256 },
-            true,
-            ["decrypt", "encrypt"]
-          );
-          const storedIVDecoded = Uint8Array.from(atob(storedIV), (c) =>
-            c.charCodeAt(0)
-          );
-          const storedEncryptedHashDecoded = Uint8Array.from(
-            atob(storedEncryptedHash),
-            (c) => c.charCodeAt(0)
-          );
-          const decryptedHashedPasswordBuffer = await crypto.subtle.decrypt(
-            {
-              name: "AES-GCM",
-              iv: storedIVDecoded,
-            },
-            derivedKey,
-            storedEncryptedHashDecoded
-          );
-          const decryptedHashedPasswordHex = Array.from(
-            new Uint8Array(decryptedHashedPasswordBuffer)
-          )
-            .map((b) => b.toString(16).padStart(2, "0"))
-            .join("");
-
-          let hashedPasswordText = hexToText(decryptedHashedPasswordHex);
-          if (hashedPasswordText === hashedInputHex) {
-            let importedKey = await convertKeyToCryptoKey(
-              storedEncryptionKeyJwk
-            );
-
-            chrome.storage.local.set({
-              isPasswordVerified: true,
-            });
-            popupUpdate();
-            document.getElementById(
-              "authenticator-main-content"
-            ).style.display = "block";
-            document.getElementById("password-prompt-container").style.display =
-              "none";
-            const tokens = await decryptTokens(importedKey);
-            tokens.forEach((tokenObj) => {
-              addTokenToDOM(
-                tokenObj.name,
-                tokenObj.secret,
-                tokenObj.url,
-                tokenObj.otp
-              );
-            });
-          } else {
-          }
-        } catch (error) {
-          const errorMessageElement = document.getElementById(
-            "incorrect-password-message"
-          );
-          if (errorMessageElement) {
-            errorMessageElement.textContent = chrome.i18n.getMessage(
-              "incorrect_password_message"
-            );
-            setTimeout(() => {
-              errorMessageElement.textContent = "";
-            }, 3000);
-          }
-        }
+    if (!userPasswordInput) {
+      return;
+    }
+    const success = await verifyPassword(userPasswordInput);
+    if (!success) {
+      const errorMessageElement = document.getElementById(
+        "incorrect-password-message"
+      );
+      if (errorMessageElement) {
+        errorMessageElement.textContent = chrome.i18n.getMessage(
+          "incorrect_password_message"
+        );
+        setTimeout(() => {
+          errorMessageElement.textContent = "";
+        }, 3000);
       }
-    );
-  });
+      return;
+    }
 
+    try {
+      const key = getCachedEncryptionKey();
+      const tokens = key ? await decryptTokens(key) : [];
+      while (tokensContainer.firstChild) {
+        tokensContainer.removeChild(tokensContainer.firstChild);
+      }
+      tokens.forEach((tokenObj) => {
+        addTokenToDOM(
+          tokenObj.name,
+          tokenObj.secret,
+          tokenObj.url,
+          tokenObj.otp
+        );
+      });
+      popupUpdate();
+      authenticatorMainContent.style.display = "block";
+      passwordPromptContainer.style.display = "none";
+      passwordInputField.value = "";
+    } catch (error) {
+      console.error(error);
+    }
+  });
   try {
     chrome.storage.local.get((localResult) => {
       if (
@@ -554,6 +475,7 @@ const startPopup = () => {
         });
       } else {
         chrome.storage.local.set({ isPasswordVerified: false });
+        clearCachedEncryptionKey();
         autofillCheckbox.checked = localResult.autofillEnabled;
         syncCheckbox.checked = localResult.syncEnabled;
         const changeEvent = new Event("change");
@@ -609,7 +531,7 @@ const startPopup = () => {
       }
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 
   let saveUrlButton = document.getElementById("add-url-button");
@@ -651,7 +573,7 @@ const startPopup = () => {
           autofillCheckbox.checked = false;
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         autofillCheckbox.checked = false;
       }
     } else {
@@ -744,7 +666,7 @@ const startPopup = () => {
       chrome.storage.local.set({ syncEnabled: syncCheckbox.checked });
       chrome.storage.sync.set({ syncEnabled: syncCheckbox.checked });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
 
@@ -763,7 +685,7 @@ const startPopup = () => {
           clipboardCopyingCheckbox.checked = false;
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         clipboardCopyingCheckbox.checked = false;
       }
     } else {
@@ -783,7 +705,7 @@ const startPopup = () => {
         onlineTimeEnabled: onlineTimeCheckbox.checked,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
 
     if (onlineTimeCheckbox.checked) {
@@ -810,148 +732,151 @@ const startPopup = () => {
         advancedAddEnabled: advancedAddCheckbox.checked,
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   });
 
   addTokenButton.addEventListener("click", () => {
     const name = nameInput.value.trim();
-    let nameLength = false;
-    if (name.length < 12) {
-      nameLength = true;
-    } else {
+    const rawSecret = secretInput.value.trim();
+    const normalizedSecret = normalizeSecret(rawSecret);
+    const MAX_NAME_LENGTH = 25;
+
+    if (name.length > MAX_NAME_LENGTH) {
       createPopup(chrome.i18n.getMessage("name_too_long_message"));
       return;
     }
 
-    const secret = secretInput.value.trim();
-    if (name && nameLength && secret) {
-      if (isValidBase32(secret)) {
-        chrome.storage.local.get(
-          ["tokens", "encryptionKeyInMemory"],
-          async (result) => {
-            let tokens = result.tokens || [];
-            const nameExists = tokens.some(
-              (tokenObj) => tokenObj.name === name
-            );
-            const secretExists = tokens.some(
-              (tokenObj) => tokenObj.secret === secret
-            );
-            if (nameExists) {
-              createPopup(
-                chrome.i18n.getMessage("name_already_exists_message")
-              );
-            } else if (secretExists) {
-              createPopup(
-                chrome.i18n.getMessage("secret_already_added_message")
-              );
-            } else {
-              try {
-                const token = generateToken(secret);
-                if (token) {
-                  nameInput.value = "";
-                  secretInput.value = "";
-                  const otp = token;
-                  const newTokenObj = {
-                    name,
-                    secret: secret,
-                    url: "",
-                    otp,
-                  };
-                  tokens.push(newTokenObj);
-                  if (syncCheckbox.checked === true) {
-                    chrome.storage.sync.set({ tokens }, () => {
-                      chrome.storage.local.get(["tokenOrder"], (o) => {
-                        const ordered = reorderTokensByOrderArray(
-                          tokens,
-                          o.tokenOrder || []
-                        );
-                        while (tokensContainer.firstChild) {
-                          tokensContainer.removeChild(
-                            tokensContainer.firstChild
-                          );
-                        }
-                        ordered.forEach((tokenObj) => {
-                          addTokenToDOM(
-                            tokenObj.name,
-                            tokenObj.secret,
-                            tokenObj.url,
-                            tokenObj.otp
-                          );
-                        });
-                      });
-                    });
-                  }
-                  if (isPasswordCheckboxChecked === true) {
-                    let cryptoKey = await convertKeyToCryptoKey(
-                      result.encryptionKeyInMemory
-                    );
-                    const encryptedSecretObject = await encryptSecret(
-                      secret,
-                      cryptoKey
-                    );
-                    tokens = tokens.map((tokenObj) => {
-                      if (tokenObj.name === name) {
-                        return {
-                          ...tokenObj,
-                          secret: encryptedSecretObject.encryptedData,
-                        };
+    if (name && normalizedSecret) {
+      if (isValidBase32(rawSecret)) {
+        chrome.storage.local.get(["tokens"], async (result) => {
+          let tokens = result.tokens || [];
+          const nameExists = tokens.some((tokenObj) => tokenObj.name === name);
+          const secretExists = tokens.some(
+            (tokenObj) => tokenObj.secret === normalizedSecret
+          );
+          if (nameExists) {
+            createPopup(chrome.i18n.getMessage("name_already_exists_message"));
+          } else if (secretExists) {
+            createPopup(chrome.i18n.getMessage("secret_already_added_message"));
+          } else {
+            try {
+              const token = generateToken(normalizedSecret);
+              if (token) {
+                nameInput.value = "";
+                secretInput.value = "";
+                const otp = token;
+                const newTokenObj = {
+                  name,
+                  secret: normalizedSecret,
+                  url: "",
+                  otp,
+                };
+                tokens.push(newTokenObj);
+                if (syncCheckbox.checked === true) {
+                  chrome.storage.sync.set({ tokens }, () => {
+                    chrome.storage.local.get(["tokenOrder"], (o) => {
+                      const ordered = reorderTokensByOrderArray(
+                        tokens,
+                        o.tokenOrder || []
+                      );
+                      while (tokensContainer.firstChild) {
+                        tokensContainer.removeChild(tokensContainer.firstChild);
                       }
-                      return tokenObj;
-                    });
-                    chrome.storage.local.set({ tokens }, () => {
-                      chrome.storage.local.get(["tokenOrder"], (o) => {
-                        const ordered = reorderTokensByOrderArray(
-                          tokens,
-                          o.tokenOrder || []
+                      ordered.forEach((tokenObj) => {
+                        addTokenToDOM(
+                          tokenObj.name,
+                          tokenObj.secret,
+                          tokenObj.url,
+                          tokenObj.otp
                         );
-                        while (tokensContainer.firstChild) {
-                          tokensContainer.removeChild(
-                            tokensContainer.firstChild
-                          );
-                        }
-                        ordered.forEach((tokenObj) => {
-                          addTokenToDOM(
-                            tokenObj.name,
-                            secret,
-                            tokenObj.url,
-                            tokenObj.otp
-                          );
-                        });
                       });
                     });
-                  } else {
-                    chrome.storage.local.set({ tokens }, () => {
-                      chrome.storage.local.get(["tokenOrder"], (o) => {
-                        const ordered = reorderTokensByOrderArray(
-                          tokens,
-                          o.tokenOrder || []
-                        );
-                        while (tokensContainer.firstChild) {
-                          tokensContainer.removeChild(
-                            tokensContainer.firstChild
-                          );
-                        }
-                        ordered.forEach((tokenObj) => {
-                          addTokenToDOM(
-                            tokenObj.name,
-                            tokenObj.secret,
-                            tokenObj.url,
-                            tokenObj.otp
-                          );
-                        });
-                      });
-                    });
-                  }
-                } else {
-                  throw new Error("Invalid token generated.");
+                  });
                 }
-              } catch (error) {
-                console.log(error);
+                if (isPasswordCheckboxChecked === true) {
+                  const key = getCachedEncryptionKey();
+                  if (!key) {
+                    return;
+                  }
+                  const encryptedSecretObject = await encryptSecret(
+                    normalizedSecret,
+                    key
+                  );
+                  tokens = tokens.map((tokenObj) => {
+                    if (tokenObj.name === name) {
+                      return {
+                        ...tokenObj,
+                        secret: encryptedSecretObject.payload,
+                      };
+                    }
+                    return tokenObj;
+                  });
+                  chrome.storage.local.set({ tokens }, () => {
+                    chrome.storage.local.get(
+                      ["tokenOrder", "iv"],
+                      async (o) => {
+                        const ordered = reorderTokensByOrderArray(
+                          tokens,
+                          o.tokenOrder || []
+                        );
+                        while (tokensContainer.firstChild) {
+                          tokensContainer.removeChild(
+                            tokensContainer.firstChild
+                          );
+                        }
+                        for (const tokenObj of ordered) {
+                          let renderSecret = tokenObj.secret;
+                          if (isPasswordCheckboxChecked && key) {
+                            try {
+                              renderSecret = await decryptSecret(
+                                tokenObj.secret,
+                                key,
+                                o.iv
+                              );
+                            } catch (error) {
+                              console.error(error);
+                            }
+                          }
+                          addTokenToDOM(
+                            tokenObj.name,
+                            renderSecret,
+                            tokenObj.url,
+                            tokenObj.otp
+                          );
+                        }
+                      }
+                    );
+                  });
+                } else {
+                  chrome.storage.local.set({ tokens }, () => {
+                    chrome.storage.local.get(["tokenOrder"], (o) => {
+                      const ordered = reorderTokensByOrderArray(
+                        tokens,
+                        o.tokenOrder || []
+                      );
+                      while (tokensContainer.firstChild) {
+                        tokensContainer.removeChild(tokensContainer.firstChild);
+                      }
+                      ordered.forEach((tokenObj) => {
+                        addTokenToDOM(
+                          tokenObj.name,
+                          tokenObj.secret,
+                          tokenObj.url,
+                          tokenObj.otp
+                        );
+                      });
+                    });
+                  });
+                }
+              } else {
+                throw new Error("Invalid token generated.");
               }
+            } catch (error) {
+              console.error(error);
             }
           }
-        );
+        });
       } else {
         createPopup(chrome.i18n.getMessage("invalid_secret_message"));
       }
@@ -1149,7 +1074,7 @@ const startPopup = () => {
               );
               encryptedTokens.push({
                 ...token,
-                secret: encryptedSecretObject.encryptedData,
+                secret: encryptedSecretObject.payload,
               });
             }
             passwordProtectedCheckbox.checked = true;
@@ -1162,7 +1087,7 @@ const startPopup = () => {
             try {
               document.body.removeChild(popupContainer);
             } catch (error) {
-              console.log(error);
+              console.error(error);
             }
           });
         } else {
@@ -1246,19 +1171,15 @@ const startPopup = () => {
               isPasswordCheckboxChecked = false;
               chrome.storage.local.set({ passwordCheckbox: false });
 
-              chrome.storage.local.get(
-                "encryptionKeyInMemory",
-                async (result) => {
-                  try {
-                    let importedKey = await convertKeyToCryptoKey(
-                      result.encryptionKeyInMemory
-                    );
-                    await decryptAllTokens(importedKey);
-                  } catch (error) {
-                    console.log(error);
-                  }
+              try {
+                const key = getCachedEncryptionKey();
+                if (key) {
+                  await decryptAllTokens(key);
                 }
-              );
+                clearCachedEncryptionKey();
+              } catch (error) {
+                console.error(error);
+              }
             } else {
             }
           } catch (error) {
@@ -1314,7 +1235,7 @@ const startPopup = () => {
           );
           decryptedTokens.push({ ...token, secret: decryptedSecret });
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
       chrome.storage.local.set({
@@ -1701,6 +1622,7 @@ function initializePopup() {
   chrome.storage.local.set({
     isPasswordVerified: false,
   });
+  clearCachedEncryptionKey();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", startPopup, { once: true });
   } else {
@@ -1711,3 +1633,4 @@ function initializePopup() {
 runStorageMigrations()
   .catch(() => {})
   .finally(initializePopup);
+

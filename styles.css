@@ -91,6 +91,7 @@ body.theme-dark {
 }
 
 .token-box {
+  overflow: hidden;
   border: 2px solid #007bff;
   padding: 10px;
   margin: 5px;
@@ -196,6 +197,8 @@ body.theme-dark {
   text-align: center;
   margin-bottom: 0px;
   margin-top: -35px;
+  overflow: hidden;
+  line-height: 24px;
 }
 
 .token-value {
@@ -1548,9 +1551,11 @@ input:checked + .slider:before {
   margin-top: 20px;
   text-align: center;
   display: block;
-  max-width: calc(100% - 20px);
   margin-left: auto;
   margin-right: auto;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .advanced-add-messages {
@@ -1725,6 +1730,12 @@ input:checked + .slider:before {
   gap: 8px;
 }
 
+.export-error {
+  margin-top: 12px;
+  color: #d93025;
+  font-size: 13px;
+  text-align: center;
+}
 .dark-theme-button {
   display: flex;
   align-items: center;
@@ -1942,3 +1953,4 @@ input:checked + .slider:before {
     overflow: hidden;
   }
 }
+

@@ -1,11 +1,11 @@
 import { jsPDF } from "jspdf";
 import { openModal, buildHeader } from "./ui.js";
+import { decryptTokens, getCachedEncryptionKey } from "./auth.js";
 
 const t = (key, substitutions) => {
   try {
     const message = chrome.i18n.getMessage(key, substitutions);
     if (message && message.length > 0) {
-      console.log(message);
       return message;
     }
   } catch (_) {}
@@ -20,6 +20,12 @@ export async function getStoredScale() {
       const v = result.uiScale;
       resolve(typeof v === "number" && v > 0 ? v : 1);
     });
+  });
+}
+
+function storageLocalGet(keys) {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(keys, (result = {}) => resolve(result));
   });
 }
 
@@ -239,6 +245,11 @@ export function initExportControls(settingsContainer) {
 
     popupContent.appendChild(btns);
 
+    const exportError = document.createElement("div");
+    exportError.className = "export-error";
+    exportError.style.display = "none";
+    popupContent.appendChild(exportError);
+
     if (xIcon) xIcon.addEventListener("click", close);
 
     const escapeHtml = (value) =>
@@ -373,26 +384,44 @@ export function initExportControls(settingsContainer) {
       doc.save(name || suggested);
     };
 
-    csvBtn.addEventListener("click", () => {
-      chrome.storage.local.get(["tokens"], (res) => {
-        exportCSV(Array.isArray(res.tokens) ? res.tokens : []);
-        close();
-      });
-    });
+    async function getTokensForExport() {
+      const { passwordCheckbox } = await storageLocalGet(["passwordCheckbox"]);
+      if (passwordCheckbox) {
+        const key = getCachedEncryptionKey();
+        if (!key) {
+          const error = new Error("locked");
+          error.code = "PASSWORD_LOCKED";
+          throw error;
+        }
+        return decryptTokens(key);
+      }
+      const { tokens } = await storageLocalGet(["tokens"]);
+      return Array.isArray(tokens) ? tokens : [];
+    }
 
-    pdfBtn.addEventListener("click", () => {
-      chrome.storage.local.get(["tokens"], (res) => {
-        exportPDF(Array.isArray(res.tokens) ? res.tokens : []);
-        close();
-      });
-    });
+    function showExportError(messageKey) {
+      exportError.textContent = chrome.i18n.getMessage(messageKey);
+      exportError.style.display = "block";
+    }
 
-    docBtn.addEventListener("click", () => {
-      chrome.storage.local.get(["tokens"], (res) => {
-        exportDOC(Array.isArray(res.tokens) ? res.tokens : []);
+    const handleExport = async (exporter) => {
+      try {
+        exportError.style.display = "none";
+        const tokens = await getTokensForExport();
+        exporter(tokens);
         close();
-      });
-    });
+      } catch (error) {
+        if (error && error.code === "PASSWORD_LOCKED") {
+          showExportError("main_enter_password_message");
+        } else {
+          console.error(error);
+        }
+      }
+    };
+
+    csvBtn.addEventListener("click", () => handleExport(exportCSV));
+    pdfBtn.addEventListener("click", () => handleExport(exportPDF));
+    docBtn.addEventListener("click", () => handleExport(exportDOC));
   };
 
   exportBtn.addEventListener("click", onClick);
@@ -683,3 +712,4 @@ export function initBasicToggles({
     });
   }
 }
+

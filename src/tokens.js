@@ -1,15 +1,22 @@
 import { authenticator } from "otplib";
 import QRCode from "qrcode";
-import { buildCloseAction, openModal } from "./ui.js";
+import { openModal } from "./ui.js";
+
+const BASE32_REGEX = /^[A-Z2-7]+=*$/;
+
+export function normalizeSecret(secret = "") {
+  return String(secret).replace(/\s+/g, "").toUpperCase();
+}
 
 export function isValidBase32(secret) {
-  const base32Regex = /^[A-Z2-7]+=*$/;
-  return base32Regex.test(secret);
+  const normalized = normalizeSecret(secret);
+  return normalized.length > 0 && BASE32_REGEX.test(normalized);
 }
 
 export function generateToken(secret) {
-  if (isValidBase32(secret)) {
-    return authenticator.generate(secret);
+  const normalized = normalizeSecret(secret);
+  if (BASE32_REGEX.test(normalized)) {
+    return authenticator.generate(normalized);
   }
   return false;
 }
@@ -31,6 +38,15 @@ export function createTokenUI({
   let dndBound = false;
   let dragPlaceholder = null;
 
+  function applyNameSizing(element, name) {
+    const baseSize = 18;
+    const minSize = 12;
+    const overflow = Math.max(0, (name || "").length - 11);
+    const reductionSteps = Math.ceil(overflow / 2);
+    const fontSize = Math.max(minSize, baseSize - reductionSteps * 1.5);
+    element.style.fontSize = `${fontSize}px`;
+    element.textContent = name;
+  }
   function ensureDragPlaceholder() {
     if (dragPlaceholder && dragPlaceholder.isConnected) {
       return dragPlaceholder;
@@ -113,12 +129,12 @@ export function createTokenUI({
         ); // 0..1
         const dy = Math.max(1, Math.round(maxStep * intensity));
         window.scrollBy(0, -dy - 1);
-        console.log("scrolling up", dy);
+        console.error("scrolling up", dy);
       } else if (e.clientY > bottomStart) {
         const intensity = Math.min(4, (e.clientY - bottomStart) / 50);
         const dy = Math.max(1, Math.round(maxStep * intensity));
         window.scrollBy(0, dy + 1);
-        console.log("scrolling down", dy);
+        console.error("scrolling down", dy);
       }
     });
     tokensContainer.addEventListener("drop", (e) => {
@@ -150,7 +166,7 @@ export function createTokenUI({
 
     const nameHeader = document.createElement("h2");
     nameHeader.className = "token-name";
-    nameHeader.textContent = `${name}`;
+    applyNameSizing(nameHeader, name);
 
     const tokenHeader = document.createElement("h1");
     tokenHeader.className = "token-value";
@@ -272,7 +288,7 @@ export function createTokenUI({
           popupContent.appendChild(inlineUrlDiv);
           const deleteButton = document.createElement("button");
           deleteButton.className = "delete-token";
-          deleteButton.id = "delete-token";
+          deleteButton.id = `delete-token-${name}`;
           const closeButton = document.createElement("button");
           closeButton.className = "close-popup";
           closeButton.textContent = chrome.i18n.getMessage("close");
@@ -360,7 +376,7 @@ export function createTokenUI({
           });
         });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
 
     fetch("./icons/clipboard.svg")
       .then((response) => response.text())
@@ -372,7 +388,7 @@ export function createTokenUI({
         tokenCopy.setAttribute("id", name + "-token-copy");
         tokenElement.appendChild(tokenCopy);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
 
     const tokenQRButton = document.createElement("img");
     tokenQRButton.src = "./icons/tiny-qr.svg";
@@ -418,7 +434,7 @@ export function createTokenUI({
         const redXButton = document.getElementById("x-icon");
         redXButton.addEventListener("click", close);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     });
 
@@ -494,3 +510,7 @@ export function createTokenUI({
 
   return { addTokenToDOM, updateToken };
 }
+
+
+
+

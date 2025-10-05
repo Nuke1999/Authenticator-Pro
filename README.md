@@ -8,11 +8,11 @@ Authenticator-Pro is a customizable authenticator extension that generates and a
 - Autofill URL: Set unique URLs for each token to ensure OTP autofill works seamlessly across various websites via the token settings button.
 - Clipboard Copying: Enable OTP copying by simply clicking on a token, saving time on manual entry.
 - Chrome Sync: Syncs tokens on logged-in Chrome devices.
-- Scaling: Adjust the extension’s interface between 70% and 130% of its original size for optimal visibility and usability across different screens.
+- Scaling: Adjust the extension's interface between 70% and 130% of its original size for optimal visibility and usability across different screens.
 - Online Time Sync: Synchronize with online time to ensure OTPs are accurately generated.
 - Password Protection: Securely lock OTPs and secrets behind a password, allowing access only after correct password input.
 - Popup Mode: Opens the extension in a separate popup window, providing quick and convenient access to OTPs.
-- Themes: Choose from four themes — Light, Dark, Ocean, and Forest — to match your visual preference.
+- Themes: Choose from four themes - Light, Dark, Ocean, and Forest - to match your visual preference.
 - Token Management: View, edit, and delete active OTP tokens within the extension.
 
 <h3>Dark Theme</h3>
@@ -50,7 +50,7 @@ Authenticator-Pro is a customizable authenticator extension that generates and a
 5. Load the extension in Chrome:
    - Go to 'chrome://extensions'
    - Enable "Developer mode"
-   - Click "Loan unpacked" and select the root of the project.
+   - Click "Load unpacked" and select the root of the project.
 
 ## Usage
 
@@ -85,3 +85,7 @@ This project uses open-source dependencies that are licensed under the MIT licen
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+
+
+

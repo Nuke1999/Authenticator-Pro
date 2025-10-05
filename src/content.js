@@ -54,7 +54,7 @@ window.Buffer = Buffer;
     try {
       chrome.runtime.sendMessage({ type: "GET_TAB_URL" }, (response) => {
         if (chrome.runtime.lastError) {
-          console.log(chrome.runtime.lastError);
+          console.error(chrome.runtime.lastError);
           return;
         }
 
@@ -66,12 +66,11 @@ window.Buffer = Buffer;
               "autofillEnabled",
               "isPasswordVerified",
               "passwordCheckbox",
-              "encryptionKeyInMemory",
               "iv",
             ],
             async (result) => {
               if (chrome.runtime.lastError) {
-                console.log(chrome.runtime.lastError);
+                console.error(chrome.runtime.lastError);
                 return;
               }
               try {
@@ -107,16 +106,16 @@ window.Buffer = Buffer;
                   }
                 }
               } catch (error) {
-                console.log(error);
+                console.error(error);
               }
             }
           );
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -155,3 +154,4 @@ window.Buffer = Buffer;
     onDOMContentLoaded();
   }
 })();
+
