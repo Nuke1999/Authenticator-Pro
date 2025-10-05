@@ -648,17 +648,15 @@ body.theme-dark {
   fill: #0f2017;
 }
 
-.theme-dark path {
+.theme-dark path:not(.logo-path) {
   fill: white;
 }
 
-.theme-ocean path {
+.theme-ocean path:not(.logo-path) {
   fill: #e6f4f8;
 }
 
-.theme-forest path {
-  /* right here */
-  /* fill: #e8f5e9; */
+.theme-forest path:not(.logo-path) {
   fill: white;
 }
 
@@ -835,6 +833,58 @@ body.theme-dark {
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 14px;
+}
+
+.autofill-url-input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.autofill-url-input-wrapper .form-input {
+  margin-bottom: 0;
+  padding-right: 42px;
+}
+
+.clear-url-button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 18px;
+  line-height: 1;
+  border-radius: 50%;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.clear-url-button:hover:not(:disabled),
+.clear-url-button:focus-visible:not(:disabled) {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.theme-dark .clear-url-button:hover:not(:disabled),
+.theme-dark .clear-url-button:focus-visible:not(:disabled),
+.theme-ocean .clear-url-button:hover:not(:disabled),
+.theme-ocean .clear-url-button:focus-visible:not(:disabled),
+.theme-forest .clear-url-button:hover:not(:disabled),
+.theme-forest .clear-url-button:focus-visible:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.clear-url-button:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 .theme-dark .form-input-no-margin {
@@ -1430,6 +1480,10 @@ input:checked + .slider:before {
   right: 5px;
 }
 
+.qr-image {
+  margin-top: 20px;
+}
+
 .token-qr-button:hover {
   transform: scale(1.1);
 }
@@ -1767,17 +1821,52 @@ input:checked + .slider:before {
   margin-top: 30px;
 }
 
-.logo-container img {
+.logo-container svg {
   width: 50%;
-  height: auto;
-  filter: invert(100%);
+  height: 50%;
 }
 
 #password-submit-button {
   margin-top: 5px;
 }
 
-.theme-dark .logo-container {
+.theme-dark .logo-path-right-background {
+  fill: black !important;
+}
+
+.theme-dark .logo-path-left-background {
+  fill: black !important;
+}
+
+.theme-dark .logo-path-top-background {
+  fill: black !important;
+}
+
+.theme-forest .logo-path-right-background {
+  fill: #0f2017 !important;
+}
+
+.theme-forest .logo-path-left-background {
+  fill: #0f2017 !important;
+}
+
+.theme-forest .logo-path-top-background {
+  fill: #0f2017 !important;
+}
+
+.theme-ocean .logo-path-right-background {
+  fill: #0b2230 !important;
+}
+
+.theme-ocean .logo-path-left-background {
+  fill: #0b2230 !important;
+}
+
+.theme-ocean .logo-path-top-background {
+  fill: #0b2230 !important;
+}
+
+.theme-light .logo-container {
   filter: invert(100%);
 }
 

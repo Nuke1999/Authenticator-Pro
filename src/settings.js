@@ -1,5 +1,19 @@
 import { jsPDF } from "jspdf";
 import { openModal, buildHeader } from "./ui.js";
+
+const t = (key, substitutions) => {
+  try {
+    const message = chrome.i18n.getMessage(key, substitutions);
+    if (message && message.length > 0) {
+      console.log(message);
+      return message;
+    }
+  } catch (_) {}
+  if (Array.isArray(substitutions) && substitutions.length > 0) {
+    return substitutions.join(" ");
+  }
+  return key;
+};
 export async function getStoredScale() {
   return new Promise((resolve) => {
     chrome.storage.local.get(["uiScale"], (result) => {
@@ -20,17 +34,12 @@ export function buildSettingsUI(settingsContainer) {
   exportContainer.className = "export-container";
   const exportHeader = document.createElement("h2");
   exportHeader.className = "export-header";
-  try {
-    exportHeader.textContent = chrome.i18n.getMessage("export") || "Export";
-  } catch (_) {
-    exportHeader.textContent = "Export";
-  }
+  exportHeader.textContent = t("export");
   const exportRow = document.createElement("div");
   exportRow.className = "theme-buttons-container";
   const exportBtn = document.createElement("button");
   exportBtn.className = "export-data-button";
-  // exportBtn.className = "light-theme-button"; // reuse button style
-  exportBtn.textContent = "Export Data";
+  exportBtn.textContent = t("export_data");
   exportRow.appendChild(exportBtn);
   exportContainer.appendChild(exportHeader);
   exportContainer.appendChild(exportRow);
@@ -42,12 +51,7 @@ export function buildSettingsUI(settingsContainer) {
   permContainer.id = "switch-boxes-container";
   const permHeader = document.createElement("h2");
   permHeader.className = "permissions-header";
-  try {
-    permHeader.textContent =
-      chrome.i18n.getMessage("permissions") || "Permissions";
-  } catch (_) {
-    permHeader.textContent = "Permissions";
-  }
+  permHeader.textContent = t("permissions");
   permContainer.appendChild(permHeader);
   settingsContainer.appendChild(permContainer);
 
@@ -62,11 +66,7 @@ export function buildSettingsUI(settingsContainer) {
   settingsContainer.appendChild(themesContainer);
   const themesHeader = document.createElement("h2");
   themesHeader.className = "themes-header";
-  try {
-    themesHeader.textContent = chrome.i18n.getMessage("themes") || "Themes";
-  } catch (_) {
-    themesHeader.textContent = "Themes";
-  }
+  themesHeader.textContent = t("themes");
   settingsContainer.appendChild(themesContainer);
 
   themesContainer.appendChild(themesHeader);
@@ -82,33 +82,23 @@ export function buildSettingsUI(settingsContainer) {
   const lightBtn = document.createElement("button");
   lightBtn.className = "light-theme-button";
   lightBtn.id = "light-theme-button";
-  try {
-    lightBtn.textContent =
-      chrome.i18n.getMessage("light_theme") || "Light Theme";
-  } catch (_) {
-    lightBtn.textContent = "Light Theme";
-  }
+  lightBtn.textContent = t("light_theme");
   const darkBtn = document.createElement("button");
   darkBtn.className = "dark-theme-button";
   darkBtn.id = "dark-theme-button";
-  try {
-    darkBtn.textContent = chrome.i18n.getMessage("dark_theme") || "Dark Theme";
-  } catch (_) {
-    darkBtn.textContent = "Dark Theme";
-  }
+  darkBtn.textContent = t("dark_theme");
   const oceanBtn = document.createElement("button");
   oceanBtn.className = "ocean-theme-button";
   oceanBtn.id = "ocean-theme-button";
-  oceanBtn.textContent = "Ocean Theme";
+  oceanBtn.textContent = t("ocean_theme");
   const forestBtn = document.createElement("button");
   forestBtn.className = "forest-theme-button";
   forestBtn.id = "forest-theme-button";
-  forestBtn.textContent = "Forest Theme";
+  forestBtn.textContent = t("forest_theme");
   themeButtonsContainer.appendChild(lightBtn);
   themeButtonsContainer.appendChild(darkBtn);
   themeButtonsContainer.appendChild(oceanBtn);
   themeButtonsContainer.appendChild(forestBtn);
-  // settingsContainer.appendChild(themeButtonsContainer);
 
   // Theme/export wiring is initialized by popup after switches are available
 }
@@ -144,36 +134,24 @@ export function initScaleControl(settingsContainer) {
   section.className = "scale-container";
   const header = document.createElement("h2");
   header.className = "scale-header";
-  header.textContent = "Scale";
+  header.textContent = t("scale_heading");
   section.appendChild(header);
 
   const select = document.createElement("select");
   select.id = "ui-scale-control";
   select.className = "form-input";
-  const options = [
-    { label: "70%", value: 0.7 },
-    { label: "80%", value: 0.8 },
-    { label: "90%", value: 0.9 },
-    { label: "100%", value: 1 },
-    { label: "110%", value: 1.1 },
-    { label: "120%", value: 1.2 },
-    { label: "130%", value: 1.3 },
-  ];
-  options.forEach((opt) => {
-    const o = document.createElement("option");
-    o.value = String(opt.value);
-    o.textContent = opt.label;
-    select.appendChild(o);
+  const scaleValues = [0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3];
+  scaleValues.forEach((value) => {
+    const option = document.createElement("option");
+    option.value = String(value);
+    option.textContent = t("scale_percentage", String(Math.round(value * 100)));
+    select.appendChild(option);
   });
 
   getStoredScale().then((scale) => {
-    const closest = options
-      .map((o) => o.value)
-      .reduce(
-        (prev, curr) =>
-          Math.abs(curr - scale) < Math.abs(prev - scale) ? curr : prev,
-        1
-      );
+    const closest = scaleValues.reduce((prev, curr) =>
+      Math.abs(curr - scale) < Math.abs(prev - scale) ? curr : prev
+    );
     select.value = String(closest);
   });
 
@@ -216,7 +194,8 @@ export function initScaleControl(settingsContainer) {
 }
 
 export function initExportControls(settingsContainer) {
-  let exportBtn = settingsContainer.querySelector(".export-data-button");
+  const exportBtn = settingsContainer.querySelector(".export-data-button");
+  if (!exportBtn) return;
 
   const onClick = () => {
     const {
@@ -231,78 +210,120 @@ export function initExportControls(settingsContainer) {
         } catch (_) {}
       },
     });
-    // Optional: maintain legacy body class side-effect if styles rely on it
     try {
       document.body.classList.add("modal-active");
     } catch (_) {}
 
-    const { header, xIcon } = buildHeader({ title: "Export Options" });
+    const { header, xIcon } = buildHeader({
+      title: t("export_options_title"),
+    });
     popupContent.appendChild(header);
 
     const btns = document.createElement("div");
     btns.className = "export-buttons";
+
     const csvBtn = document.createElement("button");
     csvBtn.className = "wide-button";
-    csvBtn.textContent = "Export CSV";
+    csvBtn.textContent = t("export_csv_label");
     btns.appendChild(csvBtn);
+
     const pdfBtn = document.createElement("button");
     pdfBtn.className = "wide-button";
-    pdfBtn.textContent = "Export PDF";
+    pdfBtn.textContent = t("export_pdf_label");
     btns.appendChild(pdfBtn);
+
     const docBtn = document.createElement("button");
     docBtn.className = "wide-button";
-    docBtn.textContent = "Export Word (.doc)";
+    docBtn.textContent = t("export_doc_label");
     btns.appendChild(docBtn);
+
     popupContent.appendChild(btns);
 
-    // Red X closes
     if (xIcon) xIcon.addEventListener("click", close);
 
-    function downloadBlob(filename, mime, content) {
+    const escapeHtml = (value) =>
+      String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const columnLabels = {
+      name: t("export_column_name"),
+      secret: t("export_column_secret"),
+      url: t("export_column_url"),
+      otp: t("export_column_otp"),
+    };
+
+    const filenamePrefix = t("export_filename_prefix");
+    const csvFilename = `${filenamePrefix}.csv`;
+    const docFilename = `${filenamePrefix}.doc`;
+    const pdfBaseFilename = `${filenamePrefix}.pdf`;
+    const pdfPrompt = t("export_pdf_prompt");
+    const documentTitle = t("export_document_title");
+
+    const downloadBlob = (filename, mime, content) => {
       const blob = new Blob([content], { type: mime });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
+    };
 
-    function exportCSV(tokens) {
-      const header = ["name", "secret", "url", "otp"];
+    const exportCSV = (tokens) => {
+      const header = [
+        columnLabels.name,
+        columnLabels.secret,
+        columnLabels.url,
+        columnLabels.otp,
+      ];
       const lines = [header.join(",")];
-      tokens.forEach((t) => {
-        const vals = [
-          t.name || "",
-          t.secret || "",
-          t.url || "",
-          t.otp || "",
-        ].map((v) => '"' + String(v).replace(/"/g, '""') + '"');
-        lines.push(vals.join(","));
+      tokens.forEach((token) => {
+        const values = [
+          token.name || "",
+          token.secret || "",
+          token.url || "",
+          token.otp || "",
+        ].map((value) => '"' + String(value).replace(/"/g, '""') + '"');
+        lines.push(values.join(","));
       });
-      downloadBlob(
-        "authenticator-export.csv",
-        "text/csv;charset=utf-8",
-        lines.join("\r\n")
-      );
-    }
+      downloadBlob(csvFilename, "text/csv;charset=utf-8", lines.join("\r\n"));
+    };
 
-    function exportDOC(tokens) {
+    const exportDOC = (tokens) => {
+      const headerRow = `<tr>${[
+        columnLabels.name,
+        columnLabels.secret,
+        columnLabels.url,
+        columnLabels.otp,
+      ]
+        .map((label) => `<th>${escapeHtml(label)}</th>`)
+        .join("")}</tr>`;
       const rows = tokens
-        .map(
-          (t) =>
-            `<tr><td>${t.name || ""}</td><td>${t.secret || ""}</td><td>${
-              t.url || ""
-            }</td><td>${t.otp || ""}</td></tr>`
-        )
+        .map((token) => {
+          const cells = [
+            escapeHtml(token.name),
+            escapeHtml(token.secret),
+            escapeHtml(token.url),
+            escapeHtml(token.otp),
+          ]
+            .map((cell) => `<td>${cell}</td>`)
+            .join("");
+          return `<tr>${cells}</tr>`;
+        })
         .join("");
-      const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Export</title></head><body><table border="1" cellspacing="0" cellpadding="4"><thead><tr><th>Name</th><th>Secret</th><th>URL</th><th>OTP</th></tr></thead><tbody>${rows}</tbody></table></body></html>`;
-      downloadBlob("authenticator-export.doc", "application/msword", html);
-    }
+      const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${escapeHtml(
+        documentTitle
+      )}</title></head><body><table border="1" cellspacing="0" cellpadding="4"><thead>${headerRow}</thead><tbody>${rows}</tbody></table></body></html>`;
+      downloadBlob(docFilename, "application/msword", html);
+    };
 
-    function exportPDF(tokens) {
+    const exportPDF = (tokens) => {
       const doc = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
       const margin = 36;
       const lineHeight = 18;
@@ -310,14 +331,14 @@ export function initExportControls(settingsContainer) {
       let y = margin + 12;
       doc.setFont("Helvetica", "bold");
       doc.setFontSize(14);
-      doc.text("Authenticator Export", margin, y);
+      doc.text(documentTitle, margin, y);
       y += 24;
       doc.setFontSize(11);
       doc.setFont("Helvetica", "bold");
-      doc.text("Name", colX[0], y);
-      doc.text("Secret", colX[1], y);
-      doc.text("URL", colX[2], y);
-      doc.text("OTP", colX[3], y);
+      doc.text(columnLabels.name, colX[0], y);
+      doc.text(columnLabels.secret, colX[1], y);
+      doc.text(columnLabels.url, colX[2], y);
+      doc.text(columnLabels.otp, colX[3], y);
       y += 12;
       doc.setFont("Helvetica", "normal");
       const pageHeight = doc.internal.pageSize.getHeight();
@@ -326,31 +347,31 @@ export function initExportControls(settingsContainer) {
         String(str || "").length > max
           ? String(str).slice(0, max - 3) + "..."
           : String(str || "");
-      tokens.forEach((t) => {
+      tokens.forEach((token) => {
         if (y > maxY) {
           doc.addPage();
           y = margin;
         }
-        doc.text(wrap(t.name, 24), colX[0], y);
-        doc.text(wrap(t.secret, 28), colX[1], y);
-        doc.text(wrap(t.url, 36), colX[2], y);
-        doc.text(wrap(t.otp, 8), colX[3], y);
+        doc.text(wrap(token.name, 24), colX[0], y);
+        doc.text(wrap(token.secret, 28), colX[1], y);
+        doc.text(wrap(token.url, 36), colX[2], y);
+        doc.text(wrap(token.otp, 8), colX[3], y);
         y += lineHeight;
       });
-      let suggested = "authenticator-export.pdf";
+      let suggested = pdfBaseFilename;
       try {
         const stamp = new Date()
           .toISOString()
           .slice(0, 19)
           .replace(/[:T]/g, "-");
-        suggested = `authenticator-export-${stamp}.pdf`;
+        suggested = `${filenamePrefix}-${stamp}.pdf`;
       } catch (_) {}
       const name =
-        typeof window !== "undefined" && window.prompt
-          ? window.prompt("Save PDF as:", suggested)
+        typeof window !== "undefined" && typeof window.prompt === "function"
+          ? window.prompt(pdfPrompt, suggested)
           : suggested;
       doc.save(name || suggested);
-    }
+    };
 
     csvBtn.addEventListener("click", () => {
       chrome.storage.local.get(["tokens"], (res) => {
@@ -358,19 +379,22 @@ export function initExportControls(settingsContainer) {
         close();
       });
     });
-    docBtn.addEventListener("click", () => {
-      chrome.storage.local.get(["tokens"], (res) => {
-        exportDOC(Array.isArray(res.tokens) ? res.tokens : []);
-        close();
-      });
-    });
+
     pdfBtn.addEventListener("click", () => {
       chrome.storage.local.get(["tokens"], (res) => {
         exportPDF(Array.isArray(res.tokens) ? res.tokens : []);
         close();
       });
     });
+
+    docBtn.addEventListener("click", () => {
+      chrome.storage.local.get(["tokens"], (res) => {
+        exportDOC(Array.isArray(res.tokens) ? res.tokens : []);
+        close();
+      });
+    });
   };
+
   exportBtn.addEventListener("click", onClick);
 }
 

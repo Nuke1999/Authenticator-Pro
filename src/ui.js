@@ -270,7 +270,6 @@ export function createPopup(message) {
   popupContent.appendChild(closeButtonContainer);
   popupContainer.appendChild(popupContent);
   document.body.appendChild(popupContainer);
-  // Close on overlay click to match other modals
   popupContainer.addEventListener("click", (e) => {
     if (e.target === popupContainer) {
       try {
@@ -286,10 +285,6 @@ export function createPopup(message) {
     document.body.removeChild(popupContainer);
   });
 }
-
-// popupContainer.addEventListener("click", (e) => {
-//   if (e.target === popupContainer) close();
-// });
 
 export function openModal({
   contentClass = "popup-content",

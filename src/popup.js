@@ -35,6 +35,7 @@ import {
 } from "./permissions.js";
 import { deleteToken } from "./storage.js";
 import { createTokenUI, generateToken, isValidBase32 } from "./tokens.js";
+import { runStorageMigrations } from "./migrations.js";
 
 // Global references for the last opened modal elements (if needed elsewhere)
 let globalPopupContainer = null;
@@ -118,10 +119,7 @@ function preventKeys(e) {
 
 window.Buffer = Buffer;
 
-chrome.storage.local.set({
-  isPasswordVerified: false,
-});
-document.addEventListener("DOMContentLoaded", () => {
+const startPopup = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const isPopup = urlParams.get("isPopup") === "true";
   const isVideoPermission = urlParams.get("isVideoPermission") === "true";
@@ -789,10 +787,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (onlineTimeCheckbox.checked) {
-      console.log("online time enabled");
       updateClock();
     } else {
-      console.log("online time disabled");
     }
   });
 
@@ -829,13 +825,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const secret = secretInput.value.trim();
-    console.log(secret);
     if (name && nameLength && secret) {
       if (isValidBase32(secret)) {
         chrome.storage.local.get(
           ["tokens", "encryptionKeyInMemory"],
           async (result) => {
-            console.log(result);
             let tokens = result.tokens || [];
             const nameExists = tokens.some(
               (tokenObj) => tokenObj.name === name
@@ -848,7 +842,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 chrome.i18n.getMessage("name_already_exists_message")
               );
             } else if (secretExists) {
-              console.log("secret already exists");
               createPopup(
                 chrome.i18n.getMessage("secret_already_added_message")
               );
@@ -1468,7 +1461,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const stopCameraAndScanner = () => {
       if (qrScanner) {
-        console.log("qrScanner was true");
         qrScanner.stop();
         qrScanner = null;
       }
@@ -1526,7 +1518,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     popupContainer.addEventListener("click", (e) => {
       if (e.target === popupContainer) {
-        console.log("should be stopping camera and scanner");
         stopCameraAndScanner();
         document.body.classList.remove("modal-active");
         closeAdvanced();
@@ -1541,16 +1532,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     webcamButton.addEventListener("click", async () => {
       if (isCooldown) {
-        console.log("Blocked: cooldown active, ignoring click.");
         return;
       }
 
-      console.log("Webcam button clicked, fired");
       isCooldown = true;
-      webcamButton.disabled = true; // always disable button immediately
-      console.log("Webcam button disabled for 3 seconds");
-
-      // 🔒 optional overlay for outside clicks
+      webcamButton.disabled = true;
       const overlay = document.createElement("div");
       overlay.style.position = "fixed";
       overlay.style.top = "0";
@@ -1566,7 +1552,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (overlay.parentNode) overlay.remove();
         webcamButton.disabled = false;
         isCooldown = false;
-        console.log("Cooldown ended (3s), button re-enabled.");
       }, 3000);
 
       try {
@@ -1710,4 +1695,19 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateToken(name, secret) {
     return updateTokenImpl(name, secret);
   }
-});
+};
+
+function initializePopup() {
+  chrome.storage.local.set({
+    isPasswordVerified: false,
+  });
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startPopup, { once: true });
+  } else {
+    startPopup();
+  }
+}
+
+runStorageMigrations()
+  .catch(() => {})
+  .finally(initializePopup);

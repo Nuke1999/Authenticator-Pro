@@ -179,35 +179,53 @@ export function createTokenUI({
               : t("autofill_url_not_enabled");
           popupContent.appendChild(label);
 
+          const urlInputWrapper = document.createElement("div");
+          urlInputWrapper.className = "autofill-url-input-wrapper";
+
           const urlInput = document.createElement("input");
           urlInput.type = "text";
           urlInput.id = "autofill-url-input";
           urlInput.className = "form-input enter-url-placeholder";
+          urlInput.placeholder = t("enter_url");
           urlInput.disabled = !(autofillChk && autofillChk.checked);
-          popupContent.appendChild(urlInput);
-          if (autofillChk) {
-            autofillChk.addEventListener("change", function () {
-              if (autofillChk.checked) {
-                urlInput.disabled = false;
-                label.textContent = t("autofill_url");
-              } else {
-                urlInput.disabled = true;
-                label.textContent = t("autofill_url_not_enabled");
-              }
-            });
+          urlInputWrapper.appendChild(urlInput);
+
+          const clearUrlButton = document.createElement("button");
+          clearUrlButton.type = "button";
+          clearUrlButton.id = "clear-url-button";
+          clearUrlButton.className = "clear-url-button";
+          clearUrlButton.textContent = "\u00D7";
+          const clearLabel = t("clear_saved_url");
+          if (clearLabel) {
+            clearUrlButton.title = clearLabel;
+            clearUrlButton.setAttribute("aria-label", clearLabel);
           }
+          clearUrlButton.disabled = !url;
+          urlInputWrapper.appendChild(clearUrlButton);
+
+          popupContent.appendChild(urlInputWrapper);
 
           const saveUrlButton = document.createElement("button");
-          if (autofillChk.checked) {
-            saveUrlButton.disabled = false;
-          } else {
-            saveUrlButton.disabled = true;
-            console.log("autofill is NOT CHECKED");
-          }
           saveUrlButton.id = "save-url-button";
           saveUrlButton.className = "wide-button";
           saveUrlButton.textContent = t("save_url");
           popupContent.appendChild(saveUrlButton);
+
+          const updateAutofillControls = () => {
+            const enabled = !!(autofillChk && autofillChk.checked);
+            urlInput.disabled = !enabled;
+            saveUrlButton.disabled = !enabled;
+            clearUrlButton.disabled = !url;
+            label.textContent = enabled
+              ? t("autofill_url")
+              : t("autofill_url_not_enabled");
+          };
+
+          updateAutofillControls();
+
+          if (autofillChk) {
+            autofillChk.addEventListener("change", updateAutofillControls);
+          }
           const buttonsContainer = document.createElement("div");
           buttonsContainer.className = "buttons-container";
           popupContent.appendChild(buttonsContainer);
@@ -261,6 +279,35 @@ export function createTokenUI({
                 const displayUrl =
                   newUrl.length > 50 ? newUrl.substring(0, 50) + "..." : newUrl;
                 currentUrlDiv.textContent = displayUrl;
+                url = newUrl;
+                shortenedUrl = displayUrl;
+                urlInput.value = "";
+                clearUrlButton.disabled = !url;
+                updateAutofillControls();
+              }
+            });
+          });
+
+          clearUrlButton.addEventListener("click", () => {
+            chrome.storage.local.get(["tokens"], (result) => {
+              let tokens = result.tokens || [];
+              const tokenIndex = tokens.findIndex((t) => t.name === name);
+              if (tokenIndex !== -1) {
+                if (tokens[tokenIndex].hasOwnProperty("url")) {
+                  delete tokens[tokenIndex].url;
+                }
+                const saveToLocal = () =>
+                  chrome.storage.local.set({ tokens }, () => {});
+                const saveToSync = () =>
+                  chrome.storage.sync.set({ tokens }, () => {});
+                saveToLocal();
+                if (syncChk && syncChk.checked) saveToSync();
+                url = "";
+                shortenedUrl = "";
+                urlInput.value = "";
+                currentUrlDiv.textContent = "";
+                clearUrlButton.disabled = true;
+                updateAutofillControls();
               }
             });
           });
@@ -323,6 +370,7 @@ export function createTokenUI({
         secretValue.textContent = secret;
         qrContainer.appendChild(secretValue);
         const qrImage = document.createElement("img");
+        qrImage.className = "qr-image";
         qrImage.src = qrDataURL;
         qrImage.alt = `${name} QR Code`;
         qrImage.style.width = "140px";

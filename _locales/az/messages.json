@@ -208,5 +208,59 @@
   },
   "webcam": {
     "message": "Vebkamera"
+  },
+  "clear_saved_url": {
+    "message": "Clear saved URL"
+  },
+  "export": {
+    "message": "Export"
+  },
+  "export_data": {
+    "message": "Export Data"
+  },
+  "ocean_theme": {
+    "message": "Ocean Theme"
+  },
+  "forest_theme": {
+    "message": "Forest Theme"
+  },
+  "scale_heading": {
+    "message": "Scale"
+  },
+  "scale_percentage": {
+    "message": "$1%"
+  },
+  "export_options_title": {
+    "message": "Export Options"
+  },
+  "export_csv_label": {
+    "message": "Export CSV"
+  },
+  "export_pdf_label": {
+    "message": "Export PDF"
+  },
+  "export_doc_label": {
+    "message": "Export Word (.doc)"
+  },
+  "export_column_name": {
+    "message": "Name"
+  },
+  "export_column_secret": {
+    "message": "Secret"
+  },
+  "export_column_url": {
+    "message": "URL"
+  },
+  "export_column_otp": {
+    "message": "OTP"
+  },
+  "export_filename_prefix": {
+    "message": "authenticator-export"
+  },
+  "export_pdf_prompt": {
+    "message": "Save PDF as:"
+  },
+  "export_document_title": {
+    "message": "Authenticator Export"
   }
 }
