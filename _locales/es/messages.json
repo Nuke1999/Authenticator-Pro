@@ -29,7 +29,7 @@
     "enter_password": { "message": "Introducir Contraseña:" },
     "enter_secret": { "message": "Introducir Secreto:" },
     "enter_url": { "message": "Introducir URL" },
-    "extension_description": { "message": "Authenticator Pro es una potente herramienta que genera una contraseña de un solo uso (OTP) cada 30 segundos basada en un secreto proporcionado." },
+    "extension_description": { "message": "Authenticator Pro genera contraseñas de un solo uso (OTP) cada 30 segundos basadas en un secreto proporcionado." },
     "extension_name": { "message": "Authenticator Pro" },
     "hide_token_adder_checkbox_label": { "message": "Ocultar Añadidor de Tokens" },
     "hide_token_adder_checkbox_tooltip": { "message": "Oculta el formulario para añadir tokens; proporciona una mejor visibilidad de los tokens guardados." },

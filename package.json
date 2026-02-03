@@ -30,3 +30,4 @@
                     "build:prod":  "webpack --env production"
                 }
 }
+
