@@ -1,266 +1,296 @@
-{
-  "active_tokens": {
-    "message": "Tokens Actius:"
-  },
-  "add_token": {
-    "message": "Afegir Token"
-  },
-  "add_qr_code_via": {
-    "message": "Afegir Codi QR Mitjançant:"
-  },
-  "advanced_add": {
-    "message": "Afegit Avançat"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Botó d’Afegit Avançat"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Permet als usuaris afegir secrets mitjançant un codi QR (càmera, fitxer o enllaç)."
-  },
-  "are_you_sure_message": {
-    "message": "N’estàs segur? Aquesta acció és permanent."
-  },
-  "autofill_checkbox_label": {
-    "message": "Ompliment Automàtic"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Omple automàticament el camp OTP utilitzant l’URL d’ompliment automàtic per a cada token."
-  },
-  "autofill_url": {
-    "message": "URL d’Ompliment Automàtic:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "URL d’Ompliment Automàtic: (No Activat)"
-  },
-  "camera_permission_button": {
-    "message": "Botó de Permís de Càmera"
-  },
-  "camera_permission_message_1": {
-    "message": "*El botó es clica automàticament en carregar la pàgina*"
-  },
-  "camera_permission_message_2": {
-    "message": "El botó de la càmera funcionarà després d’acceptar l’accés a la càmera"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Còpia al Portapapers"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Permet copiar l’OTP al portapapers en fer clic en una casella de token."
-  },
-  "close": {
-    "message": "Tanca"
-  },
-  "confirm_password": {
-    "message": "Confirma la Contrasenya:"
-  },
-  "copied": {
-    "message": "Copiat!"
-  },
-  "currently_saved": {
-    "message": "Actualment Guardat: "
-  },
-  "dark_theme": {
-    "message": "Tema Fosc"
-  },
-  "delete": {
-    "message": "Suprimeix"
-  },
-  "disable_password_protection": {
-    "message": "Desactiva la Protecció amb Contrasenya"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Activa la còpia al portapapers a les opcions"
-  },
-  "enable_password_protection": {
-    "message": "Activa la Protecció amb Contrasenya"
-  },
-  "enter_name": {
-    "message": "Introdueix el Nom:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Si us plau, introdueix tant el nom com el secret."
-  },
-  "enter_password": {
-    "message": "Introdueix la Contrasenya:"
-  },
-  "enter_secret": {
-    "message": "Introdueix el Secret:"
-  },
-  "enter_url": {
-    "message": "Introdueix l’URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro és una eina potent que genera una contrasenya d’un sol ús (OTP) cada 30 segons basant-se en un secret proporcionat."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Amaga l’Afegidor de Tokens"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Amaga el formulari d’afegir tokens; proporciona una millor visibilitat dels tokens guardats."
-  },
-  "image": {
-    "message": "Imatge"
-  },
-  "image_url": {
-    "message": "URL de la Imatge:"
-  },
-  "incorrect_password_message": {
-    "message": "Contrasenya Incorrecta"
-  },
-  "incorrect_url_message": {
-    "message": "URL incorrecta o l’URL no conté un codi QR."
-  },
-  "invalid_secret_message": {
-    "message": "Secret invàlid. Si us plau, introdueix una cadena codificada en Base32."
-  },
-  "light_theme": {
-    "message": "Tema Clar"
-  },
-  "main_enter_password_message": {
-    "message": "Introdueix la Contrasenya per Desbloquejar"
-  },
-  "name_already_exists_message": {
-    "message": "Ja existeix un token amb aquest nom."
-  },
-  "name_too_long_message": {
-    "message": "Nom massa llarg, introdueix un nom més curt."
-  },
-  "online_time_checkbox_label": {
-    "message": "Sincronització de Temps en Línia"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Sincronitza amb l’hora en línia per a més precisió; en cas contrari, utilitza l’hora del dispositiu local."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Protecció amb Contrasenya"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Per activar, desactiva la sincronització a Chrome"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Xifra i protegeix els secrets guardats amb una contrasenya."
-  },
-  "password_protection_setup": {
-    "message": "Configuració de Protecció amb Contrasenya"
-  },
-  "passwords_dont_match": {
-    "message": "Les Contrasenyes No Coincideixen"
-  },
-  "password_warning_message": {
-    "message": "AVÍS: Si oblides la contrasenya, no es pot recuperar."
-  },
-  "permissions": {
-    "message": "Permisos"
-  },
-  "permissions_page_header": {
-    "message": "Pàgina de Permisos d’Authenticator Pro"
-  },
-  "popup_mode_label": {
-    "message": "Mode Popup"
-  },
-  "popup_mode_tooltip": {
-    "message": "Obre Authenticator Pro en una finestra separada."
-  },
-  "qr_found_message": {
-    "message": "Codi QR trobat!"
-  },
-  "qr_not_found_message": {
-    "message": "Codi QR no trobat. Prova amb una altra imatge."
-  },
-  "remove_password": {
-    "message": "Elimina la Contrasenya"
-  },
-  "save_url": {
-    "message": "Guarda l’URL"
-  },
-  "scanning": {
-    "message": "Escanejant..."
-  },
-  "secret": {
-    "message": " Secret:"
-  },
-  "secret_already_added_message": {
-    "message": "Ja has afegit aquest secret."
-  },
-  "settings": {
-    "message": "Configuració"
-  },
-  "submit": {
-    "message": "Envia"
-  },
-  "sync_checkbox_label": {
-    "message": "Sincronitza a Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "Per activar, desactiva la Protecció amb Contrasenya"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Sincronitza tokens en dispositius connectats a Chrome; si no, l’estat només és local."
-  },
-  "themes": {
-    "message": "Temes"
-  },
-  "token_settings": {
-    "message": "Configuració de Tokens"
-  },
-  "webcam": {
-    "message": "Webcam"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+﻿{
+    "active_tokens":  {
+                          "message":  "Tokens Actius:"
+                      },
+    "add_token":  {
+                      "message":  "Afegir Token"
+                  },
+    "add_qr_code_via":  {
+                            "message":  "Afegir Codi QR MitjanÃ§ant:"
+                        },
+    "advanced_add":  {
+                         "message":  "Afegit AvanÃ§at"
+                     },
+    "advanced_add_checkbox_label":  {
+                                        "message":  "BotÃ³ dâ€™Afegit AvanÃ§at"
+                                    },
+    "advanced_add_checkbox_tooltip":  {
+                                          "message":  "Permet als usuaris afegir secrets mitjanÃ§ant un codi QR (cÃ mera, fitxer o enllaÃ§)."
+                                      },
+    "are_you_sure_message":  {
+                                 "message":  "Nâ€™estÃ s segur? Aquesta acciÃ³ Ã©s permanent."
+                             },
+    "autofill_checkbox_label":  {
+                                    "message":  "Ompliment AutomÃ tic"
+                                },
+    "autofill_checkbox_tooltip":  {
+                                      "message":  "Omple automÃ ticament el camp OTP utilitzant lâ€™URL dâ€™ompliment automÃ tic per a cada token."
+                                  },
+    "autofill_url":  {
+                         "message":  "URL dâ€™Ompliment AutomÃ tic:"
+                     },
+    "autofill_url_not_enabled":  {
+                                     "message":  "URL dâ€™Ompliment AutomÃ tic: (No Activat)"
+                                 },
+    "camera_permission_button":  {
+                                     "message":  "BotÃ³ de PermÃ­s de CÃ mera"
+                                 },
+    "camera_permission_message_1":  {
+                                        "message":  "*El botÃ³ es clica automÃ ticament en carregar la pÃ gina*"
+                                    },
+    "camera_permission_message_2":  {
+                                        "message":  "El botÃ³ de la cÃ mera funcionarÃ  desprÃ©s dâ€™acceptar lâ€™accÃ©s a la cÃ mera"
+                                    },
+    "clipboard_copying_checkbox_label":  {
+                                             "message":  "CÃ²pia al Portapapers"
+                                         },
+    "clipboard_copying_checkbox_tooltip":  {
+                                               "message":  "Permet copiar lâ€™OTP al portapapers en fer clic en una casella de token."
+                                           },
+    "close":  {
+                  "message":  "Tanca"
+              },
+    "confirm_password":  {
+                             "message":  "Confirma la Contrasenya:"
+                         },
+    "copied":  {
+                   "message":  "Copiat!"
+               },
+    "currently_saved":  {
+                            "message":  "Actualment Guardat: "
+                        },
+    "dark_theme":  {
+                       "message":  "Tema Fosc"
+                   },
+    "delete":  {
+                   "message":  "Suprimeix"
+               },
+    "disable_password_protection":  {
+                                        "message":  "Desactiva la ProtecciÃ³ amb Contrasenya"
+                                    },
+    "enable_clipboard_copy_message":  {
+                                          "message":  "Activa la cÃ²pia al portapapers a les opcions"
+                                      },
+    "enable_password_protection":  {
+                                       "message":  "Activa la ProtecciÃ³ amb Contrasenya"
+                                   },
+    "enter_name":  {
+                       "message":  "Introdueix el Nom:"
+                   },
+    "enter_name_and_secret_message":  {
+                                          "message":  "Si us plau, introdueix tant el nom com el secret."
+                                      },
+    "enter_password":  {
+                           "message":  "Introdueix la Contrasenya:"
+                       },
+    "enter_secret":  {
+                         "message":  "Introdueix el Secret:"
+                     },
+    "enter_url":  {
+                      "message":  "Introdueix lâ€™URL"
+                  },
+    "extension_description":  {
+                                  "message":  "Authenticator Pro Ã©s una eina potent que genera una contrasenya dâ€™un sol Ãºs (OTP) cada 30 segons basant-se en un secret proporcionat."
+                              },
+    "extension_name":  {
+                           "message":  "Authenticator Pro"
+                       },
+    "hide_token_adder_checkbox_label":  {
+                                            "message":  "Amaga lâ€™Afegidor de Tokens"
+                                        },
+    "hide_token_adder_checkbox_tooltip":  {
+                                              "message":  "Amaga el formulari dâ€™afegir tokens; proporciona una millor visibilitat dels tokens guardats."
+                                          },
+    "image":  {
+                  "message":  "Imatge"
+              },
+    "image_url":  {
+                      "message":  "URL de la Imatge:"
+                  },
+    "incorrect_password_message":  {
+                                       "message":  "Contrasenya Incorrecta"
+                                   },
+    "incorrect_url_message":  {
+                                  "message":  "URL incorrecta o lâ€™URL no contÃ© un codi QR."
+                              },
+    "invalid_secret_message":  {
+                                   "message":  "Secret invÃ lid. Si us plau, introdueix una cadena codificada en Base32."
+                               },
+    "light_theme":  {
+                        "message":  "Tema Clar"
+                    },
+    "main_enter_password_message":  {
+                                        "message":  "Introdueix la Contrasenya per Desbloquejar"
+                                    },
+    "name_already_exists_message":  {
+                                        "message":  "Ja existeix un token amb aquest nom."
+                                    },
+    "name_too_long_message":  {
+                                  "message":  "Nom massa llarg, introdueix un nom mÃ©s curt."
+                              },
+    "online_time_checkbox_label":  {
+                                       "message":  "SincronitzaciÃ³ de Temps en LÃ­nia"
+                                   },
+    "online_time_checkbox_tooltip":  {
+                                         "message":  "Sincronitza amb lâ€™hora en lÃ­nia per a mÃ©s precisiÃ³; en cas contrari, utilitza lâ€™hora del dispositiu local."
+                                     },
+    "password_protected_checkbox_label":  {
+                                              "message":  "ProtecciÃ³ amb Contrasenya"
+                                          },
+    "password_protected_checkbox_message":  {
+                                                "message":  "Per activar, desactiva la sincronitzaciÃ³ a Chrome"
+                                            },
+    "password_protected_checkbox_tooltip":  {
+                                                "message":  "Xifra i protegeix els secrets guardats amb una contrasenya."
+                                            },
+    "password_protection_setup":  {
+                                      "message":  "ConfiguraciÃ³ de ProtecciÃ³ amb Contrasenya"
+                                  },
+    "passwords_dont_match":  {
+                                 "message":  "Les Contrasenyes No Coincideixen"
+                             },
+    "password_warning_message":  {
+                                     "message":  "AVÃS: Si oblides la contrasenya, no es pot recuperar."
+                                 },
+    "permissions":  {
+                        "message":  "Permisos"
+                    },
+    "permissions_page_header":  {
+                                    "message":  "PÃ gina de Permisos dâ€™Authenticator Pro"
+                                },
+    "popup_mode_label":  {
+                             "message":  "Mode Popup"
+                         },
+    "popup_mode_tooltip":  {
+                               "message":  "Obre Authenticator Pro en una finestra separada."
+                           },
+    "qr_found_message":  {
+                             "message":  "Codi QR trobat!"
+                         },
+    "qr_not_found_message":  {
+                                 "message":  "Codi QR no trobat. Prova amb una altra imatge."
+                             },
+    "remove_password":  {
+                            "message":  "Elimina la Contrasenya"
+                        },
+    "save_url":  {
+                     "message":  "Guarda lâ€™URL"
+                 },
+    "scanning":  {
+                     "message":  "Escanejant..."
+                 },
+    "secret":  {
+                   "message":  " Secret:"
+               },
+    "secret_already_added_message":  {
+                                         "message":  "Ja has afegit aquest secret."
+                                     },
+    "settings":  {
+                     "message":  "ConfiguraciÃ³"
+                 },
+    "submit":  {
+                   "message":  "Envia"
+               },
+    "sync_checkbox_label":  {
+                                "message":  "Sincronitza a Chrome"
+                            },
+    "sync_checkbox_message":  {
+                                  "message":  "Per activar, desactiva la ProtecciÃ³ amb Contrasenya"
+                              },
+    "sync_checkbox_tooltip":  {
+                                  "message":  "Sincronitza tokens en dispositius connectats a Chrome; si no, lâ€™estat nomÃ©s Ã©s local."
+                              },
+    "themes":  {
+                   "message":  "Temes"
+               },
+    "token_settings":  {
+                           "message":  "ConfiguraciÃ³ de Tokens"
+                       },
+    "webcam":  {
+                   "message":  "Webcam"
+               },
+    "clear_saved_url":  {
+                            "message":  "Clear saved URL"
+                        },
+    "export":  {
+                   "message":  "Export"
+               },
+    "export_data":  {
+                        "message":  "Export Data"
+                    },
+    "ocean_theme":  {
+                        "message":  "Ocean Theme"
+                    },
+    "forest_theme":  {
+                         "message":  "Forest Theme"
+                     },
+    "scale_heading":  {
+                          "message":  "Scale"
+                      },
+    "scale_percentage":  {
+                             "message":  "$1%"
+                         },
+    "export_options_title":  {
+                                 "message":  "Export Options"
+                             },
+    "export_csv_label":  {
+                             "message":  "Export CSV"
+                         },
+    "export_pdf_label":  {
+                             "message":  "Export PDF"
+                         },
+    "export_doc_label":  {
+                             "message":  "Export Word (.doc)"
+                         },
+    "export_column_name":  {
+                               "message":  "Name"
+                           },
+    "export_column_secret":  {
+                                 "message":  "Secret"
+                             },
+    "export_column_url":  {
+                              "message":  "URL"
+                          },
+    "export_column_otp":  {
+                              "message":  "OTP"
+                          },
+    "export_filename_prefix":  {
+                                   "message":  "authenticator-export"
+                               },
+    "export_pdf_prompt":  {
+                              "message":  "Save PDF as:"
+                          },
+    "export_document_title":  {
+                                  "message":  "Authenticator Export"
+                              },
+    "bulk_add_label":  {
+                           "message":  "Afegir en massa"
+                       },
+    "bulk_add_title":  {
+                           "message":  "Afegir en massa"
+                       },
+    "bulk_add_csv_label":  {
+                               "message":  "Fitxer CSV"
+                           },
+    "bulk_add_json_label":  {
+                                "message":  "Fitxer JSON"
+                            },
+    "bulk_add_failed":  {
+                            "message":  "Ha fallat l\u0027afegit en massa."
+                        },
+    "bulk_add_invalid_file":  {
+                                  "message":  "Format de fitxer no vàlid."
+                              },
+    "bulk_add_no_valid":  {
+                              "message":  "No s\\u0027han trobat tokens vàlids."
+                          },
+    "bulk_add_success":  {
+                             "message":  "Èxit."
+                         },
+    "bulk_add_partial":  {
+                             "message":  "Afegit en massa parcialment satisfactori."
+                         },
+    "bulk_add_details":  {
+                             "message":  "Afegits: $1 | Omesos: $2 | No vàlids: $3"
+                         }
 }

@@ -1,266 +1,100 @@
 {
-  "active_tokens": {
-    "message": "Aktiva Token:"
-  },
-  "add_token": {
-    "message": "Lägg till Token"
-  },
-  "add_qr_code_via": {
-    "message": "Lägg till QR-kod via:"
-  },
-  "advanced_add": {
-    "message": "Avancerad Lägg till"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Avancerad Lägg till-knapp"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Möjliggör för användare att lägga till hemligheter via QR-kod (webbkameran, fil eller länk)."
-  },
-  "are_you_sure_message": {
-    "message": "Är du säker? Denna åtgärd är permanent."
-  },
-  "autofill_checkbox_label": {
-    "message": "Automatisk ifyllnad"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Fyller automatiskt i OTP-fältet med hjälp av autofyllnings-URL för varje token."
-  },
-  "autofill_url": {
-    "message": "Autofyllnings-URL:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "Autofyllnings-URL: (Ej aktiverad)"
-  },
-  "camera_permission_button": {
-    "message": "Kamerabehörighetsknapp"
-  },
-  "camera_permission_message_1": {
-    "message": "*Knappen klickar automatiskt vid sidladdning*"
-  },
-  "camera_permission_message_2": {
-    "message": "Webbkameraknappen fungerar efter att kameratillgång beviljas"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Kopiera till Urklipp"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Möjliggör kopiering av OTP till urklipp när du klickar på en tokenruta."
-  },
-  "close": {
-    "message": "Stäng"
-  },
-  "confirm_password": {
-    "message": "Bekräfta Lösenord:"
-  },
-  "copied": {
-    "message": "Kopierad!"
-  },
-  "currently_saved": {
-    "message": "För närvarande sparad: "
-  },
-  "dark_theme": {
-    "message": "Mörkt Tema"
-  },
-  "delete": {
-    "message": "Ta bort"
-  },
-  "disable_password_protection": {
-    "message": "Inaktivera Lösenordsskydd"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Aktivera kopiering till urklipp i inställningar"
-  },
-  "enable_password_protection": {
-    "message": "Aktivera Lösenordsskydd"
-  },
-  "enter_name": {
-    "message": "Ange Namn:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Vänligen ange både namn och hemlighet."
-  },
-  "enter_password": {
-    "message": "Ange Lösenord:"
-  },
-  "enter_secret": {
-    "message": "Ange Hemlighet:"
-  },
-  "enter_url": {
-    "message": "Ange URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro är ett kraftfullt verktyg som genererar en engångslösenord (OTP) var 30:e sekund baserat på en angiven hemlighet."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Dölj Tokenläggare"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Döljer tokenläggarformuläret; ger bättre synlighet av sparade token."
-  },
-  "image": {
-    "message": "Bild"
-  },
-  "image_url": {
-    "message": "Bild-URL:"
-  },
-  "incorrect_password_message": {
-    "message": "Felaktigt Lösenord"
-  },
-  "incorrect_url_message": {
-    "message": "Felaktig URL, eller URL innehöll inte QR-kod."
-  },
-  "invalid_secret_message": {
-    "message": "Ogiltig hemlighet. Vänligen ange en Base32-kodad sträng."
-  },
-  "light_theme": {
-    "message": "Ljust Tema"
-  },
-  "main_enter_password_message": {
-    "message": "Ange Lösenord för Att Låsa Upp"
-  },
-  "name_already_exists_message": {
-    "message": "En token med detta namn finns redan."
-  },
-  "name_too_long_message": {
-    "message": "Namnet är för långt, vänligen ange ett kortare namn."
-  },
-  "online_time_checkbox_label": {
-    "message": "Online Tidsynk"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Synkroniserar med tiden online för noggrannhet; annars används lokal enhetstid."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Lösenordsskydd"
-  },
-  "password_protected_checkbox_message": {
-    "message": "För att aktivera, stäng av synkronisering över Chrome"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Krypterar och skyddar sparade hemligheter med ett lösenord."
-  },
-  "password_protection_setup": {
-    "message": "Inställning av Lösenordsskydd"
-  },
-  "passwords_dont_match": {
-    "message": "Lösenorden Matchar Inte"
-  },
-  "password_warning_message": {
-    "message": "VARNING: Om lösenordet glöms bort kan det inte återställas."
-  },
-  "permissions": {
-    "message": "Behörigheter"
-  },
-  "permissions_page_header": {
-    "message": "Authenticator Pro Behörighetssida "
-  },
-  "popup_mode_label": {
-    "message": "Popup-läge"
-  },
-  "popup_mode_tooltip": {
-    "message": "Öppnar Authenticator Pro i ett separat fönster."
-  },
-  "qr_found_message": {
-    "message": "QR-kod funnen!"
-  },
-  "qr_not_found_message": {
-    "message": "QR-kod hittades inte. Försök med en annan bild."
-  },
-  "remove_password": {
-    "message": "Ta bort Lösenord"
-  },
-  "save_url": {
-    "message": "Spara URL"
-  },
-  "scanning": {
-    "message": "Skanning..."
-  },
-  "secret": {
-    "message": " Hemlighet:"
-  },
-  "secret_already_added_message": {
-    "message": "Du har redan lagt till denna hemlighet."
-  },
-  "settings": {
-    "message": "Inställningar"
-  },
-  "submit": {
-    "message": "Skicka"
-  },
-  "sync_checkbox_label": {
-    "message": "Synkronisera över Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "För att aktivera, stäng av Lösenordsskydd"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Synkroniserar token på inloggade Chrome-enheter; annars är tillståndet endast lokalt."
-  },
-  "themes": {
-    "message": "Teman"
-  },
-  "token_settings": {
-    "message": "Tokeninställningar"
-  },
-  "webcam": {
-    "message": "Webbkamera"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+    "active_tokens": { "message": "Aktiva koder:" },
+    "add_token": { "message": "Lägg till kod" },
+    "add_qr_code_via": { "message": "Lägg till QR-kod via:" },
+    "advanced_add": { "message": "Avancerat tillägg" },
+    "advanced_add_checkbox_label": { "message": "Knapp för avancerat tillägg" },
+    "advanced_add_checkbox_tooltip": { "message": "Låter användare lägga till hemligheter via QR-kod (webbkamera, fil eller länk)." },
+    "are_you_sure_message": { "message": "Är du säker? Denna åtgärd är permanent." },
+    "autofill_checkbox_label": { "message": "Autofyll" },
+    "autofill_checkbox_tooltip": { "message": "Fyller automatiskt i OTP-fältet med hjälp av autofyll-URL:en för varje kod." },
+    "autofill_url": { "message": "Autofyll-URL:" },
+    "autofill_url_not_enabled": { "message": "Autofyll-URL: (Ej aktiverad)" },
+    "camera_permission_button": { "message": "Knapp för kameratillstånd" },
+    "camera_permission_message_1": { "message": "*Knappen klickar automatiskt när sidan laddas*" },
+    "camera_permission_message_2": { "message": "Webbkameraknappen fungerar efter att du har tillåtit kameraåtkomst" },
+    "clipboard_copying_checkbox_label": { "message": "Kopiera till urklipp" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Tillåter kopiering av OTP till urklipp när du klickar på en kodruta." },
+    "close": { "message": "Stäng" },
+    "confirm_password": { "message": "Bekräfta lösenord:" },
+    "copied": { "message": "Kopierad!" },
+    "currently_saved": { "message": "Sparade för närvarande: " },
+    "dark_theme": { "message": "Mörkt tema" },
+    "delete": { "message": "Ta bort" },
+    "disable_password_protection": { "message": "Inaktivera lösenordsskydd" },
+    "enable_clipboard_copy_message": { "message": "Aktivera kopiera till urklipp i inställningarna" },
+    "enable_password_protection": { "message": "Aktivera lösenordsskydd" },
+    "enter_name": { "message": "Ange namn:" },
+    "enter_name_and_secret_message": { "message": "Ange både namn och hemlighet." },
+    "enter_password": { "message": "Ange lösenord:" },
+    "enter_secret": { "message": "Ange hemlighet:" },
+    "enter_url": { "message": "Ange URL" },
+    "extension_description": { "message": "Authenticator Pro är ett kraftfullt verktyg som genererar ett engångslösenord (OTP) var 30:e sekund baserat på en tillhandahållen hemlighet." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Dölj kodtilläggaren" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Döljer formuläret för att lägga till koder; ger bättre överblick över sparade koder." },
+    "image": { "message": "Bild" },
+    "image_url": { "message": "Bild-URL:" },
+    "incorrect_password_message": { "message": "Felaktigt lösenord" },
+    "incorrect_url_message": { "message": "Felaktig URL, eller URL innehöll inte en QR-kod." },
+    "invalid_secret_message": { "message": "Ogiltig hemlighet. Ange en Base32-kodad sträng." },
+    "light_theme": { "message": "Ljust tema" },
+    "main_enter_password_message": { "message": "Ange lösenord för att låsa upp" },
+    "name_already_exists_message": { "message": "En kod med detta namn finns redan." },
+    "name_too_long_message": { "message": "Namnet är för långt, ange ett kortare namn." },
+    "online_time_checkbox_label": { "message": "Online-tidssynkronisering" },
+    "online_time_checkbox_tooltip": { "message": "Synkroniserar med tid online för noggrannhet; annars används lokal enhetstid." },
+    "password_protected_checkbox_label": { "message": "Lösenordsskydd" },
+    "password_protected_checkbox_message": { "message": "För att aktivera, stäng av synkronisering över Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "Krypterar och skyddar sparade hemligheter med ett lösenord." },
+    "password_protection_setup": { "message": "Inställning för lösenordsskydd" },
+    "passwords_dont_match": { "message": "Lösenorden matchar inte" },
+    "password_warning_message": { "message": "VARNING: Om lösenordet glöms bort kan det inte återställas." },
+    "permissions": { "message": "Behörigheter" },
+    "permissions_page_header": { "message": "Behörighetssida för Authenticator Pro" },
+    "popup_mode_label": { "message": "Popup-läge" },
+    "popup_mode_tooltip": { "message": "Öppnar Authenticator Pro i ett separat fönster." },
+    "qr_found_message": { "message": "QR-kod hittades!" },
+    "qr_not_found_message": { "message": "QR-kod hittades inte. Prova en annan bild." },
+    "remove_password": { "message": "Ta bort lösenord" },
+    "save_url": { "message": "Spara URL" },
+    "scanning": { "message": "Skannar..." },
+    "secret": { "message": " Hemlighet:" },
+    "secret_already_added_message": { "message": "Du har redan lagt till denna hemlighet." },
+    "settings": { "message": "Inställningar" },
+    "submit": { "message": "Skicka" },
+    "sync_checkbox_label": { "message": "Synkronisera över Chrome" },
+    "sync_checkbox_message": { "message": "För att aktivera, stäng av lösenordsskydd" },
+    "sync_checkbox_tooltip": { "message": "Synkroniserar koder på inloggade Chrome-enheter; annars är tillståndet endast lokalt." },
+    "themes": { "message": "Teman" },
+    "token_settings": { "message": "Kodinställningar" },
+    "webcam": { "message": "Webbkamera" },
+    "clear_saved_url": { "message": "Rensa sparad URL" },
+    "export": { "message": "Exportera" },
+    "export_data": { "message": "Exportera data" },
+    "ocean_theme": { "message": "Havstema" },
+    "forest_theme": { "message": "Skogstema" },
+    "scale_heading": { "message": "Skala" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Exportalternativ" },
+    "export_csv_label": { "message": "Exportera CSV" },
+    "export_pdf_label": { "message": "Exportera PDF" },
+    "export_doc_label": { "message": "Exportera Word (.doc)" },
+    "export_column_name": { "message": "Namn" },
+    "export_column_secret": { "message": "Hemlighet" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-export" },
+    "export_pdf_prompt": { "message": "Spara PDF som:" },
+    "export_document_title": { "message": "Export från Authenticator" },
+    "bulk_add_label": { "message": "Mass-tillägg" },
+    "bulk_add_title": { "message": "Mass-tillägg" },
+    "bulk_add_csv_label": { "message": "CSV-fil" },
+    "bulk_add_json_label": { "message": "JSON-fil" },
+    "bulk_add_failed": { "message": "Mass-tillägg misslyckades." },
+    "bulk_add_invalid_file": { "message": "Ogiltigt filformat." },
+    "bulk_add_no_valid": { "message": "Inga giltiga koder hittades." },
+    "bulk_add_success": { "message": "Lyckades." },
+    "bulk_add_partial": { "message": "Mass-tillägg lyckades delvis." },
+    "bulk_add_details": { "message": "Tillagda: $1 | Hoppade över: $2 | Ogiltiga: $3" }
 }

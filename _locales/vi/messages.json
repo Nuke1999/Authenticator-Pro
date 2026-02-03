@@ -1,266 +1,100 @@
 {
-  "active_tokens": {
-    "message": "Các Token Đang Hoạt Động:"
-  },
-  "add_token": {
-    "message": "Thêm Token"
-  },
-  "add_qr_code_via": {
-    "message": "Thêm QR Code Qua:"
-  },
-  "advanced_add": {
-    "message": "Thêm Nâng Cao"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Nút Thêm Nâng Cao"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Cho phép người dùng thêm bí mật qua QR code (webcam, tệp hoặc liên kết)."
-  },
-  "are_you_sure_message": {
-    "message": "Bạn có chắc chắn không? Hành động này là vĩnh viễn."
-  },
-  "autofill_checkbox_label": {
-    "message": "Tự Động Điền"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Tự động điền trường OTP bằng URL Tự Động Điền cho mỗi token."
-  },
-  "autofill_url": {
-    "message": "URL Tự Động Điền:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "URL Tự Động Điền: (Chưa Kích Hoạt)"
-  },
-  "camera_permission_button": {
-    "message": "Nút Cấp Quyền Camera"
-  },
-  "camera_permission_message_1": {
-    "message": "*Nút tự động nhấp khi tải trang*"
-  },
-  "camera_permission_message_2": {
-    "message": "Nút Webcam sẽ hoạt động sau khi cho phép truy cập camera"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Sao Chép Vào Clipboard"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Cho phép sao chép OTP vào clipboard khi nhấp vào ô token."
-  },
-  "close": {
-    "message": "Đóng"
-  },
-  "confirm_password": {
-    "message": "Xác Nhận Mật Khẩu:"
-  },
-  "copied": {
-    "message": "Đã Sao Chép!"
-  },
-  "currently_saved": {
-    "message": "Hiện Đang Lưu: "
-  },
-  "dark_theme": {
-    "message": "Chủ Đề Tối"
-  },
-  "delete": {
-    "message": "Xóa"
-  },
-  "disable_password_protection": {
-    "message": "Tắt Bảo Vệ Bằng Mật Khẩu"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Kích Hoạt Sao Chép Vào Clipboard trong cài đặt"
-  },
-  "enable_password_protection": {
-    "message": "Kích Hoạt Bảo Vệ Bằng Mật Khẩu"
-  },
-  "enter_name": {
-    "message": "Nhập Tên:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Vui lòng nhập cả tên và bí mật."
-  },
-  "enter_password": {
-    "message": "Nhập Mật Khẩu:"
-  },
-  "enter_secret": {
-    "message": "Nhập Bí Mật:"
-  },
-  "enter_url": {
-    "message": "Nhập URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro là một công cụ mạnh mẽ tạo ra Mật Khẩu Một Lần (OTP) mỗi 30 giây dựa trên bí mật đã cung cấp."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Ẩn Biểu Mẫu Thêm Token"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Ẩn biểu mẫu thêm token; cung cấp khả năng hiển thị dễ dàng hơn của các token đã lưu."
-  },
-  "image": {
-    "message": "Hình Ảnh"
-  },
-  "image_url": {
-    "message": "URL Hình Ảnh:"
-  },
-  "incorrect_password_message": {
-    "message": "Mật khẩu không chính xác"
-  },
-  "incorrect_url_message": {
-    "message": "URL không chính xác, hoặc URL không chứa QR code."
-  },
-  "invalid_secret_message": {
-    "message": "Bí mật không hợp lệ. Vui lòng nhập một chuỗi được mã hóa Base32."
-  },
-  "light_theme": {
-    "message": "Chủ Đề Sáng"
-  },
-  "main_enter_password_message": {
-    "message": "Nhập Mật Khẩu Để Mở Khóa"
-  },
-  "name_already_exists_message": {
-    "message": "Một token với tên này đã tồn tại."
-  },
-  "name_too_long_message": {
-    "message": "Tên quá dài, vui lòng nhập tên ngắn hơn."
-  },
-  "online_time_checkbox_label": {
-    "message": "Đồng Bộ Thời Gian Trực Tuyến"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Đồng bộ với thời gian trực tuyến để đảm bảo độ chính xác; nếu không sẽ sử dụng thời gian của thiết bị."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Bảo Vệ Bằng Mật Khẩu"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Để kích hoạt, hãy tắt Đồng Bộ Giữa Các Chrome"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Mã hóa và bảo vệ các bí mật đã lưu bằng mật khẩu."
-  },
-  "password_protection_setup": {
-    "message": "Cài Đặt Bảo Vệ Bằng Mật Khẩu"
-  },
-  "passwords_dont_match": {
-    "message": "Mật Khẩu Không Khớp"
-  },
-  "password_warning_message": {
-    "message": "CẢNH BÁO: Nếu mật khẩu bị quên, nó sẽ không thể được khôi phục."
-  },
-  "permissions": {
-    "message": "Quyền"
-  },
-  "permissions_page_header": {
-    "message": "Trang Quyền Authenticator Pro "
-  },
-  "popup_mode_label": {
-    "message": "Chế Độ Cửa Sổ Pop-up"
-  },
-  "popup_mode_tooltip": {
-    "message": "Mở Authenticator Pro trong một cửa sổ riêng."
-  },
-  "qr_found_message": {
-    "message": "QR code đã được tìm thấy!"
-  },
-  "qr_not_found_message": {
-    "message": "QR Code không tìm thấy. Hãy thử một hình ảnh khác."
-  },
-  "remove_password": {
-    "message": "Xóa Mật Khẩu"
-  },
-  "save_url": {
-    "message": "Lưu URL"
-  },
-  "scanning": {
-    "message": "Đang Quét..."
-  },
-  "secret": {
-    "message": " Bí Mật:"
-  },
-  "secret_already_added_message": {
-    "message": "Bạn đã thêm bí mật này rồi."
-  },
-  "settings": {
-    "message": "Cài Đặt"
-  },
-  "submit": {
-    "message": "Gửi"
-  },
-  "sync_checkbox_label": {
-    "message": "Đồng Bộ Giữa Các Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "Để kích hoạt, hãy tắt Bảo Vệ Bằng Mật Khẩu"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Đồng bộ các token trên các thiết bị Chrome đã đăng nhập; nếu không, trạng thái chỉ là cục bộ."
-  },
-  "themes": {
-    "message": "Chủ Đề"
-  },
-  "token_settings": {
-    "message": "Cài Đặt Token"
-  },
-  "webcam": {
-    "message": "Webcam"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+    "active_tokens": { "message": "Các mã đang hoạt động:" },
+    "add_token": { "message": "Thêm mã" },
+    "add_qr_code_via": { "message": "Thêm mã QR qua:" },
+    "advanced_add": { "message": "Thêm nâng cao" },
+    "advanced_add_checkbox_label": { "message": "Nút thêm nâng cao" },
+    "advanced_add_checkbox_tooltip": { "message": "Cho phép người dùng thêm các khóa bí mật qua mã QR (webcam, tệp hoặc liên kết)." },
+    "are_you_sure_message": { "message": "Bạn có chắc chắn không? Hành động này là vĩnh viễn." },
+    "autofill_checkbox_label": { "message": "Tự động điền" },
+    "autofill_checkbox_tooltip": { "message": "Tự động điền vào trường OTP bằng URL tự động điền cho mỗi mã." },
+    "autofill_url": { "message": "URL tự động điền:" },
+    "autofill_url_not_enabled": { "message": "URL tự động điền: (Chưa bật)" },
+    "camera_permission_button": { "message": "Nút cho phép máy ảnh" },
+    "camera_permission_message_1": { "message": "*Nút tự động nhấp khi tải trang*" },
+    "camera_permission_message_2": { "message": "Nút Webcam sẽ hoạt động sau khi cho phép truy cập máy ảnh" },
+    "clipboard_copying_checkbox_label": { "message": "Sao chép vào khay nhớ tạm" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Cho phép sao chép OTP vào khay nhớ tạm khi nhấp vào ô chứa mã." },
+    "close": { "message": "Đóng" },
+    "confirm_password": { "message": "Xác nhận mật khẩu:" },
+    "copied": { "message": "Đã sao chép!" },
+    "currently_saved": { "message": "Hiện đã lưu: " },
+    "dark_theme": { "message": "Giao diện tối" },
+    "delete": { "message": "Xóa" },
+    "disable_password_protection": { "message": "Tắt bảo vệ bằng mật khẩu" },
+    "enable_clipboard_copy_message": { "message": "Bật sao chép vào khay nhớ tạm trong cài đặt" },
+    "enable_password_protection": { "message": "Bật bảo vệ bằng mật khẩu" },
+    "enter_name": { "message": "Nhập tên:" },
+    "enter_name_and_secret_message": { "message": "Vui lòng nhập cả tên và khóa bí mật." },
+    "enter_password": { "message": "Nhập mật khẩu:" },
+    "enter_secret": { "message": "Nhập khóa bí mật:" },
+    "enter_url": { "message": "Nhập Url" },
+    "extension_description": { "message": "Authenticator Pro là một công cụ mạnh mẽ tạo Mật khẩu dùng một lần (OTP) sau mỗi 30 giây dựa trên một khóa bí mật được cung cấp." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Ẩn phần thêm mã" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Ẩn biểu mẫu thêm mã; giúp hiển thị các mã đã lưu dễ dàng hơn." },
+    "image": { "message": "Hình ảnh" },
+    "image_url": { "message": "Url hình ảnh:" },
+    "incorrect_password_message": { "message": "Mật khẩu không chính xác" },
+    "incorrect_url_message": { "message": "URL không chính xác hoặc URL không chứa mã QR." },
+    "invalid_secret_message": { "message": "Khóa bí mật không hợp lệ. Vui lòng nhập một chuỗi mã hóa Base32." },
+    "light_theme": { "message": "Giao diện sáng" },
+    "main_enter_password_message": { "message": "Nhập mật khẩu để mở khóa" },
+    "name_already_exists_message": { "message": "Một mã với tên này đã tồn tại." },
+    "name_too_long_message": { "message": "Tên quá dài, vui lòng nhập tên ngắn hơn." },
+    "online_time_checkbox_label": { "message": "Đồng bộ thời gian trực tuyến" },
+    "online_time_checkbox_tooltip": { "message": "Đồng bộ hóa với thời gian trực tuyến để có độ chính xác cao; nếu không sẽ sử dụng thời gian của thiết bị địa phương." },
+    "password_protected_checkbox_label": { "message": "Bảo vệ bằng mật khẩu" },
+    "password_protected_checkbox_message": { "message": "Để bật, hãy tắt Đồng bộ hóa trên Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "Mã hóa và bảo vệ các khóa bí mật đã lưu bằng mật khẩu." },
+    "password_protection_setup": { "message": "Thiết lập bảo vệ bằng mật khẩu" },
+    "passwords_dont_match": { "message": "Mật khẩu không khớp" },
+    "password_warning_message": { "message": "CẢNH BÁO: Nếu quên mật khẩu, mật khẩu đó không thể khôi phục được." },
+    "permissions": { "message": "Quyền" },
+    "permissions_page_header": { "message": "Trang quyền Authenticator Pro" },
+    "popup_mode_label": { "message": "Chế độ cửa sổ bật lên" },
+    "popup_mode_tooltip": { "message": "Mở Authenticator Pro trong một cửa sổ riêng biệt." },
+    "qr_found_message": { "message": "Đã tìm thấy mã QR!" },
+    "qr_not_found_message": { "message": "Không tìm thấy mã QR. Thử một hình ảnh khác." },
+    "remove_password": { "message": "Xóa mật khẩu" },
+    "save_url": { "message": "Lưu Url" },
+    "scanning": { "message": "Đang quét..." },
+    "secret": { "message": " Bí mật:" },
+    "secret_already_added_message": { "message": "Bạn đã thêm khóa bí mật này rồi." },
+    "settings": { "message": "Cài đặt" },
+    "submit": { "message": "Gửi" },
+    "sync_checkbox_label": { "message": "Đồng bộ hóa trên Chrome" },
+    "sync_checkbox_message": { "message": "Để bật, hãy tắt Bảo vệ bằng mật khẩu" },
+    "sync_checkbox_tooltip": { "message": "Đồng bộ hóa mã trên các thiết bị Chrome đã đăng nhập; nếu không, trạng thái chỉ có ở địa phương." },
+    "themes": { "message": "Chủ đề" },
+    "token_settings": { "message": "Cài đặt mã" },
+    "webcam": { "message": "Webcam" },
+    "clear_saved_url": { "message": "Xóa URL đã lưu" },
+    "export": { "message": "Xuất" },
+    "export_data": { "message": "Xuất dữ liệu" },
+    "ocean_theme": { "message": "Giao diện đại dương" },
+    "forest_theme": { "message": "Giao diện rừng rậm" },
+    "scale_heading": { "message": "Tỷ lệ" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Tùy chọn xuất" },
+    "export_csv_label": { "message": "Xuất CSV" },
+    "export_pdf_label": { "message": "Xuất PDF" },
+    "export_doc_label": { "message": "Xuất Word (.doc)" },
+    "export_column_name": { "message": "Tên" },
+    "export_column_secret": { "message": "Bí mật" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "xuat-authenticator" },
+    "export_pdf_prompt": { "message": "Lưu PDF thành:" },
+    "export_document_title": { "message": "Xuất dữ liệu Authenticator" },
+    "bulk_add_label": { "message": "Thêm hàng loạt" },
+    "bulk_add_title": { "message": "Thêm hàng loạt" },
+    "bulk_add_csv_label": { "message": "Tệp CSV" },
+    "bulk_add_json_label": { "message": "Tệp JSON" },
+    "bulk_add_failed": { "message": "Thêm hàng loạt thất bại." },
+    "bulk_add_invalid_file": { "message": "Định dạng tệp không hợp lệ." },
+    "bulk_add_no_valid": { "message": "Không tìm thấy mã hợp lệ nào." },
+    "bulk_add_success": { "message": "Thành công." },
+    "bulk_add_partial": { "message": "Thêm hàng loạt thành công một phần." },
+    "bulk_add_details": { "message": "Đã thêm: $1 | Đã bỏ qua: $2 | Không hợp lệ: $3" }
 }

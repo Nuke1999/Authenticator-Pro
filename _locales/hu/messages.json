@@ -1,266 +1,100 @@
 {
-  "active_tokens": {
-    "message": "Aktív tokenek:"
-  },
-  "add_token": {
-    "message": "Token hozzáadása"
-  },
-  "add_qr_code_via": {
-    "message": "QR kód hozzáadása:"
-  },
-  "advanced_add": {
-    "message": "Speciális hozzáadás"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Speciális hozzáadási gomb"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Lehetővé teszi a felhasználók számára, hogy QR kód (webkamera, fájl vagy hivatkozás) segítségével titkokat adjanak hozzá."
-  },
-  "are_you_sure_message": {
-    "message": "Biztos benne? Ez a művelet végleges."
-  },
-  "autofill_checkbox_label": {
-    "message": "Automatikus kitöltés"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Automatikusan kitölti az OTP mezőt az egyes tokenekhez tartozó automatikus kitöltési URL segítségével."
-  },
-  "autofill_url": {
-    "message": "Automatikus kitöltési URL:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "Automatikus kitöltési URL: (nem engedélyezve)"
-  },
-  "camera_permission_button": {
-    "message": "Kamera engedélyező gomb"
-  },
-  "camera_permission_message_1": {
-    "message": "*A gomb automatikusan kattintódik a lap betöltésekor*"
-  },
-  "camera_permission_message_2": {
-    "message": "A webkamera gomb működni fog, miután engedélyezte a kamera hozzáférést"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Vágólap másolás"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Lehetővé teszi az OTP vágólapra másolását, amikor egy token dobozra kattint."
-  },
-  "close": {
-    "message": "Bezárás"
-  },
-  "confirm_password": {
-    "message": "Jelszó megerősítése:"
-  },
-  "copied": {
-    "message": "Másolva!"
-  },
-  "currently_saved": {
-    "message": "Jelenleg mentve: "
-  },
-  "dark_theme": {
-    "message": "Sötét téma"
-  },
-  "delete": {
-    "message": "Törlés"
-  },
-  "disable_password_protection": {
-    "message": "Jelszóvédelem letiltása"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Engedélyezze a vágólap másolást a beállításokban"
-  },
-  "enable_password_protection": {
-    "message": "Jelszóvédelem engedélyezése"
-  },
-  "enter_name": {
-    "message": "Név megadása:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Kérjük, adja meg mind a nevet, mind a titkot."
-  },
-  "enter_password": {
-    "message": "Jelszó megadása:"
-  },
-  "enter_secret": {
-    "message": "Titok megadása:"
-  },
-  "enter_url": {
-    "message": "URL megadása"
-  },
-  "extension_description": {
-    "message": "Az Authenticator Pro egy hatékony eszköz, amely 30 másodpercenként generál egy egyszer használatos jelszót (OTP) egy megadott titok alapján."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Token hozzáadó elrejtése"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Elrejti a token hozzáadó űrlapot; könnyebb láthatóságot biztosít a mentett tokenekhez."
-  },
-  "image": {
-    "message": "Kép"
-  },
-  "image_url": {
-    "message": "Kép URL:"
-  },
-  "incorrect_password_message": {
-    "message": "Hibás jelszó"
-  },
-  "incorrect_url_message": {
-    "message": "Hibás URL, vagy az URL nem tartalmazott QR kódot."
-  },
-  "invalid_secret_message": {
-    "message": "Érvénytelen titok. Kérjük, adjon meg egy Base32 kódolt karakterláncot."
-  },
-  "light_theme": {
-    "message": "Világos téma"
-  },
-  "main_enter_password_message": {
-    "message": "Jelszó megadása a feloldáshoz"
-  },
-  "name_already_exists_message": {
-    "message": "Ezzel a névvel már létezik token."
-  },
-  "name_too_long_message": {
-    "message": "A név túl hosszú, kérjük, adjon meg egy rövidebb nevet."
-  },
-  "online_time_checkbox_label": {
-    "message": "Online idő szinkronizálás"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "A pontosság érdekében szinkronizál az online idővel; különben a helyi eszközidőt használja."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Jelszóvédelem"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Engedélyezéshez kapcsolja ki a szinkronizálást a Chrome-on"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Titkosítja és védi a mentett titkokat egy jelszóval."
-  },
-  "password_protection_setup": {
-    "message": "Jelszóvédelem beállítása"
-  },
-  "passwords_dont_match": {
-    "message": "A jelszavak nem egyeznek"
-  },
-  "password_warning_message": {
-    "message": "FIGYELMEZTETÉS: Ha a jelszót elfelejti, nem lehet visszaállítani."
-  },
-  "permissions": {
-    "message": "Engedélyek"
-  },
-  "permissions_page_header": {
-    "message": "Authenticator Pro engedélyezési oldal"
-  },
-  "popup_mode_label": {
-    "message": "Felugró mód"
-  },
-  "popup_mode_tooltip": {
-    "message": "Az Authenticator Pro külön ablakban nyílik meg."
-  },
-  "qr_found_message": {
-    "message": "QR kód található!"
-  },
-  "qr_not_found_message": {
-    "message": "QR kód nem található. Próbáljon meg egy másik képet."
-  },
-  "remove_password": {
-    "message": "Jelszó eltávolítása"
-  },
-  "save_url": {
-    "message": "URL mentése"
-  },
-  "scanning": {
-    "message": "Keresés..."
-  },
-  "secret": {
-    "message": " Titok:"
-  },
-  "secret_already_added_message": {
-    "message": "Ezt a titkot már hozzáadta."
-  },
-  "settings": {
-    "message": "Beállítások"
-  },
-  "submit": {
-    "message": "Küldés"
-  },
-  "sync_checkbox_label": {
-    "message": "Szinkronizálás a Chrome-on"
-  },
-  "sync_checkbox_message": {
-    "message": "Engedélyezéshez kapcsolja ki a jelszóvédelmet"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "A tokenek szinkronizálása a bejelentkezett Chrome-eszközökön; különben az állapot csak helyi."
-  },
-  "themes": {
-    "message": "Témák"
-  },
-  "token_settings": {
-    "message": "Token beállítások"
-  },
-  "webcam": {
-    "message": "Webkamera"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+    "active_tokens": { "message": "Aktív tokenek:" },
+    "add_token": { "message": "Token hozzáadása" },
+    "add_qr_code_via": { "message": "QR-kód hozzáadása innen:" },
+    "advanced_add": { "message": "Speciális hozzáadás" },
+    "advanced_add_checkbox_label": { "message": "Speciális hozzáadás gomb" },
+    "advanced_add_checkbox_tooltip": { "message": "Lehetővé teszi a titkos kódok hozzáadását QR-kóddal (webkamera, fájl vagy link)." },
+    "are_you_sure_message": { "message": "Biztos benne? Ez a művelet végleges." },
+    "autofill_checkbox_label": { "message": "Automatikus kitöltés" },
+    "autofill_checkbox_tooltip": { "message": "Automatikusan kitölti az OTP mezőt az egyes tokenekhez tartozó automatikus kitöltési URL használatával." },
+    "autofill_url": { "message": "Automatikus kitöltési URL:" },
+    "autofill_url_not_enabled": { "message": "Automatikus kitöltési URL: (Nincs engedélyezve)" },
+    "camera_permission_button": { "message": "Kamera engedélyezése gomb" },
+    "camera_permission_message_1": { "message": "*A gombra automatikusan rákattint az oldal betöltésekor*" },
+    "camera_permission_message_2": { "message": "A webkamera gomb a kamera-hozzáférés engedélyezése után fog működni" },
+    "clipboard_copying_checkbox_label": { "message": "Másolás a vágólapra" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Lehetővé teszi az OTP vágólapra másolását a token mezőre kattintva." },
+    "close": { "message": "Bezárás" },
+    "confirm_password": { "message": "Jelszó megerősítése:" },
+    "copied": { "message": "Másolva!" },
+    "currently_saved": { "message": "Jelenleg mentve: " },
+    "dark_theme": { "message": "Sötét téma" },
+    "delete": { "message": "Törlés" },
+    "disable_password_protection": { "message": "Jelszavas védelem kikapcsolása" },
+    "enable_clipboard_copy_message": { "message": "Engedélyezze a vágólapra másolást a beállításokban" },
+    "enable_password_protection": { "message": "Jelszavas védelem bekapcsolása" },
+    "enter_name": { "message": "Név megadása:" },
+    "enter_name_and_secret_message": { "message": "Kérjük, adja meg a nevet és a titkos kódot is." },
+    "enter_password": { "message": "Jelszó megadása:" },
+    "enter_secret": { "message": "Titkos kód megadása:" },
+    "enter_url": { "message": "URL megadása" },
+    "extension_description": { "message": "Az Authenticator Pro egy hatékony eszköz, amely 30 másodpercenként egyszeri jelszót (OTP) generál a megadott titkos kód alapján." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Token hozzáadó elrejtése" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Elrejti a token hozzáadási űrlapot; jobb láthatóságot biztosít a mentett tokeneknek." },
+    "image": { "message": "Kép" },
+    "image_url": { "message": "Kép URL-je:" },
+    "incorrect_password_message": { "message": "Helytelen jelszó" },
+    "incorrect_url_message": { "message": "Helytelen URL, vagy az URL nem tartalmazott QR-kódot." },
+    "invalid_secret_message": { "message": "Érvénytelen titkos kód. Kérjük, Base32 kódolású karakterláncot adjon meg." },
+    "light_theme": { "message": "Világos téma" },
+    "main_enter_password_message": { "message": "Adja meg a jelszót a feloldáshoz" },
+    "name_already_exists_message": { "message": "Ilyen nevű token már létezik." },
+    "name_too_long_message": { "message": "A név túl hosszú, kérjük, adjon meg rövidebb nevet." },
+    "online_time_checkbox_label": { "message": "Online időszinkronizálás" },
+    "online_time_checkbox_tooltip": { "message": "A pontosság érdekében online szinkronizál az idővel; egyébként a helyi eszköz idejét használja." },
+    "password_protected_checkbox_label": { "message": "Jelszavas védelem" },
+    "password_protected_checkbox_message": { "message": "Az engedélyezéshez kapcsolja ki a Chrome-szinkronizálást" },
+    "password_protected_checkbox_tooltip": { "message": "Titkosítja és jelszóval védi a mentett titkos kódokat." },
+    "password_protection_setup": { "message": "Jelszavas védelem beállítása" },
+    "passwords_dont_match": { "message": "A jelszavak nem egyeznek" },
+    "password_warning_message": { "message": "FIGYELEM: Ha elfelejti a jelszót, nem lehet visszaállítani." },
+    "permissions": { "message": "Engedélyek" },
+    "permissions_page_header": { "message": "Authenticator Pro engedélyek oldal" },
+    "popup_mode_label": { "message": "Felugró ablak mód" },
+    "popup_mode_tooltip": { "message": "Az Authenticator Pro-t egy külön ablakban nyitja meg." },
+    "qr_found_message": { "message": "QR-kód találva!" },
+    "qr_not_found_message": { "message": "QR-kód nem található. Próbálkozzon másik képpel." },
+    "remove_password": { "message": "Jelszó eltávolítása" },
+    "save_url": { "message": "URL mentése" },
+    "scanning": { "message": "Beolvasás..." },
+    "secret": { "message": " Titkos kód:" },
+    "secret_already_added_message": { "message": "Ezt a titkos kódot már hozzáadta." },
+    "settings": { "message": "Beállítások" },
+    "submit": { "message": "Beküldés" },
+    "sync_checkbox_label": { "message": "Szinkronizálás a Chrome-ban" },
+    "sync_checkbox_message": { "message": "Az engedélyezéshez kapcsolja ki a jelszavas védelmet" },
+    "sync_checkbox_tooltip": { "message": "Szinkronizálja a tokeneket a bejelentkezett Chrome eszközökön; egyébként az állapot csak helyi." },
+    "themes": { "message": "Témák" },
+    "token_settings": { "message": "Token beállítások" },
+    "webcam": { "message": "Webkamera" },
+    "clear_saved_url": { "message": "Mentett URL törlése" },
+    "export": { "message": "Exportálás" },
+    "export_data": { "message": "Adatok exportálása" },
+    "ocean_theme": { "message": "Óceán téma" },
+    "forest_theme": { "message": "Erdő téma" },
+    "scale_heading": { "message": "Skálázás" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Exportálási beállítások" },
+    "export_csv_label": { "message": "Exportálás CSV-be" },
+    "export_pdf_label": { "message": "Exportálás PDF-be" },
+    "export_doc_label": { "message": "Exportálás Word-be (.doc)" },
+    "export_column_name": { "message": "Név" },
+    "export_column_secret": { "message": "Titkos kód" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-exportalas" },
+    "export_pdf_prompt": { "message": "PDF mentése másként:" },
+    "export_document_title": { "message": "Authenticator exportálás" },
+    "bulk_add_label": { "message": "Tömeges hozzáadás" },
+    "bulk_add_title": { "message": "Tömeges hozzáadás" },
+    "bulk_add_csv_label": { "message": "CSV fájl" },
+    "bulk_add_json_label": { "message": "JSON fájl" },
+    "bulk_add_failed": { "message": "A tömeges hozzáadás sikertelen." },
+    "bulk_add_invalid_file": { "message": "Érvénytelen fájlformátum." },
+    "bulk_add_no_valid": { "message": "Nem találhatók érvényes tokenek." },
+    "bulk_add_success": { "message": "Sikeres." },
+    "bulk_add_partial": { "message": "A tömeges hozzáadás részben sikeres." },
+    "bulk_add_details": { "message": "Hozzáadva: $1 | Kihagyva: $2 | Érvénytelen: $3" }
 }

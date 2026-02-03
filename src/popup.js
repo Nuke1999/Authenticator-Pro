@@ -18,6 +18,7 @@ import {
   buildSettingsUI,
   initThemeControls,
   initExportControls,
+  initBulkAddControls,
 } from "./settings.js";
 import {
   encryptSecret,
@@ -582,10 +583,7 @@ const startPopup = () => {
   });
 
   const syncCheckbox = document.getElementById("sync-checkbox");
-  // Initialize export and theme controls now that DOM and switches exist
-  try {
-    if (settingsPage) initExportControls(settingsPage);
-  } catch (_) {}
+  // Initialize theme controls now that DOM and switches exist
   try {
     initThemeControls({ syncCheckbox });
   } catch (_) {}
@@ -1311,7 +1309,7 @@ const startPopup = () => {
     errorMessage.className = "advanced-add-messages";
     errorMessage.id = "advanced-add-messages";
     errorMessage.style.visibility = "hidden";
-    errorMessage.textContent = "QR Code not found. Try a different image.";
+    errorMessage.textContent = chrome.i18n.getMessage("qr_not_found_message");
     headerDiv.appendChild(errorMessage);
     let svgIcon = createXIcon({
       className: "feather x-icon",
@@ -1483,7 +1481,7 @@ const startPopup = () => {
           qrScanner = null;
           stream = null;
           document.querySelector(".video-container").style.display = "none";
-          webcamButton.textContent = "Webcam";
+          webcamButton.textContent = chrome.i18n.getMessage("webcam");
           webcamButton.appendChild(webcamOnIcon);
           setAdvancedAddMessage(
             chrome.i18n.getMessage("qr_not_found_message"),
@@ -1616,6 +1614,18 @@ const startPopup = () => {
   function updateToken(name, secret) {
     return updateTokenImpl(name, secret);
   }
+
+  try {
+    if (settingsPage) initExportControls(settingsPage);
+  } catch (_) {}
+  try {
+    if (settingsPage)
+      initBulkAddControls(settingsPage, {
+        tokensContainer,
+        addTokenToDOM,
+        syncCheckbox,
+      });
+  } catch (_) {}
 };
 
 function initializePopup() {

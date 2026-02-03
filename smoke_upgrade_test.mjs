@@ -195,7 +195,7 @@ try {
   results.passwordFlow = await simulatePasswordProtectedUpgrade();
   auth.clearCachedEncryptionKey();
   results.nonPassword = await simulateNonPasswordUpgrade();
-  console.log("Simulated upgrade tests passed:", results);
+  // Intentionally no console logging in production builds.
 } catch (err) {
   console.error("Simulated upgrade tests failed", err);
   process.exit(1);

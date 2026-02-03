@@ -15,27 +15,76 @@ window.Buffer = Buffer;
   function generateToken(secret) {
     return authenticator.generate(secret);
   }
+  function setInputValue(input, value) {
+    const stringValue = String(value ?? "");
+    try {
+      input.focus();
+    } catch (_) {}
+    try {
+      const prototype = Object.getPrototypeOf(input);
+      const descriptor = Object.getOwnPropertyDescriptor(prototype, "value");
+      if (descriptor && typeof descriptor.set === "function") {
+        descriptor.set.call(input, stringValue);
+      } else {
+        input.value = stringValue;
+      }
+      input.setAttribute("value", stringValue);
+    } catch (_) {
+      input.value = stringValue;
+    }
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    input.dispatchEvent(new Event("keyup", { bubbles: true }));
+    try {
+      input.blur();
+    } catch (_) {}
+  }
   function autoFillAuthInputs(token) {
     const inputs = document.querySelectorAll("input");
     const activeElement = document.activeElement;
     inputs.forEach((input) => {
-      const inputId = input.id.toLowerCase();
-      if (
-        inputId.includes("auth") ||
-        inputId.includes("totp") ||
-        inputId.includes("otp") ||
-        inputId.includes("2fa") ||
-        inputId.includes("mfa") ||
-        inputId.includes("code") ||
-        inputId.includes("token") ||
-        inputId.includes("verify") ||
-        inputId.includes("passcode")
-      ) {
-        input.value = token;
-        const inputEvent = new Event("input", { bubbles: true });
-        input.dispatchEvent(inputEvent);
-        const changeEvent = new Event("change", { bubbles: true });
-        input.dispatchEvent(changeEvent);
+      const inputId = input.id ? input.id.toLowerCase() : "";
+      const inputName = input.name ? input.name.toLowerCase() : "";
+      const inputType = input.type ? input.type.toLowerCase() : "";
+      const ariaLabel = (input.getAttribute("aria-label") || "").toLowerCase();
+      const placeholder = (input.getAttribute("placeholder") || "").toLowerCase();
+      const autocomplete = (input.getAttribute("autocomplete") || "").toLowerCase();
+
+      const keywords = [
+        "auth",
+        "totp",
+        "otp",
+        "2fa",
+        "mfa",
+        "code",
+        "token",
+        "verify",
+        "passcode",
+        "twostep",
+        "two-step",
+        "two_step",
+        "twofactor",
+        "two-factor",
+        "two_factor",
+        "onetime",
+        "one-time",
+        "verification",
+        "securitycode",
+        "security",
+        "pin",
+      ];
+
+      const haystack = `${inputId} ${inputName} ${ariaLabel} ${placeholder}`;
+      const keywordMatch = keywords.some((word) => haystack.includes(word));
+      const autocompleteMatch =
+        autocomplete.includes("one-time-code") ||
+        autocomplete.includes("otp") ||
+        autocomplete.includes("totp") ||
+        autocomplete.includes("2fa") ||
+        autocomplete.includes("mfa");
+
+      if (keywordMatch || autocompleteMatch) {
+        setInputValue(input, token);
       }
     });
     if (activeElement && activeElement.focus) {
@@ -83,8 +132,13 @@ window.Buffer = Buffer;
                     const savedUrl = tokenObj.url;
                     const secret = tokenObj.secret;
                     if (savedUrl && currentTabUrl.includes(savedUrl)) {
-                      let generatedToken = generateToken(secret);
-                      autoFillAuthInputs(generatedToken);
+                      let generatedToken;
+                      try {
+                        generatedToken = generateToken(secret);
+                      } catch (e) {
+                        console.error(e);
+                      }
+                      if (generatedToken) autoFillAuthInputs(generatedToken);
                     }
                   });
                 } else if (

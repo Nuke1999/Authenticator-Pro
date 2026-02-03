@@ -1,266 +1,100 @@
-{
-  "active_tokens": {
-    "message": "Aktivní Tokeny:"
-  },
-  "add_token": {
-    "message": "Přidat Token"
-  },
-  "add_qr_code_via": {
-    "message": "Přidat QR Kód Pomocí:"
-  },
-  "advanced_add": {
-    "message": "Pokročilé Přidání"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Tlačítko Pokročilého Přidání"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Umožňuje uživatelům přidávat tajné kódy pomocí QR kódu (webkamera, soubor nebo odkaz)."
-  },
-  "are_you_sure_message": {
-    "message": "Jste si jisti? Tato akce je nevratná."
-  },
-  "autofill_checkbox_label": {
-    "message": "Automatické Vyplňování"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Automaticky vyplňuje pole OTP pomocí URL pro automatické vyplnění pro každý token."
-  },
-  "autofill_url": {
-    "message": "URL pro Automatické Vyplnění:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "URL pro Automatické Vyplnění: (Není Aktivní)"
-  },
-  "camera_permission_button": {
-    "message": "Tlačítko Povolení Kamery"
-  },
-  "camera_permission_message_1": {
-    "message": "*Tlačítko se automaticky aktivuje při načtení stránky*"
-  },
-  "camera_permission_message_2": {
-    "message": "Tlačítko Webkamery bude fungovat po povolení přístupu ke kameře"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Kopírování do Schránky"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Umožňuje zkopírovat OTP do schránky při kliknutí na pole tokenu."
-  },
-  "close": {
-    "message": "Zavřít"
-  },
-  "confirm_password": {
-    "message": "Potvrďte Heslo:"
-  },
-  "copied": {
-    "message": "Zkopírováno!"
-  },
-  "currently_saved": {
-    "message": "Aktuálně Uloženo: "
-  },
-  "dark_theme": {
-    "message": "Tmavé Téma"
-  },
-  "delete": {
-    "message": "Smazat"
-  },
-  "disable_password_protection": {
-    "message": "Deaktivovat Ochranu Heslem"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Aktivujte Kopírování do Schránky v nastavení"
-  },
-  "enable_password_protection": {
-    "message": "Aktivovat Ochranu Heslem"
-  },
-  "enter_name": {
-    "message": "Zadejte Jméno:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Prosím, zadejte jak jméno, tak tajný kód."
-  },
-  "enter_password": {
-    "message": "Zadejte Heslo:"
-  },
-  "enter_secret": {
-    "message": "Zadejte Tajný Kód:"
-  },
-  "enter_url": {
-    "message": "Zadejte URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro je výkonný nástroj, který generuje jednorázové heslo (OTP) každých 30 sekund na základě poskytnutého tajného kódu."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Skrýt Přidávač Tokenů"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Skrývá formulář pro přidání tokenů; umožňuje lepší viditelnost uložených tokenů."
-  },
-  "image": {
-    "message": "Obrázek"
-  },
-  "image_url": {
-    "message": "URL Obrázku:"
-  },
-  "incorrect_password_message": {
-    "message": "Nesprávné Heslo"
-  },
-  "incorrect_url_message": {
-    "message": "Nesprávná URL nebo URL neobsahuje QR kód."
-  },
-  "invalid_secret_message": {
-    "message": "Neplatný tajný kód. Zadejte řetězec kódovaný v Base32."
-  },
-  "light_theme": {
-    "message": "Světlé Téma"
-  },
-  "main_enter_password_message": {
-    "message": "Zadejte Heslo pro Odemčení"
-  },
-  "name_already_exists_message": {
-    "message": "Token s tímto jménem již existuje."
-  },
-  "name_too_long_message": {
-    "message": "Jméno je příliš dlouhé, zadejte kratší jméno."
-  },
-  "online_time_checkbox_label": {
-    "message": "Online Synchronizace Času"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Synchronizuje s online časem pro přesnost; jinak používá místní čas zařízení."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Ochrana Heslem"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Pro aktivaci vypněte Synchronizaci v Chromu"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Šifruje a chrání uložené tajné kódy pomocí hesla."
-  },
-  "password_protection_setup": {
-    "message": "Nastavení Ochrany Heslem"
-  },
-  "passwords_dont_match": {
-    "message": "Hesla se Neshodují"
-  },
-  "password_warning_message": {
-    "message": "UPOZORNĚNÍ: Pokud heslo zapomenete, nelze jej obnovit."
-  },
-  "permissions": {
-    "message": "Oprávnění"
-  },
-  "permissions_page_header": {
-    "message": "Stránka Oprávnění Authenticator Pro"
-  },
-  "popup_mode_label": {
-    "message": "Režim Vyskakovacího Okna"
-  },
-  "popup_mode_tooltip": {
-    "message": "Otevře Authenticator Pro v samostatném okně."
-  },
-  "qr_found_message": {
-    "message": "QR kód nalezen!"
-  },
-  "qr_not_found_message": {
-    "message": "QR kód nebyl nalezen. Zkuste jiný obrázek."
-  },
-  "remove_password": {
-    "message": "Odebrat Heslo"
-  },
-  "save_url": {
-    "message": "Uložit URL"
-  },
-  "scanning": {
-    "message": "Skenování..."
-  },
-  "secret": {
-    "message": " Tajný Kód:"
-  },
-  "secret_already_added_message": {
-    "message": "Tento tajný kód již byl přidán."
-  },
-  "settings": {
-    "message": "Nastavení"
-  },
-  "submit": {
-    "message": "Odeslat"
-  },
-  "sync_checkbox_label": {
-    "message": "Synchronizovat v Chromu"
-  },
-  "sync_checkbox_message": {
-    "message": "Pro aktivaci vypněte Ochranu Heslem"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Synchronizuje tokeny na zařízeních připojených k Chromu; jinak je stav pouze místní."
-  },
-  "themes": {
-    "message": "Témata"
-  },
-  "token_settings": {
-    "message": "Nastavení Tokenů"
-  },
-  "webcam": {
-    "message": "Webkamera"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+﻿{
+    "active_tokens": { "message": "Aktivní tokeny:" },
+    "add_token": { "message": "Přidat token" },
+    "add_qr_code_via": { "message": "Přidat QR kód přes:" },
+    "advanced_add": { "message": "Pokročilé přidání" },
+    "advanced_add_checkbox_label": { "message": "Tlačítko pokročilého přidání" },
+    "advanced_add_checkbox_tooltip": { "message": "Umožňuje uživatelům přidávat tajemství přes QR kód (webkamera, soubor nebo odkaz)." },
+    "are_you_sure_message": { "message": "Jste si jisti? Tato akce je trvalá." },
+    "autofill_checkbox_label": { "message": "Automatické vyplňování" },
+    "autofill_checkbox_tooltip": { "message": "Automaticky vyplní pole OTP pomocí URL pro automatické vyplňování u každého tokenu." },
+    "autofill_url": { "message": "URL pro automatické vyplňování:" },
+    "autofill_url_not_enabled": { "message": "URL pro automatické vyplňování: (Není povoleno)" },
+    "camera_permission_button": { "message": "Tlačítko oprávnění ke kameře" },
+    "camera_permission_message_1": { "message": "*Tlačítko se automaticky klikne při načtení stránky*" },
+    "camera_permission_message_2": { "message": "Tlačítko webkamery bude fungovat po povolení přístupu ke kameře" },
+    "clipboard_copying_checkbox_label": { "message": "Kopírování do schránky" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Umožňuje zkopírovat OTP do schránky po kliknutí na pole tokenu." },
+    "close": { "message": "Zavřít" },
+    "confirm_password": { "message": "Potvrdit heslo:" },
+    "copied": { "message": "Zkopírováno!" },
+    "currently_saved": { "message": "Aktuálně uloženo: " },
+    "dark_theme": { "message": "Tmavý motiv" },
+    "delete": { "message": "Smazat" },
+    "disable_password_protection": { "message": "Vypnout ochranu heslem" },
+    "enable_clipboard_copy_message": { "message": "Povolte kopírování do schránky v nastavení" },
+    "enable_password_protection": { "message": "Zapnout ochranu heslem" },
+    "enter_name": { "message": "Zadejte název:" },
+    "enter_name_and_secret_message": { "message": "Zadejte prosím název i tajemství." },
+    "enter_password": { "message": "Zadejte heslo:" },
+    "enter_secret": { "message": "Zadejte tajemství:" },
+    "enter_url": { "message": "Zadejte URL" },
+    "extension_description": { "message": "Authenticator Pro je výkonný nástroj, který každých 30 sekund generuje jednorázové heslo (OTP) na základě poskytnutého tajemství." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Skrýt přidávání tokenů" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Skryje formulář pro přidávání tokenů; poskytuje lepší přehled o uložených tokenech." },
+    "image": { "message": "Obrázek" },
+    "image_url": { "message": "URL obrázku:" },
+    "incorrect_password_message": { "message": "Nesprávné heslo" },
+    "incorrect_url_message": { "message": "Nesprávná URL nebo URL neobsahovala QR kód." },
+    "invalid_secret_message": { "message": "Neplatné tajemství. Zadejte prosím řetězec kódovaný v Base32." },
+    "light_theme": { "message": "Světlý motiv" },
+    "main_enter_password_message": { "message": "Zadejte heslo pro odemknutí" },
+    "name_already_exists_message": { "message": "Token s tímto názvem již existuje." },
+    "name_too_long_message": { "message": "Název je příliš dlouhý, zadejte prosím kratší název." },
+    "online_time_checkbox_label": { "message": "Online synchronizace času" },
+    "online_time_checkbox_tooltip": { "message": "Synchronizuje se s časem online pro přesnost; jinak používá místní čas zařízení." },
+    "password_protected_checkbox_label": { "message": "Ochrana heslem" },
+    "password_protected_checkbox_message": { "message": "Pro aktivaci vypněte synchronizaci přes Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "Šifruje a chrání uložená tajemství heslem." },
+    "password_protection_setup": { "message": "Nastavení ochrany heslem" },
+    "passwords_dont_match": { "message": "Hesla se neshodují" },
+    "password_warning_message": { "message": "VAROVÁNÍ: Pokud zapomenete heslo, nelze jej obnovit." },
+    "permissions": { "message": "Oprávnění" },
+    "permissions_page_header": { "message": "Stránka oprávnění Authenticator Pro" },
+    "popup_mode_label": { "message": "Režim vyskakovacího okna" },
+    "popup_mode_tooltip": { "message": "Otevře Authenticator Pro v samostatném okně." },
+    "qr_found_message": { "message": "QR kód nalezen!" },
+    "qr_not_found_message": { "message": "QR kód nenalezen. Zkuste jiný obrázek." },
+    "remove_password": { "message": "Odebrat heslo" },
+    "save_url": { "message": "Uložit URL" },
+    "scanning": { "message": "Skenování..." },
+    "secret": { "message": " Tajemství:" },
+    "secret_already_added_message": { "message": "Toto tajemství jste již přidali." },
+    "settings": { "message": "Nastavení" },
+    "submit": { "message": "Odeslat" },
+    "sync_checkbox_label": { "message": "Synchronizace přes Chrome" },
+    "sync_checkbox_message": { "message": "Pro aktivaci vypněte ochranu heslem" },
+    "sync_checkbox_tooltip": { "message": "Synchronizuje tokeny v přihlášených zařízeních Chrome; jinak je stav pouze lokální." },
+    "themes": { "message": "Motivy" },
+    "token_settings": { "message": "Nastavení tokenu" },
+    "webcam": { "message": "Webkamera" },
+    "clear_saved_url": { "message": "Vymazat uloženou URL" },
+    "export": { "message": "Exportovat" },
+    "export_data": { "message": "Exportovat data" },
+    "ocean_theme": { "message": "Mořský motiv" },
+    "forest_theme": { "message": "Lesní motiv" },
+    "scale_heading": { "message": "Měřítko" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Možnosti exportu" },
+    "export_csv_label": { "message": "Exportovat do CSV" },
+    "export_pdf_label": { "message": "Exportovat do PDF" },
+    "export_doc_label": { "message": "Exportovat do Wordu (.doc)" },
+    "export_column_name": { "message": "Název" },
+    "export_column_secret": { "message": "Tajemství" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-export" },
+    "export_pdf_prompt": { "message": "Uložit PDF jako:" },
+    "export_document_title": { "message": "Export Authenticatoru" },
+    "bulk_add_label": { "message": "Hromadné přidání" },
+    "bulk_add_title": { "message": "Hromadné přidání" },
+    "bulk_add_csv_label": { "message": "Soubor CSV" },
+    "bulk_add_json_label": { "message": "Soubor JSON" },
+    "bulk_add_failed": { "message": "Hromadné přidání se nezdařilo." },
+    "bulk_add_invalid_file": { "message": "Neplatný formát souboru." },
+    "bulk_add_no_valid": { "message": "Nebyly nalezeny žádné platné tokeny." },
+    "bulk_add_success": { "message": "Úspěch." },
+    "bulk_add_partial": { "message": "Hromadné přidání bylo částečně úspěšné." },
+    "bulk_add_details": { "message": "Přidáno: $1 | Přeskočeno: $2 | Neplatné: $3" }
 }

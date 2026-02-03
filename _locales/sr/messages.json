@@ -1,266 +1,100 @@
 {
-  "active_tokens": {
-    "message": "Aktivni Tokeni:"
-  },
-  "add_token": {
-    "message": "Dodaj Token"
-  },
-  "add_qr_code_via": {
-    "message": "Dodaj QR Kod Putem:"
-  },
-  "advanced_add": {
-    "message": "Napredna Dodavanje"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Dugme Naprednog Dodavanja"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Omogućava korisnicima da dodaju tajne putem QR koda (kamera, datoteka ili link)."
-  },
-  "are_you_sure_message": {
-    "message": "Da li ste sigurni? Ova radnja je trajna."
-  },
-  "autofill_checkbox_label": {
-    "message": "Automatsko Popunjavanje"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Automatski popunjava polje OTP koristeći URL za automatsko popunjavanje za svaki token."
-  },
-  "autofill_url": {
-    "message": "URL za Automatsko Popunjavanje:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "URL za Automatsko Popunjavanje: (Nije Aktiviran)"
-  },
-  "camera_permission_button": {
-    "message": "Dugme za Dozvolu Kamere"
-  },
-  "camera_permission_message_1": {
-    "message": "*Dugme automatski klika prilikom učitavanja stranice*"
-  },
-  "camera_permission_message_2": {
-    "message": "Dugme za Webcam će raditi nakon dozvoljavanja pristupa kameri"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Kopiranje u Clipboard"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Omogućava kopiranje OTP u clipboard kada se klikne na token kutiju."
-  },
-  "close": {
-    "message": "Zatvori"
-  },
-  "confirm_password": {
-    "message": "Potvrdi Lozinku:"
-  },
-  "copied": {
-    "message": "Kopirano!"
-  },
-  "currently_saved": {
-    "message": "Trenutno Sačuvano: "
-  },
-  "dark_theme": {
-    "message": "Tamna Tema"
-  },
-  "delete": {
-    "message": "Obriši"
-  },
-  "disable_password_protection": {
-    "message": "Isključi Zaštitu Lozinkom"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Omogućite Kopiranje u Clipboard u podešavanjima"
-  },
-  "enable_password_protection": {
-    "message": "Omogući Zaštitu Lozinkom"
-  },
-  "enter_name": {
-    "message": "Unesite Ime:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Molimo unesite i ime i tajnu."
-  },
-  "enter_password": {
-    "message": "Unesite Lozinku:"
-  },
-  "enter_secret": {
-    "message": "Unesite Tajnu:"
-  },
-  "enter_url": {
-    "message": "Unesite URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro je moćan alat koji generiše Jednokratnu Lozinku (OTP) svakih 30 sekundi na osnovu zadate tajne."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Sakrij Dodavač Tokena"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Sakrij formu za dodavanje tokena; omogućava lakšu vidljivost sačuvanih tokena."
-  },
-  "image": {
-    "message": "Slika"
-  },
-  "image_url": {
-    "message": "URL Slike:"
-  },
-  "incorrect_password_message": {
-    "message": "Pogrešna Lozinka"
-  },
-  "incorrect_url_message": {
-    "message": "Pogrešan URL, ili URL ne sadrži QR kod."
-  },
-  "invalid_secret_message": {
-    "message": "Pogrešna tajna. Molimo unesite Base32 kodiranu string."
-  },
-  "light_theme": {
-    "message": "Svetla Tema"
-  },
-  "main_enter_password_message": {
-    "message": "Unesite Lozinku za Otključavanje"
-  },
-  "name_already_exists_message": {
-    "message": "Token sa ovim imenom već postoji."
-  },
-  "name_too_long_message": {
-    "message": "Ime je predugačko, molimo unesite kraće ime."
-  },
-  "online_time_checkbox_label": {
-    "message": "Sinhronizacija Vremena Online"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Sinhronizuje se sa vremenom online radi tačnosti; inače koristi lokalno vreme uređaja."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Zaštita Lozinkom"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Da biste aktivirali, isključite Sinhronizaciju preko Chrome-a"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Enkriptuje i štiti sačuvane tajne sa lozinkom."
-  },
-  "password_protection_setup": {
-    "message": "Podešavanje Zaštite Lozinkom"
-  },
-  "passwords_dont_match": {
-    "message": "Lozinke se ne poklapaju"
-  },
-  "password_warning_message": {
-    "message": "UPUTSTVO: Ako zaboravite lozinku, ne može se povratiti."
-  },
-  "permissions": {
-    "message": "Dozvole"
-  },
-  "permissions_page_header": {
-    "message": "Stranica Dozvola Authenticator Pro"
-  },
-  "popup_mode_label": {
-    "message": "Način Iskočne Poruke"
-  },
-  "popup_mode_tooltip": {
-    "message": "Otvara Authenticator Pro u posebnom prozoru."
-  },
-  "qr_found_message": {
-    "message": "QR kod pronađen!"
-  },
-  "qr_not_found_message": {
-    "message": "QR Kod nije pronađen. Pokušajte sa drugom slikom."
-  },
-  "remove_password": {
-    "message": "Ukloni Lozinku"
-  },
-  "save_url": {
-    "message": "Sačuvaj URL"
-  },
-  "scanning": {
-    "message": "Skeniranje..."
-  },
-  "secret": {
-    "message": " Tajna:"
-  },
-  "secret_already_added_message": {
-    "message": "Već ste dodali ovu tajnu."
-  },
-  "settings": {
-    "message": "Podešavanja"
-  },
-  "submit": {
-    "message": "Pošalji"
-  },
-  "sync_checkbox_label": {
-    "message": "Sinhronizuj preko Chrome-a"
-  },
-  "sync_checkbox_message": {
-    "message": "Da biste omogućili, isključite Zaštitu Lozinkom"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Sinhronizuje tokene na prijavljenim Chrome uređajima; inače, stanje je samo lokalno."
-  },
-  "themes": {
-    "message": "Teme"
-  },
-  "token_settings": {
-    "message": "Podešavanja Tokena"
-  },
-  "webcam": {
-    "message": "Webkamera"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+    "active_tokens": { "message": "Aktivni tokeni:" },
+    "add_token": { "message": "Dodaj token" },
+    "add_qr_code_via": { "message": "Dodaj QR kod putem:" },
+    "advanced_add": { "message": "Napredno dodavanje" },
+    "advanced_add_checkbox_label": { "message": "Dugme za napredno dodavanje" },
+    "advanced_add_checkbox_tooltip": { "message": "Omogućava korisnicima da dodaju tajne putem QR koda (veb kamera, datoteka ili link)." },
+    "are_you_sure_message": { "message": "Da li ste sigurni? Ova radnja je trajna." },
+    "autofill_checkbox_label": { "message": "Automatsko popunjavanje" },
+    "autofill_checkbox_tooltip": { "message": "Automatski popunjava OTP polje koristeći URL za automatsko popunjavanje za svaki token." },
+    "autofill_url": { "message": "URL za automatsko popunjavanje:" },
+    "autofill_url_not_enabled": { "message": "URL za automatsko popunjavanje: (Nije omogućeno)" },
+    "camera_permission_button": { "message": "Dugme za dozvolu kamere" },
+    "camera_permission_message_1": { "message": "*Dugme se automatski klikne prilikom učitavanja stranice*" },
+    "camera_permission_message_2": { "message": "Dugme za veb kameru će raditi nakon što dozvolite pristup kameri" },
+    "clipboard_copying_checkbox_label": { "message": "Kopiranje u privremenu memoriju" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Omogućava kopiranje OTP-a u privremenu memoriju klikom na polje tokena." },
+    "close": { "message": "Zatvori" },
+    "confirm_password": { "message": "Potvrdi lozinku:" },
+    "copied": { "message": "Kopirano!" },
+    "currently_saved": { "message": "Trenutno sačuvano: " },
+    "dark_theme": { "message": "Tamna tema" },
+    "delete": { "message": "Obriši" },
+    "disable_password_protection": { "message": "Onemogući zaštitu lozinkom" },
+    "enable_clipboard_copy_message": { "message": "Omogućite kopiranje u privremenu memoriju u podešavanjima" },
+    "enable_password_protection": { "message": "Omogući zaštitu lozinkom" },
+    "enter_name": { "message": "Unesite ime:" },
+    "enter_name_and_secret_message": { "message": "Molimo unesite i ime i tajnu." },
+    "enter_password": { "message": "Unesite lozinku:" },
+    "enter_secret": { "message": "Unesite tajnu:" },
+    "enter_url": { "message": "Unesite URL" },
+    "extension_description": { "message": "Authenticator Pro je moćan alat koji generiše jednokratnu lozinku (OTP) svakih 30 sekundi na osnovu pružene tajne." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Sakrij dodavač tokena" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Skriva obrazac za dodavanje tokena; omogućava lakšu vidljivost sačuvanih tokena." },
+    "image": { "message": "Slika" },
+    "image_url": { "message": "URL slike:" },
+    "incorrect_password_message": { "message": "Pogrešna lozinka" },
+    "incorrect_url_message": { "message": "Pogrešan URL ili URL nije sadržao QR kod." },
+    "invalid_secret_message": { "message": "Nevažeća tajna. Molimo unesite Base32 kodirani niz." },
+    "light_theme": { "message": "Svetla tema" },
+    "main_enter_password_message": { "message": "Unesite lozinku za otključavanje" },
+    "name_already_exists_message": { "message": "Token sa ovim imenom već postoji." },
+    "name_too_long_message": { "message": "Ime je predugačko, molimo unesite kraće ime." },
+    "online_time_checkbox_label": { "message": "Onlajn sinhronizacija vremena" },
+    "online_time_checkbox_tooltip": { "message": "Sinhronizuje se sa onlajn vremenom radi preciznosti; u suprotnom koristi lokalno vreme uređaja." },
+    "password_protected_checkbox_label": { "message": "Zaštita lozinkom" },
+    "password_protected_checkbox_message": { "message": "Da biste omogućili, isključite sinhronizaciju preko Chrome-a" },
+    "password_protected_checkbox_tooltip": { "message": "Šifruje i štiti sačuvane tajne lozinkom." },
+    "password_protection_setup": { "message": "Podešavanje zaštite lozinkom" },
+    "passwords_dont_match": { "message": "Lozinke se ne podudaraju" },
+    "password_warning_message": { "message": "UPOZORENJE: Ako se lozinka zaboravi, ne može se vratiti." },
+    "permissions": { "message": "Dozvole" },
+    "permissions_page_header": { "message": "Authenticator Pro stranica sa dozvolama" },
+    "popup_mode_label": { "message": "Pop-up režim" },
+    "popup_mode_tooltip": { "message": "Otvara Authenticator Pro u zasebnom prozoru." },
+    "qr_found_message": { "message": "QR kod je pronađen!" },
+    "qr_not_found_message": { "message": "QR kod nije pronađen. Pokušajte sa drugom slikom." },
+    "remove_password": { "message": "Ukloni lozinku" },
+    "save_url": { "message": "Sačuvaj URL" },
+    "scanning": { "message": "Skeniranje..." },
+    "secret": { "message": " Tajna:" },
+    "secret_already_added_message": { "message": "Već ste dodali ovu tajnu." },
+    "settings": { "message": "Podešavanja" },
+    "submit": { "message": "Pošalji" },
+    "sync_checkbox_label": { "message": "Sinhronizacija preko Chrome-a" },
+    "sync_checkbox_message": { "message": "Da biste omogućili, isključite zaštitu lozinkom" },
+    "sync_checkbox_tooltip": { "message": "Sinhronizuje tokene na prijavljenim Chrome uređajima; inače je stanje samo lokalno." },
+    "themes": { "message": "Teme" },
+    "token_settings": { "message": "Podešavanja tokena" },
+    "webcam": { "message": "Veb kamera" },
+    "clear_saved_url": { "message": "Obriši sačuvani URL" },
+    "export": { "message": "Izvezi" },
+    "export_data": { "message": "Izvezi podatke" },
+    "ocean_theme": { "message": "Okeanska tema" },
+    "forest_theme": { "message": "Šumska tema" },
+    "scale_heading": { "message": "Razmera" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Opcije izvoza" },
+    "export_csv_label": { "message": "Izvezi u CSV" },
+    "export_pdf_label": { "message": "Izvezi u PDF" },
+    "export_doc_label": { "message": "Izvezi u Word (.doc)" },
+    "export_column_name": { "message": "Ime" },
+    "export_column_secret": { "message": "Tajna" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-izvoz" },
+    "export_pdf_prompt": { "message": "Sačuvaj PDF kao:" },
+    "export_document_title": { "message": "Izvoz Authenticator-a" },
+    "bulk_add_label": { "message": "Grupno dodavanje" },
+    "bulk_add_title": { "message": "Grupno dodavanje" },
+    "bulk_add_csv_label": { "message": "CSV datoteka" },
+    "bulk_add_json_label": { "message": "JSON datoteka" },
+    "bulk_add_failed": { "message": "Grupno dodavanje nije uspelo." },
+    "bulk_add_invalid_file": { "message": "Nevažeći format datoteke." },
+    "bulk_add_no_valid": { "message": "Nisu pronađeni važeći tokeni." },
+    "bulk_add_success": { "message": "Uspešno." },
+    "bulk_add_partial": { "message": "Grupno dodavanje je delimično uspešno." },
+    "bulk_add_details": { "message": "Dodato: $1 | Preskočeno: $2 | Nevažeće: $3" }
 }

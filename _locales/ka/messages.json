@@ -1,266 +1,100 @@
 {
-  "active_tokens": {
-    "message": "აქტიური ტოკენები:"
-  },
-  "add_token": {
-    "message": "ტოკენის დამატება"
-  },
-  "add_qr_code_via": {
-    "message": "QR კოდის დამატება:"
-  },
-  "advanced_add": {
-    "message": "წარმატებული დამატება"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "წარმატებული დამატების ღილაკი"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "შესაძლებელია საიდუმლოებების დამატება QR კოდით (ვებსაიტი, ფაილი ან ლინკი)."
-  },
-  "are_you_sure_message": {
-    "message": "ნამდვილად ხართ დარწმუნებული? ეს მოქმედება მუდმივია."
-  },
-  "autofill_checkbox_label": {
-    "message": "ავტომატური შევსება"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "OTP ველის ავტომატურად შევსება ყოველი ტოკენის ავტომატური შევსების URL-ით."
-  },
-  "autofill_url": {
-    "message": "ავტომატური შევსების URL:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "ავტომატური შევსების URL: (გაუმართავი)"
-  },
-  "camera_permission_button": {
-    "message": "კამერის ნებართვის ღილაკი"
-  },
-  "camera_permission_message_1": {
-    "message": "*ღილაკი ავტომატურად იწერს გვერდის დატვირთვის დროს*"
-  },
-  "camera_permission_message_2": {
-    "message": "ვებსაიტის ღილაკი იმუშავებს კამერის წვდომის დადასტურების შემდეგ"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "კლიპბორდზე კოპირება"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "ტოკენის ჩასაწერად კლიპბორდზე OTP-ის კოპირება."
-  },
-  "close": {
-    "message": "დახურვა"
-  },
-  "confirm_password": {
-    "message": "პაროლის დამოწმება:"
-  },
-  "copied": {
-    "message": "კოპირებული!"
-  },
-  "currently_saved": {
-    "message": "მიმდინარე შენახული: "
-  },
-  "dark_theme": {
-    "message": "ბნელი თემატიკა"
-  },
-  "delete": {
-    "message": "წაშლა"
-  },
-  "disable_password_protection": {
-    "message": "პაროლის დაცვის გამორთვა"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "აქტივირებული პაროლის დაცვის გამორთვა"
-  },
-  "enable_password_protection": {
-    "message": "პაროლის დაცვის გაწვდვა"
-  },
-  "enter_name": {
-    "message": "შეიყვანეთ სახელი:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "გთხოვთ, შეიყვანოთ როგორც სახელი, ასევე საიდუმლო."
-  },
-  "enter_password": {
-    "message": "შეიყვანეთ პაროლი:"
-  },
-  "enter_secret": {
-    "message": "შეიყვანეთ საიდუმლო:"
-  },
-  "enter_url": {
-    "message": "შეიყვანეთ URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro არის ძლიერი ინსტრუმენტი, რომელიც წარმოგიდგენთ ერთჯერად პაროლს (OTP) ყოველ 30 წამში, მითითებული საიდუმლოს საფუძველზე."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "ტოკენის დამატება დავიწყება"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "ტოკენის დამატების ფორმის დამალვა; შენახული ტოკენების უკეთესი ხედვა."
-  },
-  "image": {
-    "message": "სურათი"
-  },
-  "image_url": {
-    "message": "სურათის URL:"
-  },
-  "incorrect_password_message": {
-    "message": "არასწორი პაროლი"
-  },
-  "incorrect_url_message": {
-    "message": "არასწორი URL, ან URL არ შეიცავს QR კოდს."
-  },
-  "invalid_secret_message": {
-    "message": "არასწორი საიდუმლო. გთხოვთ, შეიყვანეთ Base32 კოდირებული სტრიქონი."
-  },
-  "light_theme": {
-    "message": "მსუბუქი თემატიკა"
-  },
-  "main_enter_password_message": {
-    "message": "შეიყვანეთ პაროლი გასახსნელად"
-  },
-  "name_already_exists_message": {
-    "message": "ამ სახელით ტოკენი უკვე არსებობს."
-  },
-  "name_too_long_message": {
-    "message": "სახელი ძალიან გრძელი, გთხოვთ, შეიყვანოთ უფრო მოკლე სახელი."
-  },
-  "online_time_checkbox_label": {
-    "message": "ონლაინ დროის სინქრონიზაცია"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "ზუსტობისთვის ონლაინ დროსთან სინქრონიზაცია; წინააღმდეგ შემთხვევაში იყენებს ადგილობრივ მოწყობილობას."
-  },
-  "password_protected_checkbox_label": {
-    "message": "პაროლის დაცვა"
-  },
-  "password_protected_checkbox_message": {
-    "message": "აქტივაციისთვის გამორთეთ Chrome-ს შორის სინქრონიზაცია"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "პაროლის გამოყენებით დაიცავით და შეინახეთ საიდუმლოებები."
-  },
-  "password_protection_setup": {
-    "message": "პაროლის დაცვის სეტაპი"
-  },
-  "passwords_dont_match": {
-    "message": "პაროლები არ ემთხვევა"
-  },
-  "password_warning_message": {
-    "message": "გაფრთხილება: თუ პაროლი დაგავიწყდა, იგი აღდგენის შესაძლებლობა არ არის."
-  },
-  "permissions": {
-    "message": "აუცილებლობები"
-  },
-  "permissions_page_header": {
-    "message": "Authenticator Pro უფლებების გვერდი "
-  },
-  "popup_mode_label": {
-    "message": "პოპულარული რეჟიმი"
-  },
-  "popup_mode_tooltip": {
-    "message": "Authenticator Pro-ის გახსნა ცალკე ფანჯარაში."
-  },
-  "qr_found_message": {
-    "message": "QR კოდი მოიძიეს!"
-  },
-  "qr_not_found_message": {
-    "message": "QR კოდი არ მოიძიეს. სცადეთ სხვა სურათი."
-  },
-  "remove_password": {
-    "message": "პაროლის მოხსნა"
-  },
-  "save_url": {
-    "message": "URL-ის შენახვა"
-  },
-  "scanning": {
-    "message": "სკანირება..."
-  },
-  "secret": {
-    "message": " საიდუმლო:"
-  },
-  "secret_already_added_message": {
-    "message": "ამ საიდუმლოს უკვე დაამატეთ."
-  },
-  "settings": {
-    "message": "პარამეტრები"
-  },
-  "submit": {
-    "message": "გაგზავნა"
-  },
-  "sync_checkbox_label": {
-    "message": "Chrome-ს შორის სინქრონიზაცია"
-  },
-  "sync_checkbox_message": {
-    "message": "აქტივაციისთვის გამორთეთ პაროლის დაცვა"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "ტოკენების სინქრონიზაცია Chrome-ის შემოწმებულ მოწყობილობებზე; წინააღმდეგ შემთხვევაში, სტატუსი მხოლოდ ადგილობრივი იქნება."
-  },
-  "themes": {
-    "message": "თემები"
-  },
-  "token_settings": {
-    "message": "ტოკენის პარამეტრები"
-  },
-  "webcam": {
-    "message": "ვებსაიტი"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+    "active_tokens": { "message": "აქტიური ტოკენები:" },
+    "add_token": { "message": "ტოკენის დამატება" },
+    "add_qr_code_via": { "message": "QR კოდის დამატება საშუალებით:" },
+    "advanced_add": { "message": "გაფართოებული დამატება" },
+    "advanced_add_checkbox_label": { "message": "გაფართოებული დამატების ღილაკი" },
+    "advanced_add_checkbox_tooltip": { "message": "საშუალებას აძლევს მომხმარებლებს დაამატონ საიდუმლოებები QR კოდის საშუალებით (ვებკამერა, ფაილი ან ბმული)." },
+    "are_you_sure_message": { "message": "დარწმუნებული ხართ? ეს ქმედება მუდმივია." },
+    "autofill_checkbox_label": { "message": "ავტომატური შევსება" },
+    "autofill_checkbox_tooltip": { "message": "ავტომატურად ავსებს OTP ველს თითოეული ტოკენისთვის ავტომატური შევსების URL-ის გამოყენებით." },
+    "autofill_url": { "message": "ავტომატური შევსების URL:" },
+    "autofill_url_not_enabled": { "message": "ავტომატური შევსების URL: (არაა აქტიური)" },
+    "camera_permission_button": { "message": "კამერის ნებართვის ღილაკი" },
+    "camera_permission_message_1": { "message": "*ღილაკი ავტომატურად აქტიურდება გვერდის ჩატვირთვისას*" },
+    "camera_permission_message_2": { "message": "ვებკამერის ღილაკი იმუშავებს კამერაზე წვდომის დაშვების შემდეგ" },
+    "clipboard_copying_checkbox_label": { "message": "ბუფერში კოპირება" },
+    "clipboard_copying_checkbox_tooltip": { "message": "საშუალებას იძლევა მოხდეს OTP-ის კოპირება ბუფერში ტოკენის ყუთზე დაწკაპუნებისას." },
+    "close": { "message": "დახურვა" },
+    "confirm_password": { "message": "დაადასტურეთ პაროლი:" },
+    "copied": { "message": "დაკოპირდა!" },
+    "currently_saved": { "message": "ამჟამად შენახულია: " },
+    "dark_theme": { "message": "ბნელი თემა" },
+    "delete": { "message": "წაშლა" },
+    "disable_password_protection": { "message": "პაროლით დაცვის გამორთვა" },
+    "enable_clipboard_copy_message": { "message": "ჩართეთ ბუფერში კოპირება პარამეტრებიდან" },
+    "enable_password_protection": { "message": "პაროლით დაცვის ჩართვა" },
+    "enter_name": { "message": "შეიყვანეთ სახელი:" },
+    "enter_name_and_secret_message": { "message": "გთხოვთ შეიყვანოთ სახელიც და საიდუმლოც." },
+    "enter_password": { "message": "შეიყვანეთ პაროლი:" },
+    "enter_secret": { "message": "შეიყვანეთ საიდუმლო:" },
+    "enter_url": { "message": "შეიყვანეთ URL" },
+    "extension_description": { "message": "Authenticator Pro არის მძლავრი ინსტრუმენტი, რომელიც ყოველ 30 წამში აგენერირებს ერთჯერად პაროლს (OTP) მოწოდებული საიდუმლოს საფუძველზე." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "ტოკენის დამმატებლის დამალვა" },
+    "hide_token_adder_checkbox_tooltip": { "message": "მალავს ტოკენების დამატების ფორმას; უზრუნველყოფს შენახული ტოკენების უკეთეს ხილვადობას." },
+    "image": { "message": "სურათი" },
+    "image_url": { "message": "სურათის URL:" },
+    "incorrect_password_message": { "message": "არასწორი პაროლი" },
+    "incorrect_url_message": { "message": "არასწორი URL, ან URL არ შეიცავდა QR კოდს." },
+    "invalid_secret_message": { "message": "არავალიდური საიდუმლო. გთხოვთ შეიყვანოთ Base32-ით კოდირებული სტრიქონი." },
+    "light_theme": { "message": "ნათელი თემა" },
+    "main_enter_password_message": { "message": "შეიყვანეთ პაროლი განსაბლოკად" },
+    "name_already_exists_message": { "message": "ტოკენი ამ სახელით უკვე არსებობს." },
+    "name_too_long_message": { "message": "სახელი ძალიან გრძელია, გთხოვთ შეიყვანოთ უფრო მოკლე სახელი." },
+    "online_time_checkbox_label": { "message": "ონლაინ დროის სინქრონიზაცია" },
+    "online_time_checkbox_tooltip": { "message": "სინქრონიზაციას ახდენს ონლაინ დროსთან სიზუსტისთვის; სხვა შემთხვევაში იყენებს მოწყობილობის ლოკალურ დროს." },
+    "password_protected_checkbox_label": { "message": "პაროლით დაცვა" },
+    "password_protected_checkbox_message": { "message": "ჩასართავად გამორთეთ სინქრონიზაცია Chrome-ში" },
+    "password_protected_checkbox_tooltip": { "message": "შიფრავს და იცავს შენახულ საიდუმლოებს პაროლით." },
+    "password_protection_setup": { "message": "პაროლით დაცვის დაყენება" },
+    "passwords_dont_match": { "message": "პაროლები არ ემთხვევა" },
+    "password_warning_message": { "message": "გაფრთხილება: პაროლის დავიწყების შემთხვევაში, მისი აღდგენა შეუძლებელია." },
+    "permissions": { "message": "ნებართვები" },
+    "permissions_page_header": { "message": "Authenticator Pro-ს ნებართვების გვერდი" },
+    "popup_mode_label": { "message": "Pop-up რეჟიმი" },
+    "popup_mode_tooltip": { "message": "ხსნის Authenticator Pro-ს ცალკე ფანჯარაში." },
+    "qr_found_message": { "message": "QR კოდი ნაპოვნია!" },
+    "qr_not_found_message": { "message": "QR კოდი ვერ მოიძებნა. სცადეთ სხვა სურათი." },
+    "remove_password": { "message": "პაროლის მოცილება" },
+    "save_url": { "message": "URL-ის შენახვა" },
+    "scanning": { "message": "სკანირება..." },
+    "secret": { "message": " საიდუმლო:" },
+    "secret_already_added_message": { "message": "თქვენ უკვე დაამატეთ ეს საიდუმლო." },
+    "settings": { "message": "პარამეტრები" },
+    "submit": { "message": "გაგზავნა" },
+    "sync_checkbox_label": { "message": "სინქრონიზაცია Chrome-ში" },
+    "sync_checkbox_message": { "message": "ჩასართავად გამორთეთ პაროლით დაცვა" },
+    "sync_checkbox_tooltip": { "message": "ახდენს ტოკენების სინქრონიზაციას ავტორიზებულ Chrome მოწყობილობებზე; წინააღმდეგ შემთხვევაში, მდგომარეობა მხოლოდ ლოკალურია." },
+    "themes": { "message": "თემები" },
+    "token_settings": { "message": "ტოკენის პარამეტრები" },
+    "webcam": { "message": "ვებკამერა" },
+    "clear_saved_url": { "message": "შენახული URL-ის გასუფთავება" },
+    "export": { "message": "ექსპორტი" },
+    "export_data": { "message": "მონაცემების ექსპორტი" },
+    "ocean_theme": { "message": "ოკეანის თემა" },
+    "forest_theme": { "message": "ტყის თემა" },
+    "scale_heading": { "message": "მასშტაბი" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "ექსპორტის ოფციები" },
+    "export_csv_label": { "message": "ექსპორტი CSV-ში" },
+    "export_pdf_label": { "message": "ექსპორტი PDF-ში" },
+    "export_doc_label": { "message": "ექსპორტი Word-ში (.doc)" },
+    "export_column_name": { "message": "სახელი" },
+    "export_column_secret": { "message": "საიდუმლო" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-ექსპორტი" },
+    "export_pdf_prompt": { "message": "შეინახეთ PDF როგორც:" },
+    "export_document_title": { "message": "Authenticator-ის ექსპორტი" },
+    "bulk_add_label": { "message": "მასობრივი დამატება" },
+    "bulk_add_title": { "message": "მასობრივი დამატება" },
+    "bulk_add_csv_label": { "message": "CSV ფაილი" },
+    "bulk_add_json_label": { "message": "JSON ფაილი" },
+    "bulk_add_failed": { "message": "მასობრივი დამატება ვერ მოხერხდა." },
+    "bulk_add_invalid_file": { "message": "ფაილის არავალიდური ფორმატი." },
+    "bulk_add_no_valid": { "message": "ვალიდური ტოკენები ვერ მოიძებნა." },
+    "bulk_add_success": { "message": "წარმატება." },
+    "bulk_add_partial": { "message": "მასობრივი დამატება ნაწილობრივ წარმატებულია." },
+    "bulk_add_details": { "message": "დაემატა: $1 | გამოტოვებული: $2 | არავალიდური: $3" }
 }

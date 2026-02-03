@@ -1,6 +1,7 @@
 import { jsPDF } from "jspdf";
 import { openModal, buildHeader } from "./ui.js";
-import { decryptTokens, getCachedEncryptionKey } from "./auth.js";
+import { decryptTokens, getCachedEncryptionKey, encryptSecret } from "./auth.js";
+import { generateToken, isValidBase32, normalizeSecret } from "./tokens.js";
 
 const t = (key, substitutions) => {
   try {
@@ -42,9 +43,15 @@ export function buildSettingsUI(settingsContainer) {
   exportHeader.className = "export-header";
   exportHeader.textContent = t("export");
   const exportRow = document.createElement("div");
-  exportRow.className = "theme-buttons-container";
+  exportRow.className = "export-buttons";
+  const bulkAddBtn = document.createElement("button");
+  bulkAddBtn.className = "export-data-button bulk-add-button";
+  bulkAddBtn.id = "bulk-add-button";
+  bulkAddBtn.textContent = t("bulk_add_label");
+  exportRow.appendChild(bulkAddBtn);
   const exportBtn = document.createElement("button");
   exportBtn.className = "export-data-button";
+  exportBtn.id = "export-data-button";
   exportBtn.textContent = t("export_data");
   exportRow.appendChild(exportBtn);
   exportContainer.appendChild(exportHeader);
@@ -200,7 +207,7 @@ export function initScaleControl(settingsContainer) {
 }
 
 export function initExportControls(settingsContainer) {
-  const exportBtn = settingsContainer.querySelector(".export-data-button");
+  const exportBtn = settingsContainer.querySelector("#export-data-button");
   if (!exportBtn) return;
 
   const onClick = () => {
@@ -264,7 +271,6 @@ export function initExportControls(settingsContainer) {
       name: t("export_column_name"),
       secret: t("export_column_secret"),
       url: t("export_column_url"),
-      otp: t("export_column_otp"),
     };
 
     const filenamePrefix = t("export_filename_prefix");
@@ -291,7 +297,6 @@ export function initExportControls(settingsContainer) {
         columnLabels.name,
         columnLabels.secret,
         columnLabels.url,
-        columnLabels.otp,
       ];
       const lines = [header.join(",")];
       tokens.forEach((token) => {
@@ -299,7 +304,6 @@ export function initExportControls(settingsContainer) {
           token.name || "",
           token.secret || "",
           token.url || "",
-          token.otp || "",
         ].map((value) => '"' + String(value).replace(/"/g, '""') + '"');
         lines.push(values.join(","));
       });
@@ -311,7 +315,6 @@ export function initExportControls(settingsContainer) {
         columnLabels.name,
         columnLabels.secret,
         columnLabels.url,
-        columnLabels.otp,
       ]
         .map((label) => `<th>${escapeHtml(label)}</th>`)
         .join("")}</tr>`;
@@ -321,7 +324,6 @@ export function initExportControls(settingsContainer) {
             escapeHtml(token.name),
             escapeHtml(token.secret),
             escapeHtml(token.url),
-            escapeHtml(token.otp),
           ]
             .map((cell) => `<td>${cell}</td>`)
             .join("");
@@ -338,7 +340,7 @@ export function initExportControls(settingsContainer) {
       const doc = new jsPDF({ orientation: "p", unit: "pt", format: "a4" });
       const margin = 36;
       const lineHeight = 18;
-      const colX = [margin, margin + 160, margin + 360, margin + 480];
+      const colX = [margin, margin + 200, margin + 400];
       let y = margin + 12;
       doc.setFont("Helvetica", "bold");
       doc.setFontSize(14);
@@ -349,7 +351,6 @@ export function initExportControls(settingsContainer) {
       doc.text(columnLabels.name, colX[0], y);
       doc.text(columnLabels.secret, colX[1], y);
       doc.text(columnLabels.url, colX[2], y);
-      doc.text(columnLabels.otp, colX[3], y);
       y += 12;
       doc.setFont("Helvetica", "normal");
       const pageHeight = doc.internal.pageSize.getHeight();
@@ -364,9 +365,8 @@ export function initExportControls(settingsContainer) {
           y = margin;
         }
         doc.text(wrap(token.name, 24), colX[0], y);
-        doc.text(wrap(token.secret, 28), colX[1], y);
-        doc.text(wrap(token.url, 36), colX[2], y);
-        doc.text(wrap(token.otp, 8), colX[3], y);
+        doc.text(wrap(token.secret, 32), colX[1], y);
+        doc.text(wrap(token.url, 48), colX[2], y);
         y += lineHeight;
       });
       let suggested = pdfBaseFilename;
@@ -425,6 +425,403 @@ export function initExportControls(settingsContainer) {
   };
 
   exportBtn.addEventListener("click", onClick);
+}
+
+export function initBulkAddControls(
+  settingsContainer,
+  { tokensContainer, addTokenToDOM, syncCheckbox } = {}
+) {
+  const bulkBtn = settingsContainer.querySelector(".bulk-add-button");
+  if (!bulkBtn) return;
+
+  const normalizeHeader = (value) =>
+    String(value || "")
+      .replace(/\uFEFF/g, "")
+      .replace(/^[^a-z0-9]+|[^a-z0-9]+$/gi, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
+
+  const parseCsv = (text) => {
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let inQuotes = false;
+    for (let i = 0; i < text.length; i += 1) {
+      const ch = text[i];
+      const next = text[i + 1];
+      if (ch === '"') {
+        if (inQuotes && next === '"') {
+          cell += '"';
+          i += 1;
+        } else {
+          inQuotes = !inQuotes;
+        }
+        continue;
+      }
+      if (!inQuotes && (ch === "," || ch === "\n" || ch === "\r")) {
+        if (ch === "\r" && next === "\n") {
+          i += 1;
+        }
+        row.push(cell);
+        cell = "";
+        if (ch !== ",") {
+          if (row.length > 1 || row.some((v) => String(v).trim().length > 0)) {
+            rows.push(row);
+          }
+          row = [];
+        }
+        continue;
+      }
+      cell += ch;
+    }
+    if (cell.length > 0 || row.length > 0) {
+      row.push(cell);
+      rows.push(row);
+    }
+    return rows;
+  };
+
+  const buildHeaderMap = (headerRow, columnLabels) => {
+    const headerLookup = new Map([
+      [normalizeHeader(columnLabels.name), "name"],
+      [normalizeHeader(columnLabels.secret), "secret"],
+      [normalizeHeader(columnLabels.url), "url"],
+      ["name", "name"],
+      ["account", "name"],
+      ["label", "name"],
+      ["issuer", "name"],
+      ["secret", "secret"],
+      ["key", "secret"],
+      ["totp secret", "secret"],
+      ["url", "url"],
+      ["site", "url"],
+      ["website", "url"],
+      ["autofill", "url"],
+      ["autofill url", "url"],
+      ["otp", "otp"],
+      ["code", "otp"],
+    ]);
+    const map = headerRow.map((cell) => headerLookup.get(normalizeHeader(cell)));
+    const hasAny = map.some(Boolean);
+    const hasSecret = map.includes("secret");
+    return { map, hasHeader: hasAny && hasSecret };
+  };
+
+  const parseCsvTokens = (text, columnLabels) => {
+    const cleaned = String(text || "").replace(/^\uFEFF/, "");
+    const rows = parseCsv(cleaned);
+    if (rows.length === 0) return [];
+    const { map: headerMap, hasHeader } = buildHeaderMap(
+      rows[0],
+      columnLabels
+    );
+    const startIndex = hasHeader ? 1 : 0;
+    const tokens = [];
+    for (let i = startIndex; i < rows.length; i += 1) {
+      const row = rows[i];
+      if (!row || row.length === 0) continue;
+      const token = { name: "", secret: "", url: "" };
+      if (hasHeader) {
+        row.forEach((value, idx) => {
+          const key = headerMap[idx];
+          if (!key || key === "otp") return;
+          token[key] = value;
+        });
+      } else {
+        token.name = row[0] || "";
+        token.secret = row[1] || "";
+        token.url = row[2] || "";
+      }
+      const hasAnyValue =
+        String(token.name || "").trim().length > 0 ||
+        String(token.secret || "").trim().length > 0 ||
+        String(token.url || "").trim().length > 0;
+      if (hasAnyValue) tokens.push(token);
+    }
+    return tokens;
+  };
+
+  const parseJsonTokens = (text) => {
+    const data = JSON.parse(text);
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray(data.tokens)) return data.tokens;
+    return [];
+  };
+
+  const refreshTokensUI = async () => {
+    if (!tokensContainer || !addTokenToDOM) return;
+    const { passwordCheckbox, tokenOrder } = await storageLocalGet([
+      "passwordCheckbox",
+      "tokenOrder",
+    ]);
+    let tokensToRender = [];
+    if (passwordCheckbox) {
+      const key = getCachedEncryptionKey();
+      if (!key) return;
+      tokensToRender = await decryptTokens(key);
+    } else {
+      const { tokens } = await storageLocalGet(["tokens"]);
+      tokensToRender = Array.isArray(tokens) ? tokens : [];
+    }
+    const ordered = reorderTokensByOrderArray(
+      tokensToRender,
+      tokenOrder || []
+    );
+    while (tokensContainer.firstChild) {
+      tokensContainer.removeChild(tokensContainer.firstChild);
+    }
+    ordered.forEach((tokenObj) => {
+      addTokenToDOM(tokenObj.name, tokenObj.secret, tokenObj.url, tokenObj.otp);
+    });
+  };
+
+  const reorderTokensByOrderArray = (tokens, order) => {
+    if (!Array.isArray(tokens)) return [];
+    const list = tokens.slice();
+    if (!Array.isArray(order) || order.length === 0) {
+      return list.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    const indexMap = new Map(order.map((n, i) => [n, i]));
+    const inOrder = [];
+    const rest = [];
+    for (const tkn of list) {
+      if (indexMap.has(tkn.name)) inOrder.push(tkn);
+      else rest.push(tkn);
+    }
+    inOrder.sort((a, b) => indexMap.get(a.name) - indexMap.get(b.name));
+    rest.sort((a, b) => a.name.localeCompare(b.name));
+    return inOrder.concat(rest);
+  };
+
+    const applyBulkAdd = async (incomingTokens, statusEl, renderStatus) => {
+    const { tokens = [], passwordCheckbox, syncEnabled } = await storageLocalGet(
+      ["tokens", "passwordCheckbox", "syncEnabled"]
+    );
+    const syncOn = syncCheckbox ? syncCheckbox.checked : !!syncEnabled;
+
+    let decryptedTokens = Array.isArray(tokens) ? tokens : [];
+    let key = null;
+    if (passwordCheckbox) {
+      key = getCachedEncryptionKey();
+      if (!key) {
+        const error = new Error("locked");
+        error.code = "PASSWORD_LOCKED";
+        throw error;
+      }
+      decryptedTokens = await decryptTokens(key);
+    }
+
+    const existingNames = new Set(
+      decryptedTokens.map((tkn) => String(tkn.name || "").trim())
+    );
+    const existingSecrets = new Set(
+      decryptedTokens.map((tkn) => normalizeSecret(tkn.secret || ""))
+    );
+
+    let added = 0;
+    let skipped = 0;
+    let invalid = 0;
+    const newStoredTokens = [];
+
+      for (const rawToken of incomingTokens) {
+        const name = String(rawToken?.name || "").trim();
+        const rawSecret = String(rawToken?.secret || "").trim();
+        const normalized = normalizeSecret(rawSecret);
+        const url = String(rawToken?.url || "").trim();
+        if (!name || !normalized || !isValidBase32(normalized)) {
+          invalid += 1;
+          continue;
+        }
+      if (existingNames.has(name) || existingSecrets.has(normalized)) {
+        skipped += 1;
+        continue;
+      }
+      const otp = generateToken(normalized);
+      if (!otp) {
+        invalid += 1;
+        continue;
+      }
+
+      let secretForStore = normalized;
+      if (passwordCheckbox && key) {
+        const { payload } = await encryptSecret(normalized, key);
+        secretForStore = payload;
+      }
+
+      newStoredTokens.push({
+        name,
+        secret: secretForStore,
+        url,
+        otp,
+      });
+      existingNames.add(name);
+      existingSecrets.add(normalized);
+      added += 1;
+    }
+
+    const details = t("bulk_add_details", [
+      String(added),
+      String(skipped),
+      String(invalid),
+    ]);
+    if (added === 0) {
+      renderStatus({
+      title: t("bulk_add_no_valid"),
+        details,
+        color: "#d93025",
+      });
+      return;
+    }
+
+    const updatedTokens = [...tokens, ...newStoredTokens];
+    await new Promise((resolve) =>
+      chrome.storage.local.set({ tokens: updatedTokens }, () => resolve())
+    );
+    if (syncOn) {
+      try {
+        chrome.storage.sync.set({ tokens: updatedTokens }, () => {});
+      } catch (_) {}
+    }
+    await refreshTokensUI();
+
+    const isPartial = skipped > 0 || invalid > 0;
+    renderStatus({
+      title: isPartial ? t("bulk_add_partial") : t("bulk_add_success"),
+      details,
+      color: isPartial ? "#b35a00" : "#1b7f3a",
+    });
+  };
+
+  const onClick = () => {
+    const {
+      container: popupContainer,
+      content: popupContent,
+      close,
+    } = openModal({
+      contentClass: "popup-content",
+      onClose: () => {
+        try {
+          document.body.classList.remove("modal-active");
+        } catch (_) {}
+      },
+    });
+    try {
+      document.body.classList.add("modal-active");
+    } catch (_) {}
+
+    const { header, xIcon } = buildHeader({
+      title: t("bulk_add_title"),
+    });
+    popupContent.appendChild(header);
+
+    const btns = document.createElement("div");
+    btns.className = "export-buttons";
+
+    const csvBtn = document.createElement("button");
+    csvBtn.className = "wide-button";
+    csvBtn.textContent = t("bulk_add_csv_label");
+    btns.appendChild(csvBtn);
+
+    const jsonBtn = document.createElement("button");
+    jsonBtn.className = "wide-button";
+    jsonBtn.textContent = t("bulk_add_json_label");
+    btns.appendChild(jsonBtn);
+
+    popupContent.appendChild(btns);
+
+    const status = document.createElement("div");
+    status.className = "export-error";
+    status.style.display = "none";
+    popupContent.appendChild(status);
+
+    const csvInput = document.createElement("input");
+    csvInput.type = "file";
+    csvInput.accept = ".csv,text/csv";
+    csvInput.style.display = "none";
+    popupContent.appendChild(csvInput);
+
+    const jsonInput = document.createElement("input");
+    jsonInput.type = "file";
+    jsonInput.accept = ".json,application/json";
+    jsonInput.style.display = "none";
+    popupContent.appendChild(jsonInput);
+
+    const columnLabels = {
+      name: t("export_column_name"),
+      secret: t("export_column_secret"),
+      url: t("export_column_url"),
+    };
+
+    const renderStatus = ({ title, details, color }) => {
+      status.textContent = "";
+      const titleEl = document.createElement("div");
+      titleEl.textContent = title;
+      titleEl.style.fontSize = "14px";
+      titleEl.style.fontWeight = "600";
+      const detailsEl = document.createElement("div");
+      detailsEl.textContent = details;
+      detailsEl.style.fontSize = "12px";
+      detailsEl.style.marginTop = "4px";
+      status.appendChild(titleEl);
+      status.appendChild(detailsEl);
+      status.style.display = "block";
+      status.style.color = color;
+    };
+
+    const handleFileError = (message) => {
+      renderStatus({
+        title: t("bulk_add_failed"),
+        details: message,
+        color: "#d93025",
+      });
+    };
+
+    csvBtn.addEventListener("click", () => csvInput.click());
+    jsonBtn.addEventListener("click", () => jsonInput.click());
+
+    csvInput.addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        status.style.display = "none";
+        const text = await file.text();
+        const tokens = parseCsvTokens(text, columnLabels);
+        await applyBulkAdd(tokens, status, renderStatus);
+      } catch (error) {
+        if (error && error.code === "PASSWORD_LOCKED") {
+          handleFileError(chrome.i18n.getMessage("main_enter_password_message"));
+        } else {
+          handleFileError(t("bulk_add_invalid_file"));
+        }
+      } finally {
+        e.target.value = "";
+      }
+    });
+
+    jsonInput.addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        status.style.display = "none";
+        const text = await file.text();
+        const tokens = parseJsonTokens(text);
+        await applyBulkAdd(tokens, status, renderStatus);
+      } catch (error) {
+        if (error && error.code === "PASSWORD_LOCKED") {
+          handleFileError(chrome.i18n.getMessage("main_enter_password_message"));
+        } else {
+          handleFileError(t("bulk_add_invalid_file"));
+        }
+      } finally {
+        e.target.value = "";
+      }
+    });
+
+    if (xIcon) xIcon.addEventListener("click", close);
+  };
+
+  bulkBtn.addEventListener("click", onClick);
 }
 
 export function initThemeControls({

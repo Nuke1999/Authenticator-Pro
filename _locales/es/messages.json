@@ -1,266 +1,100 @@
-{
-  "active_tokens": {
-    "message": "Tokens Activos:"
-  },
-  "add_token": {
-    "message": "Agregar Token"
-  },
-  "add_qr_code_via": {
-    "message": "Agregar Código QR Vía:"
-  },
-  "advanced_add": {
-    "message": "Adición Avanzada"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Botón de Adición Avanzada"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Permite agregar secretos mediante código QR (webcam, archivo o enlace)."
-  },
-  "are_you_sure_message": {
-    "message": "¿Estás seguro? Esta acción es permanente."
-  },
-  "autofill_checkbox_label": {
-    "message": "Autocompletar"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Llena automáticamente el campo OTP usando la URL de autocompletar."
-  },
-  "autofill_url": {
-    "message": "URL de Autocompletar:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "URL de Autocompletar: (No habilitado)"
-  },
-  "camera_permission_button": {
-    "message": "Botón de Permiso de Cámara"
-  },
-  "camera_permission_message_1": {
-    "message": "*El botón se hace clic automáticamente al cargar la página*"
-  },
-  "camera_permission_message_2": {
-    "message": "El botón de la webcam funcionará después de permitir acceso"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Copiar al Portapapeles"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Permite copiar el OTP al portapapeles al hacer clic en el token."
-  },
-  "close": {
-    "message": "Cerrar"
-  },
-  "confirm_password": {
-    "message": "Confirmar Contraseña:"
-  },
-  "copied": {
-    "message": "¡Copiado!"
-  },
-  "currently_saved": {
-    "message": "Guardado Actualmente:"
-  },
-  "dark_theme": {
-    "message": "Tema Oscuro"
-  },
-  "delete": {
-    "message": "Eliminar"
-  },
-  "disable_password_protection": {
-    "message": "Desactivar Protección con Contraseña"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Habilitar Copiado en Configuración"
-  },
-  "enable_password_protection": {
-    "message": "Activar Protección con Contraseña"
-  },
-  "enter_name": {
-    "message": "Ingrese Nombre:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Por favor ingrese nombre y secreto."
-  },
-  "enter_password": {
-    "message": "Ingrese Contraseña:"
-  },
-  "enter_secret": {
-    "message": "Ingrese Secreto:"
-  },
-  "enter_url": {
-    "message": "Ingrese URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro genera una Contraseña de un Solo Uso (OTP) cada 30 segundos basada en un secreto proporcionado."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Ocultar Agregar Token"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Oculta el formulario de agregar token; permite ver mejor los tokens guardados."
-  },
-  "image": {
-    "message": "Imagen"
-  },
-  "image_url": {
-    "message": "URL de Imagen:"
-  },
-  "incorrect_password_message": {
-    "message": "Contraseña Incorrecta"
-  },
-  "incorrect_url_message": {
-    "message": "URL incorrecta o no contiene un código QR."
-  },
-  "invalid_secret_message": {
-    "message": "Secreto inválido. Ingrese una cadena en Base32."
-  },
-  "light_theme": {
-    "message": "Tema Claro"
-  },
-  "main_enter_password_message": {
-    "message": "Ingrese Contraseña para Desbloquear"
-  },
-  "name_already_exists_message": {
-    "message": "Ya existe un token con este nombre."
-  },
-  "name_too_long_message": {
-    "message": "Nombre demasiado largo. Use uno más corto."
-  },
-  "online_time_checkbox_label": {
-    "message": "Sincronización en Línea"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Sincroniza con la hora en línea; de lo contrario usa la hora local."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Protección con Contraseña"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Para habilitar, desactiva Sincronización en Chrome."
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Protege los secretos guardados con una contraseña."
-  },
-  "password_protection_setup": {
-    "message": "Configuración de Protección con Contraseña"
-  },
-  "passwords_dont_match": {
-    "message": "Las Contraseñas No Coinciden"
-  },
-  "password_warning_message": {
-    "message": "ADVERTENCIA: Si se olvida, no se podrá recuperar."
-  },
-  "permissions": {
-    "message": "Permisos"
-  },
-  "permissions_page_header": {
-    "message": "Página de Permisos de Authenticator Pro"
-  },
-  "popup_mode_label": {
-    "message": "Modo Popup"
-  },
-  "popup_mode_tooltip": {
-    "message": "Abre Authenticator Pro en una ventana aparte."
-  },
-  "qr_found_message": {
-    "message": "¡Código QR encontrado!"
-  },
-  "qr_not_found_message": {
-    "message": "Código QR no encontrado. Prueba otra imagen."
-  },
-  "remove_password": {
-    "message": "Quitar Contraseña"
-  },
-  "save_url": {
-    "message": "Guardar URL"
-  },
-  "scanning": {
-    "message": "Escaneando..."
-  },
-  "secret": {
-    "message": "Secreto:"
-  },
-  "secret_already_added_message": {
-    "message": "Este secreto ya fue agregado."
-  },
-  "settings": {
-    "message": "Configuración"
-  },
-  "submit": {
-    "message": "Enviar"
-  },
-  "sync_checkbox_label": {
-    "message": "Sincronizar en Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "Para habilitar, desactiva Protección con Contraseña."
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Sincroniza tokens en dispositivos Chrome conectados."
-  },
-  "themes": {
-    "message": "Temas"
-  },
-  "token_settings": {
-    "message": "Configuración de Tokens"
-  },
-  "webcam": {
-    "message": "Webcam"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+﻿{
+    "active_tokens": { "message": "Tokens Activos:" },
+    "add_token": { "message": "Añadir Token" },
+    "add_qr_code_via": { "message": "Añadir código QR vía:" },
+    "advanced_add": { "message": "Adición Avanzada" },
+    "advanced_add_checkbox_label": { "message": "Botón de Adición Avanzada" },
+    "advanced_add_checkbox_tooltip": { "message": "Permite a los usuarios añadir secretos mediante código QR (webcam, archivo o enlace)." },
+    "are_you_sure_message": { "message": "¿Estás seguro? Esta acción es permanente." },
+    "autofill_checkbox_label": { "message": "Autocompletar" },
+    "autofill_checkbox_tooltip": { "message": "Rellena automáticamente el campo OTP utilizando la URL de autocompletado para cada token." },
+    "autofill_url": { "message": "URL de autocompletado:" },
+    "autofill_url_not_enabled": { "message": "URL de autocompletado: (No habilitado)" },
+    "camera_permission_button": { "message": "Botón de Permiso de Cámara" },
+    "camera_permission_message_1": { "message": "*El botón hace clic automáticamente al cargar la página*" },
+    "camera_permission_message_2": { "message": "El botón de la webcam funcionará después de permitir el acceso a la cámara" },
+    "clipboard_copying_checkbox_label": { "message": "Copia al Portapapeles" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Permite copiar el OTP al portapapeles al hacer clic en un cuadro de token." },
+    "close": { "message": "Cerrar" },
+    "confirm_password": { "message": "Confirmar Contraseña:" },
+    "copied": { "message": "¡Copiado!" },
+    "currently_saved": { "message": "Guardados Actualmente: " },
+    "dark_theme": { "message": "Tema Oscuro" },
+    "delete": { "message": "Eliminar" },
+    "disable_password_protection": { "message": "Desactivar Protección por Contraseña" },
+    "enable_clipboard_copy_message": { "message": "Activa la copia al portapapeles en la configuración" },
+    "enable_password_protection": { "message": "Activar Protección por Contraseña" },
+    "enter_name": { "message": "Introducir Nombre:" },
+    "enter_name_and_secret_message": { "message": "Por favor, introduce tanto el nombre como el secreto." },
+    "enter_password": { "message": "Introducir Contraseña:" },
+    "enter_secret": { "message": "Introducir Secreto:" },
+    "enter_url": { "message": "Introducir URL" },
+    "extension_description": { "message": "Authenticator Pro es una potente herramienta que genera una contraseña de un solo uso (OTP) cada 30 segundos basada en un secreto proporcionado." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Ocultar Añadidor de Tokens" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Oculta el formulario para añadir tokens; proporciona una mejor visibilidad de los tokens guardados." },
+    "image": { "message": "Imagen" },
+    "image_url": { "message": "URL de la Imagen:" },
+    "incorrect_password_message": { "message": "Contraseña Incorrecta" },
+    "incorrect_url_message": { "message": "URL incorrecta, o la URL no contenía un código QR." },
+    "invalid_secret_message": { "message": "Secreto no válido. Por favor, introduce una cadena codificada en Base32." },
+    "light_theme": { "message": "Tema Claro" },
+    "main_enter_password_message": { "message": "Introduce la Contraseña para Desbloquear" },
+    "name_already_exists_message": { "message": "Ya existe un token con este nombre." },
+    "name_too_long_message": { "message": "Nombre demasiado largo, por favor introduce un nombre más corto." },
+    "online_time_checkbox_label": { "message": "Sincronización de Hora en Línea" },
+    "online_time_checkbox_tooltip": { "message": "Se sincroniza con la hora en línea para mayor precisión; de lo contrario, utiliza la hora local del dispositivo." },
+    "password_protected_checkbox_label": { "message": "Protección por Contraseña" },
+    "password_protected_checkbox_message": { "message": "Para activar, desactiva la Sincronización en Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "Cifra y protege los secretos guardados con una contraseña." },
+    "password_protection_setup": { "message": "Configuración de Protección por Contraseña" },
+    "passwords_dont_match": { "message": "Las contraseñas no coinciden" },
+    "password_warning_message": { "message": "ADVERTENCIA: Si se olvida la contraseña, no se podrá recuperar." },
+    "permissions": { "message": "Permisos" },
+    "permissions_page_header": { "message": "Página de Permisos de Authenticator Pro" },
+    "popup_mode_label": { "message": "Modo Ventana Emergente" },
+    "popup_mode_tooltip": { "message": "Abre Authenticator Pro en una ventana separada." },
+    "qr_found_message": { "message": "¡Código QR encontrado!" },
+    "qr_not_found_message": { "message": "No se encontró ningún código QR. Prueba con otra imagen." },
+    "remove_password": { "message": "Eliminar Contraseña" },
+    "save_url": { "message": "Guardar URL" },
+    "scanning": { "message": "Escaneando..." },
+    "secret": { "message": " Secreto:" },
+    "secret_already_added_message": { "message": "Ya has añadido este secreto." },
+    "settings": { "message": "Configuración" },
+    "submit": { "message": "Enviar" },
+    "sync_checkbox_label": { "message": "Sincronización en Chrome" },
+    "sync_checkbox_message": { "message": "Para activar, desactiva la Protección por Contraseña" },
+    "sync_checkbox_tooltip": { "message": "Sincroniza tokens en dispositivos Chrome con sesión iniciada; de lo contrario, el estado es solo local." },
+    "themes": { "message": "Temas" },
+    "token_settings": { "message": "Configuración de Tokens" },
+    "webcam": { "message": "Webcam" },
+    "clear_saved_url": { "message": "Borrar URL guardada" },
+    "export": { "message": "Exportar" },
+    "export_data": { "message": "Exportar Datos" },
+    "ocean_theme": { "message": "Tema Océano" },
+    "forest_theme": { "message": "Tema Bosque" },
+    "scale_heading": { "message": "Escala" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Opciones de Exportación" },
+    "export_csv_label": { "message": "Exportar CSV" },
+    "export_pdf_label": { "message": "Exportar PDF" },
+    "export_doc_label": { "message": "Exportar Word (.doc)" },
+    "export_column_name": { "message": "Nombre" },
+    "export_column_secret": { "message": "Secreto" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-exportacion" },
+    "export_pdf_prompt": { "message": "Guardar PDF como:" },
+    "export_document_title": { "message": "Exportación de Authenticator" },
+    "bulk_add_label": { "message": "Adición Masiva" },
+    "bulk_add_title": { "message": "Adición Masiva" },
+    "bulk_add_csv_label": { "message": "Archivo CSV" },
+    "bulk_add_json_label": { "message": "Archivo JSON" },
+    "bulk_add_failed": { "message": "Error en la adición masiva." },
+    "bulk_add_invalid_file": { "message": "Formato de archivo no válido." },
+    "bulk_add_no_valid": { "message": "No se encontraron tokens válidos." },
+    "bulk_add_success": { "message": "Éxito." },
+    "bulk_add_partial": { "message": "Adición masiva parcialmente exitosa." },
+    "bulk_add_details": { "message": "Añadidos: $1 | Omitidos: $2 | No válidos: $3" }
 }

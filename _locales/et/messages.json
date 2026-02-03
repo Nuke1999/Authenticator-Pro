@@ -1,266 +1,296 @@
-{
-  "active_tokens": {
-    "message": "Aktiivsed Tokenid:"
-  },
-  "add_token": {
-    "message": "Lisa Token"
-  },
-  "add_qr_code_via": {
-    "message": "Lisa QR-kood kaudu:"
-  },
-  "advanced_add": {
-    "message": "Laiendatud lisamine"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Laiendatud lisamisnupp"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Võimaldab lisada saladusi QR-koodi kaudu (veebikaamera, fail või link)."
-  },
-  "are_you_sure_message": {
-    "message": "Oled kindel? See toiming on jääv."
-  },
-  "autofill_checkbox_label": {
-    "message": "Automaattäitmine"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Täidab OTP välja automaatselt iga tokeni Autofill URL-i kasutades."
-  },
-  "autofill_url": {
-    "message": "Automaattäitmise URL:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "Automaattäitmise URL: (Pole lubatud)"
-  },
-  "camera_permission_button": {
-    "message": "Kaamera loa nupp"
-  },
-  "camera_permission_message_1": {
-    "message": "*Nupp klikib lehe laadimisel automaatselt*"
-  },
-  "camera_permission_message_2": {
-    "message": "Veebikaamera nupp töötab pärast kaamera juurdepääsu lubamist"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Lõikepuhvrisse kopeerimine"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Võimaldab OTP kopeerimist lõikepuhvrisse, kui klikitakse tokeni lahtrile."
-  },
-  "close": {
-    "message": "Sulge"
-  },
-  "confirm_password": {
-    "message": "Kinnita parool:"
-  },
-  "copied": {
-    "message": "Kopeeritud!"
-  },
-  "currently_saved": {
-    "message": "Praegu salvestatud: "
-  },
-  "dark_theme": {
-    "message": "Tume teema"
-  },
-  "delete": {
-    "message": "Kustuta"
-  },
-  "disable_password_protection": {
-    "message": "Keela paroolikaitse"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Luba lõikepuhvrisse kopeerimine seadetes"
-  },
-  "enable_password_protection": {
-    "message": "Luba paroolikaitse"
-  },
-  "enter_name": {
-    "message": "Sisesta nimi:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Palun sisesta nii nimi kui ka saladus."
-  },
-  "enter_password": {
-    "message": "Sisesta parool:"
-  },
-  "enter_secret": {
-    "message": "Sisesta saladus:"
-  },
-  "enter_url": {
-    "message": "Sisesta URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro on võimas tööriist, mis genereerib iga 30 sekundi järel ühekordse parooli (OTP) antud saladuse põhjal."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Peida tokeni lisaja"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Peidab tokeni lisamise vormi; lihtsustab salvestatud tokenite nähtavust."
-  },
-  "image": {
-    "message": "Pilt"
-  },
-  "image_url": {
-    "message": "Pildi URL:"
-  },
-  "incorrect_password_message": {
-    "message": "Vale parool"
-  },
-  "incorrect_url_message": {
-    "message": "Vale URL või URL ei sisaldanud QR-koodi."
-  },
-  "invalid_secret_message": {
-    "message": "Kehtetu saladus. Palun sisesta Base32 kodeeritud string."
-  },
-  "light_theme": {
-    "message": "Hele teema"
-  },
-  "main_enter_password_message": {
-    "message": "Sisesta parool avamiseks"
-  },
-  "name_already_exists_message": {
-    "message": "Selle nimega token juba eksisteerib."
-  },
-  "name_too_long_message": {
-    "message": "Nimi on liiga pikk, sisesta lühem nimi."
-  },
-  "online_time_checkbox_label": {
-    "message": "Veebi aja sünkroonimine"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Sünkroonib täpseks ajaks veebis; muidu kasutab seadme kohalikku aega."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Paroolikaitse"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Sisselülitamiseks lülitage välja Sünkroonimine Chrome’i kaudu"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Krüpteerib ja kaitseb salvestatud saladusi parooliga."
-  },
-  "password_protection_setup": {
-    "message": "Paroolikaitse seadistamine"
-  },
-  "passwords_dont_match": {
-    "message": "Paroolid ei ühti"
-  },
-  "password_warning_message": {
-    "message": "HOIATUS: Kui parool unustatakse, ei saa seda taastada."
-  },
-  "permissions": {
-    "message": "Õigused"
-  },
-  "permissions_page_header": {
-    "message": "Authenticator Pro õiguste leht"
-  },
-  "popup_mode_label": {
-    "message": "Hüpikakna režiim"
-  },
-  "popup_mode_tooltip": {
-    "message": "Avab Authenticator Pro eraldi aknas."
-  },
-  "qr_found_message": {
-    "message": "QR-kood leitud!"
-  },
-  "qr_not_found_message": {
-    "message": "QR-koodi ei leitud. Proovi teist pilti."
-  },
-  "remove_password": {
-    "message": "Eemalda parool"
-  },
-  "save_url": {
-    "message": "Salvesta URL"
-  },
-  "scanning": {
-    "message": "Skaneerimine..."
-  },
-  "secret": {
-    "message": "Saladus:"
-  },
-  "secret_already_added_message": {
-    "message": "See saladus on juba lisatud."
-  },
-  "settings": {
-    "message": "Seaded"
-  },
-  "submit": {
-    "message": "Esita"
-  },
-  "sync_checkbox_label": {
-    "message": "Sünkroonimine Chrome’i kaudu"
-  },
-  "sync_checkbox_message": {
-    "message": "Sisselülitamiseks lülitage välja Paroolikaitse"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Sünkroonib tokenid sisselogitud Chrome'i seadmetes; muidu on seisund ainult kohalik."
-  },
-  "themes": {
-    "message": "Teemad"
-  },
-  "token_settings": {
-    "message": "Tokeni seaded"
-  },
-  "webcam": {
-    "message": "Veebikaamera"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+﻿{
+    "active_tokens":  {
+                          "message":  "Aktiivsed Tokenid:"
+                      },
+    "add_token":  {
+                      "message":  "Lisa Token"
+                  },
+    "add_qr_code_via":  {
+                            "message":  "Lisa QR-kood kaudu:"
+                        },
+    "advanced_add":  {
+                         "message":  "Laiendatud lisamine"
+                     },
+    "advanced_add_checkbox_label":  {
+                                        "message":  "Laiendatud lisamisnupp"
+                                    },
+    "advanced_add_checkbox_tooltip":  {
+                                          "message":  "VÃµimaldab lisada saladusi QR-koodi kaudu (veebikaamera, fail vÃµi link)."
+                                      },
+    "are_you_sure_message":  {
+                                 "message":  "Oled kindel? See toiming on jÃ¤Ã¤v."
+                             },
+    "autofill_checkbox_label":  {
+                                    "message":  "AutomaattÃ¤itmine"
+                                },
+    "autofill_checkbox_tooltip":  {
+                                      "message":  "TÃ¤idab OTP vÃ¤lja automaatselt iga tokeni Autofill URL-i kasutades."
+                                  },
+    "autofill_url":  {
+                         "message":  "AutomaattÃ¤itmise URL:"
+                     },
+    "autofill_url_not_enabled":  {
+                                     "message":  "AutomaattÃ¤itmise URL: (Pole lubatud)"
+                                 },
+    "camera_permission_button":  {
+                                     "message":  "Kaamera loa nupp"
+                                 },
+    "camera_permission_message_1":  {
+                                        "message":  "*Nupp klikib lehe laadimisel automaatselt*"
+                                    },
+    "camera_permission_message_2":  {
+                                        "message":  "Veebikaamera nupp tÃ¶Ã¶tab pÃ¤rast kaamera juurdepÃ¤Ã¤su lubamist"
+                                    },
+    "clipboard_copying_checkbox_label":  {
+                                             "message":  "LÃµikepuhvrisse kopeerimine"
+                                         },
+    "clipboard_copying_checkbox_tooltip":  {
+                                               "message":  "VÃµimaldab OTP kopeerimist lÃµikepuhvrisse, kui klikitakse tokeni lahtrile."
+                                           },
+    "close":  {
+                  "message":  "Sulge"
+              },
+    "confirm_password":  {
+                             "message":  "Kinnita parool:"
+                         },
+    "copied":  {
+                   "message":  "Kopeeritud!"
+               },
+    "currently_saved":  {
+                            "message":  "Praegu salvestatud: "
+                        },
+    "dark_theme":  {
+                       "message":  "Tume teema"
+                   },
+    "delete":  {
+                   "message":  "Kustuta"
+               },
+    "disable_password_protection":  {
+                                        "message":  "Keela paroolikaitse"
+                                    },
+    "enable_clipboard_copy_message":  {
+                                          "message":  "Luba lÃµikepuhvrisse kopeerimine seadetes"
+                                      },
+    "enable_password_protection":  {
+                                       "message":  "Luba paroolikaitse"
+                                   },
+    "enter_name":  {
+                       "message":  "Sisesta nimi:"
+                   },
+    "enter_name_and_secret_message":  {
+                                          "message":  "Palun sisesta nii nimi kui ka saladus."
+                                      },
+    "enter_password":  {
+                           "message":  "Sisesta parool:"
+                       },
+    "enter_secret":  {
+                         "message":  "Sisesta saladus:"
+                     },
+    "enter_url":  {
+                      "message":  "Sisesta URL"
+                  },
+    "extension_description":  {
+                                  "message":  "Authenticator Pro on vÃµimas tÃ¶Ã¶riist, mis genereerib iga 30 sekundi jÃ¤rel Ã¼hekordse parooli (OTP) antud saladuse pÃµhjal."
+                              },
+    "extension_name":  {
+                           "message":  "Authenticator Pro"
+                       },
+    "hide_token_adder_checkbox_label":  {
+                                            "message":  "Peida tokeni lisaja"
+                                        },
+    "hide_token_adder_checkbox_tooltip":  {
+                                              "message":  "Peidab tokeni lisamise vormi; lihtsustab salvestatud tokenite nÃ¤htavust."
+                                          },
+    "image":  {
+                  "message":  "Pilt"
+              },
+    "image_url":  {
+                      "message":  "Pildi URL:"
+                  },
+    "incorrect_password_message":  {
+                                       "message":  "Vale parool"
+                                   },
+    "incorrect_url_message":  {
+                                  "message":  "Vale URL vÃµi URL ei sisaldanud QR-koodi."
+                              },
+    "invalid_secret_message":  {
+                                   "message":  "Kehtetu saladus. Palun sisesta Base32 kodeeritud string."
+                               },
+    "light_theme":  {
+                        "message":  "Hele teema"
+                    },
+    "main_enter_password_message":  {
+                                        "message":  "Sisesta parool avamiseks"
+                                    },
+    "name_already_exists_message":  {
+                                        "message":  "Selle nimega token juba eksisteerib."
+                                    },
+    "name_too_long_message":  {
+                                  "message":  "Nimi on liiga pikk, sisesta lÃ¼hem nimi."
+                              },
+    "online_time_checkbox_label":  {
+                                       "message":  "Veebi aja sÃ¼nkroonimine"
+                                   },
+    "online_time_checkbox_tooltip":  {
+                                         "message":  "SÃ¼nkroonib tÃ¤pseks ajaks veebis; muidu kasutab seadme kohalikku aega."
+                                     },
+    "password_protected_checkbox_label":  {
+                                              "message":  "Paroolikaitse"
+                                          },
+    "password_protected_checkbox_message":  {
+                                                "message":  "SisselÃ¼litamiseks lÃ¼litage vÃ¤lja SÃ¼nkroonimine Chromeâ€™i kaudu"
+                                            },
+    "password_protected_checkbox_tooltip":  {
+                                                "message":  "KrÃ¼pteerib ja kaitseb salvestatud saladusi parooliga."
+                                            },
+    "password_protection_setup":  {
+                                      "message":  "Paroolikaitse seadistamine"
+                                  },
+    "passwords_dont_match":  {
+                                 "message":  "Paroolid ei Ã¼hti"
+                             },
+    "password_warning_message":  {
+                                     "message":  "HOIATUS: Kui parool unustatakse, ei saa seda taastada."
+                                 },
+    "permissions":  {
+                        "message":  "Ã•igused"
+                    },
+    "permissions_page_header":  {
+                                    "message":  "Authenticator Pro Ãµiguste leht"
+                                },
+    "popup_mode_label":  {
+                             "message":  "HÃ¼pikakna reÅ¾iim"
+                         },
+    "popup_mode_tooltip":  {
+                               "message":  "Avab Authenticator Pro eraldi aknas."
+                           },
+    "qr_found_message":  {
+                             "message":  "QR-kood leitud!"
+                         },
+    "qr_not_found_message":  {
+                                 "message":  "QR-koodi ei leitud. Proovi teist pilti."
+                             },
+    "remove_password":  {
+                            "message":  "Eemalda parool"
+                        },
+    "save_url":  {
+                     "message":  "Salvesta URL"
+                 },
+    "scanning":  {
+                     "message":  "Skaneerimine..."
+                 },
+    "secret":  {
+                   "message":  "Saladus:"
+               },
+    "secret_already_added_message":  {
+                                         "message":  "See saladus on juba lisatud."
+                                     },
+    "settings":  {
+                     "message":  "Seaded"
+                 },
+    "submit":  {
+                   "message":  "Esita"
+               },
+    "sync_checkbox_label":  {
+                                "message":  "SÃ¼nkroonimine Chromeâ€™i kaudu"
+                            },
+    "sync_checkbox_message":  {
+                                  "message":  "SisselÃ¼litamiseks lÃ¼litage vÃ¤lja Paroolikaitse"
+                              },
+    "sync_checkbox_tooltip":  {
+                                  "message":  "SÃ¼nkroonib tokenid sisselogitud Chrome\u0027i seadmetes; muidu on seisund ainult kohalik."
+                              },
+    "themes":  {
+                   "message":  "Teemad"
+               },
+    "token_settings":  {
+                           "message":  "Tokeni seaded"
+                       },
+    "webcam":  {
+                   "message":  "Veebikaamera"
+               },
+    "clear_saved_url":  {
+                            "message":  "Clear saved URL"
+                        },
+    "export":  {
+                   "message":  "Export"
+               },
+    "export_data":  {
+                        "message":  "Export Data"
+                    },
+    "ocean_theme":  {
+                        "message":  "Ocean Theme"
+                    },
+    "forest_theme":  {
+                         "message":  "Forest Theme"
+                     },
+    "scale_heading":  {
+                          "message":  "Scale"
+                      },
+    "scale_percentage":  {
+                             "message":  "$1%"
+                         },
+    "export_options_title":  {
+                                 "message":  "Export Options"
+                             },
+    "export_csv_label":  {
+                             "message":  "Export CSV"
+                         },
+    "export_pdf_label":  {
+                             "message":  "Export PDF"
+                         },
+    "export_doc_label":  {
+                             "message":  "Export Word (.doc)"
+                         },
+    "export_column_name":  {
+                               "message":  "Name"
+                           },
+    "export_column_secret":  {
+                                 "message":  "Secret"
+                             },
+    "export_column_url":  {
+                              "message":  "URL"
+                          },
+    "export_column_otp":  {
+                              "message":  "OTP"
+                          },
+    "export_filename_prefix":  {
+                                   "message":  "authenticator-export"
+                               },
+    "export_pdf_prompt":  {
+                              "message":  "Save PDF as:"
+                          },
+    "export_document_title":  {
+                                  "message":  "Authenticator Export"
+                              },
+    "bulk_add_label":  {
+                           "message":  "Hulgilisamine"
+                       },
+    "bulk_add_title":  {
+                           "message":  "Hulgilisamine"
+                       },
+    "bulk_add_csv_label":  {
+                               "message":  "CSV-fail"
+                           },
+    "bulk_add_json_label":  {
+                                "message":  "JSON-fail"
+                            },
+    "bulk_add_failed":  {
+                            "message":  "Hulgilisamine ebaõnnestus."
+                        },
+    "bulk_add_invalid_file":  {
+                                  "message":  "Vigane failivorming."
+                              },
+    "bulk_add_no_valid":  {
+                              "message":  "Kehtivaid tokeneid ei leitud."
+                          },
+    "bulk_add_success":  {
+                             "message":  "Õnnestus."
+                         },
+    "bulk_add_partial":  {
+                             "message":  "Hulgilisamine oli osaliselt edukas."
+                         },
+    "bulk_add_details":  {
+                             "message":  "Lisatud: $1 | Vahele jäetud: $2 | Vigane: $3"
+                         }
 }

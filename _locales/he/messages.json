@@ -1,266 +1,100 @@
-{
-  "active_tokens": {
-    "message": "אסימונים פעילים:"
-  },
-  "add_token": {
-    "message": "הוסף אסימון"
-  },
-  "add_qr_code_via": {
-    "message": "הוסף קוד QR באמצעות:"
-  },
-  "advanced_add": {
-    "message": "הוספה מתקדמת"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "כפתור הוספה מתקדמת"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "מאפשר למשתמשים להוסיף סודות באמצעות קוד QR (מצלמה, קובץ או קישור)."
-  },
-  "are_you_sure_message": {
-    "message": "אתה בטוח? פעולה זו היא קבועה."
-  },
-  "autofill_checkbox_label": {
-    "message": "השלמה אוטומטית"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "ממלא באופן אוטומטי את שדה ה-OTP באמצעות כתובת ה-URL להשלמה אוטומטית עבור כל אסימון."
-  },
-  "autofill_url": {
-    "message": "כתובת ה-URL להשלמה אוטומטית:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "כתובת ה-URL להשלמה אוטומטית: (לא הופעלה)"
-  },
-  "camera_permission_button": {
-    "message": "כפתור הרשאת מצלמה"
-  },
-  "camera_permission_message_1": {
-    "message": "*הכפתור לוחץ אוטומטית בעת טעינת הדף*"
-  },
-  "camera_permission_message_2": {
-    "message": "כפתור המצלמה יעבוד לאחר שתאפשר גישה למצלמה"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "העתקת לוח"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "מאפשר העתקה של ה-OTP ללוח כאשר לוחצים על תיבת אסימון."
-  },
-  "close": {
-    "message": "סגור"
-  },
-  "confirm_password": {
-    "message": "אשר סיסמה:"
-  },
-  "copied": {
-    "message": "הועתק!"
-  },
-  "currently_saved": {
-    "message": "נשמר כרגע: "
-  },
-  "dark_theme": {
-    "message": "נושא כהה"
-  },
-  "delete": {
-    "message": "מחק"
-  },
-  "disable_password_protection": {
-    "message": "בטל הגנת סיסמה"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "אפשר העתקת לוח בהגדרות"
-  },
-  "enable_password_protection": {
-    "message": "אפשר הגנת סיסמה"
-  },
-  "enter_name": {
-    "message": "הזן שם:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "אנא הכנס גם את השם וגם את הסוד."
-  },
-  "enter_password": {
-    "message": "הזן סיסמה:"
-  },
-  "enter_secret": {
-    "message": "הזן סוד:"
-  },
-  "enter_url": {
-    "message": "הזן URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro היא כלי חזק שמייצר סיסמת שימוש חד פעמי (OTP) כל 30 שניות בהתבסס על סוד שניתן."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "הסתר את הוספת האסימונים"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "מסתיר את טופס הוספת האסימונים; מספק נראות קלה יותר של אסימונים שמורים."
-  },
-  "image": {
-    "message": "תמונה"
-  },
-  "image_url": {
-    "message": "כתובת URL של התמונה:"
-  },
-  "incorrect_password_message": {
-    "message": "סיסמה שגויה"
-  },
-  "incorrect_url_message": {
-    "message": "URL שגוי, או ש-URL לא הכיל קוד QR."
-  },
-  "invalid_secret_message": {
-    "message": "סוד לא חוקי. אנא הכנס מיתר מקודד ב-Base32."
-  },
-  "light_theme": {
-    "message": "נושא בהיר"
-  },
-  "main_enter_password_message": {
-    "message": "הזן סיסמה כדי לשחרר"
-  },
-  "name_already_exists_message": {
-    "message": "אסימון עם שם זה כבר קיים."
-  },
-  "name_too_long_message": {
-    "message": "שם ארוך מדי, אנא הכנס שם קצר יותר."
-  },
-  "online_time_checkbox_label": {
-    "message": "סנכרון זמן אונליין"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "מסנכרן עם הזמן אונליין לדיוק; אחרת משתמש בזמן המקומי של המכשיר."
-  },
-  "password_protected_checkbox_label": {
-    "message": "הגנת סיסמה"
-  },
-  "password_protected_checkbox_message": {
-    "message": "כדי לאפשר, בטל את הסנכרון בין Chrome"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "מגנה ומצפינה את הסודות השמורים עם סיסמה."
-  },
-  "password_protection_setup": {
-    "message": "הגדרת הגנת סיסמה"
-  },
-  "passwords_dont_match": {
-    "message": "הסיסמאות אינן תואמות"
-  },
-  "password_warning_message": {
-    "message": "אזהרה: אם הסיסמה נשכחת, לא ניתן לשחזר אותה."
-  },
-  "permissions": {
-    "message": "הרשאות"
-  },
-  "permissions_page_header": {
-    "message": "דף ההרשאות של Authenticator Pro"
-  },
-  "popup_mode_label": {
-    "message": "מצב חלון קופץ"
-  },
-  "popup_mode_tooltip": {
-    "message": "פותח את Authenticator Pro בחלון נפרד."
-  },
-  "qr_found_message": {
-    "message": "קוד QR נמצא!"
-  },
-  "qr_not_found_message": {
-    "message": "קוד QR לא נמצא. נסה תמונה אחרת."
-  },
-  "remove_password": {
-    "message": "הסר סיסמה"
-  },
-  "save_url": {
-    "message": "שמור URL"
-  },
-  "scanning": {
-    "message": "סורק..."
-  },
-  "secret": {
-    "message": " סוד:"
-  },
-  "secret_already_added_message": {
-    "message": "כבר הוספת סוד זה."
-  },
-  "settings": {
-    "message": "הגדרות"
-  },
-  "submit": {
-    "message": "שלח"
-  },
-  "sync_checkbox_label": {
-    "message": "סנכרן בין Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "כדי לאפשר, בטל את הגנת הסיסמה"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "מסנכרן אסימונים במכשירים המחוברים ל-Chrome; אחרת, המצב הוא מקומי בלבד."
-  },
-  "themes": {
-    "message": "נושאים"
-  },
-  "token_settings": {
-    "message": "הגדרות האסימונים"
-  },
-  "webcam": {
-    "message": "מצלמת רשת"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+﻿{
+    "active_tokens": { "message": "טוקנים פעילים:" },
+    "add_token": { "message": "הוסף טוקן" },
+    "add_qr_code_via": { "message": "הוסף קוד QR באמצעות:" },
+    "advanced_add": { "message": "הוספה מתקדמת" },
+    "advanced_add_checkbox_label": { "message": "כפתור הוספה מתקדמת" },
+    "advanced_add_checkbox_tooltip": { "message": "מאפשר למשתמשים להוסיף סודות באמצעות קוד QR (מצלמת אינטרנט, קובץ או קישור)." },
+    "are_you_sure_message": { "message": "האם אתה בטוח? פעולה זו היא קבועה." },
+    "autofill_checkbox_label": { "message": "מילוי אוטומטי" },
+    "autofill_checkbox_tooltip": { "message": "ממלא אוטומטית את שדה ה-OTP באמצעות כתובת ה-URL למילוי אוטומטי עבור כל טוקן." },
+    "autofill_url": { "message": "כתובת URL למילוי אוטומטי:" },
+    "autofill_url_not_enabled": { "message": "כתובת URL למילוי אוטומטי: (לא מופעל)" },
+    "camera_permission_button": { "message": "כפתור הרשאת מצלמה" },
+    "camera_permission_message_1": { "message": "*הכפתור נלחץ אוטומטית בעת טעינת הדף*" },
+    "camera_permission_message_2": { "message": "כפתור מצלמת האינטרנט יעבוד לאחר אישור גישה למצלמה" },
+    "clipboard_copying_checkbox_label": { "message": "העתקה ללוח" },
+    "clipboard_copying_checkbox_tooltip": { "message": "מאפשר העתקת ה-OTP ללוח בעת לחיצה על תיבת טוקן." },
+    "close": { "message": "סגור" },
+    "confirm_password": { "message": "אישור סיסמה:" },
+    "copied": { "message": "הועתק!" },
+    "currently_saved": { "message": "שמורים כעת: " },
+    "dark_theme": { "message": "ערכת נושא כהה" },
+    "delete": { "message": "מחק" },
+    "disable_password_protection": { "message": "השבת הגנת סיסמה" },
+    "enable_clipboard_copy_message": { "message": "הפעל העתקה ללוח בהגדרות" },
+    "enable_password_protection": { "message": "הפעל הגנת סיסמה" },
+    "enter_name": { "message": "הזן שם:" },
+    "enter_name_and_secret_message": { "message": "אנא הזן גם שם וגם סוד." },
+    "enter_password": { "message": "הזן סיסמה:" },
+    "enter_secret": { "message": "הזן סוד:" },
+    "enter_url": { "message": "הזן כתובת URL" },
+    "extension_description": { "message": "Authenticator Pro הוא כלי רב עוצמה המפיק סיסמה חד-פעמית (OTP) כל 30 שניות בהתבסס על סוד שסופק." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "הסתר מוסיף טוקנים" },
+    "hide_token_adder_checkbox_tooltip": { "message": "מסתיר את טופס הוספת הטוקנים; מאפשר נראות טובה יותר של טוקנים שמורים." },
+    "image": { "message": "תמונה" },
+    "image_url": { "message": "כתובת URL של התמונה:" },
+    "incorrect_password_message": { "message": "סיסמה שגויה" },
+    "incorrect_url_message": { "message": "כתובת URL שגויה, או שכתובת ה-URL לא הכילה קוד QR." },
+    "invalid_secret_message": { "message": "סוד לא חוקי. אנא הזן מחרוזת בקידוד Base32." },
+    "light_theme": { "message": "ערכת נושא בהירה" },
+    "main_enter_password_message": { "message": "הזן סיסמה לביטול הנעילה" },
+    "name_already_exists_message": { "message": "טוקן בשם זה כבר קיים." },
+    "name_too_long_message": { "message": "השם ארוך מדי, אנא הזן שם קצר יותר." },
+    "online_time_checkbox_label": { "message": "סנכרון זמן מקוון" },
+    "online_time_checkbox_tooltip": { "message": "מסתנכרן עם הזמן המקוון לצורך דיוק; אחרת משתמש בזמן המכשיר המקומי." },
+    "password_protected_checkbox_label": { "message": "הגנה באמצעות סיסמה" },
+    "password_protected_checkbox_message": { "message": "כדי להפעיל, כבה את הסנכרון ב-Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "מצפין ומגן על סודות שמורים באמצעות סיסמה." },
+    "password_protection_setup": { "message": "הגדרת הגנת סיסמה" },
+    "passwords_dont_match": { "message": "הסיסמאות אינן תואמות" },
+    "password_warning_message": { "message": "אזהרה: אם הסיסמה תישכח, לא ניתן יהיה לשחזר אותה." },
+    "permissions": { "message": "הרשאות" },
+    "permissions_page_header": { "message": "דף הרשאות Authenticator Pro" },
+    "popup_mode_label": { "message": "מצב חלון קופץ" },
+    "popup_mode_tooltip": { "message": "פותח את Authenticator Pro בחלון נפרד." },
+    "qr_found_message": { "message": "נמצא קוד QR!" },
+    "qr_not_found_message": { "message": "קוד QR לא נמצא. נסה תמונה אחרת." },
+    "remove_password": { "message": "הסר סיסמה" },
+    "save_url": { "message": "שמור כתובת URL" },
+    "scanning": { "message": "סורק..." },
+    "secret": { "message": " סוד:" },
+    "secret_already_added_message": { "message": "כבר הוספת את הסוד הזה." },
+    "settings": { "message": "הגדרות" },
+    "submit": { "message": "שלח" },
+    "sync_checkbox_label": { "message": "סנכרון ב-Chrome" },
+    "sync_checkbox_message": { "message": "כדי להפעיל, כבה את הגנת הסיסמה" },
+    "sync_checkbox_tooltip": { "message": "מסנכרן טוקנים במכשירי Chrome מחוברים; אחרת, המצב הוא מקומי בלבד." },
+    "themes": { "message": "ערכות נושא" },
+    "token_settings": { "message": "הגדרות טוקן" },
+    "webcam": { "message": "מצלמת אינטרנט" },
+    "clear_saved_url": { "message": "נקה כתובת URL שמורה" },
+    "export": { "message": "ייצוא" },
+    "export_data": { "message": "ייצוא נתונים" },
+    "ocean_theme": { "message": "ערכת נושא אוקיינוס" },
+    "forest_theme": { "message": "ערכת נושא יער" },
+    "scale_heading": { "message": "קנה מידה" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "אפשרויות ייצוא" },
+    "export_csv_label": { "message": "ייצא ל-CSV" },
+    "export_pdf_label": { "message": "ייצא ל-PDF" },
+    "export_doc_label": { "message": "ייצא ל-Word (.doc)" },
+    "export_column_name": { "message": "שם" },
+    "export_column_secret": { "message": "סוד" },
+    "export_column_url": { "message": "כתובת URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-export" },
+    "export_pdf_prompt": { "message": "שמור PDF בשם:" },
+    "export_document_title": { "message": "ייצוא Authenticator" },
+    "bulk_add_label": { "message": "הוספה בכמות גדולה" },
+    "bulk_add_title": { "message": "הוספה בכמות גדולה" },
+    "bulk_add_csv_label": { "message": "קובץ CSV" },
+    "bulk_add_json_label": { "message": "קובץ JSON" },
+    "bulk_add_failed": { "message": "הוספה בכמות גדולה נכשלה." },
+    "bulk_add_invalid_file": { "message": "פורמט קובץ לא חוקי." },
+    "bulk_add_no_valid": { "message": "לא נמצאו טוקנים חוקיים." },
+    "bulk_add_success": { "message": "הצלחה." },
+    "bulk_add_partial": { "message": "הוספה בכמות גדולה הצליחה באופן חלקי." },
+    "bulk_add_details": { "message": "נוספו: $1 | דולגו: $2 | לא חוקיים: $3" }
 }

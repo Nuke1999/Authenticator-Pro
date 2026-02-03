@@ -1,266 +1,100 @@
-{
-  "active_tokens": {
-    "message": "Ενεργά Διακριτικά:"
-  },
-  "add_token": {
-    "message": "Προσθήκη Διακριτικού"
-  },
-  "add_qr_code_via": {
-    "message": "Προσθήκη QR Κώδικα Μέσω:"
-  },
-  "advanced_add": {
-    "message": "Προηγμένη Προσθήκη"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Κουμπί Προηγμένης Προσθήκης"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Επιτρέπει την προσθήκη μυστικών μέσω QR κώδικα (webcam, αρχείο ή σύνδεσμος)."
-  },
-  "are_you_sure_message": {
-    "message": "Είσαι σίγουρος; Αυτή η ενέργεια είναι μόνιμη."
-  },
-  "autofill_checkbox_label": {
-    "message": "Αυτόματη Συμπλήρωση"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Συμπληρώνει αυτόματα το πεδίο OTP χρησιμοποιώντας την URL αυτόματης συμπλήρωσης για κάθε διακριτικό."
-  },
-  "autofill_url": {
-    "message": "URL Αυτόματης Συμπλήρωσης:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "URL Αυτόματης Συμπλήρωσης: (Μη Ενεργοποιημένο)"
-  },
-  "camera_permission_button": {
-    "message": "Κουμπί Άδειας Κάμερας"
-  },
-  "camera_permission_message_1": {
-    "message": "*Το κουμπί κάνει αυτόματο κλικ κατά τη φόρτωση της σελίδας*"
-  },
-  "camera_permission_message_2": {
-    "message": "Το κουμπί της κάμερας λειτουργεί μετά την παροχή άδειας πρόσβασης στην κάμερα"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Αντιγραφή στο Πρόχειρο"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Επιτρέπει την αντιγραφή του OTP στο πρόχειρο με ένα κλικ σε ένα κουτί διακριτικού."
-  },
-  "close": {
-    "message": "Κλείσιμο"
-  },
-  "confirm_password": {
-    "message": "Επιβεβαίωση Κωδικού:"
-  },
-  "copied": {
-    "message": "Αντιγράφηκε!"
-  },
-  "currently_saved": {
-    "message": "Αποθηκευμένα Τώρα: "
-  },
-  "dark_theme": {
-    "message": "Σκούρο Θέμα"
-  },
-  "delete": {
-    "message": "Διαγραφή"
-  },
-  "disable_password_protection": {
-    "message": "Απενεργοποίηση Προστασίας με Κωδικό"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Ενεργοποίηση Αντιγραφής στο Πρόχειρο στις ρυθμίσεις"
-  },
-  "enable_password_protection": {
-    "message": "Ενεργοποίηση Προστασίας με Κωδικό"
-  },
-  "enter_name": {
-    "message": "Εισαγωγή Ονόματος:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Παρακαλούμε εισάγετε τόσο το όνομα όσο και το μυστικό."
-  },
-  "enter_password": {
-    "message": "Εισαγωγή Κωδικού:"
-  },
-  "enter_secret": {
-    "message": "Εισαγωγή Μυστικού:"
-  },
-  "enter_url": {
-    "message": "Εισαγωγή URL"
-  },
-  "extension_description": {
-    "message": "Το Authenticator Pro είναι ένα ισχυρό εργαλείο που δημιουργεί έναν κωδικό μιας χρήσης (OTP) κάθε 30 δευτερόλεπτα με βάση ένα μυστικό."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Απόκρυψη Φόρμας Προσθήκης Διακριτικών"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Αποκρύπτει τη φόρμα προσθήκης διακριτικών για καλύτερη προβολή των αποθηκευμένων διακριτικών."
-  },
-  "image": {
-    "message": "Εικόνα"
-  },
-  "image_url": {
-    "message": "URL Εικόνας:"
-  },
-  "incorrect_password_message": {
-    "message": "Λάθος Κωδικός"
-  },
-  "incorrect_url_message": {
-    "message": "Λανθασμένη URL ή ο QR Κωδικός δεν περιλαμβάνεται."
-  },
-  "invalid_secret_message": {
-    "message": "Άκυρο μυστικό. Παρακαλούμε εισάγετε μια κωδικοποιημένη ακολουθία σε Base32."
-  },
-  "light_theme": {
-    "message": "Φωτεινό Θέμα"
-  },
-  "main_enter_password_message": {
-    "message": "Εισαγάγετε τον Κωδικό για Ξεκλείδωμα"
-  },
-  "name_already_exists_message": {
-    "message": "Ένα διακριτικό με αυτό το όνομα υπάρχει ήδη."
-  },
-  "name_too_long_message": {
-    "message": "Το όνομα είναι πολύ μεγάλο, παρακαλώ εισάγετε ένα μικρότερο."
-  },
-  "online_time_checkbox_label": {
-    "message": "Συγχρονισμός Ώρας Online"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Συγχρονίζεται με την online ώρα για ακρίβεια, διαφορετικά χρησιμοποιεί την τοπική ώρα της συσκευής."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Προστασία με Κωδικό"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Για ενεργοποίηση, απενεργοποιήστε τον συγχρονισμό σε Chrome"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Κρυπτογραφεί και προστατεύει τα αποθηκευμένα μυστικά με έναν κωδικό."
-  },
-  "password_protection_setup": {
-    "message": "Ρύθμιση Προστασίας με Κωδικό"
-  },
-  "passwords_dont_match": {
-    "message": "Οι Κωδικοί Δεν Ταιριάζουν"
-  },
-  "password_warning_message": {
-    "message": "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Εάν ξεχαστεί ο κωδικός, δεν μπορεί να ανακτηθεί."
-  },
-  "permissions": {
-    "message": "Δικαιώματα"
-  },
-  "permissions_page_header": {
-    "message": "Σελίδα Δικαιωμάτων Authenticator Pro"
-  },
-  "popup_mode_label": {
-    "message": "Λειτουργία Αναδυόμενου Παραθύρου"
-  },
-  "popup_mode_tooltip": {
-    "message": "Ανοίγει το Authenticator Pro σε ξεχωριστό παράθυρο."
-  },
-  "qr_found_message": {
-    "message": "QR κώδικας βρέθηκε!"
-  },
-  "qr_not_found_message": {
-    "message": "QR Κώδικας δεν βρέθηκε. Δοκιμάστε μια άλλη εικόνα."
-  },
-  "remove_password": {
-    "message": "Αφαίρεση Κωδικού"
-  },
-  "save_url": {
-    "message": "Αποθήκευση URL"
-  },
-  "scanning": {
-    "message": "Σάρωση..."
-  },
-  "secret": {
-    "message": " Μυστικό:"
-  },
-  "secret_already_added_message": {
-    "message": "Έχετε ήδη προσθέσει αυτό το μυστικό."
-  },
-  "settings": {
-    "message": "Ρυθμίσεις"
-  },
-  "submit": {
-    "message": "Υποβολή"
-  },
-  "sync_checkbox_label": {
-    "message": "Συγχρονισμός σε Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "Για ενεργοποίηση, απενεργοποιήστε την Προστασία με Κωδικό"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Συγχρονίζει διακριτικά σε συνδεδεμένες συσκευές Chrome. Διαφορετικά, αποθηκεύεται τοπικά."
-  },
-  "themes": {
-    "message": "Θέματα"
-  },
-  "token_settings": {
-    "message": "Ρυθμίσεις Διακριτικών"
-  },
-  "webcam": {
-    "message": "Κάμερα"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+﻿{
+    "active_tokens": { "message": "Ενεργά Διακριτικά:" },
+    "add_token": { "message": "Προσθήκη Διακριτικού" },
+    "add_qr_code_via": { "message": "Προσθήκη κωδικού QR μέσω:" },
+    "advanced_add": { "message": "Προηγμένη Προσθήκη" },
+    "advanced_add_checkbox_label": { "message": "Κουμπί Προηγμένης Προσθήκης" },
+    "advanced_add_checkbox_tooltip": { "message": "Επιτρέπει στους χρήστες να προσθέτουν μυστικά μέσω κωδικού QR (κάμερα, αρχείο ή σύνδεσμος)." },
+    "are_you_sure_message": { "message": "Είστε σίγουροι; Αυτή η ενέργεια είναι μόνιμη." },
+    "autofill_checkbox_label": { "message": "Αυτόματη συμπλήρωση" },
+    "autofill_checkbox_tooltip": { "message": "Συμπληρώνει αυτόματα το πεδίο OTP χρησιμοποιώντας το URL αυτόματης συμπλήρωσης για κάθε διακριτικό." },
+    "autofill_url": { "message": "URL αυτόματης συμπλήρωσης:" },
+    "autofill_url_not_enabled": { "message": "URL αυτόματης συμπλήρωσης: (Δεν είναι ενεργοποιημένο)" },
+    "camera_permission_button": { "message": "Κουμπί άδειας κάμερας" },
+    "camera_permission_message_1": { "message": "*Το κουμπί πατιέται αυτόματα κατά τη φόρτωση της σελίδας*" },
+    "camera_permission_message_2": { "message": "Το κουμπί κάμερας θα λειτουργήσει αφού επιτρέψετε την πρόσβαση στην κάμερα" },
+    "clipboard_copying_checkbox_label": { "message": "Αντιγραφή στο πρόχειρο" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Επιτρέπει την αντιγραφή του OTP στο πρόχειρο όταν κάνετε κλικ σε ένα πλαίσιο διακριτικού." },
+    "close": { "message": "Κλείσιμο" },
+    "confirm_password": { "message": "Επιβεβαίωση κωδικού πρόσβασης:" },
+    "copied": { "message": "Αντιγράφηκε!" },
+    "currently_saved": { "message": "Αποθηκευμένα αυτή τη στιγμή: " },
+    "dark_theme": { "message": "Σκούρο Θέμα" },
+    "delete": { "message": "Διαγραφή" },
+    "disable_password_protection": { "message": "Απενεργοποίηση προστασίας με κωδικό πρόσβασης" },
+    "enable_clipboard_copy_message": { "message": "Ενεργοποιήστε την αντιγραφή στο πρόχειρο στις ρυθμίσεις" },
+    "enable_password_protection": { "message": "Ενεργοποίηση προστασίας με κωδικό πρόσβασης" },
+    "enter_name": { "message": "Εισαγάγετε όνομα:" },
+    "enter_name_and_secret_message": { "message": "Παρακαλούμε εισαγάγετε όνομα και μυστικό." },
+    "enter_password": { "message": "Εισαγάγετε κωδικό πρόσβασης:" },
+    "enter_secret": { "message": "Εισαγάγετε μυστικό:" },
+    "enter_url": { "message": "Εισαγάγετε URL" },
+    "extension_description": { "message": "Το Authenticator Pro είναι ένα ισχυρό εργαλείο που δημιουργεί έναν κωδικό μίας χρήσης (OTP) κάθε 30 δευτερόλεπτα βάσει ενός παρεχόμενου μυστικού." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Απόκρυψη προσθήκης διακριτικών" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Αποκρύπτει τη φόρμα προσθήκης διακριτικών· παρέχει ευκολότερη ορατότητα των αποθηκευμένων διακριτικών." },
+    "image": { "message": "Εικόνα" },
+    "image_url": { "message": "URL εικόνας:" },
+    "incorrect_password_message": { "message": "Λανθασμένος κωδικός πρόσβασης" },
+    "incorrect_url_message": { "message": "Λανθασμένο URL ή το URL δεν περιείχε κωδικό QR." },
+    "invalid_secret_message": { "message": "Μη έγκυρο μυστικό. Παρακαλούμε εισαγάγετε μια συμβολοσειρά κωδικοποιημένη σε Base32." },
+    "light_theme": { "message": "Φωτεινό Θέμα" },
+    "main_enter_password_message": { "message": "Εισαγάγετε κωδικό πρόσβασης για ξεκλείδωμα" },
+    "name_already_exists_message": { "message": "Ένα διακριτικό με αυτό το όνομα υπάρχει ήδη." },
+    "name_too_long_message": { "message": "Το όνομα είναι πολύ μεγάλο, παρακαλούμε εισαγάγετε ένα μικρότερο όνομα." },
+    "online_time_checkbox_label": { "message": "Συγχρονισμός ώρας μέσω διαδικτύου" },
+    "online_time_checkbox_tooltip": { "message": "Συγχρονίζεται με την ώρα του διαδικτύου για ακρίβεια· διαφορετικά χρησιμοποιεί την τοπική ώρα της συσκευής." },
+    "password_protected_checkbox_label": { "message": "Προστασία με κωδικό πρόσβασης" },
+    "password_protected_checkbox_message": { "message": "Για ενεργοποίηση, απενεργοποιήστε τον συγχρονισμό στο Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "Κρυπτογραφεί και προστατεύει τα αποθηκευμένα μυστικά με κωδικό πρόσβασης." },
+    "password_protection_setup": { "message": "Ρύθμιση προστασίας με κωδικό πρόσβασης" },
+    "passwords_dont_match": { "message": "Οι κωδικοί πρόσβασης δεν ταιριάζουν" },
+    "password_warning_message": { "message": "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Εάν ξεχάσετε τον κωδικό πρόσβασης, δεν μπορεί να ανακτηθεί." },
+    "permissions": { "message": "Άδειες" },
+    "permissions_page_header": { "message": "Σελίδα Αδειών Authenticator Pro" },
+    "popup_mode_label": { "message": "Λειτουργία αναδυόμενου παραθύρου" },
+    "popup_mode_tooltip": { "message": "Ανοίγει το Authenticator Pro σε ξεχωριστό παράθυρο." },
+    "qr_found_message": { "message": "Βρέθηκε κωδικός QR!" },
+    "qr_not_found_message": { "message": "Δεν βρέθηκε κωδικός QR. Δοκιμάστε μια άλλη εικόνα." },
+    "remove_password": { "message": "Κατάργηση κωδικού πρόσβασης" },
+    "save_url": { "message": "Αποθήκευση URL" },
+    "scanning": { "message": "Σάρωση..." },
+    "secret": { "message": " Μυστικό:" },
+    "secret_already_added_message": { "message": "Έχετε ήδη προσθέσει αυτό το μυστικό." },
+    "settings": { "message": "Ρυθμίσεις" },
+    "submit": { "message": "Υποβολή" },
+    "sync_checkbox_label": { "message": "Συγχρονισμός στο Chrome" },
+    "sync_checkbox_message": { "message": "Για ενεργοποίηση, απενεργοποιήστε την προστασία με κωδικό πρόσβασης" },
+    "sync_checkbox_tooltip": { "message": "Συγχρονίζει τα διακριτικά σε συνδεδεμένες συσκευές Chrome· διαφορετικά η κατάσταση είναι μόνο τοπική." },
+    "themes": { "message": "Θέματα" },
+    "token_settings": { "message": "Ρυθμίσεις διακριτικών" },
+    "webcam": { "message": "Κάμερα" },
+    "clear_saved_url": { "message": "Εκκαθάριση αποθηκευμένου URL" },
+    "export": { "message": "Εξαγωγή" },
+    "export_data": { "message": "Εξαγωγή Δεδομένων" },
+    "ocean_theme": { "message": "Θέμα Ωκεανού" },
+    "forest_theme": { "message": "Θέμα Δάσους" },
+    "scale_heading": { "message": "Κλίμακα" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Επιλογές Εξαγωγής" },
+    "export_csv_label": { "message": "Εξαγωγή CSV" },
+    "export_pdf_label": { "message": "Εξαγωγή PDF" },
+    "export_doc_label": { "message": "Εξαγωγή Word (.doc)" },
+    "export_column_name": { "message": "Όνομα" },
+    "export_column_secret": { "message": "Μυστικό" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "authenticator-export" },
+    "export_pdf_prompt": { "message": "Αποθήκευση PDF ως:" },
+    "export_document_title": { "message": "Εξαγωγή Authenticator" },
+    "bulk_add_label": { "message": "Μαζική Προσθήκη" },
+    "bulk_add_title": { "message": "Μαζική Προσθήκη" },
+    "bulk_add_csv_label": { "message": "Αρχείο CSV" },
+    "bulk_add_json_label": { "message": "Αρχείο JSON" },
+    "bulk_add_failed": { "message": "Η μαζική προσθήκη απέτυχε." },
+    "bulk_add_invalid_file": { "message": "Μη έγκυρη μορφή αρχείου." },
+    "bulk_add_no_valid": { "message": "Δεν βρέθηκαν έγκυρα διακριτικά." },
+    "bulk_add_success": { "message": "Επιτυχία." },
+    "bulk_add_partial": { "message": "Η μαζική προσθήκη ήταν μερικώς επιτυχής." },
+    "bulk_add_details": { "message": "Προστέθηκαν: $1 | Παραλείφθηκαν: $2 | Μη έγκυρα: $3" }
 }

@@ -52,6 +52,12 @@ Authenticator-Pro is a customizable authenticator extension that generates and a
    - Enable "Developer mode"
    - Click "Load unpacked" and select the root of the project.
 
+## Build / Refactor Notes
+
+- The extension source lives in `src/` (modularized popup/settings/auth/etc.).
+- Production builds output to `dist/`, and the popup loads `dist/popup.js`.
+- Refactor note (Feb 2026): codebase was reorganized to support a `dist/`-based production layout and smaller modules.
+
 ## Usage
 
 - Open the extension popup by clicking on the Authenticator Pro icon in the Chrome toolbar.

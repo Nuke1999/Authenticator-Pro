@@ -1,266 +1,100 @@
 {
-  "active_tokens": {
-    "message": "Aktīvie tokeni:"
-  },
-  "add_token": {
-    "message": "Pievienot tokenu"
-  },
-  "add_qr_code_via": {
-    "message": "Pievienot QR kodu caur:"
-  },
-  "advanced_add": {
-    "message": "Paplašināts pievienojums"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Paplašināta pievienojuma poga"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Atļauj lietotājiem pievienot noslēpumus, izmantojot QR kodu (webcam, fails vai saite)."
-  },
-  "are_you_sure_message": {
-    "message": "Vai tiešām esat pārliecināts? Šī darbība ir pastāvīga."
-  },
-  "autofill_checkbox_label": {
-    "message": "Automātiska aizpildīšana"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Automātiski aizpilda OTP lauku, izmantojot katra tokena automātiskās aizpildīšanas URL."
-  },
-  "autofill_url": {
-    "message": "Automātiskās aizpildīšanas URL:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "Automātiskās aizpildīšanas URL: (Nav iespējots)"
-  },
-  "camera_permission_button": {
-    "message": "Kameru atļaujas poga"
-  },
-  "camera_permission_message_1": {
-    "message": "*Poga automātiski nospiež lapas ielādes laikā*"
-  },
-  "camera_permission_message_2": {
-    "message": "Webcam poga darbosies pēc kameru pieejamības apstiprināšanas"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Kopēšana uz starpliktuvi"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Atļauj kopēt OTP uz starpliktuvi, noklikšķinot uz tokena lodziņa."
-  },
-  "close": {
-    "message": "Aizvērt"
-  },
-  "confirm_password": {
-    "message": "Apstipriniet paroli:"
-  },
-  "copied": {
-    "message": "Kopēts!"
-  },
-  "currently_saved": {
-    "message": "Pašreiz saglabāts: "
-  },
-  "dark_theme": {
-    "message": "Tumša tēma"
-  },
-  "delete": {
-    "message": "Dzēst"
-  },
-  "disable_password_protection": {
-    "message": "Atspējot paroles aizsardzību"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Iespējot kopēšanu uz starpliktuvi iestatījumos"
-  },
-  "enable_password_protection": {
-    "message": "Iespējot paroles aizsardzību"
-  },
-  "enter_name": {
-    "message": "Ievadiet vārdu:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Lūdzu, ievadiet gan vārdu, gan noslēpumu."
-  },
-  "enter_password": {
-    "message": "Ievadiet paroli:"
-  },
-  "enter_secret": {
-    "message": "Ievadiet noslēpumu:"
-  },
-  "enter_url": {
-    "message": "Ievadiet URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro ir jaudīgs rīks, kas katras 30 sekundes ģenerē vienreizēju paroli (OTP) pamatojoties uz sniegto noslēpumu."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Paslēpt tokena pievienotāju"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Paslēpj tokena pievienošanas veidlapu; nodrošina labāku saglabāto tokenu redzamību."
-  },
-  "image": {
-    "message": "Attēls"
-  },
-  "image_url": {
-    "message": "Attēla URL:"
-  },
-  "incorrect_password_message": {
-    "message": "Nepareiza parole"
-  },
-  "incorrect_url_message": {
-    "message": "Nepareizs URL, vai URL nesatur QR kodu."
-  },
-  "invalid_secret_message": {
-    "message": "Nederīgs noslēpums. Lūdzu, ievadiet Base32 kodētu virkni."
-  },
-  "light_theme": {
-    "message": "Gaiša tēma"
-  },
-  "main_enter_password_message": {
-    "message": "Ievadiet paroli, lai atbloķētu"
-  },
-  "name_already_exists_message": {
-    "message": "Token ar šo vārdu jau pastāv."
-  },
-  "name_too_long_message": {
-    "message": "Vārds ir pārāk garš, lūdzu, ievadiet īsāku vārdu."
-  },
-  "online_time_checkbox_label": {
-    "message": "Tiešsaistes laika sinhronizācija"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Sinhronizē ar tiešsaistes laiku precizitātei; pretējā gadījumā tiek izmantots vietējais ierīces laiks."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Paroles aizsardzība"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Lai aktivizētu, izslēdziet sinhronizāciju starp Chrome"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Šifrē un aizsargā saglabātos noslēpumus ar paroli."
-  },
-  "password_protection_setup": {
-    "message": "Paroles aizsardzības iestatīšana"
-  },
-  "passwords_dont_match": {
-    "message": "Paroles nesakrīt"
-  },
-  "password_warning_message": {
-    "message": "BRĪDINĀJUMS: Ja parole tiek aizmirsta, to nevar atjaunot."
-  },
-  "permissions": {
-    "message": "Atļaujas"
-  },
-  "permissions_page_header": {
-    "message": "Authenticator Pro atļauju lapa "
-  },
-  "popup_mode_label": {
-    "message": "Uznirstošais režīms"
-  },
-  "popup_mode_tooltip": {
-    "message": "Atver Authenticator Pro atsevišķā logā."
-  },
-  "qr_found_message": {
-    "message": "QR kods atrasts!"
-  },
-  "qr_not_found_message": {
-    "message": "QR kods netika atrasts. Mēģiniet citu attēlu."
-  },
-  "remove_password": {
-    "message": "Noņemt paroli"
-  },
-  "save_url": {
-    "message": "Saglabāt URL"
-  },
-  "scanning": {
-    "message": "Skenēšana..."
-  },
-  "secret": {
-    "message": " Noslēpums:"
-  },
-  "secret_already_added_message": {
-    "message": "Jūs jau esat pievienojis šo noslēpumu."
-  },
-  "settings": {
-    "message": "Iestatījumi"
-  },
-  "submit": {
-    "message": "Iesniegt"
-  },
-  "sync_checkbox_label": {
-    "message": "Sinhronizēt starp Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "Lai aktivizētu, izslēdziet paroles aizsardzību"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Sinhronizē tokenus pieslēgtos Chrome ierīcēs; citādi stāvoklis būs tikai lokāls."
-  },
-  "themes": {
-    "message": "Temas"
-  },
-  "token_settings": {
-    "message": "Tokenu iestatījumi"
-  },
-  "webcam": {
-    "message": "Webcam"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+    "active_tokens": { "message": "Aktīvie marķieri:" },
+    "add_token": { "message": "Pievienot marķieri" },
+    "add_qr_code_via": { "message": "Pievienot QR kodu caur:" },
+    "advanced_add": { "message": "Paplašinātā pievienošana" },
+    "advanced_add_checkbox_label": { "message": "Paplašinātās pievienošanas poga" },
+    "advanced_add_checkbox_tooltip": { "message": "Ļauj lietotājiem pievienot noslēpumus caur QR kodu (tīmekļa kameru, failu vai saiti)." },
+    "are_you_sure_message": { "message": "Vai esat pārliecināts? Šī darbība ir neatgriezeniska." },
+    "autofill_checkbox_label": { "message": "Automātiskā aizpilde" },
+    "autofill_checkbox_tooltip": { "message": "Automātiski aizpilda OTP lauku, izmantojot katra marķiera automātiskās aizpildes URL." },
+    "autofill_url": { "message": "Automātiskās aizpildes URL:" },
+    "autofill_url_not_enabled": { "message": "Automātiskās aizpildes URL: (Nav iespējots)" },
+    "camera_permission_button": { "message": "Kameras atļaujas poga" },
+    "camera_permission_message_1": { "message": "*Poga tiek automātiski nospiesta lapas ielādes laikā*" },
+    "camera_permission_message_2": { "message": "Tīmekļa kameras poga darbosies pēc kameras piekļuves atļaušanas" },
+    "clipboard_copying_checkbox_label": { "message": "Kopēšana starpliktuvē" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Ļauj kopēt OTP starpliktuvē, noklikšķinot uz marķiera lodziņa." },
+    "close": { "message": "Aizvērt" },
+    "confirm_password": { "message": "Apstiprināt paroli:" },
+    "copied": { "message": "Nokopēts!" },
+    "currently_saved": { "message": "Pašlaik saglabātie: " },
+    "dark_theme": { "message": "Tumšā tēma" },
+    "delete": { "message": "Dzēst" },
+    "disable_password_protection": { "message": "Atspējot paroles aizsardzību" },
+    "enable_clipboard_copy_message": { "message": "Iespējojiet kopēšanu starpliktuvē iestatījumos" },
+    "enable_password_protection": { "message": "Iespējot paroles aizsardzību" },
+    "enter_name": { "message": "Ievadiet nosaukumu:" },
+    "enter_name_and_secret_message": { "message": "Lūdzu, ievadiet gan nosaukumu, gan noslēpumu." },
+    "enter_password": { "message": "Ievadiet paroli:" },
+    "enter_secret": { "message": "Ievadiet noslēpumu:" },
+    "enter_url": { "message": "Ievadiet URL" },
+    "extension_description": { "message": "Authenticator Pro ir jaudīgs rīks, kas ik pēc 30 sekundēm ģenerē vienreizēju paroli (OTP), pamatojoties uz sniegto noslēpumu." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Paslēpt marķieru pievienotāju" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Paslēpj marķieru pievienošanas formu; nodrošina labāku saglabāto marķieru redzamību." },
+    "image": { "message": "Attēls" },
+    "image_url": { "message": "Attēla URL:" },
+    "incorrect_password_message": { "message": "Nepareiza parole" },
+    "incorrect_url_message": { "message": "Nepareizs URL vai URL nesaturēja QR kodu." },
+    "invalid_secret_message": { "message": "Nederīgs noslēpums. Lūdzu, ievadiet Base32 kodētu virkni." },
+    "light_theme": { "message": "Gaišā tēma" },
+    "main_enter_password_message": { "message": "Ievadiet paroli, lai atbloķētu" },
+    "name_already_exists_message": { "message": "Marķieris ar šādu nosaukumu jau eksistē." },
+    "name_too_long_message": { "message": "Nosaukums ir pārāk garš, lūdzu, ievadiet īsāku nosaukumu." },
+    "online_time_checkbox_label": { "message": "Tiešsaistes laika sinhronizācija" },
+    "online_time_checkbox_tooltip": { "message": "Precizitātes nolūkos sinhronizējas ar laiku tiešsaistē; pretējā gadījumā izmanto vietējo ierīces laiku." },
+    "password_protected_checkbox_label": { "message": "Paroles aizsardzība" },
+    "password_protected_checkbox_message": { "message": "Lai iespējotu, izslēdziet sinhronizāciju pāri Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "Šifrē un aizsargā saglabātos noslēpumus ar paroli." },
+    "password_protection_setup": { "message": "Paroles aizsardzības iestatīšana" },
+    "passwords_dont_match": { "message": "Paroles nesakrīt" },
+    "password_warning_message": { "message": "BRĪDINĀJUMS: Ja parole tiek aizmirsta, to nevar atgūt." },
+    "permissions": { "message": "Atļaujas" },
+    "permissions_page_header": { "message": "Authenticator Pro atļauju lapa" },
+    "popup_mode_label": { "message": "Uznirstošais režīms" },
+    "popup_mode_tooltip": { "message": "Atver Authenticator Pro atsevišķā logā." },
+    "qr_found_message": { "message": "QR kods atrasts!" },
+    "qr_not_found_message": { "message": "QR kods nav atrasts. Izmēģiniet citu attēlu." },
+    "remove_password": { "message": "Noņemt paroli" },
+    "save_url": { "message": "Saglabāt URL" },
+    "scanning": { "message": "Notiek skenēšana..." },
+    "secret": { "message": " Noslēpums:" },
+    "secret_already_added_message": { "message": "Jūs jau esat pievienojis šo noslēpumu." },
+    "settings": { "message": "Iestatījumi" },
+    "submit": { "message": "Iesniegt" },
+    "sync_checkbox_label": { "message": "Sinhronizēt pāri Chrome" },
+    "sync_checkbox_message": { "message": "Lai iespējotu, izslēdziet paroles aizsardzību" },
+    "sync_checkbox_tooltip": { "message": "Sinhronizē marķierus pierakstītajās Chrome ierīcēs; pretējā gadījumā stāvoklis ir tikai vietējs." },
+    "themes": { "message": "Tēmas" },
+    "token_settings": { "message": "Marķiera iestatījumi" },
+    "webcam": { "message": "Tīmekļa kamera" },
+    "clear_saved_url": { "message": "Notīrīt saglabāto URL" },
+    "export": { "message": "Eksportēt" },
+    "export_data": { "message": "Eksportēt datus" },
+    "ocean_theme": { "message": "Okeāna tēma" },
+    "forest_theme": { "message": "Meža tēma" },
+    "scale_heading": { "message": "Mērogs" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Eksportēšanas opcijas" },
+    "export_csv_label": { "message": "Eksportēt CSV" },
+    "export_pdf_label": { "message": "Eksportēt PDF" },
+    "export_doc_label": { "message": "Eksportēt Word (.doc)" },
+    "export_column_name": { "message": "Vārds" },
+    "export_column_secret": { "message": "Noslēpums" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "autentifikatora-eksports" },
+    "export_pdf_prompt": { "message": "Saglabāt PDF kā:" },
+    "export_document_title": { "message": "Autentifikatora eksports" },
+    "bulk_add_label": { "message": "Lielapjoma pievienošana" },
+    "bulk_add_title": { "message": "Lielapjoma pievienošana" },
+    "bulk_add_csv_label": { "message": "CSV fails" },
+    "bulk_add_json_label": { "message": "JSON fails" },
+    "bulk_add_failed": { "message": "Lielapjoma pievienošana neizdevās." },
+    "bulk_add_invalid_file": { "message": "Nederīgs faila formāts." },
+    "bulk_add_no_valid": { "message": "Netika atrasts neviens derīgs marķieris." },
+    "bulk_add_success": { "message": "Veiksmīgi." },
+    "bulk_add_partial": { "message": "Lielapjoma pievienošana daļēji veiksmīga." },
+    "bulk_add_details": { "message": "Pievienoti: $1 | Izlaisti: $2 | Nederīgi: $3" }
 }

@@ -1,266 +1,100 @@
 {
-  "active_tokens": {
-    "message": "Token Aktif:"
-  },
-  "add_token": {
-    "message": "Tambah Token"
-  },
-  "add_qr_code_via": {
-    "message": "Tambah Kod QR Melalui:"
-  },
-  "advanced_add": {
-    "message": "Tambah Lanjutan"
-  },
-  "advanced_add_checkbox_label": {
-    "message": "Butang Tambah Lanjutan"
-  },
-  "advanced_add_checkbox_tooltip": {
-    "message": "Membenarkan pengguna untuk menambah rahsia melalui kod QR (kamera, fail, atau pautan)."
-  },
-  "are_you_sure_message": {
-    "message": "Adakah anda pasti? Tindakan ini adalah kekal."
-  },
-  "autofill_checkbox_label": {
-    "message": "Isi Automatik"
-  },
-  "autofill_checkbox_tooltip": {
-    "message": "Secara automatik mengisi medan OTP menggunakan URL Isi Automatik untuk setiap token."
-  },
-  "autofill_url": {
-    "message": "URL Isi Automatik:"
-  },
-  "autofill_url_not_enabled": {
-    "message": "URL Isi Automatik: (Tidak Diaktifkan)"
-  },
-  "camera_permission_button": {
-    "message": "Butang Kebenaran Kamera"
-  },
-  "camera_permission_message_1": {
-    "message": "*Butang ini akan automatik ditekan semasa memuatkan halaman*"
-  },
-  "camera_permission_message_2": {
-    "message": "Butang Webcam akan berfungsi setelah membenarkan akses kamera"
-  },
-  "clipboard_copying_checkbox_label": {
-    "message": "Salin ke Papan Klip"
-  },
-  "clipboard_copying_checkbox_tooltip": {
-    "message": "Membenarkan menyalin OTP ke papan klip apabila mengklik kotak token."
-  },
-  "close": {
-    "message": "Tutup"
-  },
-  "confirm_password": {
-    "message": "Sahkan Kata Laluan:"
-  },
-  "copied": {
-    "message": "Disalin!"
-  },
-  "currently_saved": {
-    "message": "Disimpan Sekarang: "
-  },
-  "dark_theme": {
-    "message": "Tema Gelap"
-  },
-  "delete": {
-    "message": "Padam"
-  },
-  "disable_password_protection": {
-    "message": "Matikan Perlindungan Kata Laluan"
-  },
-  "enable_clipboard_copy_message": {
-    "message": "Benarkan Salinan Papan Klip dalam tetapan"
-  },
-  "enable_password_protection": {
-    "message": "Hidupkan Perlindungan Kata Laluan"
-  },
-  "enter_name": {
-    "message": "Masukkan Nama:"
-  },
-  "enter_name_and_secret_message": {
-    "message": "Sila masukkan nama dan rahsia."
-  },
-  "enter_password": {
-    "message": "Masukkan Kata Laluan:"
-  },
-  "enter_secret": {
-    "message": "Masukkan Rahsia:"
-  },
-  "enter_url": {
-    "message": "Masukkan URL"
-  },
-  "extension_description": {
-    "message": "Authenticator Pro adalah alat yang berkuasa yang menghasilkan Kata Laluan Sekali Guna (OTP) setiap 30 saat berdasarkan rahsia yang diberikan."
-  },
-  "extension_name": {
-    "message": "Authenticator Pro"
-  },
-  "hide_token_adder_checkbox_label": {
-    "message": "Sembunyikan Penambah Token"
-  },
-  "hide_token_adder_checkbox_tooltip": {
-    "message": "Menyembunyikan borang penambah token; menyediakan penglihatan yang lebih baik terhadap token yang disimpan."
-  },
-  "image": {
-    "message": "Imej"
-  },
-  "image_url": {
-    "message": "URL Imej:"
-  },
-  "incorrect_password_message": {
-    "message": "Kata Laluan Salah"
-  },
-  "incorrect_url_message": {
-    "message": "URL Salah, atau URL tidak mengandungi kod QR."
-  },
-  "invalid_secret_message": {
-    "message": "Rahsia tidak sah. Sila masukkan rentetan yang dikodkan dalam Base32."
-  },
-  "light_theme": {
-    "message": "Tema Ringan"
-  },
-  "main_enter_password_message": {
-    "message": "Masukkan Kata Laluan untuk Membuka Kunci"
-  },
-  "name_already_exists_message": {
-    "message": "Token dengan nama ini sudah wujud."
-  },
-  "name_too_long_message": {
-    "message": "Nama terlalu panjang, sila masukkan nama yang lebih pendek."
-  },
-  "online_time_checkbox_label": {
-    "message": "Senkronisasi Waktu Dalam Talian"
-  },
-  "online_time_checkbox_tooltip": {
-    "message": "Menyelaraskan dengan waktu dalam talian untuk ketepatan; jika tidak, menggunakan waktu peranti tempatan."
-  },
-  "password_protected_checkbox_label": {
-    "message": "Perlindungan Kata Laluan"
-  },
-  "password_protected_checkbox_message": {
-    "message": "Untuk mengaktifkan, matikan Senkronisasi Antara Chrome"
-  },
-  "password_protected_checkbox_tooltip": {
-    "message": "Menyulitkan dan melindungi rahsia yang disimpan dengan kata laluan."
-  },
-  "password_protection_setup": {
-    "message": "Persediaan Perlindungan Kata Laluan"
-  },
-  "passwords_dont_match": {
-    "message": "Kata Laluan Tidak Sepadan"
-  },
-  "password_warning_message": {
-    "message": "AMARAN: Jika kata laluan dilupakan, ia tidak dapat dipulihkan."
-  },
-  "permissions": {
-    "message": "Kebenaran"
-  },
-  "permissions_page_header": {
-    "message": "Halaman Kebenaran Authenticator Pro"
-  },
-  "popup_mode_label": {
-    "message": "Mod Pop-Up"
-  },
-  "popup_mode_tooltip": {
-    "message": "Membuka Authenticator Pro dalam tingkap yang berasingan."
-  },
-  "qr_found_message": {
-    "message": "Kod QR dijumpai!"
-  },
-  "qr_not_found_message": {
-    "message": "Kod QR tidak dijumpai. Cuba imej lain."
-  },
-  "remove_password": {
-    "message": "Buang Kata Laluan"
-  },
-  "save_url": {
-    "message": "Simpan URL"
-  },
-  "scanning": {
-    "message": "Pindai..."
-  },
-  "secret": {
-    "message": " Rahsia:"
-  },
-  "secret_already_added_message": {
-    "message": "Anda sudah menambah rahsia ini."
-  },
-  "settings": {
-    "message": "Tetapan"
-  },
-  "submit": {
-    "message": "Hantar"
-  },
-  "sync_checkbox_label": {
-    "message": "Senkronisasi Antara Chrome"
-  },
-  "sync_checkbox_message": {
-    "message": "Untuk mengaktifkan, matikan Perlindungan Kata Laluan"
-  },
-  "sync_checkbox_tooltip": {
-    "message": "Menyelaraskan token pada peranti Chrome yang log masuk; jika tidak, keadaan hanya akan bersifat tempatan."
-  },
-  "themes": {
-    "message": "Tema"
-  },
-  "token_settings": {
-    "message": "Tetapan Token"
-  },
-  "webcam": {
-    "message": "Webcam"
-  },
-  "clear_saved_url": {
-    "message": "Clear saved URL"
-  },
-  "export": {
-    "message": "Export"
-  },
-  "export_data": {
-    "message": "Export Data"
-  },
-  "ocean_theme": {
-    "message": "Ocean Theme"
-  },
-  "forest_theme": {
-    "message": "Forest Theme"
-  },
-  "scale_heading": {
-    "message": "Scale"
-  },
-  "scale_percentage": {
-    "message": "$1%"
-  },
-  "export_options_title": {
-    "message": "Export Options"
-  },
-  "export_csv_label": {
-    "message": "Export CSV"
-  },
-  "export_pdf_label": {
-    "message": "Export PDF"
-  },
-  "export_doc_label": {
-    "message": "Export Word (.doc)"
-  },
-  "export_column_name": {
-    "message": "Name"
-  },
-  "export_column_secret": {
-    "message": "Secret"
-  },
-  "export_column_url": {
-    "message": "URL"
-  },
-  "export_column_otp": {
-    "message": "OTP"
-  },
-  "export_filename_prefix": {
-    "message": "authenticator-export"
-  },
-  "export_pdf_prompt": {
-    "message": "Save PDF as:"
-  },
-  "export_document_title": {
-    "message": "Authenticator Export"
-  }
+    "active_tokens": { "message": "Token Aktif:" },
+    "add_token": { "message": "Tambah Token" },
+    "add_qr_code_via": { "message": "Tambah Kod QR Melalui:" },
+    "advanced_add": { "message": "Tambah Lanjutan" },
+    "advanced_add_checkbox_label": { "message": "Butang Tambah Lanjutan" },
+    "advanced_add_checkbox_tooltip": { "message": "Membenarkan pengguna menambah rahsia melalui kod QR (webcam, fail, atau pautan)." },
+    "are_you_sure_message": { "message": "Adakah anda pasti? Tindakan ini adalah kekal." },
+    "autofill_checkbox_label": { "message": "Isi Automatik" },
+    "autofill_checkbox_tooltip": { "message": "Mengisi medan OTP secara automatik menggunakan URL Isi Automatik untuk setiap token." },
+    "autofill_url": { "message": "URL Isi Automatik:" },
+    "autofill_url_not_enabled": { "message": "URL Isi Automatik: (Tidak Dibolehkan)" },
+    "camera_permission_button": { "message": "Butang Kebenaran Kamera" },
+    "camera_permission_message_1": { "message": "*Butang klik automatik semasa halaman dimuatkan*" },
+    "camera_permission_message_2": { "message": "Butang Webcam akan berfungsi selepas membenarkan akses kamera" },
+    "clipboard_copying_checkbox_label": { "message": "Penyalinan Papan Keratan" },
+    "clipboard_copying_checkbox_tooltip": { "message": "Membenarkan menyalin OTP ke papan keratan apabila mengklik kotak token." },
+    "close": { "message": "Tutup" },
+    "confirm_password": { "message": "Sahkan Kata Laluan:" },
+    "copied": { "message": "Disalin!" },
+    "currently_saved": { "message": "Disimpan Buat Masa Ini: " },
+    "dark_theme": { "message": "Tema Gelap" },
+    "delete": { "message": "Padam" },
+    "disable_password_protection": { "message": "Nyahaktifkan Perlindungan Kata Laluan" },
+    "enable_clipboard_copy_message": { "message": "Dayakan Salin Papan Keratan dalam tetapan" },
+    "enable_password_protection": { "message": "Dayakan Perlindungan Kata Laluan" },
+    "enter_name": { "message": "Masukkan Nama:" },
+    "enter_name_and_secret_message": { "message": "Sila masukkan kedua-dua nama dan rahsia." },
+    "enter_password": { "message": "Masukkan Kata Laluan:" },
+    "enter_secret": { "message": "Masukkan Rahsia:" },
+    "enter_url": { "message": "Masukkan URL" },
+    "extension_description": { "message": "Authenticator Pro ialah alat berkuasa yang menghasilkan Kata Laluan Sekali Guna (OTP) setiap 30 saat berdasarkan rahsia yang diberikan." },
+    "extension_name": { "message": "Authenticator Pro" },
+    "hide_token_adder_checkbox_label": { "message": "Sembunyikan Penambah Token" },
+    "hide_token_adder_checkbox_tooltip": { "message": "Menyembunyikan borang penambah token; memberikan penglihatan yang lebih mudah bagi token yang disimpan." },
+    "image": { "message": "Imej" },
+    "image_url": { "message": "URL Imej:" },
+    "incorrect_password_message": { "message": "Kata Laluan Salah" },
+    "incorrect_url_message": { "message": "URL salah, atau URL tidak mengandungi kod QR." },
+    "invalid_secret_message": { "message": "Rahsia tidak sah. Sila masukkan rentetan berkod Base32." },
+    "light_theme": { "message": "Tema Terang" },
+    "main_enter_password_message": { "message": "Masukkan Kata Laluan untuk Membuka Kunci" },
+    "name_already_exists_message": { "message": "Token dengan nama ini sudah wujud." },
+    "name_too_long_message": { "message": "Nama terlalu panjang, sila masukkan nama yang lebih pendek." },
+    "online_time_checkbox_label": { "message": "Segerak Masa Dalam Talian" },
+    "online_time_checkbox_tooltip": { "message": "Menyegerak dengan masa dalam talian untuk ketepatan; jika tidak, menggunakan masa peranti tempatan." },
+    "password_protected_checkbox_label": { "message": "Perlindungan Kata Laluan" },
+    "password_protected_checkbox_message": { "message": "Untuk mendayakan, matikan Segerak Merentas Chrome" },
+    "password_protected_checkbox_tooltip": { "message": "Mengenkripsi dan melindungi rahsia yang disimpan dengan kata laluan." },
+    "password_protection_setup": { "message": "Persediaan Perlindungan Kata Laluan" },
+    "passwords_dont_match": { "message": "Kata Laluan Tidak Padan" },
+    "password_warning_message": { "message": "AMARAN: Jika kata laluan dilupakan, ia tidak boleh dipulihkan." },
+    "permissions": { "message": "Kebenaran" },
+    "permissions_page_header": { "message": "Halaman Kebenaran Authenticator Pro" },
+    "popup_mode_label": { "message": "Mod Pop timbul" },
+    "popup_mode_tooltip": { "message": "Membuka Authenticator Pro dalam tetingkap berasingan." },
+    "qr_found_message": { "message": "Kod QR ditemui!" },
+    "qr_not_found_message": { "message": "Kod QR tidak ditemui. Cuba imej lain." },
+    "remove_password": { "message": "Alih Keluar Kata Laluan" },
+    "save_url": { "message": "Simpan URL" },
+    "scanning": { "message": "Mengimbas..." },
+    "secret": { "message": " Rahsia:" },
+    "secret_already_added_message": { "message": "Anda telah menambah rahsia ini." },
+    "settings": { "message": "Tetapan" },
+    "submit": { "message": "Hantar" },
+    "sync_checkbox_label": { "message": "Segerak Merentas Chrome" },
+    "sync_checkbox_message": { "message": "Untuk mendayakan, matikan Perlindungan Kata Laluan" },
+    "sync_checkbox_tooltip": { "message": "Menyegerak token pada peranti Chrome yang log masuk; jika tidak, keadaan hanya tempatan." },
+    "themes": { "message": "Tema" },
+    "token_settings": { "message": "Tetapan Token" },
+    "webcam": { "message": "Webcam" },
+    "clear_saved_url": { "message": "Kosongkan URL yang disimpan" },
+    "export": { "message": "Eksport" },
+    "export_data": { "message": "Eksport Data" },
+    "ocean_theme": { "message": "Tema Lautan" },
+    "forest_theme": { "message": "Tema Hutan" },
+    "scale_heading": { "message": "Skala" },
+    "scale_percentage": { "message": "$1%" },
+    "export_options_title": { "message": "Pilihan Eksport" },
+    "export_csv_label": { "message": "Eksport CSV" },
+    "export_pdf_label": { "message": "Eksport PDF" },
+    "export_doc_label": { "message": "Eksport Word (.doc)" },
+    "export_column_name": { "message": "Nama" },
+    "export_column_secret": { "message": "Rahsia" },
+    "export_column_url": { "message": "URL" },
+    "export_column_otp": { "message": "OTP" },
+    "export_filename_prefix": { "message": "eksport-authenticator" },
+    "export_pdf_prompt": { "message": "Simpan PDF sebagai:" },
+    "export_document_title": { "message": "Eksport Authenticator" },
+    "bulk_add_label": { "message": "Tambah Pukal" },
+    "bulk_add_title": { "message": "Tambah Pukal" },
+    "bulk_add_csv_label": { "message": "Fail CSV" },
+    "bulk_add_json_label": { "message": "Fail JSON" },
+    "bulk_add_failed": { "message": "Tambah pukal gagal." },
+    "bulk_add_invalid_file": { "message": "Format fail tidak sah." },
+    "bulk_add_no_valid": { "message": "Tiada token sah ditemui." },
+    "bulk_add_success": { "message": "Berjaya." },
+    "bulk_add_partial": { "message": "Tambah pukal berjaya sebahagiannya." },
+    "bulk_add_details": { "message": "Ditambah: $1 | Dilangkau: $2 | Tidak sah: $3" }
 }
