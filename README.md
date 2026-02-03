@@ -6,6 +6,7 @@ Authenticator-Pro is a customizable authenticator extension that generates and a
 
 - Add Secrets Easily: Add secrets via image URL, image file, or by scanning QR codes through the webcam with the Advanced Add Button.
 - Autofill URL: Set unique URLs for each token to ensure OTP autofill works seamlessly across various websites via the token settings button.
+- Bulk Add: Import multiple OTP entries at once (CSV or JSON) using the Bulk Add button—perfect for migrating from other authenticators or setting up lots of accounts quickly (please see documentation on Github for proper CSV/JSON formatting)
 - Clipboard Copying: Enable OTP copying by simply clicking on a token, saving time on manual entry.
 - Chrome Sync: Syncs tokens on logged-in Chrome devices.
 - Scaling: Adjust the extension's interface between 70% and 130% of its original size for optimal visibility and usability across different screens.
@@ -69,6 +70,56 @@ Authenticator-Pro is a customizable authenticator extension that generates and a
 - Enable or disable autofill and copy to clipboard functionality in the settings menu.
 
 - The extension will automatically update OTPs periodically.
+
+## Bulk Add (CSV / JSON Format)
+
+Bulk Add lets you import multiple tokens at once from a CSV file or a JSON file.
+
+**CSV**
+
+- Required columns: `name`, `secret`
+- Optional column: `url` (used for Autofill URL matching)
+
+Example (with headers):
+
+```csv
+name,secret,url
+GitHub,JBSWY3DPEHPK3PXP,https://github.com
+Google,GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ,https://accounts.google.com
+```
+
+Notes:
+
+- A header row is supported. Common header variants like `account`/`label`/`issuer` (for `name`), `key`/`totp secret` (for `secret`), and `site`/`website`/`autofill url` (for `url`) are accepted.
+- If your CSV includes an `otp`/`code` column, it will be ignored (OTPs expire and are not imported/exported).
+- Secrets must be valid Base32 (A-Z and 2-7). Whitespace is tolerated, but invalid secrets will be rejected.
+
+**JSON**
+
+Accepted formats:
+
+```json
+[
+  { "name": "GitHub", "secret": "JBSWY3DPEHPK3PXP", "url": "https://github.com" },
+  { "name": "Google", "secret": "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", "url": "https://accounts.google.com" }
+]
+```
+
+Or:
+
+```json
+{
+  "tokens": [
+    { "name": "GitHub", "secret": "JBSWY3DPEHPK3PXP", "url": "https://github.com" }
+  ]
+}
+```
+
+Rules:
+
+- `name` and `secret` are required; `url` is optional.
+- Entries with missing/invalid secrets are rejected.
+- Duplicates are skipped if the `name` or `secret` already exists.
 
 ## Acknowledgements
 
