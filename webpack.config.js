@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = (env = {}, argv = {}) => {
   const isProd = Boolean(env.production) || argv.mode === "production";
@@ -19,7 +20,7 @@ module.exports = (env = {}, argv = {}) => {
       clean: true,
     },
     mode: isProd ? "production" : "development",
-    devtool: isProd ? "source-map" : "cheap-module-source-map",
+    devtool: "source-map",
     module: {
       rules: [
         {
@@ -70,6 +71,15 @@ module.exports = (env = {}, argv = {}) => {
       usedExports: true,
     },
     plugins: [
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: "manifest.json", to: "manifest.json" },
+          { from: "authenticator.html", to: "authenticator.html" },
+          { from: "styles.css", to: "styles.css", noErrorOnMissing: true },
+          { from: "icons", to: "icons", noErrorOnMissing: true },
+          { from: "_locales", to: "_locales", noErrorOnMissing: true }
+        ],
+      }),
       new webpack.ProvidePlugin({
         process: "process/browser.js",
       }),
